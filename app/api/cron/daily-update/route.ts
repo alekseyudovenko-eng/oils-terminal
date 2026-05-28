@@ -14,8 +14,8 @@ export async function POST() {
   try {
     // 3. Ищем реальную цену (запрос на английском работает лучше)
     const response = await tvly.search("current price of soybean oil per metric ton USD", {
-      search_depth: "basic",
-      include_answer: true, 
+      searchDepth: "basic",
+      includeAnswer: true, 
     });
 
     // Tavily возвращает много текста. Попробуем найти число в ответе.
