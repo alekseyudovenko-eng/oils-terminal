@@ -1,4 +1,5 @@
 import { supabaseClient } from '@/lib/supabase';
+import AddPriceButton from '@/components/AddPriceButton';
 
 export default async function Home() {
   const { data: prices } = await supabaseClient
@@ -14,15 +15,7 @@ export default async function Home() {
           <h1 className="text-3xl font-bold text-slate-900">🛢️ Oils & Fats Terminal</h1>
           <p className="text-slate-500">Online Trading Interface</p>
         </div>
-        <button 
-          onClick={async () => {
-            await fetch('/api/add-price', { method: 'POST' });
-            window.location.reload();
-          }} 
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-        >
-          ➕ Добавить тестовую цену
-        </button>
+        <AddPriceButton />
       </header>
 
       <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
