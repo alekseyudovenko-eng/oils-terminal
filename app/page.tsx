@@ -14,22 +14,15 @@ export default async function Home() {
           <h1 className="text-3xl font-bold text-slate-900">🛢️ Oils & Fats Terminal</h1>
           <p className="text-slate-500">Online Trading Interface</p>
         </div>
-        <form action={async () => {
-          'use server'
-          await supabaseClient.from('market_data').insert({
-            commodity: 'Soybean Oil (Test)',
-            metric: 'price_spot',
-            value: 1245.50,
-            status: 'verified',
-            confidence_score: 0.9,
-            sources: [{ source: 'manual_test' }],
-            verified_at: new Date().toISOString()
-          });
-        }}>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            ➕ Добавить тестовую цену
-          </button>
-        </form>
+        <button 
+          onClick={async () => {
+            await fetch('/api/add-price', { method: 'POST' });
+            window.location.reload();
+          }} 
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        >
+          ➕ Добавить тестовую цену
+        </button>
       </header>
 
       <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
