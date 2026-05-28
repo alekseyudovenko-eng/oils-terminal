@@ -22,10 +22,10 @@ export default async function Home() {
           prices.map((item: any) => (
             <div key={item.id} className="flex justify-between items-center p-4 bg-slate-50 rounded-lg mb-2 border">
               <div>
-                <p className="font-bold">{item.commodity}</p>
+                <p className="font-bold text-slate-800">{item.commodity}</p>
                 <p className="text-xs text-gray-500">Status: {item.status}</p>
               </div>
-              <p className="text-2xl font-mono font-bold">${item.value}</p>
+              <p className="text-2xl font-mono font-bold text-slate-900">${item.value}</p>
             </div>
           ))
         )}
