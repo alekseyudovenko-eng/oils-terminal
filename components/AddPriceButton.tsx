@@ -4,10 +4,14 @@ export default function AddPriceButton() {
   return (
     <button 
       onClick={async () => {
-        // Отправляем запрос на наш API-роут
-        await fetch('/api/cron/daily-update', { method: 'POST' });
-        // Перезагружаем страницу, чтобы увидеть новую цену
-        window.location.reload();
+        console.log('Кнопка нажата! Начинаем добавление...'); // Это для проверки
+        try {
+          const res = await fetch('/api/cron/daily-update', { method: 'POST' });
+          console.log('Ответ от сервера:', await res.json());
+          window.location.reload();
+        } catch (e) {
+          console.error('Ошибка:', e);
+        }
       }} 
       className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition font-bold shadow-md"
     >
