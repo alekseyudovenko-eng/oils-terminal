@@ -11,38 +11,50 @@ export async function POST() {
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
   try {
-    // 1. Ищем страницу с ценой на Trading Economics
+    // 1. Ищем страницу с ценой на соевое МАСЛО (не бобы!)
     const searchRes = await tvly.search("soybean oil price trading economics", {
-      searchDepth: "basic",
-      maxResults: 1
+      searchDepth: "advanced",
+      maxResults: 5
     });
 
-    const targetUrl = searchRes.results?.[0]?.url;
+    // 2. Ищем ссылку, где в адресе есть "soybean-oil"
+    let targetUrl = "";
+    for (const res of searchRes.results) {
+      if (res.url && res.url.includes("soybean-oil")) {
+        targetUrl = res.url;
+        break;
+      }
+    }
+
+    // Если не нашли специфичную ссылку, берем первую из поиска
+    if (!targetUrl && searchRes.results?.[0]) {
+      targetUrl = searchRes.results[0].url;
+    }
     
     if (!targetUrl) {
       throw new Error("Source URL not found");
     }
 
-    // 2. Вытаскиваем текст со страницы
+    // 3. Вытаскиваем текст со страницы
     const extractRes = await tvly.extract([targetUrl]);
     const rawText = JSON.stringify(extractRes.results);
 
-    // 3. Ищем цену. Регулярка ищет числа вида 1,650.94 или 1650.94
+    // 4. Ищем цену. 
     const matches = rawText.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
     
     let price = 0;
     if (matches) {
       for (const m of matches) {
         const val = parseFloat(m.replace(/,/g, ''));
-        // Фильтр: цена за тонну обычно между 1000 и 3000 долларов
-        if (val > 1000 && val < 3000) {
+        // Фильтр: цена на МАСЛО обычно выше 1400. Бобы дешевле (~1200).
+        if (val > 1400 && val < 3000) {
           price = val;
           break;
         }
       }
     }
 
-    // 4. ЕСЛИ ЦЕНА НЕ НАЙДЕНА — ВОЗВРАЩАЕМ ОШИБКУ
+    // 5. ЕСЛИ ЦЕНА НЕ НАЙДЕНА — ОШИБКА
     if (price === 0) {
       return NextResponse.json({ 
         error: 'REAL PRICE NOT FOUND', 
@@ -51,7 +63,7 @@ export async function POST() {
       }, { status: 500 });
     }
 
-    // 5. Записываем в базу ТОЛЬКО если цена реальная
+    // 6. Записываем в базу
     await supabase.from('market_data').insert({
       commodity: 'Soybean Oil (Real)',
       metric: 'price_spot',
