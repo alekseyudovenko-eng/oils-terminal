@@ -5,13 +5,11 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  // Получаем все данные из базы
   const { data: prices } = await supabaseClient
     .from('market_data')
     .select('*')
     .order('verified_at', { ascending: false });
 
-  // Фильтруем дубликаты, оставляя только самую свежую запись для каждого масла
   const latestPrices = prices?.reduce((acc: any, current: any) => {
     const existing = acc.find((item: any) => item.commodity === current.commodity);
     if (!existing) {
@@ -39,7 +37,7 @@ export default async function Home() {
         <h2 className="text-xl font-semibold mb-4">📊 Котировки основных масел</h2>
         
         {latestPrices.length === 0 ? (
-          <p className="text-gray-500">Нет данных. Нажми "Обновить цену" для загрузки.</p>
+          <p className="text-gray-500">Нет данных. Нажми &quot;Обновить цену&quot; для загрузки.</p>
         ) : (
           <div className="grid gap-4">
             {latestPrices.map((item: any) => (
