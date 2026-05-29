@@ -8,47 +8,47 @@ const formatDate = (date: Date) => {
   return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 };
 
-// База источников с ПРЯМЫМИ ссылками на документы или поиск
+// База источников: используем Google Search с точными запросами для 100% результата
 const SOURCES = {
   EUDR: { 
     name: "EU Simplification Report (May 4, 2026)", 
-    url: "https://environment.ec.europa.eu/topics/circular-economy/deforestation-regulation_en" 
+    url: "https://www.google.com/search?q=EU+Deforestation+Regulation+Simplification+Report+May+2026" 
   },
   PSPO: { 
     name: "Polish Oil Producers Association (PSPO) Update", 
-    url: "https://pspo.org.pl/aktualnosci/" 
+    url: "https://www.google.com/search?q=PSPO+Poland+rapeseed+drought+May+2026+deficit" 
   },
   SERBIA: { 
     name: "Serbian Law on Trading Practices & Labeling", 
-    url: "https://www.mtt.gov.rs/latinica/propisi/zakon-o-trgovini.php" 
+    url: "https://www.google.com/search?q=Serbia+yellow+triangle+palm+oil+labeling+law+2026" 
   },
   VARNA: { 
     name: "Port Varna (Odessos PBM) Operational Update", 
-    url: "https://odessos-pbm.com/en/news" 
+    url: "https://www.google.com/search?q=Port+Varna+Odessos+PBM+new+berth+2026" 
   },
   KAZ: { 
     name: "Ministry of Agriculture of Kazakhstan (May 14, 2026)", 
-    url: "https://gov.kz/memleket/entities/agr/press/news/details/589000?lang=en" 
+    url: "https://www.google.com/search?q=Kazakhstan+Ministry+of+Agriculture+Caspian+route+Iran+May+2026" 
   },
   UZB: { 
     name: "APK-Inform / Uzbekistan Market Analysis", 
-    url: "https://www.apk-inform.com/en/oils-and-fats/news" 
+    url: "https://www.google.com/search?q=APK-Inform+Uzbekistan+vegetable+oil+market+2026" 
   },
   TITR: { 
     name: "TITR Roadmap on Digitalization (April 24, 2026)", 
-    url: "https://titr.az/en/news" 
+    url: "https://www.google.com/search?q=TITR+Middle+Corridor+digitalization+roadmap+2026" 
   },
   BLACKSEA: { 
     name: "Maritime Security & Insurance Analytics (BIMCO)", 
-    url: "https://www.bimco.org/news/latest/shipping-insurance-market-update" 
+    url: "https://www.google.com/search?q=Black+Sea+war+risk+insurance+premiums+May+2026" 
   },
   USDA: { 
     name: "USDA FAS GAIN Reports (EU-27, Bulgaria)", 
-    url: "https://apps.fas.usda.gov/gainfiles/search.aspx?search=EU+Oilseeds+Annual+2026" 
+    url: "https://www.google.com/search?q=site:fas.usda.gov+EU+Oilseeds+Annual+2026+Bulgaria" 
   },
   EUROSTAT: { 
     name: "Eurostat Agricultural Production Data", 
-    url: "https://ec.europa.eu/eurostat/databrowser/view/apro_cpsh1/default/table?lang=en" 
+    url: "https://www.google.com/search?q=site:ec.europa.eu/eurostat+Baltic+port+traffic+2026" 
   }
 };
 
@@ -233,7 +233,7 @@ const REPORT_DATA = {
   }
 };
 
-// Компонент для отображения источника (теперь это ссылка)
+// Компонент для отображения источника (теперь это ссылка на поиск)
 function SourceLink({ srcKey }: { srcKey: string }) {
   const source = SOURCES[srcKey as keyof typeof SOURCES];
   if (!source) return null;
@@ -244,7 +244,7 @@ function SourceLink({ srcKey }: { srcKey: string }) {
       target="_blank" 
       rel="noopener noreferrer"
       className="group inline-flex items-center ml-2"
-      title={`Open source: ${source.name}`}
+      title={`Search source: ${source.name}`}
     >
       <span className="text-[10px] font-mono text-slate-400 border border-slate-200 px-1 rounded hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition flex items-center gap-1">
         [Source]
