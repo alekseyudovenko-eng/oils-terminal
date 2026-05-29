@@ -13,10 +13,9 @@ export default function AddPriceButton() {
       const data = await res.json();
       
       if (!res.ok) {
-        throw new Error(data.error || 'Unknown error');
+        throw new Error(data.error || 'Server Error');
       }
       
-      // Если все хорошо, перезагружаем страницу
       window.location.reload();
     } catch (e: any) {
       setError(e.message);
@@ -33,9 +32,9 @@ export default function AddPriceButton() {
           loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'
         }`}
       >
-        {loading ? 'Загрузка...' : '➕ Обновить цену'}
+        {loading ? 'Обновление...' : '➕ Обновить цену'}
       </button>
-      {error && <span className="text-red-500 text-xs mt-1">{error}</span>}
+      {error && <span className="text-red-500 text-xs mt-1 font-bold">{error}</span>}
     </div>
   );
 }
