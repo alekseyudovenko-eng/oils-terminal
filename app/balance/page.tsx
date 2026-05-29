@@ -1,23 +1,17 @@
 import OilBalanceTable from '@/components/OilBalanceTable';
+import Layout from '@/components/Layout';
 
 export default function BalancePage() {
   return (
-    <main className="min-h-screen bg-slate-50 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Кнопка "Назад" на главную */}
-        <a href="/" className="text-blue-600 hover:underline font-medium mb-4 inline-block">
-          ← На главную
-        </a>
-
-        <h1 className="text-3xl font-bold text-slate-900 mb-6">📊 Баланс масличных культур</h1>
-        <p className="text-slate-600 mb-8">
-          Анализ производства, импорта, экспорта и потребления растительных масел по регионам.
-        </p>
-        
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-          <OilBalanceTable />
-        </div>
+    <Layout title="Market Balance Sheet">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Regional Balance</h1>
+        <p className="text-slate-500 mt-1">Production, Import, Export, and Consumption metrics</p>
       </div>
-    </main>
+      
+      <div className="border border-slate-200 rounded-sm p-1 bg-white">
+        <OilBalanceTable />
+      </div>
+    </Layout>
   );
 }
