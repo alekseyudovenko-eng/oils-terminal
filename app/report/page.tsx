@@ -125,14 +125,14 @@ export default function ReportPage() {
             {/* Serbia */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
               <h3 className="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
-                🇷🇸 Serbia: Regulatory Shock & "Yellow Triangle"
+                🇷🇸 Serbia: Regulatory Shock & &quot;Yellow Triangle&quot;
               </h3>
               <p className="text-sm text-slate-600 mb-4">
-                Since May 1, 2026, all dairy analogues and pastries with palm fat must carry a <strong>yellow triangle label</strong>: "Not a 100% dairy product – contains palm oil".
+                Since May 1, 2026, all dairy analogues and pastries with palm fat must carry a <strong>yellow triangle label</strong>: &quot;Not a 100% dairy product – contains palm oil&quot;.
               </p>
               <div className="bg-slate-50 p-4 rounded-lg text-sm space-y-2">
                 <p><strong>Law on Trading Practices:</strong> Written contracts mandatory for all rebates/prices.</p>
-                <p><strong>Digital Transparency:</strong> "e-otkupno mesto" system requires digital registration of all agri-purchases.</p>
+                <p><strong>Digital Transparency:</strong> &quot;e-otkupno mesto&quot; system requires digital registration of all agri-purchases.</p>
                 <p className="text-emerald-700 font-medium mt-2">Strategy: Position MSPO-certified oil as a sustainable alternative to local drought-affected oils.</p>
               </div>
             </div>
@@ -278,7 +278,7 @@ export default function ReportPage() {
                 <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center flex-shrink-0 font-bold">1</div>
                 <div>
                   <h4 className="font-bold text-lg">Counter-Labeling in Serbia</h4>
-                  <p className="text-slate-400 text-sm mt-1">Turn the "yellow triangle" into a quality benchmark. Promote MSPO-certified oil as sustainable vs. local drought-affected oils.</p>
+                  <p className="text-slate-400 text-sm mt-1">Turn the &quot;yellow triangle&quot; into a quality benchmark. Promote MSPO-certified oil as sustainable vs. local drought-affected oils.</p>
                 </div>
               </div>
               <div className="flex gap-4">
