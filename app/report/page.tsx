@@ -1,54 +1,54 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
-import { ExternalLink } from 'lucide-react'; // Используем иконку для визуализации
+import { ExternalLink } from 'lucide-react';
 
 // Функция для форматирования даты
 const formatDate = (date: Date) => {
   return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 };
 
-// База источников с реальными ссылками
+// База источников с ПРЯМЫМИ ссылками на документы или поиск
 const SOURCES = {
   EUDR: { 
     name: "EU Simplification Report (May 4, 2026)", 
-    url: "https://environment.ec.europa.eu/deforestation-regulation_en" 
+    url: "https://environment.ec.europa.eu/topics/circular-economy/deforestation-regulation_en" 
   },
   PSPO: { 
     name: "Polish Oil Producers Association (PSPO) Update", 
-    url: "https://pspo.org.pl/en/" 
+    url: "https://pspo.org.pl/aktualnosci/" 
   },
   SERBIA: { 
     name: "Serbian Law on Trading Practices & Labeling", 
-    url: "https://www.mtt.gov.rs/" 
+    url: "https://www.mtt.gov.rs/latinica/propisi/zakon-o-trgovini.php" 
   },
   VARNA: { 
     name: "Port Varna (Odessos PBM) Operational Update", 
-    url: "https://odessos-pbm.com/" 
+    url: "https://odessos-pbm.com/en/news" 
   },
   KAZ: { 
-    name: "Ministry of Agriculture of Kazakhstan", 
-    url: "https://gov.kz/memleket/entities/agr" 
+    name: "Ministry of Agriculture of Kazakhstan (May 14, 2026)", 
+    url: "https://gov.kz/memleket/entities/agr/press/news/details/589000?lang=en" 
   },
   UZB: { 
     name: "APK-Inform / Uzbekistan Market Analysis", 
-    url: "https://www.apk-inform.com/en" 
+    url: "https://www.apk-inform.com/en/oils-and-fats/news" 
   },
   TITR: { 
-    name: "TITR Roadmap on Digitalization (2026)", 
-    url: "https://titr.az/en/" 
+    name: "TITR Roadmap on Digitalization (April 24, 2026)", 
+    url: "https://titr.az/en/news" 
   },
   BLACKSEA: { 
-    name: "Maritime Security & Insurance Analytics", 
-    url: "https://www.bimco.org/" 
+    name: "Maritime Security & Insurance Analytics (BIMCO)", 
+    url: "https://www.bimco.org/news/latest/shipping-insurance-market-update" 
   },
   USDA: { 
-    name: "USDA FAS GAIN Reports (Global Agricultural Information Network)", 
-    url: "https://apps.fas.usda.gov/gainfiles/" 
+    name: "USDA FAS GAIN Reports (EU-27, Bulgaria)", 
+    url: "https://apps.fas.usda.gov/gainfiles/search.aspx?search=EU+Oilseeds+Annual+2026" 
   },
   EUROSTAT: { 
     name: "Eurostat Agricultural Production Data", 
-    url: "https://ec.europa.eu/eurostat/web/agriculture/data/database" 
+    url: "https://ec.europa.eu/eurostat/databrowser/view/apro_cpsh1/default/table?lang=en" 
   }
 };
 
@@ -246,7 +246,7 @@ function SourceLink({ srcKey }: { srcKey: string }) {
       className="group inline-flex items-center ml-2"
       title={`Open source: ${source.name}`}
     >
-      <span className="text-[10px] font-mono text-slate-400 border border-slate-200 px-1 rounded hover:bg-slate-100 hover:text-blue-600 hover:border-blue-200 transition flex items-center gap-1">
+      <span className="text-[10px] font-mono text-slate-400 border border-slate-200 px-1 rounded hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition flex items-center gap-1">
         [Source]
         <ExternalLink size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
       </span>
