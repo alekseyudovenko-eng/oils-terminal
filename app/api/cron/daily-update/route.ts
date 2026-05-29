@@ -10,72 +10,70 @@ export async function POST() {
 
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
+  // Список проверенных источников
+  const sources = [
+    "https://futures.tradingcharts.com/chart/ZL/",
+    "https://www.barchart.com/futures/quotes/ZL*",
+    "https://www.investing.com/commodities/soybean-oil"
+  ];
+
   try {
-    // 1. Ищем страницу с ценой на соевое МАСЛО (не бобы!)
-    const searchRes = await tvly.search("soybean oil price trading economics", {
-      searchDepth: "advanced",
-      maxResults: 5
-    });
+    let bestPrice = 0;
+    let finalSource = "";
 
-    // 2. Ищем ссылку, где в адресе есть "soybean-oil"
-    let targetUrl = "";
-    for (const res of searchRes.results) {
-      if (res.url && res.url.includes("soybean-oil")) {
-        targetUrl = res.url;
-        break;
-      }
-    }
+    // Перебираем источники по очереди
+    for (const url of sources) {
+      try {
+        // 1. Ищем контент страницы через Tavily Extract
+        const extractRes = await tvly.extract([url]);
+        const rawText = JSON.stringify(extractRes.results);
 
-    // Если не нашли специфичную ссылку, берем первую из поиска
-    if (!targetUrl && searchRes.results?.[0]) {
-      targetUrl = searchRes.results[0].url;
-    }
-    
-    if (!targetUrl) {
-      throw new Error("Source URL not found");
-    }
-
-    // 3. Вытаскиваем текст со страницы
-    const extractRes = await tvly.extract([targetUrl]);
-    const rawText = JSON.stringify(extractRes.results);
-
-    // 4. Ищем цену. 
-    const matches = rawText.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
-    
-    let price = 0;
-    if (matches) {
-      for (const m of matches) {
-        const val = parseFloat(m.replace(/,/g, ''));
-        // Фильтр: цена на МАСЛО обычно выше 1400. Бобы дешевле (~1200).
-        if (val > 1400 && val < 3000) {
-          price = val;
-          break;
+        // 2. Ищем цены (числа с двумя знаками после точки, например 1650.94)
+        const matches = rawText.match(/\d{1,3}(?:,\d{3})*\.\d{2}/g);
+        
+        if (matches) {
+          for (const m of matches) {
+            const val = parseFloat(m.replace(/,/g, ''));
+            // Фильтр: цена на соевое масло обычно от 800 до 2500 долларов за тонну
+            // Это отсеет цены за фунт (75 центов) и другие лишние числа
+            if (val > 800 && val < 2500) {
+              bestPrice = val;
+              finalSource = url;
+              break; // Берем первое подходящее число с этого источника
+            }
+          }
         }
+        
+        if (bestPrice > 0) break; // Если нашли цену, выходим из цикла
+
+      } catch (e) {
+        console.log(`Failed to parse ${url}`);
+        continue;
       }
     }
 
-    // 5. ЕСЛИ ЦЕНА НЕ НАЙДЕНА — ОШИБКА
-    if (price === 0) {
+    // 3. Если ни один источник не сработал — ошибка
+    if (bestPrice === 0) {
       return NextResponse.json({ 
-        error: 'REAL PRICE NOT FOUND', 
-        url: targetUrl,
-        snippet: rawText.substring(0, 500) 
+        error: 'NO PRICE FOUND IN TRUSTED SOURCES', 
+        checked_urls: sources 
       }, { status: 500 });
     }
 
-    // 6. Записываем в базу
+    // 4. Записываем в базу
     await supabase.from('market_data').insert({
-      commodity: 'Soybean Oil (Real)',
+      commodity: 'Soybean Oil (CBOT)',
       metric: 'price_spot',
-      value: price,
+      value: bestPrice,
       status: 'verified',
-      sources: [{ source: 'trading_economics', url: targetUrl }],
+      sources: [{ source: 'trusted_aggregator', url: finalSource }],
       verified_at: new Date().toISOString()
     });
 
-    return NextResponse.json({ success: true, price: price, source: targetUrl });
+    return NextResponse.json({ success: true, price: bestPrice, source: finalSource });
 
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: 'CRITICAL ERROR' }, { status: 500 });
   }
 }
