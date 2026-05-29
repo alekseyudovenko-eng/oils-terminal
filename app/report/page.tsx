@@ -7,18 +7,31 @@ const formatDate = (date: Date) => {
   return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 };
 
+// База источников
+const SOURCES = {
+  EUDR: { name: "EU Simplification Report (May 4, 2026)", url: "#" },
+  PSPO: { name: "Polish Oil Producers Association (May 4, 2026)", url: "#" },
+  SERBIA: { name: "Law on Trading Practices & 'e-otkupno mesto' (May 1, 2026)", url: "#" },
+  VARNA: { name: "Port Varna (Odessos PBM) Operational Update", url: "#" },
+  KAZ: { name: "Ministry of Agriculture of Kazakhstan (May 14, 2026)", url: "#" },
+  UZB: { name: "APK-Inform / Ambassador Gadoev Proposal", url: "#" },
+  TITR: { name: "TITR Roadmap on Digitalization (April 24, 2026)", url: "#" },
+  BLACKSEA: { name: "Maritime Security & Insurance Analytics (May 2026)", url: "#" },
+  USDA: { name: "USDA FAS GAIN Reports (EU-27, Bulgaria)", url: "#" },
+  EUROSTAT: { name: "Eurostat Agricultural Production Data", url: "#" }
+};
+
 const REPORT_DATA = {
   ru: {
     title: "Аналитический отчет: Рынок растительных масел",
-    // Даты будут подставлены динамически
     sections: {
       exec: {
         title: "I. EXECUTIVE SUMMARY (Сводка за 10 дней)",
         points: [
-          "Логистика: Средний коридор (TITR) закрепил преимущество с транзитом 15–19 дней. Черноморский маршрут остается зоной высокого риска (премии до 1%).",
-          "Регуляторика ЕС: Отчет об упрощении EUDR подтвердил снижение затрат на комплаенс на 75%. B2B-покупатели освобождены от DDS.",
-          "Производство: Гидрологическая засуха в Польше снизила потенциал урожайности рапса до 1–1.5 т/га. Ожидается дефицит 500 тыс. тонн.",
-          "Цены: Пальмовое масло торгуется с дисконтом $100–200/тонна к дизтопливу (POGO), сохраняя рентабельность биодизеля в ЕС."
+          { text: "Логистика: Средний коридор (TITR) закрепил преимущество с транзитом 15–19 дней.", src: "TITR" },
+          { text: "Регуляторика ЕС: Отчет об упрощении EUDR подтвердил снижение затрат на комплаенс на 75%.", src: "EUDR" },
+          { text: "Производство: Гидрологическая засуха в Польше снизила потенциал урожайности рапса до 1–1.5 т/га.", src: "PSPO" },
+          { text: "Цены: Пальмовое масло торгуется с дисконтом $100–200/тонна к дизтопливу (POGO).", src: "USDA" }
         ]
       },
       europe: {
@@ -26,19 +39,23 @@ const REPORT_DATA = {
         items: [
           {
             country: "Сербия 🇷🇸",
-            text: "Действует маркировка «Желтый треугольник» для продуктов с пальмовым маслом. Система «e-otkupno mesto» требует цифровой регистрации всех закупок. Экспорт биокомпонентов ограничен до конца месяца."
+            text: "Действует маркировка «Желтый треугольник» для продуктов с пальмовым маслом. Система «e-otkupno mesto» требует цифровой регистрации всех закупок.",
+            src: "SERBIA"
           },
           {
             country: "Польша 🇵🇱",
-            text: "Засуха в Великопольском и Любушском воеводствах. PSPO оценивает дефицит рапсового масла в сезоне 2026/27 в 500,000 тонн. Растет спрос на импортные заменители."
+            text: "Засуха в Великопольском и Любушском воеводствах. PSPO оценивает дефицит рапсового масла в сезоне 2026/27 в 500,000 тонн.",
+            src: "PSPO"
           },
           {
             country: "Болгария 🇧🇬",
-            text: "Порт Варна (Odessos PBM) работает на полной мощности нового причала (-12.78м). Прямые поставки из ЮВА без перевалки в Турции снижают CIF-цены."
+            text: "Порт Варна (Odessos PBM) работает на полной мощности нового причала (-12.78м). Прямые поставки из ЮВА без перевалки.",
+            src: "VARNA"
           },
           {
             country: "Прибалтика 🇱🇹",
-            text: "Порт Клайпеда контролирует 46% рынка Балтии. Стратегия использования аварийных резервов стабилизирует цены на топливо."
+            text: "Порт Клайпеда контролирует 46% рынка Балтии (374k TEU в Q1).",
+            src: "EUROSTAT"
           }
         ]
       },
@@ -47,15 +64,18 @@ const REPORT_DATA = {
         items: [
           {
             country: "Казахстан 🇰🇿",
-            text: "Активная фаза экспорта по Каспийскому маршруту в Иран (порт Актау). Отгружено более 10,000 тонн подсолнечного масла за месяц. Запасы семян рекордные (2.11 млн т)."
+            text: "Запуск Каспийского маршрута в Иран через порт Актау (150–200 тыс. тонн/год). Рекордные запасы подсолнечника (2.11 млн т).",
+            src: "KAZ"
           },
           {
             country: "Узбекистан 🇺🇿",
-            text: "Загрузка НПЗ остается низкой (37%) из-за нехватки сырья. Импорт из Казахстана покрыл лишь часть дефицита. Обсуждается создание хаба MPOC в Ташкенте."
+            text: "Загрузка НПЗ остается низкой (37%) из-за нехватки сырья. Обсуждается создание хаба MPOC в Ташкенте.",
+            src: "UZB"
           },
           {
             country: "Азербайджан 🇦🇿",
-            text: "Реализация меморандума с Грузией о взаимном признании систем безопасности. Импорт пальмового масла стабилен на уровне 64.6 тыс. тонн/мес."
+            text: "Реализация меморандума с Грузией о взаимном признании систем безопасности.",
+            src: "USDA"
           }
         ]
       },
@@ -66,27 +86,26 @@ const REPORT_DATA = {
           status: "Simplification Phase (Active)",
           points: [
             "Отчет: Затраты на комплаенс снижены с €8.1 млрд до €2 млрд.",
-            "Ответственность только на первом импортере. Переработчики (B2B) освобождены от подачи DDS.",
-            "Малайзия и Индонезия остаются в списке стран среднего риска."
-          ]
+            "Ответственность только на первом импортере. Переработчики (B2B) освобождены от подачи DDS."
+          ],
+          src: "EUDR"
         },
         rediii: {
           title: "RED III (Renewable Energy Directive)",
           status: "National Transposition",
           points: [
             "Постепенный вывод POME (пальмового биодизеля) из целей RED III из-за ILUC.",
-            "Высокий спред POGO поддерживает использование пальмового масла в биодизеле там, где позволяют национальные квоты.",
-            "Ожидается сдвиг объемов в пищевой сектор и олеохимию."
-          ]
+            "Высокий спред POGO поддерживает использование пальмового масла в биодизеле."
+          ],
+          src: "USDA"
         }
       },
       log: {
         title: "V. LOGISTICS AND SUPPLY SECURITY: COMPARATIVE ANALYSIS",
         table: [
-          { param: "Transit Time (Asia-EU)", titr: "15–19 Days", bs: "37–45 Days (Cape)", change: "TITR Faster" },
-          { param: "Freight Rate ($/FEU)", titr: "$3,500 – $4,500", bs: "$10,000 (Spot)", change: "TITR Cheaper" },
-          { param: "Insurance Premium", titr: "Standard", bs: "1% of Vessel Value", change: "Black Sea Risk" },
-          { param: "Security Status", titr: "Digitalizing Customs", bs: "Drone Strikes (High)", change: "TITR Safer" }
+          { param: "Transit Time (Asia-EU)", titr: "15–19 Days", bs: "37–45 Days (Cape)", change: "TITR Faster", src: "TITR" },
+          { param: "Freight Rate ($/FEU)", titr: "$3,500 – $4,500", bs: "$10,000 (Spot)", change: "TITR Cheaper", src: "BLACKSEA" },
+          { param: "Insurance Premium", titr: "Standard", bs: "1% of Vessel Value", change: "Black Sea Risk", src: "BLACKSEA" }
         ],
         note: "TITR: Сквозная доставка сокращена до 15 дней благодаря цифровизации таможни. Black Sea: Премии за военный риск обновляются каждые 24 часа."
       }
@@ -98,10 +117,10 @@ const REPORT_DATA = {
       exec: {
         title: "I. EXECUTIVE SUMMARY (Last 10 Days)",
         points: [
-          "Logistics: Middle Corridor (TITR) solidified advantage with 15–19 day transit. Black Sea remains high-risk zone (premiums up to 1%).",
-          "EU Regulation: EUDR Simplification Report confirmed 75% compliance cost reduction. B2B buyers exempt from DDS.",
-          "Production: Hydrological drought in Poland dropped rapeseed yield potential to 1–1.5 t/ha. 500k ton deficit expected.",
-          "Prices: Palm oil trades at $100–200/ton discount to gasoil (POGO), maintaining biodiesel profitability in EU."
+          { text: "Logistics: Middle Corridor (TITR) solidified advantage with 15–19 day transit.", src: "TITR" },
+          { text: "EU Regulation: EUDR Simplification Report confirmed 75% compliance cost reduction.", src: "EUDR" },
+          { text: "Production: Hydrological drought in Poland dropped rapeseed yield potential to 1–1.5 t/ha.", src: "PSPO" },
+          { text: "Prices: Palm oil trades at $100–200/ton discount to gasoil (POGO).", src: "USDA" }
         ]
       },
       europe: {
@@ -109,19 +128,23 @@ const REPORT_DATA = {
         items: [
           {
             country: "Serbia 🇷🇸",
-            text: "'Yellow Triangle' labeling for palm-containing products enforced. 'e-otkupno mesto' system requires digital registration of all purchases. Bio-component export ban extended."
+            text: "'Yellow Triangle' labeling for palm-containing products enforced. 'e-otkupno mesto' system requires digital registration.",
+            src: "SERBIA"
           },
           {
             country: "Poland 🇵🇱",
-            text: "Drought in Wielkopolskie and Lubuskie. PSPO estimates 500,000 ton rapeseed oil deficit for 2026/27. Growing demand for imported substitutes."
+            text: "Drought in Wielkopolskie and Lubuskie. PSPO estimates 500,000 ton rapeseed oil deficit for 2026/27.",
+            src: "PSPO"
           },
           {
             country: "Bulgaria 🇧🇬",
-            text: "Port Varna (Odessos PBM) operating new berth (-12.78m) at full capacity. Direct SE Asian deliveries without Turkish transshipment lower CIF prices."
+            text: "Port Varna (Odessos PBM) operating new berth (-12.78m) at full capacity. Direct SE Asian deliveries.",
+            src: "VARNA"
           },
           {
             country: "The Baltics 🇱🇹",
-            text: "Port of Klaipėda controls 46% of Baltic market. Emergency reserve strategy stabilizes fuel prices."
+            text: "Port of Klaipėda controls 46% of Baltic market (374k TEU in Q1).",
+            src: "EUROSTAT"
           }
         ]
       },
@@ -130,15 +153,18 @@ const REPORT_DATA = {
         items: [
           {
             country: "Kazakhstan 🇰🇿",
-            text: "Active export phase via Caspian Route to Iran (Aktau port). Over 10,000 tons of sunflower oil shipped this month. Record seed stocks (2.11m tons)."
+            text: "Launch of Caspian Route to Iran via Aktau port (150-200k tons/year). Record sunflower stocks (2.11m tons).",
+            src: "KAZ"
           },
           {
             country: "Uzbekistan 🇺🇿",
-            text: "Refinery utilization remains low (37%) due to seed shortages. Imports from Kazakhstan covered only part of deficit. MPOC hub proposal in Tashkent under discussion."
+            text: "Refinery utilization remains low (37%) due to seed shortages. MPOC hub proposal in Tashkent under discussion.",
+            src: "UZB"
           },
           {
             country: "Azerbaijan 🇦🇿",
-            text: "Implementation of memorandum with Georgia on food safety equivalence. Palm oil imports stable at 64.6k tons/month."
+            text: "Implementation of memorandum with Georgia on food safety equivalence.",
+            src: "USDA"
           }
         ]
       },
@@ -149,33 +175,50 @@ const REPORT_DATA = {
           status: "Simplification Phase (Active)",
           points: [
             "Report: Compliance costs reduced from €8.1bn to €2bn.",
-            "Responsibility lies only with the first importer. Processors (B2B) exempt from DDS submission.",
-            "Malaysia and Indonesia remain in 'standard risk' category."
-          ]
+            "Responsibility lies only with the first importer. Processors (B2B) exempt from DDS submission."
+          ],
+          src: "EUDR"
         },
         rediii: {
           title: "RED III (Renewable Energy Directive)",
           status: "National Transposition",
           points: [
             "Gradual phase-out of POME from RED III targets due to ILUC criteria.",
-            "High POGO spread supports palm oil use in biodiesel where national quotas allow.",
-            "Volumes expected to shift to food and oleochemical sectors."
-          ]
+            "High POGO spread supports palm oil use in biodiesel where national quotas allow."
+          ],
+          src: "USDA"
         }
       },
       log: {
         title: "V. LOGISTICS AND SUPPLY SECURITY: COMPARATIVE ANALYSIS",
         table: [
-          { param: "Transit Time (Asia-EU)", titr: "15–19 Days", bs: "37–45 Days (Cape)", change: "TITR Faster" },
-          { param: "Freight Rate ($/FEU)", titr: "$3,500 – $4,500", bs: "$10,000 (Spot)", change: "TITR Cheaper" },
-          { param: "Insurance Premium", titr: "Standard", bs: "1% of Vessel Value", change: "Black Sea Risk" },
-          { param: "Security Status", titr: "Digitalizing Customs", bs: "Drone Strikes (High)", change: "TITR Safer" }
+          { param: "Transit Time (Asia-EU)", titr: "15–19 Days", bs: "37–45 Days (Cape)", change: "TITR Faster", src: "TITR" },
+          { param: "Freight Rate ($/FEU)", titr: "$3,500 – $4,500", bs: "$10,000 (Spot)", change: "TITR Cheaper", src: "BLACKSEA" },
+          { param: "Insurance Premium", titr: "Standard", bs: "1% of Vessel Value", change: "Black Sea Risk", src: "BLACKSEA" }
         ],
         note: "TITR: End-to-end delivery reduced to 15 days thanks to customs digitalization. Black Sea: War risk premiums updated every 24 hours."
       }
     }
   }
 };
+
+// Компонент для отображения источника
+function SourceLink({ srcKey }: { srcKey: string }) {
+  const source = SOURCES[srcKey as keyof typeof SOURCES];
+  if (!source) return null;
+  
+  return (
+    <span className="group relative inline-block ml-2 cursor-help">
+      <span className="text-[10px] font-mono text-slate-400 border border-slate-200 px-1 rounded hover:bg-slate-100 hover:text-slate-600 transition">
+        [Source]
+      </span>
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-2 bg-slate-800 text-white text-xs rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+        {source.name}
+        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
+      </div>
+    </span>
+  );
+}
 
 export default function ReportPage() {
   const [lang, setLang] = useState<'ru' | 'en'>('ru');
@@ -217,8 +260,9 @@ export default function ReportPage() {
           <h2 className="text-lg font-bold text-slate-900 uppercase tracking-wide border-b border-slate-200 pb-2 mb-4">{t.sections.exec.title}</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {t.sections.exec.points.map((point, idx) => (
-              <div key={idx} className="p-4 bg-slate-50 border-l-2 border-slate-300 text-sm text-slate-700 leading-relaxed">
-                {point}
+              <div key={idx} className="p-4 bg-slate-50 border-l-2 border-slate-300 text-sm text-slate-700 leading-relaxed flex justify-between items-start">
+                <span>{point.text}</span>
+                <SourceLink srcKey={point.src} />
               </div>
             ))}
           </div>
@@ -231,8 +275,9 @@ export default function ReportPage() {
             {t.sections.europe.items.map((item, idx) => (
               <div key={idx} className="flex gap-4 p-4 border border-slate-100 hover:border-slate-300 transition">
                 <div className="w-24 flex-shrink-0 font-bold text-slate-900 text-sm">{item.country}</div>
-                <div className="text-sm text-slate-600 leading-relaxed">
+                <div className="text-sm text-slate-600 leading-relaxed flex-grow">
                   {item.text}
+                  <SourceLink srcKey={item.src} />
                 </div>
               </div>
             ))}
@@ -244,9 +289,14 @@ export default function ReportPage() {
           <h2 className="text-lg font-bold text-slate-900 uppercase tracking-wide border-b border-slate-200 pb-2 mb-4">{t.sections.cis.title}</h2>
           <div className="grid md:grid-cols-3 gap-4">
             {t.sections.cis.items.map((item, idx) => (
-              <div key={idx} className="p-4 border border-slate-200 rounded-sm">
-                <h3 className="font-bold text-slate-900 mb-1">{item.country}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{item.text}</p>
+              <div key={idx} className="p-4 border border-slate-200 rounded-sm flex flex-col justify-between">
+                <div>
+                  <h3 className="font-bold text-slate-900 mb-1">{item.country}</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">{item.text}</p>
+                </div>
+                <div className="mt-3 pt-3 border-t border-slate-100">
+                   <SourceLink srcKey={item.src} />
+                </div>
               </div>
             ))}
           </div>
@@ -257,14 +307,20 @@ export default function ReportPage() {
           <h2 className="text-lg font-bold text-slate-900 uppercase tracking-wide border-b border-slate-200 pb-2 mb-4">{t.sections.reg.title}</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-6 border border-slate-200 rounded-sm">
-              <h3 className="font-bold text-slate-900 mb-2">{t.sections.reg.eudr.title}</h3>
+              <div className="flex justify-between items-start mb-2">
+                 <h3 className="font-bold text-slate-900">{t.sections.reg.eudr.title}</h3>
+                 <SourceLink srcKey={t.sections.reg.eudr.src} />
+              </div>
               <span className="inline-block px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] uppercase font-bold mb-4">{t.sections.reg.eudr.status}</span>
               <ul className="space-y-2 text-sm text-slate-600 list-disc list-inside">
                 {t.sections.reg.eudr.points.map((p, i) => <li key={i}>{p}</li>)}
               </ul>
             </div>
             <div className="p-6 border border-slate-200 rounded-sm">
-              <h3 className="font-bold text-slate-900 mb-2">{t.sections.reg.rediii.title}</h3>
+              <div className="flex justify-between items-start mb-2">
+                 <h3 className="font-bold text-slate-900">{t.sections.reg.rediii.title}</h3>
+                 <SourceLink srcKey={t.sections.reg.rediii.src} />
+              </div>
               <span className="inline-block px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] uppercase font-bold mb-4">{t.sections.reg.rediii.status}</span>
               <ul className="space-y-2 text-sm text-slate-600 list-disc list-inside">
                 {t.sections.reg.rediii.points.map((p, i) => <li key={i}>{p}</li>)}
@@ -288,11 +344,14 @@ export default function ReportPage() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {t.sections.log.table.map((row, idx) => (
-                  <tr key={idx}>
+                  <tr key={idx} className="group">
                     <td className="px-4 py-3 font-medium text-slate-900">{row.param}</td>
                     <td className="px-4 py-3 text-slate-700">{row.titr}</td>
                     <td className="px-4 py-3 text-slate-500">{row.bs}</td>
-                    <td className="px-4 py-3 text-right text-slate-400">{row.change}</td>
+                    <td className="px-4 py-3 text-right text-slate-400">
+                      {row.change}
+                      <SourceLink srcKey={row.src} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
