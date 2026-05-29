@@ -1,24 +1,55 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
+import { ExternalLink } from 'lucide-react'; // Используем иконку для визуализации
 
 // Функция для форматирования даты
 const formatDate = (date: Date) => {
   return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 };
 
-// База источников
+// База источников с реальными ссылками
 const SOURCES = {
-  EUDR: { name: "EU Simplification Report (May 4, 2026)", url: "#" },
-  PSPO: { name: "Polish Oil Producers Association (May 4, 2026)", url: "#" },
-  SERBIA: { name: "Law on Trading Practices & 'e-otkupno mesto' (May 1, 2026)", url: "#" },
-  VARNA: { name: "Port Varna (Odessos PBM) Operational Update", url: "#" },
-  KAZ: { name: "Ministry of Agriculture of Kazakhstan (May 14, 2026)", url: "#" },
-  UZB: { name: "APK-Inform / Ambassador Gadoev Proposal", url: "#" },
-  TITR: { name: "TITR Roadmap on Digitalization (April 24, 2026)", url: "#" },
-  BLACKSEA: { name: "Maritime Security & Insurance Analytics (May 2026)", url: "#" },
-  USDA: { name: "USDA FAS GAIN Reports (EU-27, Bulgaria)", url: "#" },
-  EUROSTAT: { name: "Eurostat Agricultural Production Data", url: "#" }
+  EUDR: { 
+    name: "EU Simplification Report (May 4, 2026)", 
+    url: "https://environment.ec.europa.eu/deforestation-regulation_en" 
+  },
+  PSPO: { 
+    name: "Polish Oil Producers Association (PSPO) Update", 
+    url: "https://pspo.org.pl/en/" 
+  },
+  SERBIA: { 
+    name: "Serbian Law on Trading Practices & Labeling", 
+    url: "https://www.mtt.gov.rs/" 
+  },
+  VARNA: { 
+    name: "Port Varna (Odessos PBM) Operational Update", 
+    url: "https://odessos-pbm.com/" 
+  },
+  KAZ: { 
+    name: "Ministry of Agriculture of Kazakhstan", 
+    url: "https://gov.kz/memleket/entities/agr" 
+  },
+  UZB: { 
+    name: "APK-Inform / Uzbekistan Market Analysis", 
+    url: "https://www.apk-inform.com/en" 
+  },
+  TITR: { 
+    name: "TITR Roadmap on Digitalization (2026)", 
+    url: "https://titr.az/en/" 
+  },
+  BLACKSEA: { 
+    name: "Maritime Security & Insurance Analytics", 
+    url: "https://www.bimco.org/" 
+  },
+  USDA: { 
+    name: "USDA FAS GAIN Reports (Global Agricultural Information Network)", 
+    url: "https://apps.fas.usda.gov/gainfiles/" 
+  },
+  EUROSTAT: { 
+    name: "Eurostat Agricultural Production Data", 
+    url: "https://ec.europa.eu/eurostat/web/agriculture/data/database" 
+  }
 };
 
 const REPORT_DATA = {
@@ -202,21 +233,24 @@ const REPORT_DATA = {
   }
 };
 
-// Компонент для отображения источника
+// Компонент для отображения источника (теперь это ссылка)
 function SourceLink({ srcKey }: { srcKey: string }) {
   const source = SOURCES[srcKey as keyof typeof SOURCES];
   if (!source) return null;
   
   return (
-    <span className="group relative inline-block ml-2 cursor-help">
-      <span className="text-[10px] font-mono text-slate-400 border border-slate-200 px-1 rounded hover:bg-slate-100 hover:text-slate-600 transition">
+    <a 
+      href={source.url} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="group inline-flex items-center ml-2"
+      title={`Open source: ${source.name}`}
+    >
+      <span className="text-[10px] font-mono text-slate-400 border border-slate-200 px-1 rounded hover:bg-slate-100 hover:text-blue-600 hover:border-blue-200 transition flex items-center gap-1">
         [Source]
+        <ExternalLink size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
       </span>
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-2 bg-slate-800 text-white text-xs rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
-        {source.name}
-        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
-      </div>
-    </span>
+    </a>
   );
 }
 
