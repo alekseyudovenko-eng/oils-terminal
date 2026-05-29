@@ -25,8 +25,13 @@ export default async function Home() {
           <h1 className="text-3xl font-bold text-slate-900">🛢️ Oils & Fats Terminal</h1>
           <p className="text-slate-500">Global Market Prices (Real-time)</p>
         </div>
+        
+        {/* Навигация и кнопка */}
         <div className="flex gap-4 items-center">
-          <Link href="/balance" className="text-blue-600 hover:underline font-medium">
+          <Link href="/report" className="text-emerald-600 hover:underline font-medium border border-emerald-600 px-3 py-1 rounded-md transition">
+            📄 Latest Report (May 2026)
+          </Link>
+          <Link href="/balance" className="text-blue-600 hover:underline font-medium transition">
             📈 Аналитика баланса
           </Link>
           <AddPriceButton />
