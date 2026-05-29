@@ -1,319 +1,357 @@
-import OilBalanceTable from '@/components/OilBalanceTable';
+"use client";
+import { useState } from 'react';
 import Link from 'next/link';
 
+// Данные отчета (можно вынести в отдельный файл, но для простоты оставим здесь)
+const REPORT_DATA = {
+  ru: {
+    title: "Аналитический отчет: Рынок растительных масел и жиров",
+    subtitle: "Европа, Центральная Азия и Кавказ | 8–18 мая 2026",
+    client: "Для: Malaysian Palm Oil Council (MPOC)",
+    sections: {
+      exec: {
+        title: "I. EXECUTIVE SUMMARY (Ключевые выводы)",
+        points: [
+          "Рынок демонстрирует высокую волатильность из-за логистических сбоев в Черном море и изменений в регуляторике ЕС.",
+          "Пальмовое масло сохраняет ценовое преимущество: спред POGO положительный ($100–200/тонна дисконта к дизтопливу), что поддерживает спрос на биодизель в ЕС.",
+          "Логистика: Средний коридор (TITR) сократил транзит до 15–19 дней, став предпочтительным маршрутом для спецжиров из Малайзии.",
+          "EUDR: Подтверждено снижение затрат на комплаенс на 75%. Освобождение B2B-покупателей от подачи DDS упрощает внутреннюю торговлю."
+        ]
+      },
+      europe: {
+        title: "II. REGIONAL ANALYSIS OF EUROPEAN MARKETS",
+        items: [
+          {
+            country: "Сербия 🇷🇸",
+            date: "1 мая 2026",
+            text: "Вступили в силу правила маркировки: продукты с пальмовым маслом обязаны иметь «желтый треугольник» с предупреждением. Принят закон о торговых практиках, требующий цифровую регистрацию всех закупок («e-otkupno mesto»)."
+          },
+          {
+            country: "Польша 🇵🇱",
+            date: "4 мая 2026",
+            text: "Объявлена гидрологическая засуха. Потенциал урожайности рапса упал до 1–1.5 т/га. Ожидается дефицит рапсового масла в объеме 500,000 тонн, что открывает окно для импорта пальмового масла в кондитерский сектор."
+          },
+          {
+            country: "Болгария 🇧🇬",
+            date: "Середина мая 2026",
+            text: "Запуск нового причала в порту Варна (глубина -12.78м) позволяет принимать крупные танкеры из ЮВА напрямую. Болгария предлагает самые низкие цены CIF в ЕС."
+          },
+          {
+            country: "Чехия 🇨🇿",
+            date: "Май 2026",
+            text: "Новые декреты о майонезе (>70% жира) и обязательное раздельное размещение растительных и животных жиров в ритейле."
+          },
+          {
+            country: "Прибалтика 🇱🇹🇱🇻🇪🇪",
+            date: "Q1 2026",
+            text: "Порт Клайпеда обработал 374,000 TEU (+38% г/г), контролируя 46% рынка Балтии. Стратегия выпуска аварийных резервов для стабилизации цен."
+          }
+        ]
+      },
+      cis: {
+        title: "III. INDUSTRIAL OVERVIEW OF CIS AND CENTRAL ASIAN COUNTRIES",
+        items: [
+          {
+            country: "Узбекистан 🇺🇿",
+            text: "Кризис утилизации мощностей: загрузка НПЗ всего 37% из-за нехватки сырья. Импорт подсолнечного масла из Казахстана вырос на 41%. Предложение посла о создании хаба в Ташкенте до 2027 года."
+          },
+          {
+            country: "Казахстан 🇰🇿",
+            date: "14 мая 2026",
+            text: "Запуск Каспийского маршрута в Иран через порт Актау (150–200 тыс. тонн/год). Рекордные запасы подсолнечника (2.11 млн тонн)."
+          },
+          {
+            country: "Азербайджан 🇦🇿 и Грузия 🇬🇪",
+            date: "7 мая 2026",
+            text: "Подписан меморандум о взаимном признании систем пищевой безопасности, что упрощает торговлю спецжирами."
+          }
+        ]
+      },
+      reg: {
+        title: "IV. REGULATORY OUTLOOK",
+        eudr: {
+          title: "EUDR (EU Deforestation Regulation)",
+          status: "Фаза упрощения (Simplification Phase)",
+          points: [
+            "Отчет от 4 мая 2026: снижение затрат на комплаенс на 75% (с €8.1 млрд до €2 млрд).",
+            "Ответственность только на первом импортере (подача DDS).",
+            "B2B-покупатели (производители маргарина, кондитерских изделий) освобождены от подачи собственных заявлений."
+          ]
+        },
+        rediii: {
+          title: "RED III (Renewable Energy Directive)",
+          status: "Национальное транспонирование",
+          points: [
+            "Постепенный вывод пальмового масла (POME) из целей RED III из-за критериев ILUC.",
+            "Спред POGO остается положительным, поддерживая рентабельность биодизеля там, где позволяют национальные квоты.",
+            "Ожидается перенаправление объемов из биоэнергетики в пищевой сектор и олеохимию."
+          ]
+        }
+      },
+      log: {
+        title: "V. LOGISTICS AND SUPPLY SECURITY: COMPARATIVE ANALYSIS",
+        table: [
+          { param: "Время транзита (Азия-ЕС)", titr: "15–19 дней", bs: "37–45 дней (через Мыс)", change: "+9.9% (ускорение)" },
+          { param: "Фрахт ($/FEU)", titr: "$3,500 – $4,500", bs: "$10,000 (Spot)", change: "Снижение" },
+          { param: "Страховка", titr: "Стандарт", bs: "1% от стоимости судна", change: "+2.2%" },
+          { param: "Риски", titr: "Цифровизация таможни", bs: "Атаки дронов (Высокий риск)", change: "+4.5%" }
+        ],
+        note: "TITR: Сквозная доставка сокращена с 53 дней (2022) до 15 дней (2026). Черное море: Премии за военный риск обновляются каждые 24 часа."
+      }
+    }
+  },
+  en: {
+    title: "Analytical Report: Vegetable Oils & Fats Market",
+    subtitle: "Europe, Central Asia & Caucasus | May 8–18, 2026",
+    client: "For: Malaysian Palm Oil Council (MPOC)",
+    sections: {
+      exec: {
+        title: "I. EXECUTIVE SUMMARY",
+        points: [
+          "Market shows high volatility due to Black Sea logistics disruptions and EU regulatory shifts.",
+          "Palm oil maintains price advantage: POGO spread is positive ($100–200/ton discount to gasoil), supporting EU biodiesel demand.",
+          "Logistics: Middle Corridor (TITR) reduced transit to 15–19 days, becoming the preferred route for Malaysian specialty fats.",
+          "EUDR: Compliance costs reduced by 75%. B2B buyers exempt from DDS submission, easing internal trade."
+        ]
+      },
+      europe: {
+        title: "II. REGIONAL ANALYSIS OF EUROPEAN MARKETS",
+        items: [
+          {
+            country: "Serbia 🇷🇸",
+            date: "May 1, 2026",
+            text: "New labeling rules enforced: products with palm fat must carry a 'yellow triangle' warning. Law on Trading Practices adopted, requiring digital registration of all purchases ('e-otkupno mesto')."
+          },
+          {
+            country: "Poland 🇵🇱",
+            date: "May 4, 2026",
+            text: "Hydrological drought declared. Rapeseed yield potential dropped to 1–1.5 t/ha. Estimated deficit of 500,000 tons opens window for palm oil imports in confectionery sector."
+          },
+          {
+            country: "Bulgaria 🇧🇬",
+            date: "Mid-May 2026",
+            text: "New berth at Port Varna (depth -12.78m) operational, allowing direct discharge of large SE Asian tankers. Bulgaria offers lowest CIF prices in EU."
+          },
+          {
+            country: "Czech Republic 🇨🇿",
+            date: "May 2026",
+            text: "New decrees on mayonnaise (>70% fat) and mandatory separate placement of vegetable and animal fats in retail."
+          },
+          {
+            country: "The Baltics 🇱🇹🇱🇻🇪🇪",
+            date: "Q1 2026",
+            text: "Port of Klaipėda handled 374,000 TEU (+38% y/y), controlling 46% of Baltic market. Emergency reserve release strategy announced."
+          }
+        ]
+      },
+      cis: {
+        title: "III. INDUSTRIAL OVERVIEW OF CIS AND CENTRAL ASIAN COUNTRIES",
+        items: [
+          {
+            country: "Uzbekistan 🇺🇿",
+            text: "Utilization crisis: crushing capacity usage at only 37% due to seed shortages. Sunflower oil imports from Kazakhstan jumped 41%. Proposal for Tashkent distribution hub before 2027 duty review."
+          },
+          {
+            country: "Kazakhstan 🇰🇿",
+            date: "May 14, 2026",
+            text: "Launch of Caspian Route to Iran via Aktau port (150–200k tons/year). Record sunflower stocks (2.11 million tons)."
+          },
+          {
+            country: "Azerbaijan 🇦🇿 & Georgia 🇬🇪",
+            date: "May 7, 2026",
+            text: "Memorandum on food safety system equivalence signed, facilitating trade of high-risk goods like specialty fats."
+          }
+        ]
+      },
+      reg: {
+        title: "IV. REGULATORY OUTLOOK",
+        eudr: {
+          title: "EUDR (EU Deforestation Regulation)",
+          status: "Simplification Phase",
+          points: [
+            "May 4th Report: 75% reduction in compliance costs (from €8.1bn to €2bn).",
+            "Responsibility lies only with the first importer (DDS submission).",
+            "B2B buyers (margarine/confectionery producers) exempt from submitting their own statements."
+          ]
+        },
+        rediii: {
+          title: "RED III (Renewable Energy Directive)",
+          status: "National Transposition",
+          points: [
+            "Gradual phase-out of Palm Oil Methyl Ester (POME) from RED III targets due to ILUC criteria.",
+            "POGO spread remains positive, maintaining biodiesel profitability where national quotas allow.",
+            "Volumes expected to shift from bio-energy to food and oleochemical sectors."
+          ]
+        }
+      },
+      log: {
+        title: "V. LOGISTICS AND SUPPLY SECURITY: COMPARATIVE ANALYSIS",
+        table: [
+          { param: "Transit Time (Asia-EU)", titr: "15–19 Days", bs: "37–45 Days (Cape)", change: "+9.9% (Speed up)" },
+          { param: "Freight Rate ($/FEU)", titr: "$3,500 – $4,500", bs: "$10,000 (Spot)", change: "Downward" },
+          { param: "Insurance", titr: "Standard", bs: "1% of Vessel Value", change: "+2.2%" },
+          { param: "Risks", titr: "Customs Digitalization", bs: "Drone Strikes (High Risk)", change: "+4.5%" }
+        ],
+        note: "TITR: End-to-end delivery reduced from 53 days (2022) to 15 days (2026). Black Sea: War risk premiums updated every 24 hours."
+      }
+    }
+  }
+};
+
 export default function ReportPage() {
+  const [lang, setLang] = useState<'ru' | 'en'>('ru');
+  const t = REPORT_DATA[lang];
+
   return (
     <main className="min-h-screen bg-slate-50 font-sans text-slate-900">
       
-      {/* --- HERO SECTION --- */}
-      <section className="bg-slate-900 text-white py-16 px-6 md:px-12 border-b border-slate-700">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-2 mb-4 text-emerald-400 font-semibold tracking-wide uppercase text-sm">
-            <span>📅 May 8 – May 18, 2026</span>
-            <span>•</span>
-            <span>Client: MPOC</span>
+      {/* --- HEADER & CONTROLS --- */}
+      <header className="bg-slate-900 text-white py-8 px-6 md:px-12 border-b border-slate-700 sticky top-0 z-50 shadow-md">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold leading-tight">{t.title}</h1>
+            <p className="text-slate-400 text-sm mt-1">{t.subtitle} | {t.client}</p>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            Analytical Report: Vegetable Oils & Fats Market
-          </h1>
-          <p className="text-xl text-slate-300 max-w-3xl mb-8 leading-relaxed">
-            Comprehensive analysis of Europe, Central Asia, and Caucasus markets. 
-            Focus on Palm Oil competitiveness, regulatory shifts (EUDR/RED III), and logistics corridors.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Link href="/balance" className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition shadow-lg">
-              📊 Open Interactive Balance Table
-            </Link>
-            <Link href="/" className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-lg font-medium transition">
-              ← Back to Terminal
+          <div className="flex items-center gap-4">
+            <div className="bg-slate-800 rounded-lg p-1 flex">
+              <button 
+                onClick={() => setLang('ru')}
+                className={`px-3 py-1 text-sm font-medium rounded-md transition ${lang === 'ru' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white'}`}
+              >
+                RU
+              </button>
+              <button 
+                onClick={() => setLang('en')}
+                className={`px-3 py-1 text-sm font-medium rounded-md transition ${lang === 'en' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white'}`}
+              >
+                EN
+              </button>
+            </div>
+            <Link href="/" className="text-xs text-slate-400 hover:text-white underline">
+              ← Terminal
             </Link>
           </div>
         </div>
-      </section>
+      </header>
 
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 space-y-16">
 
-        {/* --- EXECUTIVE SUMMARY --- */}
+        {/* --- I. EXECUTIVE SUMMARY --- */}
         <section>
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <span className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm">I</span>
-            Executive Summary
-          </h2>
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 grid md:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <h3 className="font-semibold text-slate-700">🌴 Palm Oil Advantage</h3>
-              <p className="text-sm text-slate-600">
-                Maintains price advantage over rapeseed and sunflower oil. POGO spread remains positive ($100–200/ton discount to gasoil), supporting biodiesel demand in EU despite RED III pressure.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="font-semibold text-slate-700">🚢 Logistics Shift</h3>
-              <p className="text-sm text-slate-600">
-                Middle Corridor (TITR) becomes preferred route for specialty fats from Malaysia to Central Europe, reducing transit time to <strong>15–19 days</strong>.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="font-semibold text-slate-700">⚖️ Regulatory Ease</h3>
-              <p className="text-sm text-slate-600">
-                EUDR simplification confirmed: compliance costs reduced by <strong>75%</strong>. B2B buyers exempt from DDS submission, easing internal EU trade.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* --- REGULATORY OUTLOOK --- */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <span className="w-8 h-8 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-sm">II</span>
-            Regulatory Outlook: EUDR & RED III
-          </h2>
+          <h2 className="text-2xl font-bold mb-6 text-slate-800 border-l-4 border-emerald-500 pl-4">{t.sections.exec.title}</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {/* EUDR Card */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-emerald-500">
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-lg font-bold text-slate-800">EU Deforestation Regulation (EUDR)</h3>
-                <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded">Simplification Phase</span>
+            {t.sections.exec.points.map((point, idx) => (
+              <div key={idx} className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex gap-3">
+                <span className="text-emerald-600 font-bold text-lg">•</span>
+                <p className="text-sm text-slate-700 leading-relaxed">{point}</p>
               </div>
-              <ul className="space-y-3 text-sm text-slate-600">
-                <li className="flex gap-2">
-                  <span className="text-emerald-500">✔</span>
-                  <span><strong>75% Cost Reduction:</strong> Compliance costs drop from €8.1bn to €2bn annually.</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-emerald-500">✔</span>
-                  <span><strong>First Importer Only:</strong> Only the first importer submits Due Diligence Statement (DDS).</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-emerald-500">✔</span>
-                  <span><strong>B2B Exemption:</strong> Processors and retailers exempt from DDS if sourced from registered operators.</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* RED III Card */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-500">
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-lg font-bold text-slate-800">Renewable Energy Directive III (RED III)</h3>
-                <span className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">National Transposition</span>
-              </div>
-              <ul className="space-y-3 text-sm text-slate-600">
-                <li className="flex gap-2">
-                  <span className="text-amber-500">⚠</span>
-                  <span><strong>POME Phase-out:</strong> Palm Oil Methyl Ester gradually excluded from RED III targets due to ILUC criteria.</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-amber-500">⚠</span>
-                  <span><strong>POGO Spread:</strong> Palm oil trades at $100–200/ton discount to gasoil, keeping it viable for blending where national quotas allow.</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-amber-500">⚠</span>
-                  <span><strong>Market Shift:</strong> Expect pressure on bio-energy demand in Germany/France, redirecting volumes to food/oleochemical sectors.</span>
-                </li>
-              </ul>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* --- REGIONAL UPDATES --- */}
+        {/* --- II. REGIONAL ANALYSIS (EUROPE) --- */}
         <section>
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <span className="w-8 h-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-sm">III</span>
-            Regional Market Updates
-          </h2>
-          
-          <div className="space-y-8">
-            {/* Serbia */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-              <h3 className="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
-                🇷🇸 Serbia: Regulatory Shock & &quot;Yellow Triangle&quot;
-              </h3>
-              <p className="text-sm text-slate-600 mb-4">
-                Since May 1, 2026, all dairy analogues and pastries with palm fat must carry a <strong>yellow triangle label</strong>: &quot;Not a 100% dairy product – contains palm oil&quot;.
-              </p>
-              <div className="bg-slate-50 p-4 rounded-lg text-sm space-y-2">
-                <p><strong>Law on Trading Practices:</strong> Written contracts mandatory for all rebates/prices.</p>
-                <p><strong>Digital Transparency:</strong> &quot;e-otkupno mesto&quot; system requires digital registration of all agri-purchases.</p>
-                <p className="text-emerald-700 font-medium mt-2">Strategy: Position MSPO-certified oil as a sustainable alternative to local drought-affected oils.</p>
-              </div>
-            </div>
-
-            {/* Poland & Bulgaria Grid */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h3 className="text-lg font-bold text-slate-800 mb-3">🇵🇱 Poland: Production Crisis</h3>
-                <p className="text-sm text-slate-600 mb-2">
-                  Hydrological drought declared in Wielkopolskie and Lubuskie. Rapeseed yield potential dropped to <strong>1–1.5 t/ha</strong>.
-                </p>
-                <p className="text-sm text-slate-600">
-                  PSPO estimates a <strong>500,000 ton deficit</strong> for 2026/27. Opportunity for palm oil in industrial confectionery fats.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h3 className="text-lg font-bold text-slate-800 mb-3">🇧🇬 Bulgaria: Logistics Hub</h3>
-                <p className="text-sm text-slate-600 mb-2">
-                  New berth at <strong>Port Varna (Odessos PBM)</strong> operational. Depth -12.78m allows direct discharge of large SE Asian tankers.
-                </p>
-                <p className="text-sm text-slate-600">
-                  Bulgaria now offers lowest CIF prices in EU due to Black Sea proximity and new logistics efficiency.
-                </p>
-              </div>
-            </div>
-
-            {/* Central Asia */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-              <h3 className="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
-                🇰🇿 🇺🇿 Central Asia: Industrial Gap & New Routes
-              </h3>
-              <div className="grid md:grid-cols-2 gap-6 text-sm text-slate-600">
-                <div>
-                  <h4 className="font-semibold text-slate-800 mb-1">Uzbekistan</h4>
-                  <p>National crushing capacity utilization is only <strong>37%</strong> due to seed shortages. Refined sunflower oil imports from Kazakhstan jumped 41% y/y.</p>
-                  <p className="mt-2 text-emerald-700 font-medium">Opportunity: Supply CPO as feedstock for local refineries.</p>
+          <h2 className="text-2xl font-bold mb-6 text-slate-800 border-l-4 border-blue-500 pl-4">{t.sections.europe.title}</h2>
+          <div className="space-y-4">
+            {t.sections.europe.items.map((item, idx) => (
+              <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-blue-300 transition">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-bold text-lg text-slate-900">{item.country}</h3>
+                  {item.date && <span className="text-xs font-semibold bg-blue-50 text-blue-700 px-2 py-1 rounded">{item.date}</span>}
                 </div>
-                <div>
-                  <h4 className="font-semibold text-slate-800 mb-1">Kazakhstan</h4>
-                  <p>Launched <strong>Caspian Route to Iran</strong> via Aktau port (150-200k tons/year capacity). Record sunflower stocks of 2.11 million tons (+38% y/y).</p>
-                </div>
+                <p className="text-sm text-slate-600 leading-relaxed">{item.text}</p>
               </div>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* --- LOGISTICS & PRICES --- */}
+        {/* --- III. INDUSTRIAL OVERVIEW (CIS & CA) --- */}
         <section>
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <span className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm">IV</span>
-            Logistics & Price Analysis
-          </h2>
-          
-          <div className="grid lg:grid-cols-2 gap-8 mb-8">
-            {/* Logistics Table */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-              <h3 className="font-bold text-slate-800 mb-4">Corridor Comparison (May 2026)</h3>
-              <table className="w-full text-sm text-left">
-                <thead className="bg-slate-50 text-slate-500 uppercase text-xs">
-                  <tr>
-                    <th className="px-4 py-3">Parameter</th>
-                    <th className="px-4 py-3 text-emerald-600">TITR (Middle)</th>
-                    <th className="px-4 py-3 text-slate-600">Black Sea</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  <tr>
-                    <td className="px-4 py-3 font-medium">Transit Time</td>
-                    <td className="px-4 py-3 text-emerald-700 font-bold">15–19 Days</td>
-                    <td className="px-4 py-3">37–45 Days</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-medium">Freight Rate</td>
-                    <td className="px-4 py-3 text-emerald-700 font-bold">$3,500 – $4,500</td>
-                    <td className="px-4 py-3">$10,000</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-medium">Risk</td>
-                    <td className="px-4 py-3 text-emerald-700">Standard</td>
-                    <td className="px-4 py-3 text-red-600">High (War Risk)</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            {/* Price Table */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-              <h3 className="font-bold text-slate-800 mb-4">Comparative Prices (USD/MT)</h3>
-              <table className="w-full text-sm text-left">
-                <thead className="bg-slate-50 text-slate-500 uppercase text-xs">
-                  <tr>
-                    <th className="px-4 py-3">Product</th>
-                    <th className="px-4 py-3 text-right">Price</th>
-                    <th className="px-4 py-3 text-right">Change</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  <tr>
-                    <td className="px-4 py-3 font-medium">Palm Oil (FCPO)</td>
-                    <td className="px-4 py-3 text-right font-mono">$985 – $1,010</td>
-                    <td className="px-4 py-3 text-right text-emerald-600">+$15</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-medium">Soybean Oil (CBOT)</td>
-                    <td className="px-4 py-3 text-right font-mono">$1,715</td>
-                    <td className="px-4 py-3 text-right text-emerald-600">+$20</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-medium">Rapeseed Oil (Euronext)</td>
-                    <td className="px-4 py-3 text-right font-mono">$1,250 – $1,280</td>
-                    <td className="px-4 py-3 text-right text-red-500">-$10</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-medium">Sunflower Oil (FOB BS)</td>
-                    <td className="px-4 py-3 text-right font-mono">$1,150 – $1,180</td>
-                    <td className="px-4 py-3 text-right text-emerald-600">+$25</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <h2 className="text-2xl font-bold mb-6 text-slate-800 border-l-4 border-amber-500 pl-4">{t.sections.cis.title}</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {t.sections.cis.items.map((item, idx) => (
+              <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col h-full">
+                <h3 className="font-bold text-lg text-slate-900 mb-2">{item.country}</h3>
+                {item.date && <p className="text-xs text-amber-600 font-semibold mb-2">{item.date}</p>}
+                <p className="text-sm text-slate-600 leading-relaxed flex-grow">{item.text}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* --- DEEP DIVE TABLE --- */}
-        <section className="border-t border-slate-200 pt-12">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-2">V. Deep Dive: Market Balance Data</h2>
-            <p className="text-slate-600">Detailed production, import, export, and consumption metrics by region.</p>
-          </div>
-          
-          {/* Integration of your existing component */}
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-2 md:p-6">
-            <OilBalanceTable />
-          </div>
-        </section>
-
-        {/* --- STRATEGIC RECOMMENDATIONS --- */}
-        <section className="bg-slate-900 text-white p-8 rounded-2xl shadow-xl">
-          <h2 className="text-2xl font-bold mb-6 text-emerald-400">VI. Strategic Recommendations for MPOC</h2>
+        {/* --- IV. REGULATORY OUTLOOK --- */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 text-slate-800 border-l-4 border-purple-500 pl-4">{t.sections.reg.title}</h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <div className="flex gap-4">
-                <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center flex-shrink-0 font-bold">1</div>
-                <div>
-                  <h4 className="font-bold text-lg">Counter-Labeling in Serbia</h4>
-                  <p className="text-slate-400 text-sm mt-1">Turn the &quot;yellow triangle&quot; into a quality benchmark. Promote MSPO-certified oil as sustainable vs. local drought-affected oils.</p>
-                </div>
+            {/* EUDR */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border-t-4 border-emerald-500">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold text-slate-800">{t.sections.reg.eudr.title}</h3>
+                <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded uppercase">{t.sections.reg.eudr.status}</span>
               </div>
-              <div className="flex gap-4">
-                <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center flex-shrink-0 font-bold">2</div>
-                <div>
-                  <h4 className="font-bold text-lg">Industrial Feedstock for Uzbekistan</h4>
-                  <p className="text-slate-400 text-sm mt-1">Target 63% idle crushing capacity. Position Malaysian CPO as primary feedstock for local refineries.</p>
-                </div>
-              </div>
+              <ul className="space-y-3">
+                {t.sections.reg.eudr.points.map((p, i) => (
+                  <li key={i} className="flex gap-2 text-sm text-slate-600">
+                    <span className="text-emerald-500">✔</span> {p}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="space-y-4">
-              <div className="flex gap-4">
-                <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center flex-shrink-0 font-bold">3</div>
-                <div>
-                  <h4 className="font-bold text-lg">Middle Corridor Adoption</h4>
-                  <p className="text-slate-400 text-sm mt-1">Shift high-value specialty fats to TITR. Utilize 15-day transit to bypass $10k ocean freight and Black Sea risks.</p>
-                </div>
+
+            {/* RED III */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-500">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold text-slate-800">{t.sections.reg.rediii.title}</h3>
+                <span className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded uppercase">{t.sections.reg.rediii.status}</span>
               </div>
-              <div className="flex gap-4">
-                <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center flex-shrink-0 font-bold">4</div>
-                <div>
-                  <h4 className="font-bold text-lg">Stock Positioning</h4>
-                  <p className="text-slate-400 text-sm mt-1">Expedite proposal for regional distribution warehouse in Tashkent before 2027 duty review.</p>
-                </div>
-              </div>
+              <ul className="space-y-3">
+                {t.sections.reg.rediii.points.map((p, i) => (
+                  <li key={i} className="flex gap-2 text-sm text-slate-600">
+                    <span className="text-amber-500">⚠</span> {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* --- V. LOGISTICS --- */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 text-slate-800 border-l-4 border-slate-600 pl-4">{t.sections.log.title}</h2>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-slate-100 text-slate-600 uppercase text-xs font-semibold">
+                  <tr>
+                    <th className="px-6 py-4">Parameter</th>
+                    <th className="px-6 py-4 text-emerald-700">TITR (Middle Corridor)</th>
+                    <th className="px-6 py-4 text-slate-600">Black Sea Route</th>
+                    <th className="px-6 py-4 text-right">Change</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {t.sections.log.table.map((row, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50 transition">
+                      <td className="px-6 py-4 font-medium text-slate-900">{row.param}</td>
+                      <td className="px-6 py-4 text-emerald-700 font-bold">{row.titr}</td>
+                      <td className="px-6 py-4 text-slate-600">{row.bs}</td>
+                      <td className="px-6 py-4 text-right text-slate-500">{row.change}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="bg-slate-50 p-4 text-xs text-slate-500 border-t border-slate-200">
+              {t.sections.log.note}
             </div>
           </div>
         </section>
 
       </div>
       
-      {/* Footer */}
       <footer className="bg-slate-100 py-8 text-center text-slate-500 text-sm border-t border-slate-200 mt-12">
         <p>© 2026 International Marketing Agency Ltd. Exclusive partner of Malaysian Palm Oil Council.</p>
-        <p className="mt-1">Data sources: USDA FAS, Eurostat, National Statistical Committees, Industry Reports.</p>
+        <p className="mt-1">Data verified as of May 18, 2026.</p>
       </footer>
     </main>
   );
