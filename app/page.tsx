@@ -1,5 +1,6 @@
 import { supabaseClient } from '@/lib/supabase';
 import AddPriceButton from '@/components/AddPriceButton';
+import Link from 'next/link'; // <--- ВАЖНО: Добавлен импорт
 
 // Запрещаем кэширование, чтобы всегда видеть свежие данные
 export const dynamic = 'force-dynamic';
@@ -16,9 +17,14 @@ export default async function Home() {
       <header className="mb-8 border-b pb-4 flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-slate-900">🛢️ Oils & Fats Terminal</h1>
-          <p className="text-slate-500">Online Trading Interface (Всего записей: {prices?.length || 0})</p>
+          <p className="text-slate-500">Online Trading Interface</p>
         </div>
-        <AddPriceButton />
+        <div className="flex gap-4 items-center">
+          <Link href="/balance" className="text-blue-600 hover:underline font-medium">
+            📈 Аналитика баланса
+          </Link>
+          <AddPriceButton />
+        </div>
       </header>
 
       <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
