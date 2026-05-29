@@ -42,7 +42,7 @@ export async function POST() {
       }
     }
 
-    // 4. ЕСЛИ ЦЕНА НЕ НАЙДЕНА — ВОЗВРАЩАЕМ ОШИБКУ И НИЧЕГО НЕ ПИШЕМ В БАЗУ
+    // 4. ЕСЛИ ЦЕНА НЕ НАЙДЕНА — ВОЗВРАЩАЕМ ОШИБКУ
     if (price === 0) {
       return NextResponse.json({ 
         error: 'REAL PRICE NOT FOUND', 
