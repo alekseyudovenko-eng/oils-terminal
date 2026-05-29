@@ -10,38 +10,13 @@ export async function POST() {
 
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
-  // Список масел и поисковых запросов для них
+  // Список масел и их реалистичные ценовые диапазоны (USD за метрическую тонну)
   const oils = [
-    {
-      id: 'soybean',
-      name: 'Soybean Oil',
-      query: 'soybean oil futures price USD per metric ton CBOT today',
-      min: 1000, max: 2500 // Реалистичный диапазон цен за тонну
-    },
-    {
-      id: 'palm',
-      name: 'Palm Oil',
-      query: 'palm oil futures price USD per metric ton Malaysia today',
-      min: 800, max: 1500
-    },
-    {
-      id: 'rapeseed',
-      name: 'Rapeseed Oil',
-      query: 'rapeseed oil futures price USD per metric ton Euronext today',
-      min: 1000, max: 2000
-    },
-    {
-      id: 'sunflower',
-      name: 'Sunflower Oil',
-      query: 'sunflower oil export price FOB Black Sea USD per metric ton recent',
-      min: 900, max: 1600
-    },
-    {
-      id: 'olive',
-      name: 'Olive Oil',
-      query: 'olive oil spot price Europe USD per metric ton 2026',
-      min: 3000, max: 12000 // Оливковое масло намного дороже
-    }
+    { id: 'soybean', name: 'Soybean Oil', query: 'soybean oil futures price USD per metric ton CBOT today', min: 1000, max: 2500 },
+    { id: 'palm', name: 'Palm Oil', query: 'palm oil futures price USD per metric ton Malaysia today', min: 800, max: 1500 },
+    { id: 'rapeseed', name: 'Rapeseed Oil', query: 'rapeseed oil futures price USD per metric ton Euronext today', min: 1000, max: 2000 },
+    { id: 'sunflower', name: 'Sunflower Oil', query: 'sunflower oil export price FOB Black Sea USD per metric ton recent', min: 900, max: 1600 },
+    { id: 'olive', name: 'Olive Oil', query: 'olive oil spot price Europe USD per metric ton 2026', min: 3000, max: 12000 }
   ];
 
   const results = [];
@@ -55,7 +30,7 @@ export async function POST() {
         includeAnswer: true
       });
 
-      // 2. Анализ текста
+      // 2. Анализ текста ответа и сниппетов
       const text = (response.answer || "") + " " + JSON.stringify(response.results);
       
       // Ищем числа с плавающей точкой (например, 1250.50)
@@ -65,7 +40,7 @@ export async function POST() {
       if (matches) {
         for (const m of matches) {
           const val = parseFloat(m.replace(/,/g, ''));
-          // Проверяем, попадает ли цена в реалистичный диапазон для этого масла
+          // Проверяем, попадает ли цена в реалистичный диапазон
           if (val >= oil.min && val <= oil.max) {
             foundPrice = val;
             break;
@@ -73,7 +48,7 @@ export async function POST() {
         }
       }
 
-      // 3. Если нашли цену — сохраняем
+      // 3. Если нашли цену — сохраняем или обновляем в базе
       if (foundPrice > 0) {
         await supabase.from('market_data').upsert({
           commodity: oil.name,
@@ -82,17 +57,4 @@ export async function POST() {
           status: 'verified',
           sources: [{ source: 'tavily_search', url: response.results?.[0]?.url }],
           verified_at: new Date().toISOString()
-        }, { onConflict: 'commodity' });
-        
-        results.push({ name: oil.name, price: foundPrice });
-      } else {
-        console.log(`Price not found for ${oil.name}`);
-      }
-
-    } catch (error) {
-      console.error(`Error fetching ${oil.name}:`, error);
-    }
-  }
-
-  return NextResponse.json({ success: true, updated: results });
-}
+        }, { onConflict: 'commodity' }); //
