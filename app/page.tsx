@@ -1,6 +1,6 @@
 import { supabaseClient } from '@/lib/supabase';
 import AddPriceButton from '@/components/AddPriceButton';
-import Link from 'next/link';
+import Layout from '@/components/Layout';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,56 +12,54 @@ export default async function Home() {
 
   const latestPrices = prices?.reduce((acc: any, current: any) => {
     const existing = acc.find((item: any) => item.commodity === current.commodity);
-    if (!existing) {
-      acc.push(current);
-    }
+    if (!existing) acc.push(current);
     return acc;
   }, []) || [];
 
   return (
-    <main className="min-h-screen bg-slate-50 p-8 font-sans">
-      <header className="mb-8 border-b pb-4 flex justify-between items-center">
+    <Layout title="Live Market Data">
+      <div className="flex justify-between items-end mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">🛢️ Oils & Fats Terminal</h1>
-          <p className="text-slate-500">Global Market Prices (Real-time)</p>
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Market Quotes</h1>
+          <p className="text-slate-500 mt-1">Real-time vegetable oil prices (USD/MT)</p>
         </div>
-        
-        {/* Навигация и кнопка */}
-        <div className="flex gap-4 items-center">
-          <Link href="/report" className="text-emerald-600 hover:underline font-medium border border-emerald-600 px-3 py-1 rounded-md transition">
-            📄 Latest Report (May 2026)
-          </Link>
-          <Link href="/balance" className="text-blue-600 hover:underline font-medium transition">
-            📈 Аналитика баланса
-          </Link>
-          <AddPriceButton />
-        </div>
-      </header>
-
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-        <h2 className="text-xl font-semibold mb-4">📊 Котировки основных масел</h2>
-        
-        {latestPrices.length === 0 ? (
-          <p className="text-gray-500">Нет данных. Нажми &quot;Обновить цену&quot; для загрузки.</p>
-        ) : (
-          <div className="grid gap-4">
-            {latestPrices.map((item: any) => (
-              <div key={item.id} className="flex justify-between items-center p-4 bg-slate-50 rounded-lg border hover:bg-slate-100 transition">
-                <div>
-                  <p className="font-bold text-slate-800 text-lg">{item.commodity}</p>
-                  <p className="text-xs text-gray-500">
-                    Source: {item.sources?.[0]?.source || 'N/A'} | {new Date(item.verified_at).toLocaleDateString()}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl font-mono font-bold text-slate-900">${item.value}</p>
-                  <p className="text-xs text-gray-400">per Metric Ton</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <AddPriceButton />
       </div>
-    </main>
+
+      <div className="border border-slate-200 rounded-sm overflow-hidden">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider text-xs">
+            <tr>
+              <th className="px-6 py-4 font-medium">Commodity</th>
+              <th className="px-6 py-4 font-medium text-right">Price</th>
+              <th className="px-6 py-4 font-medium text-right">Unit</th>
+              <th className="px-6 py-4 font-medium">Source</th>
+              <th className="px-6 py-4 font-medium text-right">Updated</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100 bg-white">
+            {latestPrices.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
+                  No data available. Please update.
+                </td>
+              </tr>
+            ) : (
+              latestPrices.map((item: any) => (
+                <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                  <td className="px-6 py-4 font-semibold text-slate-900">{item.commodity}</td>
+                  <td className="px-6 py-4 text-right font-mono text-slate-700">${item.value.toLocaleString()}</td>
+                  <td className="px-6 py-4 text-right text-slate-500">{item.unit || 'USD/MT'}</td>
+                  <td className="px-6 py-4 text-slate-500 text-xs uppercase">{item.sources?.[0]?.source || 'N/A'}</td>
+                  <td className="px-6 py-4 text-right text-slate-400 text-xs">
+                    {new Date(item.verified_at).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </Layout>
   );
 }
