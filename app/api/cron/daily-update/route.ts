@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { tavily } from '@tavily/core';
 
 export async function POST() {
   const supabase = createClient(
@@ -8,64 +7,54 @@ export async function POST() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
-
-  // Список масел и их реалистичные ценовые диапазоны (USD за метрическую тонну)
-  const oils = [
-    { id: 'soybean', name: 'Soybean Oil', query: 'soybean oil futures price USD per metric ton CBOT today', min: 1000, max: 2500 },
-    { id: 'palm', name: 'Palm Oil', query: 'palm oil futures price USD per metric ton Malaysia today', min: 800, max: 1500 },
-    { id: 'rapeseed', name: 'Rapeseed Oil', query: 'rapeseed oil futures price USD per metric ton Euronext today', min: 1000, max: 2000 },
-    { id: 'sunflower', name: 'Sunflower Oil', query: 'sunflower oil export price FOB Black Sea USD per metric ton recent', min: 900, max: 1600 },
-    { id: 'olive', name: 'Olive Oil', query: 'olive oil spot price Europe USD per metric ton 2026', min: 3000, max: 12000 }
-  ];
-
   const results = [];
 
-  for (const oil of oils) {
-    try {
-      // 1. Поиск через Tavily
-      const response = await tvly.search(oil.query, {
-        searchDepth: "advanced",
-        maxResults: 3,
-        includeAnswer: true
-      });
+  try {
+    // 1. БИРЖЕВЫЕ ДАННЫЕ (Мгновенно, без поиска)
+    const tickers = [
+      { name: 'Soybean Oil (CBOT)', ticker: 'ZL=F', type: 'soy' },
+      { name: 'Rapeseed Oil (ICE)', ticker: 'RS=F', type: 'rapeseed' }
+    ];
 
-      // 2. Анализ текста ответа и сниппетов
-      const text = (response.answer || "") + " " + JSON.stringify(response.results);
-      
-      // Ищем числа с плавающей точкой (например, 1250.50)
-      const matches = text.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
-      
-      let foundPrice = 0;
-      if (matches) {
-        for (const m of matches) {
-          const val = parseFloat(m.replace(/,/g, ''));
-          // Проверяем, попадает ли цена в реалистичный диапазон
-          if (val >= oil.min && val <= oil.max) {
-            foundPrice = val;
-            break;
-          }
-        }
-      }
-
-      // 3. Если нашли цену — сохраняем или обновляем в базе
-      if (foundPrice > 0) {
-        await supabase.from('market_data').upsert({
-          commodity: oil.name,
-          metric: 'price_spot',
-          value: foundPrice,
-          status: 'verified',
-          sources: [{ source: 'tavily_search', url: response.results?.[0]?.url }],
-          verified_at: new Date().toISOString()
-        }, { onConflict: 'commodity' });
+    for (const item of tickers) {
+      try {
+        const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${item.ticker}?interval=1d&range=1d`, {
+          headers: { 'User-Agent': 'Mozilla/5.0' }
+        });
         
-        results.push({ name: oil.name, price: foundPrice });
+        if (!res.ok) throw new Error('Yahoo API error');
+        
+        const data = await res.json();
+        const price = data.chart?.result?.[0]?.meta?.regularMarketPrice;
+        
+        if (price) {
+          let finalPrice = price;
+          // ZL=F (Соя) идет в центах за фунт. Конвертируем в $/тонну.
+          if (item.type === 'soy') {
+            finalPrice = (price / 100) * 2204.62;
+          }
+          // RS=F (Рапс) обычно сразу в долларах за тонну на ICE.
+
+          await supabase.from('market_data').upsert({
+            commodity: item.name,
+            metric: 'price_spot',
+            value: parseFloat(finalPrice.toFixed(2)),
+            status: 'verified',
+            sources: [{ source: 'yahoo_finance', url: `https://finance.yahoo.com/quote/${item.ticker}` }],
+            verified_at: new Date().toISOString()
+          }, { onConflict: 'commodity' });
+          
+          results.push(item.name);
+        }
+      } catch (e) { 
+        console.error(`Error fetching ${item.name}:`, e); 
       }
-
-    } catch (error) {
-      console.error(`Error fetching ${oil.name}:`, error);
     }
-  }
 
-  return NextResponse.json({ success: true, updated: results });
+    return NextResponse.json({ success: true, updated: results });
+
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'CRITICAL ERROR' }, { status: 500 });
+  }
 }
