@@ -23,9 +23,7 @@ export async function POST() {
 
     if (targetUrl) {
       // 2. Используем extract, чтобы зайти на сайт и взять точные данные
-      const extractRes = await tvly.extract([targetUrl], {
-        extractDepth: "basic"
-      });
+      const extractRes = await tvly.extract([targetUrl]);
 
       const rawText = JSON.stringify(extractRes.results);
       
