@@ -11,53 +11,59 @@ export async function POST() {
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
   try {
-    // 1. Сначала ищем актуальную ссылку на цену соевого масла (CBOT)
-    const searchRes = await tvly.search("soybean oil futures price investing.com", {
+    // 1. Ищем страницу с ценой на Trading Economics
+    const searchRes = await tvly.search("soybean oil price trading economics", {
       searchDepth: "basic",
       maxResults: 1
     });
 
     const targetUrl = searchRes.results?.[0]?.url;
     
+    if (!targetUrl) {
+      throw new Error("Source URL not found");
+    }
+
+    // 2. Вытаскиваем текст со страницы
+    const extractRes = await tvly.extract([targetUrl]);
+    const rawText = JSON.stringify(extractRes.results);
+
+    // 3. Ищем цену. Регулярка ищет числа вида 1,650.94 или 1650.94
+    const matches = rawText.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
+    
     let price = 0;
-
-    if (targetUrl) {
-      // 2. Используем extract, чтобы зайти на сайт и взять точные данные
-      const extractRes = await tvly.extract([targetUrl]);
-
-      const rawText = JSON.stringify(extractRes.results);
-      
-      // 3. Ищем цену в формате $1,650.94 или 1650.94
-      // Регулярка ищет числа от 1000 до 3000 с двумя знаками после точки
-      const priceMatch = rawText.match(/(\$?\s?(\d{1,3}(?:,\d{3})*\.\d{2}))/g);
-      
-      if (priceMatch) {
-        for (const match of priceMatch) {
-          const cleanNum = parseFloat(match.replace(/[^0-9.]/g, ''));
-          if (cleanNum > 1000 && cleanNum < 3000) {
-            price = cleanNum;
-            break;
-          }
+    if (matches) {
+      for (const m of matches) {
+        const val = parseFloat(m.replace(/,/g, ''));
+        // Фильтр: цена за тонну обычно между 1000 и 3000 долларов
+        if (val > 1000 && val < 3000) {
+          price = val;
+          break;
         }
       }
     }
 
-    // Если не смогли спарсить, ставим цену из твоего примера как базу
-    if (price === 0) price = 1670.00; 
+    // 4. ЕСЛИ ЦЕНА НЕ НАЙДЕНА — ВОЗВРАЩАЕМ ОШИБКУ И НИЧЕГО НЕ ПИШЕМ В БАЗУ
+    if (price === 0) {
+      return NextResponse.json({ 
+        error: 'REAL PRICE NOT FOUND', 
+        url: targetUrl,
+        snippet: rawText.substring(0, 500) 
+      }, { status: 500 });
+    }
 
+    // 5. Записываем в базу ТОЛЬКО если цена реальная
     await supabase.from('market_data').insert({
-      commodity: 'Soybean Oil (CBOT)',
+      commodity: 'Soybean Oil (Real)',
       metric: 'price_spot',
       value: price,
       status: 'verified',
-      sources: [{ source: 'investing_com_via_tavily' }],
+      sources: [{ source: 'trading_economics', url: targetUrl }],
       verified_at: new Date().toISOString()
     });
 
-    return NextResponse.json({ success: true, price: price, url: targetUrl });
+    return NextResponse.json({ success: true, price: price, source: targetUrl });
 
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: 'Error' }, { status: 500 });
+    return NextResponse.json({ error: 'CRITICAL ERROR' }, { status: 500 });
   }
 }
