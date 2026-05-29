@@ -57,4 +57,15 @@ export async function POST() {
           status: 'verified',
           sources: [{ source: 'tavily_search', url: response.results?.[0]?.url }],
           verified_at: new Date().toISOString()
-        }, { onConflict: 'commodity' }); //
+        }, { onConflict: 'commodity' });
+        
+        results.push({ name: oil.name, price: foundPrice });
+      }
+
+    } catch (error) {
+      console.error(`Error fetching ${oil.name}:`, error);
+    }
+  }
+
+  return NextResponse.json({ success: true, updated: results });
+}
