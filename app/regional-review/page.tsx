@@ -76,8 +76,8 @@ export default function RegionalReviewPage() {
             <div className="flex gap-4">
               <div className="w-24 font-bold text-slate-900 shrink-0">Сербия 🇷🇸</div>
               <div className="text-sm text-slate-700">
-                <p className="mb-1"><strong>Маркировка "Желтый треугольник":</strong> С 1 мая 2026 все продукты с пальмовым жиром (сыры-аналоги, выпечка) обязаны иметь предупреждающую маркировку.</p>
-                <p className="mb-1"><strong>Цифровая прозрачность:</strong> Система <em>"e-otkupno mesto"</em> требует регистрации всех закупок в открытом реестре.</p>
+                <p className="mb-1"><strong>Маркировка &quot;Желтый треугольник&quot;:</strong> С 1 мая 2026 все продукты с пальмовым жиром (сыры-аналоги, выпечка) обязаны иметь предупреждающую маркировку.</p>
+                <p className="mb-1"><strong>Цифровая прозрачность:</strong> Система <em>&quot;e-otkupno mesto&quot;</em> требует регистрации всех закупок в открытом реестре.</p>
                 <p><strong>Экспорт:</strong> Запрет на экспорт биокомпонентов продлен до 30 июня 2026.</p>
               </div>
             </div>
