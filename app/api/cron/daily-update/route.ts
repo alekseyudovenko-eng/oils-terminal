@@ -1,161 +1,101 @@
-import { supabaseClient } from '@/lib/supabase';
-import AddPriceButton from '@/components/AddPriceButton';
-import Link from 'next/link';
-import Script from 'next/script';
+import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+import { tavily } from '@tavily/core';
 
-export const dynamic = 'force-dynamic';
-
-// Компонент графика TradingView
-function TradingViewWidget() {
-  return (
-    <div className="w-full h-[500px] bg-white border border-slate-200 rounded-sm overflow-hidden mb-8 relative">
-      <div className="tradingview-widget-container" style={{ height: "100%", width: "100%" }}>
-        <div id="tradingview_chart" style={{ height: "100%", width: "100%" }}></div>
-        <Script
-          id="tradingview-widget"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                script.async = true;
-                script.src = "https://s3.tradingview.com/tv.js";
-                script.onload = function() {
-                  new TradingView.widget({
-                    "autosize": true,
-                    "symbol": "MYX:FCPO1!",
-                    "interval": "D",
-                    "timezone": "Asia/Kuala_Lumpur",
-                    "theme": "light",
-                    "style": "1",
-                    "locale": "en",
-                    "toolbar_bg": "#f1f3f6",
-                    "enable_publishing": false,
-                    "allow_symbol_change": true,
-                    "container_id": "tradingview_chart",
-                    "hide_side_toolbar": false,
-                    "details": true,
-                    "hotlist": true,
-                    "calendar": true,
-                    "studies": [
-                      "MASimple@tv-basicstudies",
-                      "RSI@tv-basicstudies"
-                    ]
-                  });
-                };
-                document.head.appendChild(script);
-              })();
-            `
-          }}
-        />
-      </div>
-    </div>
+export async function POST() {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
-}
 
-export default async function Home() {
-  const { data: prices } = await supabaseClient
-    .from('market_data')
-    .select('*')
-    .order('verified_at', { ascending: false });
+  const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
+  const results = [];
 
-  const latestPrices = prices?.reduce((acc: any, current: any) => {
-    const existing = acc.find((item: any) => item.commodity === current.commodity);
-    if (!existing) acc.push(current);
-    return acc;
-  }, []) || [];
-
-  // Сортируем цены в требуемом порядке
-  const desiredOrder = [
-    'Rapeseed Oil FOB Rotterdam',
-    'Soybean Oil CBOT (Chicago)',
-    'RBD Palm Olein FOB Malaysia',
-    'CPO Spot (Indonesia)',
-    'CPO Spot (Malaysia)',
-    'Sunflower Oil (FOB BS)',
-    'Olive Oil (Europe)'
+  // Список масел в требуемой последовательности
+  const oils = [
+    {
+      id: 'rapeseed_rotterdam',
+      name: 'Rapeseed Oil FOB Rotterdam',
+      query: 'Rapeseed Oil FOB Rotterdam price USD per tonne today',
+      min: 1000, max: 2000
+    },
+    {
+      id: 'soy_cbot',
+      name: 'Soybean Oil CBOT (Chicago)',
+      query: 'Soybean Oil futures price USD per metric ton CBOT Chicago today',
+      min: 1000, max: 2500
+    },
+    {
+      id: 'rbd_olein',
+      name: 'RBD Palm Olein FOB Malaysia',
+      query: 'RBD Palm Olein FOB Malaysia price USD per tonne today MPOC',
+      min: 850, max: 1600
+    },
+    {
+      id: 'cpo_indonesia',
+      name: 'CPO Spot (Indonesia)',
+      query: 'Crude Palm Oil CPO spot price Indonesia USD per tonne today GAPKI',
+      min: 800, max: 1500
+    },
+    {
+      id: 'cpo_malaysia',
+      name: 'CPO Spot (Malaysia)',
+      query: 'Crude Palm Oil CPO spot price Malaysia USD per tonne today MPOC',
+      min: 800, max: 1500
+    },
+    {
+      id: 'sunflower_bs',
+      name: 'Sunflower Oil (FOB BS)',
+      query: 'Sunflower Oil FOB Black Sea price USD per tonne today',
+      min: 800, max: 1800
+    },
+    {
+      id: 'olive_eu',
+      name: 'Olive Oil (Europe)',
+      query: 'Olive Oil bulk price ex-works Europe USD per tonne 2026 Extra Virgin or Virgin',
+      min: 3000, max: 8000
+    }
   ];
 
-  const sortedPrices = latestPrices.sort((a: any, b: any) => {
-    return desiredOrder.indexOf(a.commodity) - desiredOrder.indexOf(b.commodity);
-  });
+  for (const oil of oils) {
+    try {
+      const response = await tvly.search(oil.query, {
+        searchDepth: "advanced",
+        maxResults: 3,
+        includeAnswer: true
+      });
 
-  return (
-    <main className="min-h-screen bg-slate-50 font-sans text-slate-900">
-      {/* --- HEADER --- */}
-      <header className="border-b border-slate-200 bg-white sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="text-lg font-bold tracking-tight text-slate-900 hover:text-slate-700 transition">
-              OILS TERMINAL
-            </Link>
-            <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-500">
-              <Link href="/" className="text-slate-900 font-semibold">Market Data</Link>
-              <Link href="/regional-review" className="hover:text-slate-900 transition">Regional Review</Link>
-              <Link href="/balance" className="hover:text-slate-900 transition">Balance Sheet</Link>
-            </nav>
-          </div>
-          <div className="flex items-center gap-4">
-             <AddPriceButton />
-          </div>
-        </div>
-      </header>
+      const text = (response.answer || "") + " " + JSON.stringify(response.results);
+      const matches = text.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
+      
+      let foundPrice = 0;
+      if (matches) {
+        for (const m of matches) {
+          const val = parseFloat(m.replace(/,/g, ''));
+          if (val >= oil.min && val <= oil.max) {
+            foundPrice = val;
+            break;
+          }
+        }
+      }
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      if (foundPrice > 0) {
+        await supabase.from('market_data').upsert({
+          commodity: oil.name,
+          metric: 'price_spot',
+          value: foundPrice,
+          status: 'verified',
+          sources: [{ source: 'tavily_search', url: response.results?.[0]?.url }],
+          verified_at: new Date().toISOString()
+        }, { onConflict: 'commodity' });
         
-        {/* --- CHART SECTION --- */}
-        <div className="mb-8">
-          <div className="flex justify-between items-end mb-4">
-            <div>
-              <h2 className="text-xl font-bold text-slate-900">Malaysian Palm Oil Futures (FCPO)</h2>
-              <p className="text-sm text-slate-500">Bursa Malaysia Derivatives (BMD) • Real-time Chart</p>
-            </div>
-          </div>
-          <TradingViewWidget />
-        </div>
+        results.push(oil.name);
+      }
 
-        {/* --- PRICES TABLE --- */}
-        <div className="bg-white border border-slate-200 rounded-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
-            <h3 className="font-bold text-slate-900">Market Quotes (USD/MT)</h3>
-            <span className="text-xs text-slate-500 uppercase tracking-wider">Live Data</span>
-          </div>
-          
-          <table className="w-full text-left text-sm">
-            <thead className="bg-white border-b border-slate-200 text-slate-500 uppercase tracking-wider text-xs">
-              <tr>
-                <th className="px-6 py-4 font-medium">Commodity</th>
-                <th className="px-6 py-4 font-medium text-right">Price</th>
-                <th className="px-6 py-4 font-medium text-right">Unit</th>
-                <th className="px-6 py-4 font-medium">Source</th>
-                <th className="px-6 py-4 font-medium text-right">Updated</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 bg-white">
-              {sortedPrices.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
-                    No data available. Please update.
-                  </td>
-                </tr>
-              ) : (
-                sortedPrices.map((item: any) => (
-                  <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-6 py-4 font-semibold text-slate-900">{item.commodity}</td>
-                    <td className="px-6 py-4 text-right font-mono text-slate-700">${item.value.toLocaleString()}</td>
-                    <td className="px-6 py-4 text-right text-slate-500">{item.unit || 'USD/MT'}</td>
-                    <td className="px-6 py-4 text-slate-500 text-xs uppercase">{item.sources?.[0]?.source || 'N/A'}</td>
-                    <td className="px-6 py-4 text-right text-slate-400 text-xs">
-                      {new Date(item.verified_at).toLocaleDateString()}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </main>
-  );
+    } catch (error) {
+      console.error(`Error fetching ${oil.name}:`, error);
+    }
+  }
+
+  return NextResponse.json({ success: true, updated: results });
 }
