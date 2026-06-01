@@ -24,7 +24,7 @@ function TradingViewWidget() {
                 script.onload = function() {
                   new TradingView.widget({
                     "autosize": true,
-                    "symbol": "NCDEX:CPONSEP26", // Ближайший контракт CPO на NCDEX
+                    "symbol": "NCDEX:CPO", // Ближайший контракт CPO на NCDEX
                     "interval": "D",
                     "timezone": "Asia/Kolkata", // Время Индии для NCDEX
                     "theme": "light",
