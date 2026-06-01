@@ -11,7 +11,7 @@ export async function POST() {
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
   const results = [];
 
-  // Список масел и их поисковые запросы для получения цены в USD/MT
+  // Список масел с точными запросами и диапазонами цен
   const oils = [
     {
       id: 'soybean',
@@ -20,9 +20,15 @@ export async function POST() {
       min: 1000, max: 2500
     },
     {
-      id: 'palm',
-      name: 'Palm Oil (Bursa)',
-      query: 'palm oil futures price USD per metric ton Malaysia today',
+      id: 'palm_futures',
+      name: 'Palm Oil (FCPO USD)', // Конвертированная цена фьючерса
+      query: 'palm oil FCPO futures price USD per metric ton today',
+      min: 800, max: 1500
+    },
+    {
+      id: 'palm_spot',
+      name: 'CPO Spot (Malaysia/Indonesia)', // Физический рынок
+      query: 'crude palm oil CPO spot price Malaysia Indonesia USD per tonne today',
       min: 800, max: 1500
     },
     {
@@ -34,14 +40,14 @@ export async function POST() {
     {
       id: 'sunflower',
       name: 'Sunflower Oil (FOB BS)',
-      query: 'sunflower oil export price FOB Black Sea USD per metric ton recent',
-      min: 900, max: 1600
+      query: 'sunflower oil export price FOB Black Sea USD per tonne recent',
+      min: 800, max: 1800
     },
     {
-      id: 'olive',
-      name: 'Olive Oil (Europe)',
-      query: 'olive oil spot price Europe USD per metric ton 2026',
-      min: 3000, max: 12000
+      id: 'olive_evo',
+      name: 'Olive Oil Extra Virgin (EU)', // Только Extra Virgin
+      query: 'extra virgin olive oil bulk price ex-works Europe USD per tonne 2026 site:tradingeconomics.com OR site:investing.com OR site:fastmarkets.com',
+      min: 4000, max: 7500 // Диапазон для EVOO
     }
   ];
 
