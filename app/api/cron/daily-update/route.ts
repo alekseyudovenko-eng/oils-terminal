@@ -10,20 +10,28 @@ export async function POST() {
   const results = [];
 
   try {
-    // 1. БИРЖЕВЫЕ ДАННЫЕ
+    // Тикеры: Соя (ZL=F), Рапс (RS=F), Пальма (FCPO=F)
     const tickers = [
       { name: 'Soybean Oil (CBOT)', ticker: 'ZL=F', type: 'soy' },
       { name: 'Rapeseed Oil (ICE)', ticker: 'RS=F', type: 'rapeseed' },
-      { name: 'Palm Oil (Bursa)', ticker: 'FCPO=F', type: 'palm' } // Добавили Пальму
+      { name: 'Palm Oil (Bursa)', ticker: 'FCPO=F', type: 'palm' }
     ];
 
     for (const item of tickers) {
       try {
+        // Используем более "человеческий" User-Agent и headers
         const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${item.ticker}?interval=1d&range=1d`, {
-          headers: { 'User-Agent': 'Mozilla/5.0' }
+          headers: { 
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            'Accept': 'application/json'
+          },
+          next: { revalidate: 60 } // Кэшируем на 60 секунд
         });
         
-        if (!res.ok) continue; 
+        if (!res.ok) {
+          console.error(`Failed to fetch ${item.ticker}: ${res.status}`);
+          continue;
+        } 
         
         const data = await res.json();
         const price = data.chart?.result?.[0]?.meta?.regularMarketPrice;
@@ -31,13 +39,14 @@ export async function POST() {
         if (price) {
           let finalPrice = price;
           
-          // Конвертация валют и единиц
+          // Конвертация
           if (item.type === 'soy') {
             // ZL=F: центы за фунт -> USD за тонну
             finalPrice = (price / 100) * 2204.62;
           } else if (item.type === 'palm') {
-            // FCPO=F: MYR за тонну -> USD за тонну (курс ~4.7)
-            finalPrice = price / 4.7; 
+            // FCPO=F: MYR за тонну -> USD за тонну
+            // Курс MYR/USD плавающий, берем приблизительный 4.75 для стабильности, если нет live-курса
+            finalPrice = price / 4.75; 
           }
           // RS=F (Рапс): обычно сразу в USD за тонну
 
