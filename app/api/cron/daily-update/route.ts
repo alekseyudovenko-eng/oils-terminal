@@ -11,12 +11,30 @@ export async function POST() {
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
   const results = [];
 
-  // Список из 9 требуемых позиций с точными запросами и диапазонами цен (USD/MT)
+  // Список масел в требуемой последовательности
   const oils = [
     {
-      id: 'fcpo_usd',
-      name: 'Palm Oil (FCPO USD)',
-      query: 'FCPO palm oil futures price USD per metric ton today Bursa Malaysia',
+      id: 'rapeseed_rotterdam',
+      name: 'Rapeseed Oil FOB Rotterdam',
+      query: 'Rapeseed Oil FOB Rotterdam price USD per tonne today',
+      min: 1000, max: 2000
+    },
+    {
+      id: 'soy_cbot',
+      name: 'Soybean Oil CBOT (Chicago)',
+      query: 'Soybean Oil futures price USD per metric ton CBOT Chicago today',
+      min: 1000, max: 2500
+    },
+    {
+      id: 'rbd_olein',
+      name: 'RBD Palm Olein FOB Malaysia',
+      query: 'RBD Palm Olein FOB Malaysia price USD per tonne today MPOC',
+      min: 850, max: 1600
+    },
+    {
+      id: 'cpo_indonesia',
+      name: 'CPO Spot (Indonesia)',
+      query: 'Crude Palm Oil CPO spot price Indonesia USD per tonne today GAPKI',
       min: 800, max: 1500
     },
     {
@@ -26,46 +44,16 @@ export async function POST() {
       min: 800, max: 1500
     },
     {
-      id: 'cpo_indonesia',
-      name: 'CPO Spot (Indonesia)',
-      query: 'Crude Palm Oil CPO spot price Indonesia USD per tonne today GAPKI',
-      min: 800, max: 1500
-    },
-    {
-      id: 'rbd_olein',
-      name: 'RBD Palm Olein FOB Malaysia',
-      query: 'RBD Palm Olein FOB Malaysia price USD per tonne today',
-      min: 850, max: 1600
-    },
-    {
-      id: 'soy_cbot',
-      name: 'Soybean Oil CBOT (Chicago)',
-      query: 'Soybean Oil futures price USD per metric ton CBOT Chicago today',
-      min: 1000, max: 2500
-    },
-    {
-      id: 'rapeseed_rotterdam',
-      name: 'Rapeseed Oil FOB Rotterdam',
-      query: 'Rapeseed Oil FOB Rotterdam price USD per tonne today',
-      min: 1000, max: 2000
-    },
-    {
       id: 'sunflower_bs',
-      name: 'Sunflower Oil FOB Black Sea',
+      name: 'Sunflower Oil (FOB BS)',
       query: 'Sunflower Oil FOB Black Sea price USD per tonne today',
       min: 800, max: 1800
     },
     {
-      id: 'olive_evo',
-      name: 'Olive Oil Extra Virgin (EU)',
-      query: 'Extra Virgin Olive Oil bulk price ex-works Europe USD per tonne 2026',
-      min: 4000, max: 8000
-    },
-    {
-      id: 'olive_virgin',
-      name: 'Olive Oil Virgin (EU)',
-      query: 'Virgin Olive Oil (not extra) bulk price Europe USD per tonne 2026',
-      min: 3000, max: 6000
+      id: 'olive_eu',
+      name: 'Olive Oil (Europe)',
+      query: 'Olive Oil bulk price ex-works Europe USD per tonne 2026 Extra Virgin or Virgin',
+      min: 3000, max: 8000
     }
   ];
 
