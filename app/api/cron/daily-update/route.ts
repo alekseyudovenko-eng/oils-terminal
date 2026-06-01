@@ -11,97 +11,87 @@ export async function POST() {
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
   const results = [];
 
-  try {
-    // 1. БИРЖЕВЫЕ ДАННЫЕ
-    const tickers = [
-      { name: 'Soybean Oil (CBOT)', ticker: 'ZL=F', type: 'soy' },
-      { name: 'Rapeseed Oil (ICE)', ticker: 'RS=F', type: 'rapeseed' },
-      { name: 'Palm Oil (Bursa)', ticker: 'FCPO=F', type: 'palm' }
-    ];
-
-    for (const item of tickers) {
-      try {
-        const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${item.ticker}?interval=1d&range=1d`, {
-          headers: { 'User-Agent': 'Mozilla/5.0' }
-        });
-        
-        if (!res.ok) continue; 
-        
-        const data = await res.json();
-        const price = data.chart?.result?.[0]?.meta?.regularMarketPrice;
-        const currency = data.chart?.result?.[0]?.meta?.currency; // Проверяем валюту
-        
-        if (price) {
-          let finalPrice = price;
-          
-          if (item.type === 'soy') {
-            // ZL=F: центы за фунт -> USD за тонну
-            finalPrice = (price / 100) * 2204.62;
-          } else if (item.type === 'palm') {
-            // FCPO=F: MYR за тонну -> USD за тонну
-            finalPrice = price / 4.75; 
-          } else if (item.type === 'rapeseed') {
-            // RS=F: Если цена в CAD, конвертируем (примерно 0.73)
-            // Обычно ICE Rapeseed идет в USD, но иногда в CAD. 
-            // Если цена около 1000-1500, скорее всего USD. Если 1500-2000, может быть CAD.
-            // Для надежности оставим как есть, если это USD, или применим коэффициент, если нужно.
-            // В большинстве случаев для RS=F на Yahoo это USD/MT.
-          }
-
-          await supabase.from('market_data').upsert({
-            commodity: item.name,
-            metric: 'price_spot',
-            value: parseFloat(finalPrice.toFixed(2)),
-            status: 'verified',
-            sources: [{ source: 'yahoo_finance', url: `https://finance.yahoo.com/quote/${item.ticker}` }],
-            verified_at: new Date().toISOString()
-          }, { onConflict: 'commodity' });
-          
-          results.push(item.name);
-        }
-      } catch (e) { console.error(`Error fetching ${item.name}`, e); }
+  // Список масел и их поисковые запросы для получения цены в USD/MT
+  const oils = [
+    {
+      id: 'soybean',
+      name: 'Soybean Oil (CBOT)',
+      query: 'soybean oil futures price USD per metric ton CBOT today',
+      min: 1000, max: 2500
+    },
+    {
+      id: 'palm',
+      name: 'Palm Oil (Bursa)',
+      query: 'palm oil futures price USD per metric ton Malaysia today',
+      min: 800, max: 1500
+    },
+    {
+      id: 'rapeseed',
+      name: 'Rapeseed Oil (ICE)',
+      query: 'rapeseed oil futures price USD per metric ton ICE London today',
+      min: 1000, max: 2000
+    },
+    {
+      id: 'sunflower',
+      name: 'Sunflower Oil (FOB BS)',
+      query: 'sunflower oil export price FOB Black Sea USD per metric ton recent',
+      min: 900, max: 1600
+    },
+    {
+      id: 'olive',
+      name: 'Olive Oil (Europe)',
+      query: 'olive oil spot price Europe USD per metric ton 2026',
+      min: 3000, max: 12000
     }
+  ];
 
-    // 2. ПОДСОЛНЕЧНОЕ МАСЛО (Поиск)
+  for (const oil of oils) {
     try {
-      // Ищем цену FOB Черное море
-      const response = await tvly.search("sunflower oil price FOB Black Sea USD per ton May 2026", {
+      // 1. Поиск через Tavily
+      const response = await tvly.search(oil.query, {
         searchDepth: "advanced",
         maxResults: 3,
         includeAnswer: true
       });
-      
+
+      // 2. Анализ текста
       const text = (response.answer || "") + " " + JSON.stringify(response.results);
+      
+      // Ищем числа с плавающей точкой
       const matches = text.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
       
       let foundPrice = 0;
       if (matches) {
         for (const m of matches) {
           const val = parseFloat(m.replace(/,/g, ''));
-          // Диапазон для подсолнечного масла: $900 - $1300
-          if (val > 900 && val < 1300) {
+          // Проверяем диапазон
+          if (val >= oil.min && val <= oil.max) {
             foundPrice = val;
             break;
           }
         }
       }
 
+      // 3. Если нашли цену — сохраняем
       if (foundPrice > 0) {
         await supabase.from('market_data').upsert({
-          commodity: 'Sunflower Oil (FOB BS)',
+          commodity: oil.name,
           metric: 'price_spot',
           value: foundPrice,
-          status: 'estimated',
+          status: 'verified',
           sources: [{ source: 'tavily_search', url: response.results?.[0]?.url }],
           verified_at: new Date().toISOString()
         }, { onConflict: 'commodity' });
-        results.push('Sunflower Oil');
+        
+        results.push(oil.name);
+      } else {
+        console.log(`Price not found for ${oil.name}`);
       }
-    } catch (e) { console.error("Error searching Sunflower", e); }
 
-    return NextResponse.json({ success: true, updated: results });
-
-  } catch (error) {
-    return NextResponse.json({ error: 'CRITICAL ERROR' }, { status: 500 });
+    } catch (error) {
+      console.error(`Error fetching ${oil.name}:`, error);
+    }
   }
+
+  return NextResponse.json({ success: true, updated: results });
 }
