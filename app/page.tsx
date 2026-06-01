@@ -24,15 +24,15 @@ function TradingViewWidget() {
                 script.onload = function() {
                   new TradingView.widget({
                     "autosize": true,
-                    "symbol": "MYX:FCPO1!",
+                    "symbol": "NCDEX:CPONSEP26", // Ближайший контракт CPO на NCDEX
                     "interval": "D",
-                    "timezone": "Asia/Kuala_Lumpur",
+                    "timezone": "Asia/Kolkata", // Время Индии для NCDEX
                     "theme": "light",
                     "style": "1",
                     "locale": "en",
                     "toolbar_bg": "#f1f3f6",
                     "enable_publishing": false,
-                    "allow_symbol_change": true,
+                    "allow_symbol_change": true, // Позволяет пользователю сменить контракт
                     "container_id": "tradingview_chart",
                     "hide_side_toolbar": false,
                     "details": true,
@@ -108,8 +108,8 @@ export default async function Home() {
         <div className="mb-8">
           <div className="flex justify-between items-end mb-4">
             <div>
-              <h2 className="text-xl font-bold text-slate-900">Malaysian Palm Oil Futures (FCPO)</h2>
-              <p className="text-sm text-slate-500">Bursa Malaysia Derivatives (BMD) • Real-time Chart</p>
+              <h2 className="text-xl font-bold text-slate-900">CPO Futures (NCDEX Kandla)</h2>
+              <p className="text-sm text-slate-500">National Commodity & Derivatives Exchange • Spot/Futures</p>
             </div>
           </div>
           <TradingViewWidget />
