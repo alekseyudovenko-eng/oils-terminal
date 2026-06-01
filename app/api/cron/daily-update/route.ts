@@ -12,10 +12,11 @@ export async function POST() {
   const results = [];
 
   try {
-    // 1. БИРЖЕВЫЕ ДАННЫЕ (Соя и Рапс - самые надежные на Yahoo)
+    // 1. БИРЖЕВЫЕ ДАННЫЕ (Соя, Рапс, Пальма)
     const tickers = [
       { name: 'Soybean Oil (CBOT)', ticker: 'ZL=F', type: 'soy' },
-      { name: 'Rapeseed Oil (ICE)', ticker: 'RS=F', type: 'rapeseed' }
+      { name: 'Rapeseed Oil (ICE)', ticker: 'RS=F', type: 'rapeseed' },
+      { name: 'Palm Oil (Bursa)', ticker: 'FCPO=F', type: 'palm' }
     ];
 
     for (const item of tickers) {
@@ -31,11 +32,16 @@ export async function POST() {
         
         if (price) {
           let finalPrice = price;
-          // ZL=F (Соя): центы за фунт -> USD за тонну
+          
+          // Конвертация валют и единиц
           if (item.type === 'soy') {
+            // ZL=F: центы за фунт -> USD за тонну
             finalPrice = (price / 100) * 2204.62;
+          } else if (item.type === 'palm') {
+            // FCPO=F: MYR за тонну -> USD за тонну (курс ~4.75)
+            finalPrice = price / 4.75; 
           }
-          // RS=F (Рапс): обычно USD за тонну
+          // RS=F (Рапс): обычно сразу в USD за тонну на ICE
 
           await supabase.from('market_data').upsert({
             commodity: item.name,
@@ -51,48 +57,57 @@ export async function POST() {
       } catch (e) { console.error(`Error fetching ${item.name}`, e); }
     }
 
-    // 2. ПАЛЬМОВОЕ МАСЛО (Ищем через Tavily, так как Yahoo часто сбоит для FCPO)
-    // Запрос направлен на поиск цены в USD за метрическую тонну
-    try {
-      const response = await tvly.search("palm oil futures price USD per metric ton today site:investing.com OR site:tradingeconomics.com", {
-        searchDepth: "advanced",
-        maxResults: 3,
-        includeAnswer: true
-      });
+    // 2. ПОИСКОВЫЕ ДАННЫЕ (Подсолнечник и Оливка)
+    // Используем Tavily для получения спотовых цен, так как биржевых тикеров нет
+    
+    const searchItems = [
+      { 
+        name: 'Sunflower Oil', 
+        query: 'sunflower oil export price FOB Black Sea USD per metric ton recent site:fastmarkets.com OR site:agriCensus.com OR site:investing.com', 
+        min: 900, max: 1600 
+      },
+      { 
+        name: 'Olive Oil', 
+        query: 'olive oil spot price Europe USD per metric ton 2026 site:tradingeconomics.com OR site:investing.com', 
+        min: 3000, max: 12000 
+      }
+    ];
 
-      const text = (response.answer || "") + " " + JSON.stringify(response.results);
-      // Ищем числа в диапазоне 800-1200 (реалистичная цена за тонну в USD)
-      const matches = text.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
-      
-      let palmPrice = 0;
-      if (matches) {
-        for (const m of matches) {
-          const val = parseFloat(m.replace(/,/g, ''));
-          if (val > 800 && val < 1200) {
-            palmPrice = val;
-            break;
+    for (const item of searchItems) {
+      try {
+        const response = await tvly.search(item.query, {
+          searchDepth: "advanced",
+          maxResults: 3,
+          includeAnswer: true
+        });
+        
+        const text = (response.answer || "") + " " + JSON.stringify(response.results);
+        const matches = text.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
+        
+        let foundPrice = 0;
+        if (matches) {
+          for (const m of matches) {
+            const val = parseFloat(m.replace(/,/g, ''));
+            if (val >= item.min && val <= item.max) {
+              foundPrice = val;
+              break;
+            }
           }
         }
-      }
 
-      // Если через поиск не нашли, пробуем Yahoo с другим тикером (CL=F иногда используют как прокси, но это нефть, так что лучше не надо)
-      // Оставим цену из поиска, если она найдена
-      
-      if (palmPrice > 0) {
-        await supabase.from('market_data').upsert({
-          commodity: 'Palm Oil (Bursa)',
-          metric: 'price_spot',
-          value: parseFloat(palmPrice.toFixed(2)),
-          status: 'verified',
-          sources: [{ source: 'tavily_search_investing', url: response.results?.[0]?.url }],
-          verified_at: new Date().toISOString()
-        }, { onConflict: 'commodity' });
-        results.push('Palm Oil (Bursa)');
-      } else {
-        console.log("Palm oil price not found via search");
-      }
-
-    } catch (e) { console.error("Error searching Palm Oil", e); }
+        if (foundPrice > 0) {
+          await supabase.from('market_data').upsert({
+            commodity: item.name === 'Sunflower Oil' ? 'Sunflower Oil (FOB BS)' : 'Olive Oil (Europe)',
+            metric: 'price_spot',
+            value: foundPrice,
+            status: 'estimated',
+            sources: [{ source: 'tavily_search', url: response.results?.[0]?.url }],
+            verified_at: new Date().toISOString()
+          }, { onConflict: 'commodity' });
+          results.push(item.name);
+        }
+      } catch (e) { console.error(`Error searching ${item.name}`, e); }
+    }
 
     return NextResponse.json({ success: true, updated: results });
 
