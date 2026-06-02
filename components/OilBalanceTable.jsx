@@ -82,7 +82,7 @@ export default function OilBalanceTable() {
                 <td className="p-3 font-medium text-slate-900">{row.country}</td>
                 <td className="p-3 text-right text-slate-700">{row.production?.toLocaleString() || '-'}</td>
                 <td className="p-3 text-right text-slate-700">{row.exports?.toLocaleString() || '-'}</td>
-                <td className="p-3 text-right text-slate-700">{row.imports?.toLocaleString() || '-'}</
+                <td className="p-3 text-right text-slate-700">{row.imports?.toLocaleString() || '-'}</td>
                 <td className="p-3 text-right text-slate-700">{row.consumption?.toLocaleString() || '-'}</td>
               </tr>
             ))
