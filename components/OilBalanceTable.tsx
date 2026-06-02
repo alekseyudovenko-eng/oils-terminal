@@ -8,6 +8,15 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+interface BalanceData {
+  country: string;
+  commodity: string;
+  production: number | null;
+  exports: number | null;
+  imports: number | null;
+  consumption: number | null;
+}
+
 const TABS = [
   { key: "all", label: "All Data" },
   { key: "Soybean Oil", label: "Soybean Oil" },
@@ -18,7 +27,7 @@ const TABS = [
 
 export default function OilBalanceTable() {
   const [activeTab, setActiveTab] = useState("all");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<BalanceData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,7 +42,7 @@ export default function OilBalanceTable() {
       const { data: result, error } = await query.order('country', { ascending: true });
       
       if (!error && result) {
-        setData(result);
+        setData(result as BalanceData[]);
       }
       setLoading(false);
     }
