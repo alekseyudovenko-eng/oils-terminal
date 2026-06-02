@@ -2,43 +2,6 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { tavily } from '@tavily/core';
 
-// Функция отправки в Telegram
-async function sendTelegramNotification(prices: any[]) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-
-  if (!token || !chatId) return;
-
-  // Формируем красивое сообщение
-  let message = "🛢️ <b>Oils Terminal Update</b>\n\n";
-  
-  // Берем только ключевые масла для отчета
-  const keyOils = ['Palm Oil', 'Soybean Oil', 'Rapeseed Oil', 'Sunflower Oil'];
-  
-  prices.forEach(item => {
-    // Простая проверка, чтобы не спамить лишним
-    if (keyOils.some(k => item.commodity.includes(k))) {
-      message += `🔹 <b>${item.commodity}</b>: $${item.value}\n`;
-    }
-  });
-
-  message += `\n📅 ${new Date().toLocaleDateString('ru-RU')}`;
-
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: 'HTML'
-      })
-    });
-  } catch (e) {
-    console.error("Telegram Error:", e);
-  }
-}
-
 export async function POST() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -48,19 +11,92 @@ export async function POST() {
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
   const results = [];
 
-  const oils = [
-    { id: 'rapeseed_rotterdam', name: 'Rapeseed Oil FOB Rotterdam', query: 'Rapeseed Oil FOB Rotterdam price USD per tonne today', min: 1000, max: 2000 },
-    { id: 'soy_cbot', name: 'Soybean Oil CBOT (Chicago)', query: 'Soybean Oil futures price USD per metric ton CBOT Chicago today', min: 1000, max: 2500 },
-    { id: 'rbd_olein', name: 'RBD Palm Olein FOB Malaysia', query: 'RBD Palm Olein FOB Malaysia price USD per tonne today MPOC', min: 850, max: 1600 },
-    { id: 'cpo_indonesia', name: 'CPO Spot (Indonesia)', query: 'Crude Palm Oil CPO spot price Indonesia USD per tonne today GAPKI', min: 800, max: 1500 },
-    { id: 'cpo_malaysia', name: 'CPO Spot (Malaysia)', query: 'Crude Palm Oil CPO spot price Malaysia USD per tonne today MPOC', min: 800, max: 1500 },
-    { id: 'sunflower_bs', name: 'Sunflower Oil (FOB BS)', query: 'Sunflower Oil FOB Black Sea price USD per tonne today', min: 800, max: 1800 },
-    { id: 'olive_eu', name: 'Olive Oil (Europe)', query: 'Olive Oil bulk price ex-works Europe USD per tonne 2026 Extra Virgin or Virgin', min: 3000, max: 8000 }
+  // 1. БИРЖЕВЫЕ ДАННЫЕ (Самые надежные, берем напрямую с Yahoo)
+  const futures = [
+    { name: 'Soybean Oil CBOT (Chicago)', ticker: 'ZL=F', type: 'soy' },
+    { name: 'Rapeseed Oil FOB Rotterdam', ticker: 'RS=F', type: 'rapeseed' }, // Используем ICE Futures как прокси для Rotterdam
+    { name: 'Palm Oil Futures (FCPO)', ticker: 'FCPO=F', type: 'palm_futures' }
   ];
 
-  for (const oil of oils) {
+  for (const item of futures) {
     try {
-      const response = await tvly.search(oil.query, { searchDepth: "advanced", maxResults: 3, includeAnswer: true });
+      const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${item.ticker}?interval=1d&range=1d`, {
+        headers: { 'User-Agent': 'Mozilla/5.0' }
+      });
+      
+      if (!res.ok) continue; 
+      
+      const data = await res.json();
+      const price = data.chart?.result?.[0]?.meta?.regularMarketPrice;
+      
+      if (price) {
+        let finalPrice = price;
+        
+        if (item.type === 'soy') {
+          // ZL=F: центы за фунт -> USD за тонну
+          finalPrice = (price / 100) * 2204.62;
+        } else if (item.type === 'palm_futures') {
+          // FCPO=F: MYR за тонну -> USD за тонну (курс ~4.75)
+          finalPrice = price / 4.75; 
+        }
+        // RS=F: обычно USD за тонну
+
+        await supabase.from('market_data').upsert({
+          commodity: item.name,
+          metric: 'price_spot',
+          value: parseFloat(finalPrice.toFixed(2)),
+          status: 'verified',
+          sources: [{ source: 'yahoo_finance', url: `https://finance.yahoo.com/quote/${item.ticker}` }],
+          verified_at: new Date().toISOString()
+        }, { onConflict: 'commodity' });
+        
+        results.push(item.name);
+      }
+    } catch (e) { console.error(`Error fetching ${item.name}`, e); }
+  }
+
+  // 2. СПОТОВЫЕ И ФИЗИЧЕСКИЕ ЦЕНЫ (Ищем через Tavily с прицелом на Agropost и MPOC)
+  const spotOils = [
+    { 
+      name: 'RBD Palm Olein FOB Malaysia', 
+      query: 'RBD Palm Olein FOB Malaysia price USD per tonne today site:agropost.wordpress.com OR site:mpoc.org.my OR site:investing.com', 
+      min: 850, max: 1600 
+    },
+    { 
+      name: 'CPO Spot (Malaysia)', 
+      query: 'Crude Palm Oil CPO spot price Malaysia USD per tonne today site:agropost.wordpress.com OR site:mpoc.org.my', 
+      min: 800, max: 1500 
+    },
+    { 
+      name: 'CPO Spot (Indonesia)', 
+      query: 'Crude Palm Oil CPO spot price Indonesia USD per tonne today site:agropost.wordpress.com OR site:gapki.id', 
+      min: 800, max: 1500 
+    },
+    { 
+      name: 'Sunflower Oil (FOB BS)', 
+      query: 'Sunflower Oil FOB Black Sea price USD per tonne today site:agropost.wordpress.com OR site:fastmarkets.com OR site:investing.com', 
+      min: 800, max: 1800 
+    },
+    { 
+      name: 'Olive Oil Extra Virgin (EU)', 
+      query: 'Extra Virgin Olive Oil bulk price Europe USD per tonne 2026 site:agropost.wordpress.com OR site:investing.com OR site:tradingeconomics.com', 
+      min: 3000, max: 8000 
+    },
+    { 
+      name: 'Olive Oil Virgin (EU)', 
+      query: 'Virgin Olive Oil price Europe USD per tonne 2026 site:agropost.wordpress.com OR site:investing.com', 
+      min: 3000, max: 7000 
+    }
+  ];
+
+  for (const oil of spotOils) {
+    try {
+      const response = await tvly.search(oil.query, { 
+        searchDepth: "advanced", 
+        maxResults: 3, 
+        includeAnswer: true 
+      });
+
       const text = (response.answer || "") + " " + JSON.stringify(response.results);
       const matches = text.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
       
@@ -81,19 +117,16 @@ export async function POST() {
           metric: 'price_spot',
           value: foundPrice,
           status: 'verified',
-          sources: [{ source: 'tavily_search', url: response.results?.[0]?.url }],
+          sources: [{ source: 'agropost/mpoc_search', url: response.results?.[0]?.url }],
           verified_at: new Date().toISOString()
         }, { onConflict: 'commodity' });
         
-        results.push({ commodity: oil.name, value: foundPrice });
+        results.push(oil.name);
       }
     } catch (error) {
       console.error(`Error fetching ${oil.name}:`, error);
     }
   }
-
-  // Отправляем уведомление в Telegram после обновления
-  await sendTelegramNotification(results);
 
   return NextResponse.json({ success: true, updated: results });
 }
