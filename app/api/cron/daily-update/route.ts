@@ -3,14 +3,16 @@ import { createClient } from '@supabase/supabase-js';
 import { tavily } from '@tavily/core';
 
 // Базовые цены из твоего отчета (Extended Weekly Update 18.5.2026)
-// Используем их как fallback, если парсинг не сработал, чтобы не было пустоты
-const BASELINE_PRICES = {
-  'RBD Palm Olein FOB Malaysia': 945, // Примерная цена из отчета (FOB)
-  'CPO Spot (Malaysia)': 890,         // Примерная цена CPO
-  'Sunflower Oil (FOB BS)': 1165,     // Из таблицы отчета
-  'Olive Oil Extra Virgin (EU)': 6069,// Из отчета (IMF Index)
-  'Soybean Oil CBOT (Chicago)': 1715, // Из отчета
-  'Rapeseed Oil FOB Rotterdam': 1265  // Из отчета
+// Используем их как fallback, если парсинг не сработал
+const BASELINE_PRICES: Record<string, number> = {
+  'RBD Palm Olein FOB Malaysia': 945,
+  'CPO Spot (Malaysia)': 890,
+  'Sunflower Oil (FOB BS)': 1165,
+  'Olive Oil Extra Virgin (EU)': 6069,
+  'Soybean Oil CBOT (Chicago)': 1715,
+  'Rapeseed Oil FOB Rotterdam': 1265,
+  'CPO Spot (Indonesia)': 880,
+  'Olive Oil Virgin (EU)': 4500
 };
 
 export async function POST() {
@@ -20,7 +22,7 @@ export async function POST() {
   );
 
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
-  const updatedPrices = [];
+  const updatedPrices: { name: string; value: number }[] = [];
 
   // 1. БИРЖЕВЫЕ ДАННЫЕ (Yahoo Finance - живые данные)
   const futures = [
@@ -47,8 +49,6 @@ export async function POST() {
           finalPrice = (price / 100) * 2204.62; // Центы/фунт -> USD/тонна
         } else if (item.type === 'palm_futures') {
           finalPrice = price / 4.75; // MYR -> USD
-        } else if (item.type === 'rapeseed') {
-           // RS=F часто в USD, но проверим
         }
         
         await supabase.from('market_data').upsert({
@@ -65,7 +65,7 @@ export async function POST() {
     } catch (e) { console.error(`Error fetching ${item.name}`, e); }
   }
 
-  // 2. СПОТОВЫЕ ЦЕНЫ (Поиск + Fallback на базовые цены из отчета)
+  // 2. СПОТОВЫЕ ЦЕНЫ (Поиск + Fallback на базовые цены)
   const spotOils = [
     { name: 'RBD Palm Olein FOB Malaysia', query: 'RBD Palm Olein FOB Malaysia price USD May 2026 MPOC', min: 850, max: 1600 },
     { name: 'CPO Spot (Malaysia)', query: 'Crude Palm Oil CPO spot price Malaysia USD May 2026', min: 800, max: 1500 },
@@ -104,7 +104,7 @@ export async function POST() {
       console.error(`Search error for ${oil.name}`);
     }
 
-    // Если не нашли, берем базовую цену из отчета (чтобы не было пусто)
+    // Если не нашли, берем базовую цену из отчета
     if (foundPrice === 0 && BASELINE_PRICES[oil.name]) {
       foundPrice = BASELINE_PRICES[oil.name];
     }
@@ -129,7 +129,7 @@ export async function POST() {
   return NextResponse.json({ success: true, updated: updatedPrices.length });
 }
 
-async function sendTelegramReport(prices: any[]) {
+async function sendTelegramReport(prices: { name: string; value: number }[]) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
@@ -139,8 +139,8 @@ async function sendTelegramReport(prices: any[]) {
   msg += `📅 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
   
   // Данные для графика
-  const labels = [];
-  const data = [];
+  const labels: string[] = [];
+  const data: number[] = [];
 
   prices.forEach(p => {
     msg += `🔹 <b>${p.name}</b>: $${p.value}\n`;
