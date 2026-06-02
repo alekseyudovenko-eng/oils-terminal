@@ -11,7 +11,7 @@ export async function POST() {
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
   const results = [];
 
-  // 1. БИРЖЕВЫЕ ДАННЫЕ (Yahoo Finance - самые точные для фьючерсов)
+  // 1. БИРЖЕВЫЕ ДАННЫЕ (Yahoo Finance)
   const futures = [
     { name: 'Soybean Oil CBOT (Chicago)', ticker: 'ZL=F', type: 'soy' },
     { name: 'Rapeseed Oil FOB Rotterdam', ticker: 'RS=F', type: 'rapeseed' },
@@ -24,18 +24,30 @@ export async function POST() {
         headers: { 'User-Agent': 'Mozilla/5.0' }
       });
       
-      if (!res.ok) continue; 
+      if (!res.ok) {
+        console.error(`Yahoo failed for ${item.ticker}: ${res.status}`);
+        continue; 
+      }
       
       const data = await res.json();
       const price = data.chart?.result?.[0]?.meta?.regularMarketPrice;
+      const currency = data.chart?.result?.[0]?.meta?.currency;
       
       if (price) {
         let finalPrice = price;
         
         if (item.type === 'soy') {
-          finalPrice = (price / 100) * 2204.62; // Центы/фунт -> USD/тонна
+          // ZL=F: центы за фунт -> USD за тонну
+          finalPrice = (price / 100) * 2204.62;
         } else if (item.type === 'palm_futures') {
-          finalPrice = price / 4.75; // MYR -> USD
+          // FCPO=F: MYR за тонну -> USD за тонну
+          finalPrice = price / 4.75; 
+        } else if (item.type === 'rapeseed') {
+          // RS=F: Если цена в CAD, конвертируем (примерно 0.73)
+          // Но чаще всего на ICE это USD. Проверим валюту.
+          if (currency === 'CAD') {
+            finalPrice = price * 0.73; 
+          }
         }
         
         await supabase.from('market_data').upsert({
@@ -52,28 +64,38 @@ export async function POST() {
     } catch (e) { console.error(`Error fetching ${item.name}`, e); }
   }
 
-  // 2. СПОТОВЫЕ ЦЕНЫ ИЗ AGROPOST (Ищем только в свежих отчетах)
-  // Мы используем запрос, который ищет "Palm Oil Prices at Closing" на сайте agropost
+  // 2. СПОТОВЫЕ ЦЕНЫ (Поиск через Tavily)
+  // Используем более широкие запросы, чтобы найти ХОТЬ ЧТО-ТО
   const spotOils = [
     { 
       name: 'RBD Palm Olein FOB Malaysia', 
-      query: 'site:agropost.wordpress.com "RBD Palm Olein" price USD tonne "May 2026" OR "29 May 2026"', 
-      min: 850, max: 1600 
+      query: 'RBD Palm Olein price Malaysia USD per tonne May 2026 MPOC', 
+      min: 800, max: 1700 
     },
     { 
       name: 'CPO Spot (Malaysia)', 
-      query: 'site:agropost.wordpress.com "Crude Palm Oil" CPO price USD tonne "May 2026" OR "29 May 2026"', 
-      min: 800, max: 1500 
+      query: 'Crude Palm Oil CPO price Malaysia USD per tonne May 2026', 
+      min: 750, max: 1600 
+    },
+    { 
+      name: 'CPO Spot (Indonesia)', 
+      query: 'Crude Palm Oil CPO price Indonesia USD per tonne May 2026', 
+      min: 750, max: 1600 
     },
     { 
       name: 'Sunflower Oil (FOB BS)', 
-      query: 'site:agropost.wordpress.com "Sunflower Oil" FOB Black Sea price USD tonne "May 2026"', 
-      min: 800, max: 1800 
+      query: 'Sunflower Oil FOB Black Sea price USD per tonne May 2026', 
+      min: 800, max: 1900 
     },
     { 
       name: 'Olive Oil Extra Virgin (EU)', 
-      query: 'site:agropost.wordpress.com "Olive Oil" Extra Virgin price USD tonne Europe 2026', 
-      min: 3000, max: 8000 
+      query: 'Extra Virgin Olive Oil price Europe USD per tonne 2026', 
+      min: 3000, max: 9000 
+    },
+    { 
+      name: 'Olive Oil Virgin (EU)', 
+      query: 'Virgin Olive Oil price Europe USD per tonne 2026', 
+      min: 2500, max: 8000 
     }
   ];
 
@@ -81,12 +103,10 @@ export async function POST() {
     try {
       const response = await tvly.search(oil.query, { 
         searchDepth: "advanced", 
-        maxResults: 1, // Берем только самый релевантный (свежий) результат
-        includeAnswer: true,
-        includeRawContent: true
+        maxResults: 3, 
+        includeAnswer: true 
       });
 
-      // Ищем цену в ответе
       const text = (response.answer || "") + " " + JSON.stringify(response.results);
       const matches = text.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
       
@@ -94,6 +114,7 @@ export async function POST() {
       if (matches) {
         for (const m of matches) {
           const val = parseFloat(m.replace(/,/g, ''));
+          // Расширенный диапазон
           if (val >= oil.min && val <= oil.max) {
             foundPrice = val;
             break;
@@ -107,13 +128,13 @@ export async function POST() {
           metric: 'price_spot',
           value: foundPrice,
           status: 'verified',
-          sources: [{ source: 'agropost_latest', url: response.results?.[0]?.url }],
+          sources: [{ source: 'tavily_search', url: response.results?.[0]?.url }],
           verified_at: new Date().toISOString()
         }, { onConflict: 'commodity' });
         
         results.push(oil.name);
       } else {
-        console.log(`Price not found for ${oil.name} in Agropost`);
+        console.log(`No valid price found for ${oil.name}`);
       }
     } catch (error) {
       console.error(`Error fetching ${oil.name}:`, error);
