@@ -30,7 +30,6 @@ export async function GET() {
     
     for (const comm of COMMODITIES) {
       // Запрос к USDA PSD API
-      // attribute_id: 1=Production, 5=Exports, 6=Imports, 8=Domestic Consumption
       const url = `https://apps.fas.usda.gov/OpenData/api/psd?commodity_code=${comm.code}&country_code=${COUNTRIES.join(',')}&attribute_id=1,5,6,8&market_year=${currentYear}&api_key=${apiKey}`;
 
       const res = await fetch(url);
