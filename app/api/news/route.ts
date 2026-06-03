@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import Parser from 'rss-parser';
-import { TavilyClient } from '@tavily/core';
+import { tavily } from '@tavily/core';
 
 const parser = new Parser();
-// Создаем экземпляр клиента Tavily
-const tavily = new TavilyClient({ apiKey: process.env.TAVILY_API_KEY });
+// Инициализируем клиент один раз
+const client = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
 interface NewsItem {
   title: string;
@@ -74,9 +74,8 @@ export async function GET() {
   const query = `(palm oil OR soybean oil OR sunflower oil) (${siteQuery})`;
 
   try {
-    // Используем метод search у экземпляра клиента
-    const response = await tavily.search({ 
-      query: query,
+    // Вызываем search у созданного клиента
+    const response = await client.search(query, {
       searchDepth: "advanced",
       maxResults: 10,
       days: 7
