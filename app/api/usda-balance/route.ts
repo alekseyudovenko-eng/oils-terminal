@@ -5,7 +5,6 @@ export async function GET() {
   const apiKey = process.env.USDA_API_KEY;
   
   if (!apiKey) {
-    console.error("USDA_API_KEY is missing in environment variables");
     return NextResponse.json({ error: 'API Key missing' }, { status: 500 });
   }
 
@@ -15,34 +14,29 @@ export async function GET() {
   );
 
   try {
-    // Тестовый запрос: Соевое масло в США
-    const currentYear = new Date().getFullYear();
-    const url = `https://apps.fas.usda.gov/OpenData/api/psd?commodity_code=2222000&country_code=US&attribute_id=1,5,6,8&market_year=${currentYear}&api_key=${apiKey}`;
+    // Используем 2025 год, так как данные за 2026 могут быть еще не полными
+    const targetYear = 2025; 
+    const url = `https://apps.fas.usda.gov/OpenData/api/psd?commodity_code=2222000&country_code=US&attribute_id=1,5,6,8&market_year=${targetYear}&api_key=${apiKey}`;
 
-    console.log("Requesting USDA data...");
+    console.log("Fetching USDA data for year:", targetYear);
 
     const res = await fetch(url, {
       headers: {
-        'User-Agent': 'OilsTerminal/1.0 (alekseyudovenko@example.com)', // USDA требует email или имя приложения
+        'User-Agent': 'OilsTerminal/1.0',
         'Accept': 'application/json'
       }
     });
     
     if (!res.ok) {
       const errorText = await res.text();
-      console.error(`USDA API Error: ${res.status} - ${errorText}`);
-      return NextResponse.json({ 
-        error: `USDA API returned ${res.status}`, 
-        details: errorText,
-        hint: "Check your API Key and ensure it has no spaces."
-      }, { status: 500 });
+      return NextResponse.json({ error: `USDA API Error: ${res.status}`, details: errorText }, { status: 500 });
     }
 
     const data = await res.json();
-    console.log("Success! Records found:", data.length);
+    console.log("USDA Response records:", data.length);
 
     if (data.length === 0) {
-      return NextResponse.json({ message: 'No data found for this query' });
+      return NextResponse.json({ success: true, message: 'No data found for this year/country', count: 0 });
     }
 
     // Обрабатываем данные
@@ -71,7 +65,7 @@ export async function GET() {
       return NextResponse.json({ error: "Database save failed" }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, data: row });
+    return NextResponse.json({ success: true, data: row, count: 1 });
 
   } catch (error) {
     console.error('Critical Error:', error);
