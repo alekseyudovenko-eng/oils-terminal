@@ -12,36 +12,83 @@ interface NewsItem {
 export async function GET() {
   const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
   
-  // Ключевые запросы по твоим источникам
-  const queries = [
-    "site:usda.gov OR site:mpob.gov.my OR site:gapki.id OR site:seaofindia.org OR site:conab.gov.br palm oil soybean oil market news last 7 days",
-    "site:fastmarkets.com OR site:spglobal.com OR site:argusmedia.com OR site:lseg.com vegetable oils price analysis last 7 days",
-    "site:ikar.ru OR site:sovecon.ru sunflower oil export Russia news last 7 days",
-    "site:ec.europa.eu/agriculture rapeseed sunflower oil import data last 7 days",
-    "site:bolsadecereales.com.ar soybean harvest Argentina news last 7 days"
+  // Вычисляем дату 7 дней назад в формате YYYY-MM-DD для фильтра Tavily
+  const dateLimit = new Date();
+  dateLimit.setDate(dateLimit.getDate() - 7);
+  const afterDate = dateLimit.toISOString().split('T')[0]; // Например: "2026-05-27"
+
+  // Строгий список источников по твоему запросу
+  const sources = [
+    // Глобальные
+    "site:fastmarkets.com",
+    "site:spglobal.com",
+    "site:argusmedia.com", 
+    "site:lseg.com",
+    "site:istamielke.com", // Oil World
+    "site:world-grain.com",
+    "site:ofi-global.com", // Oils & Fats International
+    
+    // Черное море и ЕС
+    "site:apk-inform.com",
+    "site:ukragroconsult.com",
+    "site:feednavigator.com",
+    "site:sovecon.ru",
+    "site:ikar.ru",
+    
+    // Азия (Пальма, Индия, Китай)
+    "site:palmoilanalytics.com",
+    "site:theedgemarkets.com",
+    "site:mpoc.org.my",
+    "site:gapki.id",
+    "site:mysteel.com",
+    
+    // Америка (Соя, Канола)
+    "site:noticiasagricolas.com.br",
+    "site:bolsadecereales.com.ar",
+    "site:producer.com" // The Western Producer
+  ];
+
+  // Разбиваем источники на группы, чтобы запросы не были слишком длинными
+  // Tavily лучше работает с 2-3 группами по 5-7 сайтов
+  const groups = [
+    sources.slice(0, 7),   // Глобальные
+    sources.slice(7, 12),  // Черное море/ЕС
+    sources.slice(12, 17), // Азия
+    sources.slice(17, 20)  // Америка
   ];
 
   let allResults: NewsItem[] = [];
 
   try {
-    for (const query of queries) {
+    for (const group of groups) {
+      const siteQuery = group.join(" OR ");
+      // Запрос: "vegetable oils market" И (список сайтов) ПОСЛЕ даты
+      const query = `(palm oil OR soybean oil OR sunflower oil OR rapeseed oil OR vegetable oils) (${siteQuery})`;
+
       const response = await tvly.search(query, {
         searchDepth: "advanced",
-        maxResults: 3,
+        maxResults: 5, // Берем топ-5 из каждой группы
         includeAnswer: false,
-        days: 7
+        days: 7, // Дополнительный фильтр Tavily
+        // Важно: некоторые версии API поддерживают start_date/end_date, но days:7 надежнее
       });
       
       if (response.results) {
-        // Приводим результаты к нашему типу
         const typedResults: NewsItem[] = response.results.map((r: any) => ({
           title: r.title || "No Title",
           url: r.url,
           content: r.content || "",
           published_date: r.published_date || new Date().toISOString(),
-          source: r.source || "Unknown"
+          source: r.source || "Agency"
         }));
-        allResults = [...allResults, ...typedResults];
+        
+        // Фильтруем на клиенте/API уровне еще раз для надежности
+        const filtered = typedResults.filter(item => {
+          const pubDate = new Date(item.published_date);
+          return pubDate >= dateLimit;
+        });
+
+        allResults = [...allResults, ...filtered];
       }
     }
 
@@ -51,7 +98,7 @@ export async function GET() {
     // Убираем дубликаты по URL
     const uniqueResults = Array.from(new Map(allResults.map(item => [item.url, item])).values());
 
-    return NextResponse.json({ news: uniqueResults.slice(0, 15) });
+    return NextResponse.json({ news: uniqueResults.slice(0, 20) });
 
   } catch (error) {
     console.error("News fetch error:", error);
