@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import Parser from 'rss-parser';
-import { tavily } from '@tavily/core';
+import { TavilyClient } from '@tavily/core';
 
 const parser = new Parser();
+// Создаем экземпляр клиента Tavily
+const tavily = new TavilyClient({ apiKey: process.env.TAVILY_API_KEY });
 
 interface NewsItem {
   title: string;
@@ -12,7 +14,7 @@ interface NewsItem {
   source: string;
 }
 
-// Список RSS лент (Надежные источники)
+// Список RSS лент
 const RSS_FEEDS = [
   { url: 'https://www.apk-inform.com/ru/rss/maslichnye.xml', source: 'APK-Inform' },
   { url: 'https://www.producer.com/feed/', source: 'The Western Producer' },
@@ -21,7 +23,7 @@ const RSS_FEEDS = [
   { url: 'https://www.zerno-online.ru/rss/maslichnye', source: 'Zerno Online' },
 ];
 
-// Список сайтов для Tavily (Нет RSS, но есть открытые новости)
+// Список сайтов для поиска
 const SCRAPE_SITES = [
   "site:mpoc.org.my",
   "site:gapki.id",
@@ -33,7 +35,7 @@ const SCRAPE_SITES = [
   "site:ukragroconsult.com"
 ];
 
-// Запрещенные домены (Научные и прочий мусор)
+// Запрещенные домены
 const EXCLUDED_DOMAINS = [
   "ncbi.nlm.nih.gov", "pmc.ncbi.nlm.nih.gov", "researchgate.net", 
   "mdpi.com", "springer.com", "sciencedirect.com", "wikipedia.org"
@@ -62,7 +64,7 @@ export async function GET() {
         }
       });
     } catch (err) {
-      const e = err as Error; // Исправление типа ошибки
+      const e = err as Error;
       console.error(`RSS Error for ${feed.source}:`, e.message);
     }
   }
@@ -72,11 +74,12 @@ export async function GET() {
   const query = `(palm oil OR soybean oil OR sunflower oil) (${siteQuery})`;
 
   try {
-    const response = await tavily.search(query, {
+    // Используем метод search у экземпляра клиента
+    const response = await tavily.search({ 
+      query: query,
       searchDepth: "advanced",
       maxResults: 10,
-      days: 7,
-      includeAnswer: false
+      days: 7
     });
 
     if (response.results) {
@@ -98,7 +101,7 @@ export async function GET() {
       });
     }
   } catch (err) {
-    const e = err as Error; // Исправление типа ошибки
+    const e = err as Error;
     console.error("Tavily Search Error:", e.message);
   }
 
