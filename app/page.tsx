@@ -91,6 +91,7 @@ export default async function Home() {
               OILS TERMINAL
             </Link>
             <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-500">
+              <Link href="/news" className="hover:text-slate-900 transition">News</Link>
               <Link href="/" className="text-slate-900 font-semibold">Market Data</Link>
               <Link href="/regional-review" className="hover:text-slate-900 transition">Regional Review</Link>
               <Link href="/balance" className="hover:text-slate-900 transition">Balance Sheet</Link>
