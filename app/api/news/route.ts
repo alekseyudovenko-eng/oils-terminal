@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
+import Parser from 'rss-parser';
 import { tavily } from '@tavily/core';
+
+const parser = new Parser();
 
 interface NewsItem {
   title: string;
@@ -9,99 +12,106 @@ interface NewsItem {
   source: string;
 }
 
+// Список RSS лент (Надежные источники)
+const RSS_FEEDS = [
+  { url: 'https://www.apk-inform.com/ru/rss/maslichnye.xml', source: 'APK-Inform' }, // АПК-Информ (Масличные)
+  { url: 'https://www.producer.com/feed/', source: 'The Western Producer' }, // Канада (Канола)
+  { url: 'https://www.world-grain.com/rss/feed', source: 'World Grain' }, // Глобально
+  { url: 'http://www.fao.org/news/rss-news/en/', source: 'FAO' }, // ООН
+  { url: 'https://www.zerno-online.ru/rss/maslichnye', source: 'Zerno Online' }, // Зерно Он-Лайн
+];
+
+// Список сайтов для Tavily (Нет RSS, но есть открытые новости)
+const SCRAPE_SITES = [
+  "site:mpoc.org.my", // Малайзия
+  "site:gapki.id", // Индонезия
+  "site:theedgemarkets.com", // Малайзия (Бизнес)
+  "site:noticiasagricolas.com.br", // Бразилия
+  "site:bolsadecereales.com.ar", // Аргентина
+  "site:sovecon.ru", // РФ (СовЭкон)
+  "site:ikar.ru", // РФ (ИКАР)
+  "site:ukragroconsult.com" // Украина
+];
+
+// Запрещенные домены (Научные и прочий мусор)
+const EXCLUDED_DOMAINS = [
+  "ncbi.nlm.nih.gov", "pmc.ncbi.nlm.nih.gov", "researchgate.net", 
+  "mdpi.com", "springer.com", "sciencedirect.com", "wikipedia.org"
+];
+
 export async function GET() {
-  const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
-  
-  // Вычисляем дату 7 дней назад в формате YYYY-MM-DD для фильтра Tavily
-  const dateLimit = new Date();
-  dateLimit.setDate(dateLimit.getDate() - 7);
-  const afterDate = dateLimit.toISOString().split('T')[0]; // Например: "2026-05-27"
-
-  // Строгий список источников по твоему запросу
-  const sources = [
-    // Глобальные
-    "site:fastmarkets.com",
-    "site:spglobal.com",
-    "site:argusmedia.com", 
-    "site:lseg.com",
-    "site:istamielke.com", // Oil World
-    "site:world-grain.com",
-    "site:ofi-global.com", // Oils & Fats International
-    
-    // Черное море и ЕС
-    "site:apk-inform.com",
-    "site:ukragroconsult.com",
-    "site:feednavigator.com",
-    "site:sovecon.ru",
-    "site:ikar.ru",
-    
-    // Азия (Пальма, Индия, Китай)
-    "site:palmoilanalytics.com",
-    "site:theedgemarkets.com",
-    "site:mpoc.org.my",
-    "site:gapki.id",
-    "site:mysteel.com",
-    
-    // Америка (Соя, Канола)
-    "site:noticiasagricolas.com.br",
-    "site:bolsadecereales.com.ar",
-    "site:producer.com" // The Western Producer
-  ];
-
-  // Разбиваем источники на группы, чтобы запросы не были слишком длинными
-  // Tavily лучше работает с 2-3 группами по 5-7 сайтов
-  const groups = [
-    sources.slice(0, 7),   // Глобальные
-    sources.slice(7, 12),  // Черное море/ЕС
-    sources.slice(12, 17), // Азия
-    sources.slice(17, 20)  // Америка
-  ];
-
   let allResults: NewsItem[] = [];
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  // 1. Сбор через RSS (Быстро и точно)
+  for (const feed of RSS_FEEDS) {
+    try {
+      const feedContent = await parser.parseURL(feed.url);
+      feedContent.items.forEach((item: any) => {
+        const pubDate = new Date(item.pubDate || item.isoDate);
+        
+        // Строгая проверка даты
+        if (pubDate >= sevenDaysAgo && !isNaN(pubDate.getTime())) {
+          allResults.push({
+            title: item.title,
+            url: item.link,
+            content: item.contentSnippet || item.summary || "",
+            published_date: pubDate.toISOString(),
+            source: feed.source
+          });
+        }
+      });
+    } catch (e) {
+      console.error(`RSS Error for ${feed.source}:`, e.message);
+    }
+  }
+
+  // 2. Сбор через Tavily (Для сайтов без RSS)
+  // Группируем запросы, чтобы не превысить лимиты
+  const siteQuery = SCRAPE_SITES.join(" OR ");
+  const query = `(palm oil OR soybean oil OR sunflower oil) (${siteQuery})`;
 
   try {
-    for (const group of groups) {
-      const siteQuery = group.join(" OR ");
-      // Запрос: "vegetable oils market" И (список сайтов) ПОСЛЕ даты
-      const query = `(palm oil OR soybean oil OR sunflower oil OR rapeseed oil OR vegetable oils) (${siteQuery})`;
+    const response = await tavily.search(query, {
+      searchDepth: "advanced",
+      maxResults: 10,
+      days: 7, // Фильтр последней недели
+      includeAnswer: false
+    });
 
-      const response = await tvly.search(query, {
-        searchDepth: "advanced",
-        maxResults: 5, // Берем топ-5 из каждой группы
-        includeAnswer: false,
-        days: 7, // Дополнительный фильтр Tavily
-        // Важно: некоторые версии API поддерживают start_date/end_date, но days:7 надежнее
-      });
-      
-      if (response.results) {
-        const typedResults: NewsItem[] = response.results.map((r: any) => ({
-          title: r.title || "No Title",
+    if (response.results) {
+      response.results.forEach((r: any) => {
+        const pubDate = new Date(r.published_date);
+        const url = r.url.toLowerCase();
+
+        // Проверка: Есть ли дата?
+        if (!r.published_date || isNaN(pubDate.getTime())) return;
+
+        // Проверка: Дата свежая?
+        if (pubDate < sevenDaysAgo) return;
+
+        // Проверка: Не научная ли статья?
+        if (EXCLUDED_DOMAINS.some(domain => url.includes(domain))) return;
+
+        allResults.push({
+          title: r.title,
           url: r.url,
           content: r.content || "",
-          published_date: r.published_date || new Date().toISOString(),
-          source: r.source || "Agency"
-        }));
-        
-        // Фильтруем на клиенте/API уровне еще раз для надежности
-        const filtered = typedResults.filter(item => {
-          const pubDate = new Date(item.published_date);
-          return pubDate >= dateLimit;
+          published_date: pubDate.toISOString(),
+          source: r.source || "Verified Source"
         });
-
-        allResults = [...allResults, ...filtered];
-      }
+      });
     }
-
-    // Сортируем по дате (самые свежие первыми)
-    allResults.sort((a, b) => new Date(b.published_date).getTime() - new Date(a.published_date).getTime());
-
-    // Убираем дубликаты по URL
-    const uniqueResults = Array.from(new Map(allResults.map(item => [item.url, item])).values());
-
-    return NextResponse.json({ news: uniqueResults.slice(0, 20) });
-
-  } catch (error) {
-    console.error("News fetch error:", error);
-    return NextResponse.json({ error: "Failed to fetch news" }, { status: 500 });
+  } catch (e) {
+    console.error("Tavily Search Error:", e);
   }
+
+  // 3. Финальная сортировка и очистка
+  allResults.sort((a, b) => new Date(b.published_date).getTime() - new Date(a.published_date).getTime());
+  
+  // Убираем дубликаты по URL
+  const uniqueResults = Array.from(new Map(allResults.map(item => [item.url, item])).values());
+
+  return NextResponse.json({ news: uniqueResults.slice(0, 25) });
 }
