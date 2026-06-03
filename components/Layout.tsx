@@ -17,15 +17,13 @@ export default function Layout({ children, title }: LayoutProps) {
               OILS TERMINAL
             </Link>
             <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-500">
-              <Link href="/" className="hover:text-blue-600">Market Data</Link>
-              <Link href="/balance" className="hover:text-blue-600">Balance</Link>
-              <Link href="/news" className="hover:text-blue-600 font-bold text-blue-700">News</Link> {/* Добавлено */}
-              <Link href="/" className="hover:text-slate-900 transition">Market Data</Link>
-              <Link href="/regional-review" className="hover:text-slate-900 transition">Regional Review</Link>
-              <Link href="/balance" className="hover:text-slate-900 transition">Balance Sheet</Link>
+              <Link href="/" className="hover:text-blue-600 transition">Market Data</Link>
+              <Link href="/news" className="hover:text-blue-600 transition">News</Link>
+              <Link href="/balance" className="hover:text-blue-600 transition">Balance Sheet</Link>
+              <Link href="/regional-review" className="hover:text-blue-600 transition">Regional Review</Link>
             </nav>
           </div>
-          <div className="text-xs text-slate-400 uppercase tracking-wider">
+          <div className="text-xs text-slate-400 uppercase tracking-wider hidden sm:block">
             {title}
           </div>
         </div>
