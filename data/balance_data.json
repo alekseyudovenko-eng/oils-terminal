@@ -1,0 +1,74 @@
+[
+  {
+    "country": "USA",
+    "commodity": "Soybean Oil",
+    "production": 12800,
+    "exports": 8200,
+    "imports": 250,
+    "consumption": 4850
+  },
+  {
+    "country": "Brazil",
+    "commodity": "Soybean Oil",
+    "production": 11500,
+    "exports": 1800,
+    "imports": 50,
+    "consumption": 9750
+  },
+  {
+    "country": "Malaysia",
+    "commodity": "Palm Oil",
+    "production": 19200,
+    "exports": 15800,
+    "imports": 450,
+    "consumption": 3850
+  },
+  {
+    "country": "Indonesia",
+    "commodity": "Palm Oil",
+    "production": 47500,
+    "exports": 31000,
+    "imports": 300,
+    "consumption": 16800
+  },
+  {
+    "country": "European Union",
+    "commodity": "Rapeseed Oil",
+    "production": 9200,
+    "exports": 1100,
+    "imports": 2800,
+    "consumption": 10900
+  },
+  {
+    "country": "Canada",
+    "commodity": "Rapeseed Oil",
+    "production": 3100,
+    "exports": 1900,
+    "imports": 100,
+    "consumption": 1300
+  },
+  {
+    "country": "Ukraine",
+    "commodity": "Sunflower Oil",
+    "production": 6200,
+    "exports": 5500,
+    "imports": 20,
+    "consumption": 720
+  },
+  {
+    "country": "Russia",
+    "commodity": "Sunflower Oil",
+    "production": 6800,
+    "exports": 3200,
+    "imports": 50,
+    "consumption": 3650
+  },
+  {
+    "country": "Argentina",
+    "commodity": "Soybean Oil",
+    "production": 8500,
+    "exports": 7800,
+    "imports": 10,
+    "consumption": 710
+  }
+]
