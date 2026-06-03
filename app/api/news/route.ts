@@ -14,23 +14,23 @@ interface NewsItem {
 
 // Список RSS лент (Надежные источники)
 const RSS_FEEDS = [
-  { url: 'https://www.apk-inform.com/ru/rss/maslichnye.xml', source: 'APK-Inform' }, // АПК-Информ (Масличные)
-  { url: 'https://www.producer.com/feed/', source: 'The Western Producer' }, // Канада (Канола)
-  { url: 'https://www.world-grain.com/rss/feed', source: 'World Grain' }, // Глобально
-  { url: 'http://www.fao.org/news/rss-news/en/', source: 'FAO' }, // ООН
-  { url: 'https://www.zerno-online.ru/rss/maslichnye', source: 'Zerno Online' }, // Зерно Он-Лайн
+  { url: 'https://www.apk-inform.com/ru/rss/maslichnye.xml', source: 'APK-Inform' },
+  { url: 'https://www.producer.com/feed/', source: 'The Western Producer' },
+  { url: 'https://www.world-grain.com/rss/feed', source: 'World Grain' },
+  { url: 'http://www.fao.org/news/rss-news/en/', source: 'FAO' },
+  { url: 'https://www.zerno-online.ru/rss/maslichnye', source: 'Zerno Online' },
 ];
 
 // Список сайтов для Tavily (Нет RSS, но есть открытые новости)
 const SCRAPE_SITES = [
-  "site:mpoc.org.my", // Малайзия
-  "site:gapki.id", // Индонезия
-  "site:theedgemarkets.com", // Малайзия (Бизнес)
-  "site:noticiasagricolas.com.br", // Бразилия
-  "site:bolsadecereales.com.ar", // Аргентина
-  "site:sovecon.ru", // РФ (СовЭкон)
-  "site:ikar.ru", // РФ (ИКАР)
-  "site:ukragroconsult.com" // Украина
+  "site:mpoc.org.my",
+  "site:gapki.id",
+  "site:theedgemarkets.com",
+  "site:noticiasagricolas.com.br",
+  "site:bolsadecereales.com.ar",
+  "site:sovecon.ru",
+  "site:ikar.ru",
+  "site:ukragroconsult.com"
 ];
 
 // Запрещенные домены (Научные и прочий мусор)
@@ -44,14 +44,13 @@ export async function GET() {
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-  // 1. Сбор через RSS (Быстро и точно)
+  // 1. Сбор через RSS
   for (const feed of RSS_FEEDS) {
     try {
       const feedContent = await parser.parseURL(feed.url);
       feedContent.items.forEach((item: any) => {
         const pubDate = new Date(item.pubDate || item.isoDate);
         
-        // Строгая проверка даты
         if (pubDate >= sevenDaysAgo && !isNaN(pubDate.getTime())) {
           allResults.push({
             title: item.title,
@@ -62,13 +61,13 @@ export async function GET() {
           });
         }
       });
-    } catch (e) {
+    } catch (err) {
+      const e = err as Error; // Исправление типа ошибки
       console.error(`RSS Error for ${feed.source}:`, e.message);
     }
   }
 
-  // 2. Сбор через Tavily (Для сайтов без RSS)
-  // Группируем запросы, чтобы не превысить лимиты
+  // 2. Сбор через Tavily
   const siteQuery = SCRAPE_SITES.join(" OR ");
   const query = `(palm oil OR soybean oil OR sunflower oil) (${siteQuery})`;
 
@@ -76,7 +75,7 @@ export async function GET() {
     const response = await tavily.search(query, {
       searchDepth: "advanced",
       maxResults: 10,
-      days: 7, // Фильтр последней недели
+      days: 7,
       includeAnswer: false
     });
 
@@ -85,13 +84,8 @@ export async function GET() {
         const pubDate = new Date(r.published_date);
         const url = r.url.toLowerCase();
 
-        // Проверка: Есть ли дата?
         if (!r.published_date || isNaN(pubDate.getTime())) return;
-
-        // Проверка: Дата свежая?
         if (pubDate < sevenDaysAgo) return;
-
-        // Проверка: Не научная ли статья?
         if (EXCLUDED_DOMAINS.some(domain => url.includes(domain))) return;
 
         allResults.push({
@@ -103,14 +97,14 @@ export async function GET() {
         });
       });
     }
-  } catch (e) {
-    console.error("Tavily Search Error:", e);
+  } catch (err) {
+    const e = err as Error; // Исправление типа ошибки
+    console.error("Tavily Search Error:", e.message);
   }
 
   // 3. Финальная сортировка и очистка
   allResults.sort((a, b) => new Date(b.published_date).getTime() - new Date(a.published_date).getTime());
   
-  // Убираем дубликаты по URL
   const uniqueResults = Array.from(new Map(allResults.map(item => [item.url, item])).values());
 
   return NextResponse.json({ news: uniqueResults.slice(0, 25) });
