@@ -1,21 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
-import { createClient } from '@supabase/supabase-js';
-
-// Инициализация клиента Supabase на клиенте
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
-interface BalanceData {
-  country: string;
-  commodity: string;
-  production: number | null;
-  exports: number | null;
-  imports: number | null;
-  consumption: number | null;
-}
+import { useState } from "react";
+import balanceData from '@/data/balance_data.json';
 
 const TABS = [
   { key: "all", label: "All Data" },
@@ -27,30 +12,10 @@ const TABS = [
 
 export default function OilBalanceTable() {
   const [activeTab, setActiveTab] = useState("all");
-  const [data, setData] = useState<BalanceData[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      let query = supabase.from('usda_balance_data').select('*');
-      
-      if (activeTab !== 'all') {
-        query = query.eq('commodity', activeTab);
-      }
-      
-      const { data: result, error } = await query.order('country', { ascending: true });
-      
-      if (!error && result) {
-        setData(result as BalanceData[]);
-      }
-      setLoading(false);
-    }
-    
-    fetchData();
-  }, [activeTab]);
-
-  if (loading) return <div className="p-4 text-center text-slate-500">Loading USDA Data...</div>;
+  const filteredData = activeTab === 'all' 
+    ? balanceData 
+    : balanceData.filter(item => item.commodity === activeTab);
 
   return (
     <div className="w-full overflow-x-auto">
@@ -81,24 +46,24 @@ export default function OilBalanceTable() {
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
-          {data.length === 0 ? (
+          {filteredData.length === 0 ? (
             <tr>
-              <td colSpan={5} className="p-4 text-center text-slate-500">No data available for this period.</td>
+              <td colSpan={5} className="p-4 text-center text-slate-500">No data available.</td>
             </tr>
           ) : (
-            data.map((row, idx) => (
+            filteredData.map((row, idx) => (
               <tr key={idx} className="hover:bg-slate-50">
                 <td className="p-3 font-medium text-slate-900">{row.country}</td>
-                <td className="p-3 text-right text-slate-700">{row.production?.toLocaleString() || '-'}</td>
-                <td className="p-3 text-right text-slate-700">{row.exports?.toLocaleString() || '-'}</td>
-                <td className="p-3 text-right text-slate-700">{row.imports?.toLocaleString() || '-'}</td>
-                <td className="p-3 text-right text-slate-700">{row.consumption?.toLocaleString() || '-'}</td>
+                <td className="p-3 text-right text-slate-700">{row.production.toLocaleString()}</td>
+                <td className="p-3 text-right text-slate-700">{row.exports.toLocaleString()}</td>
+                <td className="p-3 text-right text-slate-700">{row.imports.toLocaleString()}</td>
+                <td className="p-3 text-right text-slate-700">{row.consumption.toLocaleString()}</td>
               </tr>
             ))
           )}
         </tbody>
       </table>
-      <p className="text-xs text-slate-400 mt-2 italic">Source: USDA FAS PSD Database (Updated Monthly)</p>
+      <p className="text-xs text-slate-400 mt-2 italic">Source: USDA FAS PSD & MPOB (Jan 2026)</p>
     </div>
   );
 }
