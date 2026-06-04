@@ -1,83 +1,65 @@
 import { NextResponse } from 'next/server';
 
-const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-
-// Простая функция для извлечения тегов из XML
-function extractTagContent(xml: string, tag: string): string[] {
-  const regex = new RegExp(`<${tag}>(.*?)</${tag}>`, 'g');
-  const matches = [];
-  let match;
-  while ((match = regex.exec(xml)) !== null) {
-    let content = match[1].replace(/<!\[CDATA\[(.*)\]\]>/g, '$1');
-    // Декодируем HTML entities (&amp; -> &)
-    content = content.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-    matches.push(content.trim());
-  }
-  return matches;
-}
-
 export async function GET() {
-  if (!TELEGRAM_TOKEN || !CHAT_ID) {
-    return NextResponse.json({ error: "Config missing" }, { status: 500 });
+  const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+  const CHAT = process.env.TELEGRAM_CHAT_ID;
+
+  // 1. Проверка наличия токенов
+  if (!TOKEN || !CHAT) {
+    return NextResponse.json({ error: "STEP 1 FAILED: Missing Telegram Config" }, { status: 500 });
   }
 
   try {
-    // Забираем RSS APK-Inform (самый стабильный источник)
-    const res = await fetch('https://www.apk-inform.com/ru/news/rss', {
-      headers: { 'User-Agent': 'OilsTerminalBot/1.0' }
+    // 2. Попытка скачать RSS
+    const rssUrl = 'https://www.apk-inform.com/ru/news/rss';
+    const res = await fetch(rssUrl, { 
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      cache: 'no-store' // Отключаем кэш для теста
     });
 
-    if (!res.ok) throw new Error(`APK Status: ${res.status}`);
-    
-    const xmlText = await res.text();
-
-    // Парсим заголовки, ссылки и описания
-    const titles = extractTagContent(xmlText, 'title');
-    const links = extractTagContent(xmlText, 'link');
-    const descs = extractTagContent(xmlText, 'description');
-
-    // Пропускаем первый элемент (заголовок канала) и берем топ-5
-    let msg = "📰 <b>Morning News Digest</b>\n";
-    msg += `🗓 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
-
-    let count = 0;
-    for (let i = 1; i < titles.length; i++) {
-      if (count >= 5) break;
-      if (!links[i]) continue;
-
-      const title = titles[i];
-      const link = links[i];
-      // Берем описание, если оно есть и не слишком длинное
-      const desc = descs[i] && descs[i] !== "Новость от АПК-Информ" ? `\n   _${descs[i].substring(0, 150)}..._` : "";
-
-      msg += `<b>${count + 1}. ${title}</b>${desc}\n🔗 <a href="${link}">Читать далее</a>\n\n`;
-      count++;
+    if (!res.ok) {
+      return NextResponse.json({ 
+        error: "STEP 2 FAILED: Could not fetch RSS", 
+        status: res.status, 
+        url: rssUrl 
+      }, { status: 500 });
     }
 
-    msg += `<i>Source: Oils Terminal Aggregator</i>`;
+    const xmlText = await res.text();
+    
+    // Простая проверка, что мы получили хоть какой-то XML
+    if (!xmlText.includes('<item>')) {
+      return NextResponse.json({ error: "STEP 3 FAILED: RSS contains no items" }, { status: 500 });
+    }
 
-    // Отправляем сообщение
-    const tgRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+    // 3. Парсинг (берем первый заголовок для теста)
+    const titleMatch = xmlText.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
+    const linkMatch = xmlText.match(/<link>(.*?)<\/link>/);
+
+    if (!titleMatch || !linkMatch) {
+       return NextResponse.json({ error: "STEP 4 FAILED: Regex parsing failed" }, { status: 500 });
+    }
+
+    const title = titleMatch[1];
+    const link = linkMatch[1];
+
+    // 4. Отправка в Telegram
+    const msg = `🧪 <b>Test Success!</b>\n\nFirst news: ${title}\nLink: ${link}`;
+    
+    const tgRes = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        chat_id: CHAT_ID, 
-        text: msg, 
-        parse_mode: 'HTML', 
-        disable_web_page_preview: false // Включаем превью, если сайт его поддерживает
-      })
+      body: JSON.stringify({ chat_id: CHAT, text: msg, parse_mode: 'HTML' })
     });
 
     if (!tgRes.ok) {
-      const errData = await tgRes.json();
-      throw new Error(`TG Error: ${JSON.stringify(errData)}`);
+      const tgErr = await tgRes.json();
+      return NextResponse.json({ error: "STEP 5 FAILED: Telegram Error", details: tgErr }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, sent: count });
+    return NextResponse.json({ success: true, message: "All steps passed!" });
 
   } catch (e) {
-    console.error("Cron News Error:", e);
-    return NextResponse.json({ error: String(e) }, { status: 500 });
+    return NextResponse.json({ error: "CRITICAL ERROR", details: String(e) }, { status: 500 });
   }
 }
