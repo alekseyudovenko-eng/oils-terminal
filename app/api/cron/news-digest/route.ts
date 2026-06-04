@@ -4,21 +4,26 @@ const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 // Простая функция для извлечения тегов из XML
-function extractTag(xml: string, tag: string): string[] {
+function extractTagContent(xml: string, tag: string): string[] {
   const regex = new RegExp(`<${tag}>(.*?)</${tag}>`, 'g');
   const matches = [];
   let match;
   while ((match = regex.exec(xml)) !== null) {
-    // Очищаем от CDATA если есть
     let content = match[1].replace(/<!\[CDATA\[(.*)\]\]>/g, '$1');
-    matches.push(content);
+    // Декодируем HTML entities (&amp; -> &)
+    content = content.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    matches.push(content.trim());
   }
   return matches;
 }
 
 export async function GET() {
+  if (!TELEGRAM_TOKEN || !CHAT_ID) {
+    return NextResponse.json({ error: "Config missing" }, { status: 500 });
+  }
+
   try {
-    // 1. Забираем XML напрямую с APK-Inform (самый надежный RSS)
+    // Забираем RSS APK-Inform (самый стабильный источник)
     const res = await fetch('https://www.apk-inform.com/ru/news/rss', {
       headers: { 'User-Agent': 'OilsTerminalBot/1.0' }
     });
@@ -27,32 +32,32 @@ export async function GET() {
     
     const xmlText = await res.text();
 
-    // 2. Парсим заголовки и ссылки вручную
-    const titles = extractTag(xmlText, 'title');
-    const links = extractTag(xmlText, 'link');
-    
-    // Пропускаем первый элемент (это заголовок канала)
-    const newsItems = [];
+    // Парсим заголовки, ссылки и описания
+    const titles = extractTagContent(xmlText, 'title');
+    const links = extractTagContent(xmlText, 'link');
+    const descs = extractTagContent(xmlText, 'description');
+
+    // Пропускаем первый элемент (заголовок канала) и берем топ-5
+    let msg = "📰 <b>Morning News Digest</b>\n";
+    msg += `🗓 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
+
+    let count = 0;
     for (let i = 1; i < titles.length; i++) {
-      if (links[i]) {
-        newsItems.push({ title: titles[i], url: links[i] });
-      }
+      if (count >= 5) break;
+      if (!links[i]) continue;
+
+      const title = titles[i];
+      const link = links[i];
+      // Берем описание, если оно есть и не слишком длинное
+      const desc = descs[i] && descs[i] !== "Новость от АПК-Информ" ? `\n   _${descs[i].substring(0, 150)}..._` : "";
+
+      msg += `<b>${count + 1}. ${title}</b>${desc}\n🔗 <a href="${link}">Читать далее</a>\n\n`;
+      count++;
     }
 
-    // Берем топ-5
-    const top5 = newsItems.slice(0, 5);
+    msg += `<i>Source: Oils Terminal Aggregator</i>`;
 
-    if (top5.length === 0) throw new Error("No items parsed");
-
-    // 3. Формируем сообщение
-    let msg = "📰 <b>Morning News Digest (APK-Inform)</b>\n\n";
-    top5.forEach((n, i) => {
-      const cleanTitle = n.title.replace(/&amp;/g, '&').replace(/&lt;/g, '<');
-      msg += `${i+1}. <a href="${n.url}">${cleanTitle}</a>\n`;
-    });
-    msg += `\n<i>Source: Oils Terminal Aggregator</i>`;
-
-    // 4. Отправляем в Telegram
+    // Отправляем сообщение
     const tgRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -60,7 +65,7 @@ export async function GET() {
         chat_id: CHAT_ID, 
         text: msg, 
         parse_mode: 'HTML', 
-        disable_web_page_preview: true 
+        disable_web_page_preview: false // Включаем превью, если сайт его поддерживает
       })
     });
 
@@ -69,7 +74,7 @@ export async function GET() {
       throw new Error(`TG Error: ${JSON.stringify(errData)}`);
     }
 
-    return NextResponse.json({ success: true, sent: top5.length });
+    return NextResponse.json({ success: true, sent: count });
 
   } catch (e) {
     console.error("Cron News Error:", e);
