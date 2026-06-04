@@ -11,70 +11,59 @@ interface NewsItem {
   source: string;
 }
 
-// Функция для генерации твоего собственного RSS XML
-function generateCustomRSS(items: NewsItem[]) {
-  const now = new Date().toUTCString();
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>Oils Terminal News Feed</title>
-    <link>https://oils-terminal.vercel.app</link>
-    <description>Curated news from APK-Inform and other sources</description>
-    <language>ru-ru</language>
-    <lastBuildDate>${now}</lastBuildDate>
-`;
-
-  items.forEach(item => {
-    xml += `
-    <item>
-      <title><![CDATA[${item.title}]]></title>
-      <link>${item.url}</link>
-      <description><![CDATA[${item.content}]]></description>
-      <pubDate>${new Date(item.published_date).toUTCString()}</pubDate>
-      <source>${item.source}</source>
-    </item>`;
-  });
-
-  xml += `
-  </channel>
-</rss>`;
-  return xml;
-}
+// Список источников для мониторинга
+const SOURCES = [
+  { name: 'APK-Inform', url: 'https://www.apk-inform.com/ru/news/rss' },
+  { name: 'MPOC (Malaysia)', url: 'https://mpoc.org.my/feed/' },
+  { name: 'Google News (Palm Oil)', url: 'https://news.google.com/rss/search?q=palm+oil+market&hl=en-US&gl=US&ceid=US:en' },
+  { name: 'World Grain', url: 'https://www.world-grain.com/rss/feed' }
+];
 
 export async function GET() {
-  // Явная типизация массива
-  let rawItems: NewsItem[] = [];
+  let allNews: NewsItem[] = [];
+  const seenTitles = new Set<string>();
 
-  try {
-    // 1. Получаем сырые данные с источника (с кэшем на 1 час)
-    const res = await fetch('https://www.apk-inform.com/ru/news/rss', { 
-      next: { revalidate: 3600 } 
-    });
-    
-    if (res.ok) {
+  // Параллельный сбор данных со всех источников
+  const promises = SOURCES.map(async (source) => {
+    try {
+      const res = await fetch(source.url, { next: { revalidate: 3600 } });
+      if (!res.ok) return [];
+      
       const text = await res.text();
       const feed = await parser.parseString(text);
       
-      if (feed.items) {
-        rawItems = feed.items.map((item: any) => ({
-          title: item.title || "No Title",
-          url: item.link || "#",
-          content: item.contentSnippet || "",
-          published_date: item.pubDate || new Date().toISOString(),
-          source: "APK-Inform"
-        }));
-      }
+      return (feed.items || []).map((item: any) => ({
+        title: item.title?.trim() || "",
+        url: item.link || "#",
+        content: item.contentSnippet || item.summary || "",
+        published_date: item.pubDate || new Date().toISOString(),
+        source: source.name
+      }));
+    } catch (e) {
+      console.error(`Error fetching ${source.name}:`, e);
+      return [];
     }
-  } catch (e) {
-    console.error("Source fetch error:", e);
-  }
-
-  // 2. Генерируем твой собственный RSS XML
-  const customRSS = generateCustomRSS(rawItems);
-
-  // 3. Возвращаем JSON для страницы /news
-  return NextResponse.json({ 
-    news: rawItems.slice(0, 20),
-    rss_xml: customRSS 
   });
+
+  const results = await Promise.all(promises);
+
+  // Объединяем, чистим и фильтруем
+  results.flat().forEach(item => {
+    // Пропускаем новости без заголовка или слишком короткие
+    if (!item.title || item.title.length < 10) return;
+
+    // Простая защита от дубликатов по заголовку (в нижнем регистре)
+    const titleKey = item.title.toLowerCase();
+    if (seenTitles.has(titleKey)) return;
+    
+    seenTitles.add(titleKey);
+    allNews.push(item);
+  });
+
+  // Сортируем по дате (самые свежие первыми)
+  allNews.sort((a, b) => 
+    new Date(b.published_date).getTime() - new Date(a.published_date).getTime()
+  );
+
+  return NextResponse.json({ news: allNews.slice(0, 25) });
 }
