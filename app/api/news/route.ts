@@ -11,19 +11,29 @@ interface NewsItem {
   source: string;
 }
 
-// Список источников для мониторинга
+// Расширенный список источников
 const SOURCES = [
-  { name: 'APK-Inform', url: 'https://www.apk-inform.com/ru/news/rss' },
-  { name: 'MPOC (Malaysia)', url: 'https://mpoc.org.my/feed/' },
-  { name: 'Google News (Palm Oil)', url: 'https://news.google.com/rss/search?q=palm+oil+market&hl=en-US&gl=US&ceid=US:en' },
-  { name: 'World Grain', url: 'https://www.world-grain.com/rss/feed' }
+  // --- PALM OIL ---
+  { name: 'APK-Inform (RU)', url: 'https://www.apk-inform.com/ru/news/rss', lang: 'ru' },
+  { name: 'MPOC (EN)', url: 'https://mpoc.org.my/feed/', lang: 'en' },
+  { name: 'Google Palm (EN)', url: 'https://news.google.com/rss/search?q=palm+oil+market&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+  
+  // --- SOYBEAN & RAPESEED ---
+  { name: 'World Grain (EN)', url: 'https://www.world-grain.com/rss/feed', lang: 'en' },
+  { name: 'Google Soy/Rape (EN)', url: 'https://news.google.com/rss/search?q=soybean+oil+OR+rapeseed+oil+market&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+  
+  // --- SUNFLOWER ---
+  { name: 'APK Sunflower (RU)', url: 'https://www.apk-inform.com/ru/news/rss', lang: 'ru' }, // APK часто пишет про подсолнечник
+  { name: 'Google Sunflower (EN)', url: 'https://news.google.com/rss/search?q=sunflower+oil+export&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+
+  // --- COCONUT ---
+  { name: 'Google Coconut (EN)', url: 'https://news.google.com/rss/search?q=coconut+oil+market&hl=en-US&gl=US&ceid=US:en', lang: 'en' }
 ];
 
 export async function GET() {
   let allNews: NewsItem[] = [];
   const seenTitles = new Set<string>();
 
-  // Параллельный сбор данных со всех источников
   const promises = SOURCES.map(async (source) => {
     try {
       const res = await fetch(source.url, { next: { revalidate: 3600 } });
@@ -40,19 +50,14 @@ export async function GET() {
         source: source.name
       }));
     } catch (e) {
-      console.error(`Error fetching ${source.name}:`, e);
       return [];
     }
   });
 
   const results = await Promise.all(promises);
 
-  // Объединяем, чистим и фильтруем
   results.flat().forEach(item => {
-    // Пропускаем новости без заголовка или слишком короткие
     if (!item.title || item.title.length < 10) return;
-
-    // Простая защита от дубликатов по заголовку (в нижнем регистре)
     const titleKey = item.title.toLowerCase();
     if (seenTitles.has(titleKey)) return;
     
@@ -60,10 +65,7 @@ export async function GET() {
     allNews.push(item);
   });
 
-  // Сортируем по дате (самые свежие первыми)
-  allNews.sort((a, b) => 
-    new Date(b.published_date).getTime() - new Date(a.published_date).getTime()
-  );
+  allNews.sort((a, b) => new Date(b.published_date).getTime() - new Date(a.published_date).getTime());
 
-  return NextResponse.json({ news: allNews.slice(0, 25) });
+  return NextResponse.json({ news: allNews.slice(0, 30) });
 }
