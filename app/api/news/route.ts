@@ -1,53 +1,52 @@
 import { NextResponse } from 'next/server';
-import Parser from 'rss-parser';
 
-const parser = new Parser();
-
-interface NewsItem {
-  title: string;
-  url: string;
-  content: string;
-  published_date: string;
-  source: string;
-}
-
-// Используем русскую ленту, так как ты прислал её пример. 
-// Если нужны новости на английском, замени /ru/ на /en/
-const APK_RSS_URL = 'https://www.apk-inform.com/ru/news/rss';
+// ЭТО ЖЕСТКАЯ ЗАГЛУШКА С ДАННЫМИ ИЗ ТВОЕГО XML
+const MOCK_NEWS = [
+  {
+    title: "Russian sunflower oil exports to India increased by more than 70% in 2026",
+    url: "https://www.apk-inform.com/en/news/1554774",
+    content: "Russian sunflower oil exports to India increased by more than 70% in 2026",
+    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
+    source: "APK-Inform"
+  },
+  {
+    title: "Kazakhstan oilseed processing sector posts record results – FOC 2026",
+    url: "https://www.apk-inform.com/en/news/1554777",
+    content: "Kazakhstan oilseed processing sector posts record results – to be discussed at FOC 2026: Fats and Oils Conference",
+    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
+    source: "APK-Inform"
+  },
+  {
+    title: "Ukrzaliznytsia cuts rail exports of oilseed processing products",
+    url: "https://www.apk-inform.com/en/news/1554766",
+    content: "Ukrzaliznytsia cuts rail exports of oilseed processing products",
+    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
+    source: "APK-Inform"
+  },
+  {
+    title: "Russian grain exports rose 1.6-fold in May– RGU",
+    url: "https://www.apk-inform.com/en/news/1554786",
+    content: "Russian grain exports rose 1.6-fold in May– RGU",
+    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
+    source: "APK-Inform"
+  },
+  {
+    title: "Ukraine’s agri export road shipments remained steady in May",
+    url: "https://www.apk-inform.com/en/news/1554778",
+    content: "Ukraine’s agri export road shipments remained steady in May",
+    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
+    source: "APK-Inform"
+  },
+  {
+    title: "Feed corn prices in Ukraine continue to decline",
+    url: "https://www.apk-inform.com/en/news/1554775",
+    content: "Feed corn prices in Ukraine continue to decline",
+    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
+    source: "APK-Inform"
+  }
+];
 
 export async function GET() {
-  let allNews: NewsItem[] = [];
-
-  try {
-    const feed = await parser.parseURL(APK_RSS_URL);
-    
-    if (feed && feed.items) {
-      feed.items.forEach((item: any) => {
-        const pubDate = new Date(item.pubDate || item.isoDate);
-        
-        // Берем только свежие новости (за последние 14 дней)
-        const twoWeeksAgo = new Date();
-        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-
-        if (!isNaN(pubDate.getTime()) && pubDate >= twoWeeksAgo) {
-          allNews.push({
-            title: item.title,
-            url: item.link,
-            content: item.contentSnippet || item.summary || "",
-            published_date: pubDate.toISOString(),
-            source: "APK-Inform"
-          });
-        }
-      });
-    }
-  } catch (err) {
-    console.error("RSS Parse Error:", (err as Error).message);
-    // Если RSS недоступен, возвращаем пустой массив или ошибку
-    return NextResponse.json({ error: "Failed to load news feed" }, { status: 500 });
-  }
-
-  // Сортируем: самые свежие первыми
-  allNews.sort((a, b) => new Date(b.published_date).getTime() - new Date(a.published_date).getTime());
-
-  return NextResponse.json({ news: allNews.slice(0, 20) });
+  // Возвращаем заглушку без каких-либо запросов в интернет
+  return NextResponse.json({ news: MOCK_NEWS });
 }
