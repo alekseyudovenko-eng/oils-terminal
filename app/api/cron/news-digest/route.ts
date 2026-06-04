@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-// Простая функция для извлечения данных из XML без внешних библиотек
+// Функция для парсинга XML без библиотек
 function parseRSS(xml: string) {
   const items = [];
   const regex = /<item>(.*?)<\/item>/gs;
@@ -13,13 +13,11 @@ function parseRSS(xml: string) {
     const itemXml = match[1];
     const titleMatch = itemXml.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
     const linkMatch = itemXml.match(/<link>(.*?)<\/link>/);
-    const descMatch = itemXml.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/);
-
+    
     if (titleMatch && linkMatch) {
       items.push({
         title: titleMatch[1].replace(/&amp;/g, '&'),
-        link: linkMatch[1],
-        desc: descMatch ? descMatch[1].replace(/&amp;/g, '&') : ''
+        link: linkMatch[1]
       });
     }
   }
@@ -31,37 +29,58 @@ export async function GET() {
     return NextResponse.json({ error: "Config missing" }, { status: 500 });
   }
 
+  // Источники: пробуем APK, если не выйдет — MPOC
+  const sources = [
+    'https://www.apk-inform.com/ru/news/rss',
+    'https://mpoc.org.my/feed/'
+  ];
+
+  let news = [];
+  let sourceName = "";
+
+  for (const url of sources) {
+    try {
+      // Маскируемся под обычный браузер Chrome
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'application/xml, text/xml, */*',
+        },
+        cache: 'no-store'
+      });
+
+      if (res.ok) {
+        const xmlText = await res.text();
+        const parsedItems = parseRSS(xmlText);
+        if (parsedItems.length > 0) {
+          news = parsedItems.slice(0, 5);
+          sourceName = url.includes('apk') ? 'APK-Inform' : 'MPOC';
+          break; // Успех, выходим из цикла
+        }
+      }
+    } catch (e) {
+      console.error(`Failed to fetch ${url}:`, e);
+      continue;
+    }
+  }
+
+  if (news.length === 0) {
+    return NextResponse.json({ error: "All sources failed or empty" }, { status: 500 });
+  }
+
+  // Формируем сообщение
+  let msg = `📰 <b>Morning News Digest (${sourceName})</b>\n`;
+  msg += `🗓 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
+
+  news.forEach((n, i) => {
+    msg += `<b>${i+1}. ${n.title}</b>\n🔗 <a href="${n.link}">Читать</a>\n\n`;
+  });
+
+  msg += `<i>Source: Oils Terminal Aggregator</i>`;
+
+  // Отправляем в Telegram
   try {
-    // 1. Забираем RSS
-    const res = await fetch('https://www.apk-inform.com/ru/news/rss', {
-      headers: { 'User-Agent': 'OilsTerminalBot/1.0' },
-      cache: 'no-store'
-    });
-
-    if (!res.ok) throw new Error(`APK Status: ${res.status}`);
-    
-    const xmlText = await res.text();
-    const news = parseRSS(xmlText).slice(0, 5); // Топ-5 новостей
-
-    if (news.length === 0) throw new Error("No news found in RSS");
-
-    // 2. Формируем красивое сообщение
-    let msg = "📰 <b>Morning News Digest</b>\n";
-    msg += `🗓 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
-
-    news.forEach((n, i) => {
-      // Если описание есть и не слишком длинное, добавляем его
-      const snippet = n.desc && n.desc !== "Новость от АПК-Информ" 
-        ? `\n   _${n.desc.substring(0, 120)}..._` 
-        : "";
-      
-      msg += `<b>${i+1}. ${n.title}</b>${snippet}\n🔗 <a href="${n.link}">Читать</a>\n\n`;
-    });
-
-    msg += `<i>Source: Oils Terminal Aggregator</i>`;
-
-    // 3. Отправляем в Telegram
-    const tgRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
@@ -71,12 +90,8 @@ export async function GET() {
         disable_web_page_preview: false 
       })
     });
-
-    if (!tgRes.ok) throw new Error("Telegram API Error");
-
-    return NextResponse.json({ success: true, sent: news.length });
-
+    return NextResponse.json({ success: true, sent: news.length, source: sourceName });
   } catch (e) {
-    return NextResponse.json({ error: String(e) }, { status: 500 });
+    return NextResponse.json({ error: "Telegram send failed" }, { status: 500 });
   }
 }
