@@ -3,8 +3,16 @@ import Parser from 'rss-parser';
 
 const parser = new Parser();
 
+interface NewsItem {
+  title: string;
+  url: string;
+  content: string;
+  published_date: string;
+  source: string;
+}
+
 // Функция для генерации твоего собственного RSS XML
-function generateCustomRSS(items: any[]) {
+function generateCustomRSS(items: NewsItem[]) {
   const now = new Date().toUTCString();
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -34,7 +42,8 @@ function generateCustomRSS(items: any[]) {
 }
 
 export async function GET() {
-  let rawItems = [];
+  // Явная типизация массива
+  let rawItems: NewsItem[] = [];
 
   try {
     // 1. Получаем сырые данные с источника (с кэшем на 1 час)
@@ -45,25 +54,27 @@ export async function GET() {
     if (res.ok) {
       const text = await res.text();
       const feed = await parser.parseString(text);
-      rawItems = feed.items.map((item: any) => ({
-        title: item.title,
-        url: item.link,
-        content: item.contentSnippet || "",
-        published_date: item.pubDate || new Date().toISOString(),
-        source: "APK-Inform"
-      }));
+      
+      if (feed.items) {
+        rawItems = feed.items.map((item: any) => ({
+          title: item.title || "No Title",
+          url: item.link || "#",
+          content: item.contentSnippet || "",
+          published_date: item.pubDate || new Date().toISOString(),
+          source: "APK-Inform"
+        }));
+      }
     }
   } catch (e) {
     console.error("Source fetch error:", e);
   }
 
-  // 2. Генерируем твой собственный RSS XML (для ботов или экспорта)
+  // 2. Генерируем твой собственный RSS XML
   const customRSS = generateCustomRSS(rawItems);
 
-  // 3. Возвращаем JSON для твоей страницы /news (чтобы она быстро отрисовалась)
-  // Если ты захочешь увидеть сам XML, просто открой этот API в браузере и добавь ?format=xml
+  // 3. Возвращаем JSON для страницы /news
   return NextResponse.json({ 
     news: rawItems.slice(0, 20),
-    rss_xml: customRSS // Мы отдаем и XML тоже, если он нужен
+    rss_xml: customRSS 
   });
 }
