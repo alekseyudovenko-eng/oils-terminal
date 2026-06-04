@@ -1,36 +1,48 @@
 import { NextResponse } from 'next/server';
+import Parser from 'rss-parser';
 
+const parser = new Parser();
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-// URL твоего сайта (замени на свой домен, если есть, или оставь vercel.app)
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://oils-terminal.vercel.app';
+
+// Те же источники, что и в основном API
+const SOURCES = [
+  { name: 'APK-Inform', url: 'https://www.apk-inform.com/ru/news/rss' },
+  { name: 'MPOC', url: 'https://mpoc.org.my/feed/' },
+  { name: 'Google News Palm', url: 'https://news.google.com/rss/search?q=palm+oil+market&hl=en-US&gl=US&ceid=US:en' }
+];
 
 export async function GET() {
-  // Простая защита: проверяем секретный ключ из заголовка (опционально, но рекомендуется)
-  // const authHeader = headers().get('authorization');
-  // if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-  //   return new NextResponse('Unauthorized', { status: 401 });
-  // }
-
   try {
-    // Забираем новости из нашего же API
-    const res = await fetch(`${SITE_URL}/api/news`);
-    if (!res.ok) throw new Error('Failed to fetch news');
+    let allNews = [];
     
-    const data = await res.json();
-    const top5 = data.news.slice(0, 5);
+    // Параллельный сбор новостей
+    const promises = SOURCES.map(async (source) => {
+      try {
+        const feed = await parser.parseURL(source.url);
+        return (feed.items || []).map((item: any) => ({
+          title: item.title,
+          url: item.link,
+          source: source.name
+        }));
+      } catch (e) { return []; }
+    });
 
-    if (top5.length === 0) return NextResponse.json({ message: 'No news found' });
+    const results = await Promise.all(promises);
+    allNews = results.flat().slice(0, 5); // Берем топ-5 свежих
+
+    if (allNews.length === 0) {
+      return NextResponse.json({ message: 'No news found' });
+    }
 
     let msg = "📰 <b>Morning News Digest</b>\n\n";
-    top5.forEach((n: any, i: number) => {
-      // Обрезаем слишком длинные заголовки
+    allNews.forEach((n: any, i: number) => {
       const title = n.title.length > 100 ? n.title.substring(0, 97) + '...' : n.title;
       msg += `${i+1}. <a href="${n.url}">${title}</a>\n`;
     });
     msg += `\n<i>Source: Oils Terminal Aggregator</i>`;
 
-    const tgRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
@@ -41,9 +53,7 @@ export async function GET() {
       })
     });
 
-    if (!tgRes.ok) throw new Error('Telegram API Error');
-
-    return NextResponse.json({ success: true, sent: top5.length });
+    return NextResponse.json({ success: true, sent: allNews.length });
   } catch (e) {
     console.error("Cron News Error:", e);
     return NextResponse.json({ error: String(e) }, { status: 500 });
