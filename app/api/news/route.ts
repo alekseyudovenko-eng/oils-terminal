@@ -1,52 +1,69 @@
 import { NextResponse } from 'next/server';
+import Parser from 'rss-parser';
 
-// ЭТО ЖЕСТКАЯ ЗАГЛУШКА С ДАННЫМИ ИЗ ТВОЕГО XML
-const MOCK_NEWS = [
-  {
-    title: "Russian sunflower oil exports to India increased by more than 70% in 2026",
-    url: "https://www.apk-inform.com/en/news/1554774",
-    content: "Russian sunflower oil exports to India increased by more than 70% in 2026",
-    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
-    source: "APK-Inform"
-  },
-  {
-    title: "Kazakhstan oilseed processing sector posts record results – FOC 2026",
-    url: "https://www.apk-inform.com/en/news/1554777",
-    content: "Kazakhstan oilseed processing sector posts record results – to be discussed at FOC 2026: Fats and Oils Conference",
-    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
-    source: "APK-Inform"
-  },
-  {
-    title: "Ukrzaliznytsia cuts rail exports of oilseed processing products",
-    url: "https://www.apk-inform.com/en/news/1554766",
-    content: "Ukrzaliznytsia cuts rail exports of oilseed processing products",
-    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
-    source: "APK-Inform"
-  },
-  {
-    title: "Russian grain exports rose 1.6-fold in May– RGU",
-    url: "https://www.apk-inform.com/en/news/1554786",
-    content: "Russian grain exports rose 1.6-fold in May– RGU",
-    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
-    source: "APK-Inform"
-  },
-  {
-    title: "Ukraine’s agri export road shipments remained steady in May",
-    url: "https://www.apk-inform.com/en/news/1554778",
-    content: "Ukraine’s agri export road shipments remained steady in May",
-    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
-    source: "APK-Inform"
-  },
-  {
-    title: "Feed corn prices in Ukraine continue to decline",
-    url: "https://www.apk-inform.com/en/news/1554775",
-    content: "Feed corn prices in Ukraine continue to decline",
-    published_date: "Wed, 03 Jun 2026 17:48:08 GMT",
-    source: "APK-Inform"
-  }
-];
+const parser = new Parser();
+
+// Функция для генерации твоего собственного RSS XML
+function generateCustomRSS(items: any[]) {
+  const now = new Date().toUTCString();
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Oils Terminal News Feed</title>
+    <link>https://oils-terminal.vercel.app</link>
+    <description>Curated news from APK-Inform and other sources</description>
+    <language>ru-ru</language>
+    <lastBuildDate>${now}</lastBuildDate>
+`;
+
+  items.forEach(item => {
+    xml += `
+    <item>
+      <title><![CDATA[${item.title}]]></title>
+      <link>${item.url}</link>
+      <description><![CDATA[${item.content}]]></description>
+      <pubDate>${new Date(item.published_date).toUTCString()}</pubDate>
+      <source>${item.source}</source>
+    </item>`;
+  });
+
+  xml += `
+  </channel>
+</rss>`;
+  return xml;
+}
 
 export async function GET() {
-  // Возвращаем заглушку без каких-либо запросов в интернет
-  return NextResponse.json({ news: MOCK_NEWS });
+  let rawItems = [];
+
+  try {
+    // 1. Получаем сырые данные с источника (с кэшем на 1 час)
+    const res = await fetch('https://www.apk-inform.com/ru/news/rss', { 
+      next: { revalidate: 3600 } 
+    });
+    
+    if (res.ok) {
+      const text = await res.text();
+      const feed = await parser.parseString(text);
+      rawItems = feed.items.map((item: any) => ({
+        title: item.title,
+        url: item.link,
+        content: item.contentSnippet || "",
+        published_date: item.pubDate || new Date().toISOString(),
+        source: "APK-Inform"
+      }));
+    }
+  } catch (e) {
+    console.error("Source fetch error:", e);
+  }
+
+  // 2. Генерируем твой собственный RSS XML (для ботов или экспорта)
+  const customRSS = generateCustomRSS(rawItems);
+
+  // 3. Возвращаем JSON для твоей страницы /news (чтобы она быстро отрисовалась)
+  // Если ты захочешь увидеть сам XML, просто открой этот API в браузере и добавь ?format=xml
+  return NextResponse.json({ 
+    news: rawItems.slice(0, 20),
+    rss_xml: customRSS // Мы отдаем и XML тоже, если он нужен
+  });
 }
