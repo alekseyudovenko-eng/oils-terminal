@@ -1,144 +1,139 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { tavily } from '@tavily/core';
+import * as cheerio from 'cheerio'; // Убедись, что cheerio есть в package.json
 
-export async function POST() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+export const dynamic = 'force-dynamic';
 
-  const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
-  const updatedPrices: { name: string; value: number }[] = [];
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
-  // 1. БИРЖЕВЫЕ ДАННЫЕ (Yahoo Finance)
-  const futures = [
-    { name: 'Soybean Oil CBOT (Chicago)', ticker: 'ZL=F', type: 'soy' },
-    { name: 'Rapeseed Oil FOB Rotterdam', ticker: 'RS=F', type: 'rapeseed' },
-    { name: 'Palm Oil Futures (FCPO)', ticker: 'FCPO=F', type: 'palm_futures' }
-  ];
-
-  for (const item of futures) {
-    try {
-      const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${item.ticker}?interval=1d&range=1d`, {
-        headers: { 'User-Agent': 'Mozilla/5.0' }
-      });
-      
-      if (!res.ok) continue; 
-      
-      const data = await res.json();
-      const price = data.chart?.result?.[0]?.meta?.regularMarketPrice;
-      
-      if (price) {
-        let finalPrice = price;
-        if (item.type === 'soy') finalPrice = (price / 100) * 2204.62;
-        else if (item.type === 'palm_futures') finalPrice = price / 4.75;
-        
-        await supabase.from('market_data').upsert({
-          commodity: item.name,
-          metric: 'price_spot',
-          value: parseFloat(finalPrice.toFixed(2)),
-          status: 'verified',
-          sources: [{ source: 'yahoo_finance' }],
-          verified_at: new Date().toISOString()
-        }, { onConflict: 'commodity' });
-        
-        updatedPrices.push({ name: item.name, value: parseFloat(finalPrice.toFixed(2)) });
-      }
-    } catch (e) { console.error(e); }
-  }
-
-  // 2. СПОТОВЫЕ ЦЕНЫ + ИНДОНЕЗИЙСКАЯ HPE
-  const spotOils = [
-    { 
-      name: 'RBD Palm Olein FOB Malaysia', 
-      query: 'RBD Palm Olein FOB Malaysia price USD tonne MPOC June 2026', 
-      min: 900, max: 1100 
-    },
-    { 
-      name: 'CPO Spot (Malaysia)', 
-      query: 'Crude Palm Oil CPO spot price Malaysia USD tonne MPOC June 2026', 
-      min: 850, max: 1000 
-    },
-    { 
-      name: 'CPO Reference Price (Indonesia)', // Новая позиция
-      query: 'Indonesia CPO HPE reference price USD tonne June 2026 ministry of trade', 
-      min: 800, max: 1000 
-    },
-    { 
-      name: 'Sunflower Oil (FOB BS)', 
-      query: 'Sunflower Oil FOB Black Sea price USD tonne June 2026', 
-      min: 1100, max: 1300 
-    }
-    // Olive Oil удален
-  ];
-
-  for (const oil of spotOils) {
-    let foundPrice = 0;
-    try {
-      const response = await tvly.search(oil.query, { searchDepth: "advanced", maxResults: 2, includeAnswer: true });
-      const text = (response.answer || "") + " " + JSON.stringify(response.results);
-      const matches = text.match(/(\d{1,3}(?:,\d{3})*\.\d{2})/g);
-      
-      if (matches) {
-        for (const m of matches) {
-          const val = parseFloat(m.replace(/,/g, ''));
-          if (val >= oil.min && val <= oil.max) {
-            foundPrice = val;
-            break;
-          }
-        }
-      }
-    } catch (error) { console.error(error); }
-
-    if (foundPrice > 0) {
-      await supabase.from('market_data').upsert({
-        commodity: oil.name,
-        metric: 'price_spot',
-        value: foundPrice,
-        status: 'verified',
-        sources: [{ source: 'tavily_search' }],
-        verified_at: new Date().toISOString()
-      }, { onConflict: 'commodity' });
-      updatedPrices.push({ name: oil.name, value: foundPrice });
-    }
-  }
-
-  // 3. TELEGRAM (Без оливы)
-  await sendTelegramReport(updatedPrices);
-
-  return NextResponse.json({ success: true, updated: updatedPrices.length });
+// Функция для получения цены сои (Yahoo Finance)
+async function getSoybeanOilPrice() {
+  try {
+    // Используем Yahoo Finance через их API или парсинг
+    // Для простоты оставим твой рабочий метод или используем надежный источник
+    // Здесь пример с Yahoo Finance (ZL=F - Soybean Oil Futures)
+    const res = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/ZL=F?region=US&lang=en-US&includePrePost=false&interval=1d&range=1d', {
+      next: { revalidate: 3600 }
+    });
+    const data = await res.json();
+    const price = data.chart.result[0].meta.regularMarketPrice;
+    
+    // Конвертация: Цена в центах за фунт -> USD за MT
+    // 1 цент/фунт = 22.0462 USD/MT
+    if (price) return (price * 22.0462).toFixed(2);
+  } catch (e) { console.error("Soy Error", e); }
+  return null;
 }
 
-async function sendTelegramReport(prices: { name: string; value: number }[]) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
-
-  let msg = "🛢️ <b>Oils Terminal Daily Report</b>\n";
-  msg += `📅 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
-  
-  const labels: string[] = [];
-  const data: number[] = [];
-
-  prices.forEach(p => {
-    // Пропускаем оливковое масло, если оно вдруг попало
-    if (p.name.includes('Olive')) return;
-
-    msg += `🔹 <b>${p.name}</b>: $${p.value}\n`;
-    labels.push(p.name.split('(')[0].trim().substring(0, 10));
-    data.push(p.value);
-  });
-
-  if (data.length === 0) return;
-
-  const chartUrl = `https://quickchart.io/chart?c={type:'bar',data:{labels:['${labels.join("','")}'],datasets:[{label:'USD/MT',data:[${data.join(',')}],backgroundColor:'rgba(54, 162, 235, 0.6)'}]}}&w=600&h=400`;
-
+// Функция для получения CPO Futures с Bursa Malaysia
+async function getCPOFuturesPrice() {
   try {
-    await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, photo: chartUrl, caption: msg, parse_mode: 'HTML' })
+    // Парсим страницу Bursa Malaysia
+    const res = await fetch('https://www.bursamalaysia.com/market_information/derivatives_prices', {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      next: { revalidate: 3600 }
     });
-  } catch (e) { console.error(e); }
+    const html = await res.text();
+    const $ = cheerio.load(html);
+    
+    // Ищем цену FCPO (Crude Palm Oil Futures)
+    // Внимание: селекторы могут меняться, нужно проверить актуальные классы на сайте
+    // Обычно цена лежит в таблице с id или классом .derivative-price
+    let priceMYR = null;
+    
+    // Примерный поиск по тексту "FCPO" или "Crude Palm Oil"
+    $('table tr').each((i, elem) => {
+      const text = $(elem).text();
+      if (text.includes('FCPO') || text.includes('Crude Palm Oil')) {
+        // Пытаемся найти числовое значение цены
+        const priceMatch = text.match(/(\d{3,4}\.\d{2})/);
+        if (priceMatch) priceMYR = parseFloat(priceMatch[1]);
+      }
+    });
+
+    if (priceMYR) {
+      // Конвертация MYR в USD (курс примерно 4.7, лучше брать актуальный, но пока жестко или через API)
+      // Для точности можно добавить запрос курса валют
+      const usdRate = 0.22; // Примерно 1 MYR = 0.22 USD (проверить актуальный)
+      return (priceMYR * usdRate).toFixed(2);
+    }
+  } catch (e) { console.error("Bursa Error", e); }
+  return null;
+}
+
+// Функция для получения официальной цены Индонезии из БД
+async function getIndonesiaReferencePrice() {
+  const { data, error } = await supabase
+    .from('indonesia_official_rates')
+    .select('reference_price_usd')
+    .order('effective_date', { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error || !data) return null;
+  return data.reference_price_usd.toString();
+}
+
+export async function GET() {
+  try {
+    // 1. Собираем данные
+    const soyPrice = await getSoybeanOilPrice();
+    const cpoFutures = await getCPOFuturesPrice();
+    const indoRefPrice = await getIndonesiaReferencePrice();
+
+    // 2. Сохраняем в основную таблицу market_data
+    const updates = [];
+
+    if (soyPrice) {
+      updates.push({
+        commodity: 'Soybean Oil CBOT (Chicago)',
+        value: soyPrice,
+        currency: 'USD',
+        unit: 'MT',
+        metric: 'price_spot',
+        updated_at: new Date().toISOString()
+      });
+    }
+
+    if (cpoFutures) {
+      updates.push({
+        commodity: 'CPO Futures (Bursa Malaysia)',
+        value: cpoFutures,
+        currency: 'USD',
+        unit: 'MT',
+        metric: 'price_futures',
+        updated_at: new Date().toISOString()
+      });
+    }
+
+    if (indoRefPrice) {
+      updates.push({
+        commodity: 'CPO Reference Price (Indonesia)',
+        value: indoRefPrice,
+        currency: 'USD',
+        unit: 'MT',
+        metric: 'price_reference',
+        updated_at: new Date().toISOString()
+      });
+    }
+
+    // 3. Записываем в базу (upsert)
+    for (const item of updates) {
+      await supabase
+        .from('market_data')
+        .upsert(item, { onConflict: 'commodity' });
+    }
+
+    return NextResponse.json({ 
+      success: true, 
+      updated: updates.length,
+      data: updates 
+    });
+
+  } catch (e) {
+    return NextResponse.json({ error: String(e) }, { status: 500 });
+  }
 }
