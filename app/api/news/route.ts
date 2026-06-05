@@ -1,7 +1,4 @@
 import { NextResponse } from 'next/server';
-import Parser from 'rss-parser';
-
-const parser = new Parser();
 
 interface NewsItem {
   title: string;
@@ -11,61 +8,63 @@ interface NewsItem {
   source: string;
 }
 
-// Расширенный список источников
-const SOURCES = [
-  // --- PALM OIL ---
-  { name: 'APK-Inform (RU)', url: 'https://www.apk-inform.com/ru/news/rss', lang: 'ru' },
-  { name: 'MPOC (EN)', url: 'https://mpoc.org.my/feed/', lang: 'en' },
-  { name: 'Google Palm (EN)', url: 'https://news.google.com/rss/search?q=palm+oil+market&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+function extractNews(xml: string, sourceName: string): NewsItem[] {
+  const items: NewsItem[] = [];
+  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+  let match;
   
-  // --- SOYBEAN & RAPESEED ---
-  { name: 'World Grain (EN)', url: 'https://www.world-grain.com/rss/feed', lang: 'en' },
-  { name: 'Google Soy/Rape (EN)', url: 'https://news.google.com/rss/search?q=soybean+oil+OR+rapeseed+oil+market&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
-  
-  // --- SUNFLOWER ---
-  { name: 'APK Sunflower (RU)', url: 'https://www.apk-inform.com/ru/news/rss', lang: 'ru' }, // APK часто пишет про подсолнечник
-  { name: 'Google Sunflower (EN)', url: 'https://news.google.com/rss/search?q=sunflower+oil+export&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
-
-  // --- COCONUT ---
-  { name: 'Google Coconut (EN)', url: 'https://news.google.com/rss/search?q=coconut+oil+market&hl=en-US&gl=US&ceid=US:en', lang: 'en' }
-];
+  while ((match = itemRegex.exec(xml)) !== null) {
+    const content = match[1];
+    const titleMatch = content.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/);
+    const linkMatch = content.match(/<link>(.*?)<\/link>/);
+    const descMatch = content.match(/<description>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/description>/);
+    
+    if (titleMatch && linkMatch) {
+      items.push({
+        title: titleMatch[1].trim(),
+        url: linkMatch[1].trim(),
+        content: descMatch ? descMatch[1].replace(/<[^>]*>/g, '').substring(0, 200) : "",
+        published_date: new Date().toISOString(),
+        source: sourceName
+      });
+    }
+  }
+  return items;
+}
 
 export async function GET() {
   let allNews: NewsItem[] = [];
-  const seenTitles = new Set<string>();
+  
+  const sources = [
+    { url: 'https://www.palmoilmagazine.com/feed/', name: 'Palmoil Magazine' }, // НОВЫЙ ИСТОЧНИК
+    { url: 'https://www.apk-inform.com/ru/news/rss', name: 'APK-Inform' },
+    { url: 'https://mpoc.org.my/feed/', name: 'MPOC' },
+    { url: 'https://news.google.com/rss/search?q=palm+oil+market&hl=en-US&gl=US&ceid=US:en', name: 'Google News' }
+  ];
 
-  const promises = SOURCES.map(async (source) => {
+  for (const src of sources) {
     try {
-      const res = await fetch(source.url, { next: { revalidate: 3600 } });
-      if (!res.ok) return [];
+      const res = await fetch(src.url, {
+        headers: { 'User-Agent': 'Mozilla/5.0' },
+        next: { revalidate: 3600 }
+      });
       
-      const text = await res.text();
-      const feed = await parser.parseString(text);
-      
-      return (feed.items || []).map((item: any) => ({
-        title: item.title?.trim() || "",
-        url: item.link || "#",
-        content: item.contentSnippet || item.summary || "",
-        published_date: item.pubDate || new Date().toISOString(),
-        source: source.name
-      }));
-    } catch (e) {
-      return [];
-    }
+      if (res.ok) {
+        const text = await res.text();
+        const items = extractNews(text, src.name);
+        allNews = [...allNews, ...items];
+      }
+    } catch (e) { continue; }
+  }
+
+  // Убираем дубликаты
+  const seen = new Set<string>();
+  const uniqueNews = allNews.filter(n => {
+    const key = n.title.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
   });
 
-  const results = await Promise.all(promises);
-
-  results.flat().forEach(item => {
-    if (!item.title || item.title.length < 10) return;
-    const titleKey = item.title.toLowerCase();
-    if (seenTitles.has(titleKey)) return;
-    
-    seenTitles.add(titleKey);
-    allNews.push(item);
-  });
-
-  allNews.sort((a, b) => new Date(b.published_date).getTime() - new Date(a.published_date).getTime());
-
-  return NextResponse.json({ news: allNews.slice(0, 30) });
+  return NextResponse.json({ news: uniqueNews.slice(0, 25) });
 }
