@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cheerio": "^1.0.0",
     "@supabase/supabase-js": "^2.106.2",
     "@tavily/core": "^0.0.2",
     "@types/node": "20.6.2",
