@@ -2,97 +2,69 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-interface NewsItem {
-  title: string;
-  link: string;
-}
-
-// Функция парсинга (универсальная)
-function extractNews(xml: string): NewsItem[] {
-  const items: NewsItem[] = [];
-  // Ищем все блоки <item>...</item>
-  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
-  let match;
-  
-  while ((match = itemRegex.exec(xml)) !== null) {
-    const content = match[1];
-    // Заголовок
-    const titleMatch = content.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/);
-    // Ссылка
-    const linkMatch = content.match(/<link>(.*?)<\/link>/);
-    
-    if (titleMatch && linkMatch) {
-      items.push({
-        title: titleMatch[1].trim(),
-        link: linkMatch[1].trim()
-      });
-    }
-  }
-  return items;
-}
-
 export async function GET() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
+  
+  // Ссылка на твой ТЕКУЩИЙ рабочий деплой
+  const MY_SITE_URL = 'https://oils-terminal-5gho-h5nrizgm8-aleksey-udovenkos-projects.vercel.app';
 
-  if (!token || !chatId) return new NextResponse(JSON.stringify({ error: "NO TOKENS" }), { status: 500 });
+  if (!token || !chatId) {
+    return new NextResponse(JSON.stringify({ error: "NO TOKENS" }), { status: 500 });
+  }
 
-  // Список источников. Пробуем по очереди.
-  const sources = [
-    'https://www.apk-inform.com/ru/news/rss',
-    'https://news.google.com/rss/search?q=palm+oil&hl=en-US&gl=US&ceid=US:en',
-    'https://mpoc.org.my/feed/'
-  ];
+  try {
+    // 1. Забираем новости с твоего же сайта (гарантия идентичности)
+    const res = await fetch(`${MY_SITE_URL}/api/news`, {
+      cache: 'no-store'
+    });
 
-  let allNews: NewsItem[] = [];
-  let usedSource = "";
-
-  for (const url of sources) {
-    try {
-      const res = await fetch(url, {
-        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' },
-        cache: 'no-store'
-      });
-
-      if (res.ok) {
-        const text = await res.text();
-        const items = extractNews(text);
-        
-        if (items.length > 0) {
-          allNews = items.slice(0, 5);
-          usedSource = url.includes('google') ? 'Google News' : (url.includes('apk') ? 'APK-Inform' : 'MPOC');
-          break; // Нашли новости, выходим из цикла
-        }
-      }
-    } catch (e) {
-      continue; // Ошибка сети, пробуем следующий
+    if (!res.ok) {
+      return new NextResponse(JSON.stringify({ error: "Failed to fetch from site API" }), { status: 500 });
     }
+
+    const data = await res.json();
+    const news = data.news.slice(0, 5); // Берем топ-5
+
+    if (!news || news.length === 0) {
+      return new NextResponse(JSON.stringify({ error: "No news on site" }), { status: 500 });
+    }
+
+    // 2. Формируем красивую рассылку
+    let msg = `📰 <b>Сводка за 24 часа</b>\n`;
+    msg += `🗓 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
+
+    for (const item of news) {
+      // Очищаем заголовок от лишних символов
+      const title = item.title.replace(/&amp;/g, '&');
+      msg += `🔹 <b>${title}</b>\n`;
+      msg += `🔗 <a href="${item.url}">Источник</a>\n\n`;
+    }
+
+    msg += `<i>Oils Terminal News</i>`;
+
+    // 3. Отправляем в Telegram
+    const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: msg,
+        parse_mode: 'HTML',
+        disable_web_page_preview: false
+      })
+    });
+
+    if (!tgRes.ok) {
+      const err = await tgRes.json();
+      return new NextResponse(JSON.stringify({ error: "Telegram Error", details: err }), { status: 500 });
+    }
+
+    return new NextResponse(JSON.stringify({ success: true, sent: news.length }), {
+      headers: { 'Cache-Control': 'no-store' }
+    });
+
+  } catch (e) {
+    return new NextResponse(JSON.stringify({ error: String(e) }), { status: 500 });
   }
-
-  if (allNews.length === 0) {
-    return new NextResponse(JSON.stringify({ error: "ALL SOURCES EMPTY OR FAILED" }), { status: 500 });
-  }
-
-  // Формируем сообщение
-  let msg = `📰 <b>News Digest (${usedSource})</b>\n\n`;
-  allNews.forEach((n, i) => {
-    msg += `<b>${i+1}. ${n.title}</b>\n<a href="${n.link}">Link</a>\n\n`;
-  });
-
-  // Отправляем в Telegram
-  const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: msg,
-      parse_mode: 'HTML'
-    })
-  });
-
-  if (!tgRes.ok) return new NextResponse(JSON.stringify({ error: "TG SEND FAILED" }), { status: 500 });
-
-  return new NextResponse(JSON.stringify({ success: true, count: allNews.length, source: usedSource }), {
-    headers: { 'Cache-Control': 'no-store' }
-  });
 }
