@@ -1,102 +1,75 @@
 import { NextResponse } from 'next/server';
 
-const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-
-interface NewsItem {
-  title: string;
-  link: string;
-}
-
-// Функция для парсинга XML без библиотек
-function parseRSS(xml: string): NewsItem[] {
-  const items: NewsItem[] = [];
-  const regex = /<item>(.*?)<\/item>/gs;
-  let match;
-  
-  while ((match = regex.exec(xml)) !== null) {
-    const itemXml = match[1];
-    const titleMatch = itemXml.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
-    const linkMatch = itemXml.match(/<link>(.*?)<\/link>/);
-    
-    if (titleMatch && linkMatch) {
-      items.push({
-        title: titleMatch[1].replace(/&amp;/g, '&'),
-        link: linkMatch[1]
-      });
-    }
-  }
-  return items;
-}
+export const dynamic = 'force-dynamic'; // Отключаем кэширование Next.js
 
 export async function GET() {
-  if (!TELEGRAM_TOKEN || !CHAT_ID) {
-    return NextResponse.json({ error: "Config missing" }, { status: 500 });
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+
+  if (!token || !chatId) {
+    return new NextResponse(JSON.stringify({ error: "NO TOKENS" }), { status: 500 });
   }
 
-  // Источники: пробуем APK, если не выйдет — MPOC
-  const sources = [
-    'https://www.apk-inform.com/ru/news/rss',
-    'https://mpoc.org.my/feed/'
-  ];
-
-  let news: NewsItem[] = [];
-  let sourceName = "";
-
-  for (const url of sources) {
-    try {
-      // Маскируемся под обычный браузер Chrome
-      const res = await fetch(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'application/xml, text/xml, */*',
-        },
-        cache: 'no-store'
-      });
-
-      if (res.ok) {
-        const xmlText = await res.text();
-        const parsedItems = parseRSS(xmlText);
-        if (parsedItems.length > 0) {
-          news = parsedItems.slice(0, 5);
-          sourceName = url.includes('apk') ? 'APK-Inform' : 'MPOC';
-          break; // Успех, выходим из цикла
-        }
-      }
-    } catch (e) {
-      console.error(`Failed to fetch ${url}:`, e);
-      continue;
-    }
-  }
-
-  if (news.length === 0) {
-    return NextResponse.json({ error: "All sources failed or empty" }, { status: 500 });
-  }
-
-  // Формируем сообщение
-  let msg = `📰 <b>Morning News Digest (${sourceName})</b>\n`;
-  msg += `🗓 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
-
-  news.forEach((n, i) => {
-    msg += `<b>${i+1}. ${n.title}</b>\n🔗 <a href="${n.link}">Читать</a>\n\n`;
-  });
-
-  msg += `<i>Source: Oils Terminal Aggregator</i>`;
-
-  // Отправляем в Telegram
   try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+    // Берем MPOC, так как APK блочит 403. MPOC обычно открыт.
+    const url = 'https://mpoc.org.my/feed/';
+    
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      cache: 'no-store' 
+    });
+
+    if (!res.ok) {
+      return new NextResponse(JSON.stringify({ error: `FETCH FAILED: ${res.status}` }), { status: 500 });
+    }
+
+    const text = await res.text();
+    
+    // Тупый парсинг XML
+    const titles = [];
+    const links = [];
+    const regex = /<item>(.*?)<\/item>/gs;
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const item = match[1];
+      const t = item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
+      const l = item.match(/<link>(.*?)<\/link>/);
+      if (t && l) {
+        titles.push(t[1]);
+        links.push(l[1]);
+      }
+    }
+
+    if (titles.length === 0) {
+      return new NextResponse(JSON.stringify({ error: "NO ITEMS PARSED" }), { status: 500 });
+    }
+
+    // Формируем текст
+    let msg = "📰 <b>News Digest</b>\n\n";
+    for (let i = 0; i < Math.min(5, titles.length); i++) {
+      msg += `<b>${i+1}. ${titles[i]}</b>\n<a href="${links[i]}">Link</a>\n\n`;
+    }
+
+    // Шлем в телегу
+    const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        chat_id: CHAT_ID, 
-        text: msg, 
-        parse_mode: 'HTML', 
-        disable_web_page_preview: false 
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: msg,
+        parse_mode: 'HTML'
       })
     });
-    return NextResponse.json({ success: true, sent: news.length, source: sourceName });
+
+    if (!tgRes.ok) {
+      return new NextResponse(JSON.stringify({ error: "TG FAILED" }), { status: 500 });
+    }
+
+    return new NextResponse(JSON.stringify({ success: true, count: titles.length }), {
+      headers: { 'Cache-Control': 'no-store, max-age=0' }
+    });
+
   } catch (e) {
-    return NextResponse.json({ error: "Telegram send failed" }, { status: 500 });
+    return new NextResponse(JSON.stringify({ error: String(e) }), { status: 500 });
   }
 }
