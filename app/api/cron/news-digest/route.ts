@@ -3,9 +3,14 @@ import { NextResponse } from 'next/server';
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
+interface NewsItem {
+  title: string;
+  link: string;
+}
+
 // Функция для парсинга XML без библиотек
-function parseRSS(xml: string) {
-  const items = [];
+function parseRSS(xml: string): NewsItem[] {
+  const items: NewsItem[] = [];
   const regex = /<item>(.*?)<\/item>/gs;
   let match;
   
@@ -35,7 +40,7 @@ export async function GET() {
     'https://mpoc.org.my/feed/'
   ];
 
-  let news = [];
+  let news: NewsItem[] = [];
   let sourceName = "";
 
   for (const url of sources) {
