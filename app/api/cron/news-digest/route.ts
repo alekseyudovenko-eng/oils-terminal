@@ -2,9 +2,14 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
+interface NewsItem {
+  title: string;
+  link: string;
+}
+
 // Функция парсинга (универсальная)
-function extractNews(xml: string) {
-  const items = [];
+function extractNews(xml: string): NewsItem[] {
+  const items: NewsItem[] = [];
   // Ищем все блоки <item>...</item>
   const itemRegex = /<item>([\s\S]*?)<\/item>/g;
   let match;
@@ -39,7 +44,7 @@ export async function GET() {
     'https://mpoc.org.my/feed/'
   ];
 
-  let allNews = [];
+  let allNews: NewsItem[] = [];
   let usedSource = "";
 
   for (const url of sources) {
