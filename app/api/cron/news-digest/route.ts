@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-dynamic'; // Отключаем кэширование Next.js
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -11,7 +11,7 @@ export async function GET() {
   }
 
   try {
-    // Берем MPOC, так как APK блочит 403. MPOC обычно открыт.
+    // Пробуем MPOC
     const url = 'https://mpoc.org.my/feed/';
     
     const res = await fetch(url, {
@@ -25,32 +25,42 @@ export async function GET() {
 
     const text = await res.text();
     
-    // Тупый парсинг XML
-    const titles = [];
-    const links = [];
-    const regex = /<item>(.*?)<\/item>/gs;
-    let match;
-    while ((match = regex.exec(text)) !== null) {
-      const item = match[1];
-      const t = item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
-      const l = item.match(/<link>(.*?)<\/link>/);
-      if (t && l) {
-        titles.push(t[1]);
-        links.push(l[1]);
+    // Более гибкий парсинг: ищем просто теги <title> и <link> внутри <item>
+    const items = [];
+    const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+    let itemMatch;
+    
+    while ((itemMatch = itemRegex.exec(text)) !== null) {
+      const content = itemMatch[1];
+      
+      // Ищем заголовок (с CDATA или без)
+      const titleMatch = content.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/);
+      // Ищем ссылку
+      const linkMatch = content.match(/<link>(.*?)<\/link>/);
+      
+      if (titleMatch && linkMatch) {
+        items.push({
+          title: titleMatch[1].trim(),
+          link: linkMatch[1].trim()
+        });
       }
     }
 
-    if (titles.length === 0) {
-      return new NextResponse(JSON.stringify({ error: "NO ITEMS PARSED" }), { status: 500 });
+    if (items.length === 0) {
+      // Если не нашли items, вернем кусок текста для отладки
+      return new NextResponse(JSON.stringify({ 
+        error: "NO ITEMS PARSED", 
+        preview: text.substring(0, 500) 
+      }), { status: 500 });
     }
 
-    // Формируем текст
-    let msg = "📰 <b>News Digest</b>\n\n";
-    for (let i = 0; i < Math.min(5, titles.length); i++) {
-      msg += `<b>${i+1}. ${titles[i]}</b>\n<a href="${links[i]}">Link</a>\n\n`;
+    // Формируем сообщение для Telegram
+    let msg = "📰 <b>News Digest (MPOC)</b>\n\n";
+    for (let i = 0; i < Math.min(5, items.length); i++) {
+      msg += `<b>${i+1}. ${items[i].title}</b>\n<a href="${items[i].link}">Link</a>\n\n`;
     }
 
-    // Шлем в телегу
+    // Отправляем
     const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -65,8 +75,8 @@ export async function GET() {
       return new NextResponse(JSON.stringify({ error: "TG FAILED" }), { status: 500 });
     }
 
-    return new NextResponse(JSON.stringify({ success: true, count: titles.length }), {
-      headers: { 'Cache-Control': 'no-store, max-age=0' }
+    return new NextResponse(JSON.stringify({ success: true, count: items.length }), {
+      headers: { 'Cache-Control': 'no-store' }
     });
 
   } catch (e) {
