@@ -6,147 +6,141 @@ interface NewsItem {
   content: string;
   published_date: string;
   source: string;
-  image?: string;
 }
 
-async function fetchNewsAPI(query: string, debugName: string): Promise<NewsItem[]> {
-  const apiKey = process.env.NEWS_API_KEY;
+function extractNewsFromRSS(xml: string, sourceName: string): NewsItem[] {
+  const items: NewsItem[] = [];
+  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+  let match;
   
-  if (!apiKey) {
-    console.error(`❌ [${debugName}] NEWS_API_KEY is missing`);
-    return [];
-  }
-
-  try {
-    // ВРЕМЕННО: без фильтра по дате, чтобы проверить, есть ли новости вообще
-    // Когда заработает — раскомментируй даты ниже
-    // const today = new Date().toISOString().split('T')[0];
-    // const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  while ((match = itemRegex.exec(xml)) !== null) {
+    const content = match[1];
+    const titleMatch = content.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i);
+    const linkMatch = content.match(/<link>(.*?)<\/link>/i);
+    const descMatch = content.match(/<description>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/description>/i);
+    const pubDateMatch = content.match(/<pubDate>(.*?)<\/pubDate>/i);
     
-    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&pageSize=10&apiKey=${apiKey}`;
-    // С датами: `...&from=${weekAgo}&to=${today}&...`
-    
-    console.log(`🌐 [${debugName}] Fetching: ${url.replace(apiKey, '***')}`);
-    
-    const res = await fetch(url, { 
-      next: { revalidate: 1800 },
-      headers: { 'Accept': 'application/json' }
-    });
-    
-    const resText = await res.text();
-    console.log(`📡 [${debugName}] Status: ${res.status}, Body length: ${resText.length}`);
-    
-    if (!res.ok) {
-      console.error(`❌ [${debugName}] HTTP Error: ${resText}`);
-      return [];
+    if (titleMatch && linkMatch) {
+      items.push({
+        title: titleMatch[1].trim().replace(/&amp;/g, '&'),
+        url: linkMatch[1].trim(),
+        content: descMatch ? descMatch[1].replace(/<[^>]*>/g, '').substring(0, 200) : "",
+        published_date: pubDateMatch ? new Date(pubDateMatch[1]).toISOString() : new Date().toISOString(),
+        source: sourceName
+      });
     }
-    
-    const data = JSON.parse(resText);
-    
-    if (data.status !== 'ok') {
-      console.warn(`⚠️ [${debugName}] API Error: ${data.code} - ${data.message}`);
-      return [];
-    }
-    
-    const count = data.articles?.length || 0;
-    console.log(`📦 [${debugName}] Found: ${count} articles`);
-    
-    if (count === 0) return [];
-
-    return data.articles
-      .filter((a: any) => a.title && a.title !== '[Removed]' && a.url)
-      .slice(0, 10) // Берем топ-10 из каждого запроса
-      .map((a: any) => ({
-        title: a.title.replace(/<[^>]*>/g, ''),
-        url: a.url,
-        content: a.description?.substring(0, 200) || "",
-        published_date: a.publishedAt,
-        source: a.source?.name || 'Unknown',
-        image: a.urlToImage || undefined
-      }));
-      
-  } catch (e) {
-    console.error(`💥 [${debugName}] Exception:`, e);
-    return [];
   }
+  return items;
 }
 
 export async function GET() {
-  try {
-    let allNews: NewsItem[] = [];
+  let allNews: NewsItem[] = [];
+  
+  // ВСЕ источники, сгруппированные по темам
+  const rssSources = [
+    // === PALM OIL / INDONESIA / MALAYSIA ===
+    { url: 'https://www.palmoilmagazine.com/feed/', name: 'Palmoil Magazine' },
+    { url: 'https://mpoc.org.my/feed/', name: 'MPOC' },
+    { url: 'https://gapki.id/feed/', name: 'GAPKI' },
+    { url: 'https://www.theedgemarkets.com/rss', name: 'The Edge Markets' },
+    { url: 'https://www.nst.com.my/rss', name: 'New Straits Times' },
     
-    // ОЧЕНЬ ПРОСТЫЕ запросы — одно-два слова, без сложных операторов
-    // Новости по ним точно есть в индексе NewsAPI
-    const queries = [
-      { q: 'palm oil', name: 'palm_oil' },
-      { q: 'crude palm oil', name: 'cpo' },
-      { q: 'soybean oil', name: 'soybean' },
-      { q: 'sunflower oil', name: 'sunflower' },
-      { q: 'vegetable oil', name: 'veg_oil' },
-      { q: 'EUDR', name: 'eudr' },
-      { q: 'RED III', name: 'red3' },
-      { q: 'Indonesia export', name: 'indo_export' },
-      { q: 'Ukraine grain', name: 'ukraine' },
-      { q: 'biofuel Europe', name: 'biofuel_eu' }
-    ];
+    // === SOY / SUNFLOWER / RAPESEED / GRAINS ===
+    { url: 'https://www.world-grain.com/rss', name: 'World-Grain' },
+    { url: 'https://www.agri-pulse.com/rss', name: 'Agri-Pulse' },
+    { url: 'https://www.brownfieldagnews.com/feed/', name: 'Brownfield Ag News' },
+    { url: 'https://www.soybeans.org/news/feed/', name: 'United Soybean Board' },
+    
+    // === GLOBAL MARKETS / EU / REGULATION ===
+    { url: 'https://www.reuters.com/business/energy/rss', name: 'Reuters Energy' },
+    { url: 'https://www.bloomberg.com/energy/rss', name: 'Bloomberg Energy' },
+    { url: 'https://www.euractiv.com/section/agriculture-food/feed/', name: 'Euractiv' },
+    { url: 'https://www.politico.eu/feed/', name: 'Politico Europe' },
+    { url: 'https://www.euobserver.com/rss', name: 'EUobserver' },
+    
+    // === CIS / UKRAINE / SUNFLOWER ===
+    { url: 'https://www.apk-inform.com/ru/news/rss', name: 'APK-Inform' },
+    { url: 'https://www.zerno.ua/feed/', name: 'Zerno.ua' },
+    { url: 'https://www.agrotimes.net/feed/', name: 'AgroTimes' },
+    
+    // === PRICES / EXCHANGES ===
+    { url: 'https://www.barchart.com/news/rss', name: 'Barchart' },
+    { url: 'https://www.investing.com/rss/news_106.rss', name: 'Investing.com Commodities' },
+    { url: 'https://www.mcxindia.com/mcxpress/rss', name: 'MCX India' }
+  ];
 
-    for (const { q, name } of queries) {
-      const items = await fetchNewsAPI(q, name);
-      allNews = [...allNews, ...items];
-      console.log(`📊 Accumulated: ${allNews.length} total`);
-      if (allNews.length >= 50) break;
+  // Параллельная загрузка с таймаутом
+  const fetchWithTimeout = async (url: string, timeout = 8000) => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    try {
+      const res = await fetch(url, {
+        headers: { 'User-Agent': 'Mozilla/5.0' },
+        signal: controller.signal,
+        next: { revalidate: 3600 }
+      });
+      clearTimeout(id);
+      return res;
+    } catch {
+      clearTimeout(id);
+      throw new Error('Timeout');
     }
+  };
 
-    // Если новостей мало — пробуем ещё более общие запросы
-    if (allNews.length < 10) {
-      console.log('⚠️ Low count, trying fallback queries...');
-      const fallbacks = [
-        { q: 'agriculture', name: 'agri' },
-        { q: 'commodity market', name: 'commodity' },
-        { q: 'food industry', name: 'food' }
-      ];
-      for (const { q, name } of fallbacks) {
-        const items = await fetchNewsAPI(q, name);
-        allNews = [...allNews, ...items];
-        if (allNews.length >= 30) break;
+  // Загружаем все источники параллельно
+  const promises = rssSources.map(async (src) => {
+    try {
+      const res = await fetchWithTimeout(src.url);
+      if (res?.ok) {
+        const text = await res.text();
+        return extractNewsFromRSS(text, src.name);
       }
+    } catch (e) {
+      console.warn(`⚠️ Failed to fetch ${src.name}:`, e);
     }
+    return [];
+  });
 
-    // Простая дедубликация
-    const seen = new Set<string>();
-    const uniqueNews = allNews.filter(n => {
-      const key = n.title.toLowerCase().trim();
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-
-    // Сортировка по дате
-    uniqueNews.sort((a, b) => 
-      new Date(b.published_date).getTime() - new Date(a.published_date).getTime()
-    );
-
-    const result = uniqueNews.slice(0, 25);
-    
-    console.log(`✅ FINAL: ${result.length} news returned`);
-    
-    return NextResponse.json({ 
-      news: result,
-      meta: {
-        source: 'NewsAPI.org (debug mode)',
-        totalFetched: allNews.length,
-        afterDedupe: uniqueNews.length,
-        returned: result.length,
-        timestamp: new Date().toISOString(),
-        hint: 'If count is low: check NewsAPI dashboard for available sources & quota'
-      }
-    });
-    
-  } catch (e) {
-    console.error("❌ Critical GET error:", e);
-    return NextResponse.json(
-      { error: "Failed to fetch news", details: String(e) }, 
-      { status: 500 }
-    );
+  const results = await Promise.all(promises);
+  for (const items of results) {
+    allNews = [...allNews, ...items];
   }
+
+  console.log(`📥 Fetched ${allNews.length} raw items from ${rssSources.length} sources`);
+
+  // Дедубликация по заголовку + источнику
+  const seen = new Set<string>();
+  const uniqueNews = allNews.filter(n => {
+    const key = `${n.title.toLowerCase().trim()}|${n.source}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  // Сортировка: сначала новые
+  uniqueNews.sort((a, b) => 
+    new Date(b.published_date).getTime() - new Date(a.published_date).getTime()
+  );
+
+  // Фильтр по ключевым словам (опционально, но рекомендуется)
+  const requiredKeywords = /palm|cpo|ffb|soybean|sunflower|rapeseed|coconut|vegetable oil|biodiesel|eudr|red.?iii|biofuel|export|import|tariff|regulation|food industry/i;
+  
+  const filteredNews = uniqueNews.filter(n => 
+    requiredKeywords.test(n.title + ' ' + n.content)
+  );
+
+  console.log(`✅ Final: ${filteredNews.length} verified news items`);
+
+  return NextResponse.json({ 
+    news: filteredNews.slice(0, 30),
+    meta: {
+      source: 'Verified RSS Feeds (multi-source)',
+      totalSources: rssSources.length,
+      rawCount: allNews.length,
+      afterDedupe: uniqueNews.length,
+      afterFilter: filteredNews.length,
+      returned: Math.min(filteredNews.length, 30),
+      timestamp: new Date().toISOString()
+    }
+  });
 }
