@@ -8,6 +8,16 @@ interface NewsItem {
   source: string;
 }
 
+// Декодер HTML-сущностей (&#8216; → ', &amp; → &, etc.)
+function decodeHtmlEntities(text: string): string {
+  const entities: Record<string, string> = {
+    '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'",
+    '&#8216;': "'", '&#8217;': "'", '&#8220;': '"', '&#8221;': '"',
+    '&nbsp;': ' ', '&ndash;': '–', '&mdash;': '—'
+  };
+  return text.replace(/&[#a-z0-9]+;/gi, (match) => entities[match.toLowerCase()] || match);
+}
+
 function extractNewsFromRSS(xml: string, sourceName: string): NewsItem[] {
   const items: NewsItem[] = [];
   const itemRegex = /<item>([\s\S]*?)<\/item>/g;
@@ -22,9 +32,9 @@ function extractNewsFromRSS(xml: string, sourceName: string): NewsItem[] {
     
     if (titleMatch && linkMatch) {
       items.push({
-        title: titleMatch[1].trim().replace(/&amp;/g, '&'),
+        title: decodeHtmlEntities(titleMatch[1].trim()),
         url: linkMatch[1].trim(),
-        content: descMatch ? descMatch[1].replace(/<[^>]*>/g, '').substring(0, 200) : "",
+        content: descMatch ? decodeHtmlEntities(descMatch[1].replace(/<[^>]*>/g, '').substring(0, 200)) : "",
         published_date: pubDateMatch ? new Date(pubDateMatch[1]).toISOString() : new Date().toISOString(),
         source: sourceName
       });
@@ -33,36 +43,45 @@ function extractNewsFromRSS(xml: string, sourceName: string): NewsItem[] {
   return items;
 }
 
-// Умный фильтр: оставляет новости про масла, убирает общий политический шум
+// 🔥 СТРОГИЙ ФИЛЬТР: только новости про масла
 function isRelevant(news: NewsItem): boolean {
   const text = (news.title + ' ' + news.content).toLowerCase();
   
-  // ✅ Белый список: если есть хотя бы одно из этих слов — новость релевантна
+  // ✅ БЕЛЫЙ СПИСОК: если есть ХОТЯ БЫ ОДНО из этих слов — новость релевантна
   const oilKeywords = [
-    'palm', 'cpo', 'ffb', 'soybean', 'sunflower', 'rapeseed', 'coconut',
-    'vegetable oil', 'edible oil', 'biodiesel', 'biofuel', 'eudr', 'red iii',
-    'red3', 'deforestation regulation', 'sustainable palm', 'rsppo', 'mspo',
-    'export duty', 'import tariff', 'cpo price', 'ffb price', 'palm oil mill',
-    'palm kernel', 'pko', 'olein', 'stearin', 'refined palm', 'crude palm'
+    // === МАСЛА ===
+    'palm oil', 'crude palm', 'cpo', 'ffb', 'fresh fruit bunch',
+    'soybean oil', 'soy oil', 'soyoil',
+    'sunflower oil', 'sunfloweroil',
+    'rapeseed oil', 'canola oil',
+    'coconut oil', 'copra',
+    'vegetable oil', 'edible oil', 'plant oil',
+    'palm kernel oil', 'pko', 'olein', 'stearin',
+    
+    // === РЫНОК / ЦЕНЫ / ТОРГОВЛЯ ===
+    'cpo price', 'ffb price', 'palm price', 'vegetable oil price',
+    'export duty', 'export tax', 'import tariff', 'reference price',
+    'palm oil export', 'palm oil import', 'vegetable oil trade',
+    'palm oil mill', 'palm oil refinery', 'crushing margin',
+    
+    // === БИОТОПЛИВО / РЕГУЛЯТОРИКА ===
+    'biodiesel', 'biofuel', 'renewable fuel', 'sustainable aviation fuel',
+    'eudr', 'deforestation regulation', 'eu deforestation',
+    'red iii', 'red3', 'renewable energy directive',
+    'rsppo', 'mspo', 'iscc', 'sustainable palm',
+    
+    // === ИНДУСТРИЯ / ПРОИЗВОДСТВО ===
+    'palm oil production', 'palm oil yield', 'palm oil stock',
+    'palm oil demand', 'palm oil consumption',
+    'smallholder palm', 'palm oil plantation', 'palm oil farmer',
+    
+    // === КОНКУРЕНТЫ / ЗАМЕСТИТЕЛИ ===
+    'soybean meal', 'sunflower meal', 'rapeseed meal',
+    'vegetable oil substitution', 'oilseed complex'
   ];
   
-  const hasOilKeyword = oilKeywords.some(kw => text.includes(kw.toLowerCase()));
-  if (hasOilKeyword) return true;
-  
-  // ❌ Черный список: если есть эти слова И нет ключевых слов по маслам — убираем
-  const blacklist = [
-    'ebola', 'deportation', 'prison', 'quarantine lab', 'settler imports',
-    'israel sanctions', 'cuba embargo', 'trader joe', 'weight loss', 'cholesterol',
-    'statins', 'hair care', 'conditioner', 'cleansing oil', 'bath product',
-    'mindful awards', 'recipe', 'chef', 'blue zone', 'ramadan food', 'gold reserve',
-    'nickel boom', 'coal price', 'copper mining', 'bond market', 'trillion trap'
-  ];
-  
-  const hasBlacklisted = blacklist.some(word => text.includes(word.toLowerCase()));
-  if (hasBlacklisted) return false;
-  
-  // Если не попали ни в один список — оставляем (на всякий случай)
-  return true;
+  // Проверяем: есть ли хотя бы одно ключевое слово?
+  return oilKeywords.some(kw => text.includes(kw.toLowerCase()));
 }
 
 export async function GET() {
@@ -84,12 +103,8 @@ export async function GET() {
       { url: 'https://www.brownfieldagnews.com/feed/', name: 'Brownfield Ag News' },
       { url: 'https://www.soybeans.org/news/feed/', name: 'United Soybean Board' },
       
-      // 🌍 EU / REGULATION / ENERGY
-      { url: 'https://www.reuters.com/business/energy/rss', name: 'Reuters Energy' },
-      { url: 'https://www.bloomberg.com/energy/rss', name: 'Bloomberg Energy' },
-      { url: 'https://www.euractiv.com/section/agriculture-food/feed/', name: 'Euractiv' },
-      { url: 'https://www.politico.eu/feed/', name: 'Politico Europe' },
-      { url: 'https://www.euobserver.com/rss', name: 'EUobserver' },
+      // 🌍 EU / REGULATION (только агро-разделы)
+      { url: 'https://www.euractiv.com/section/agriculture-food/feed/', name: 'Euractiv Agri' },
       
       // 🇷🇺 🇺🇦 CIS / SUNFLOWER
       { url: 'https://www.apk-inform.com/ru/news/rss', name: 'APK-Inform' },
@@ -100,12 +115,10 @@ export async function GET() {
       { url: 'https://www.seenews.com/feed', name: 'SeeNews (Balkans)' },
       { url: 'https://www.balkaninsight.com/feed', name: 'Balkan Insight' },
       { url: 'https://www.b92.net/eng/rss/vesti.php', name: 'B92 (Serbia)' },
-      { url: 'https://www.thefirstnews.com/rss', name: 'The First News (Poland)' },
       
       // 💹 PRICES / EXCHANGES
       { url: 'https://www.barchart.com/news/rss', name: 'Barchart' },
-      { url: 'https://www.investing.com/rss/news_106.rss', name: 'Investing.com Commodities' },
-      { url: 'https://www.mcxindia.com/mcxpress/rss', name: 'MCX India' }
+      { url: 'https://www.investing.com/rss/news_106.rss', name: 'Investing.com Commodities' }
     ];
 
     // Загрузка с таймаутом
@@ -155,7 +168,7 @@ export async function GET() {
     });
     console.log(`📅 After date filter: ${recentNews.length} items`);
 
-    // 🔹 ФИЛЬТР 2: Умная релевантность (масла ≠ общая политика)
+    // 🔹 ФИЛЬТР 2: СТРОГИЙ белый список (только масла)
     const relevantNews = recentNews.filter(isRelevant);
     console.log(`🎯 After relevance filter: ${relevantNews.length} items`);
 
@@ -180,7 +193,7 @@ export async function GET() {
     return NextResponse.json({ 
       news: result,
       meta: {
-        source: 'Verified RSS Feeds (smart filtered)',
+        source: 'Verified RSS Feeds (strict whitelist)',
         totalSources: rssSources.length,
         rawCount: allNews.length,
         afterDateFilter: recentNews.length,
