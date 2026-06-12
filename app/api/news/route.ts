@@ -9,76 +9,80 @@ interface NewsItem {
   image?: string;
 }
 
-async function fetchNewsAPI(query: string): Promise<NewsItem[]> {
-  const apiKey = process.env.NEWS_API_KEY;
-  if (!apiKey) {
-    console.error("❌ NEWS_API_KEY is not set");
-    return [];
-  }
-
+// Функция для извлечения реальной ссылки из прокси-ссылки Гугла
+function extractRealUrl(googleUrl: string): string {
   try {
-    // Даты: последние 7 дней (бесплатный тариф позволяет до 30)
-    const today = new Date().toISOString().split('T')[0];
-    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    // Гугл форматирует ссылки как: https://news.google.com/rss/articles/...?url=REAL_URL...
+    const urlObj = new URL(googleUrl);
+    const realUrlParam = urlObj.searchParams.get('url');
+    if (realUrlParam) return decodeURIComponent(realUrlParam);
     
-    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&from=${weekAgo}&to=${today}&sortBy=publishedAt&pageSize=10&apiKey=${apiKey}`;
-    
-    const res = await fetch(url, { next: { revalidate: 1800 } });
-    
-    if (!res.ok) {
-      console.error(`❌ NewsAPI HTTP ${res.status}: ${await res.text()}`);
-      return [];
+    // Если параметра нет, пробуем распарсить путь (старый формат)
+    if (urlObj.pathname.includes('/articles/')) {
+      const parts = urlObj.pathname.split('/');
+      const encoded = parts[parts.length - 1];
+      if (encoded && encoded.startsWith('CBM')) {
+         // Это сложный случай, но часто там просто закодированный оригинал
+         // Для простоты вернем оригинал, если не удалось распаковать
+      }
     }
+    return googleUrl;
+  } catch {
+    return googleUrl;
+  }
+}
+
+// Парсер RSS от Google News
+function parseGoogleRSS(xml: string): NewsItem[] {
+  const items: NewsItem[] = [];
+  // Регулярка ищет блоки <item>...</item>
+  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+  let match;
+  
+  while ((match = itemRegex.exec(xml)) !== null) {
+    const content = match[1];
     
-    const data = await res.json();
+    // Извлекаем поля
+    const titleMatch = content.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/);
+    const linkMatch = content.match(/<link>(.*?)<\/link>/);
+    const descMatch = content.match(/<description>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/description>/);
+    const pubDateMatch = content.match(/<pubDate>(.*?)<\/pubDate>/);
+    const sourceMatch = content.match(/<source[^>]*>(.*?)<\/source>/);
     
-    if (data.status !== 'ok' || !data.articles) {
-      console.warn(`⚠️ NewsAPI returned: ${data.status || 'no data'}`);
-      return [];
+    if (titleMatch && linkMatch) {
+      const rawUrl = linkMatch[1].trim();
+      items.push({
+        title: titleMatch[1].trim().replace(/&amp;/g, '&'),
+        url: extractRealUrl(rawUrl), // Распаковываем ссылку!
+        content: descMatch ? descMatch[1].replace(/<[^>]*>/g, '').substring(0, 200) : "",
+        published_date: pubDateMatch ? new Date(pubDateMatch[1]).toISOString() : new Date().toISOString(),
+        source: sourceMatch ? sourceMatch[1].trim() : 'Google News'
+      });
     }
+  }
+  return items;
+}
 
-    // Обязательные ключевые слова (хотя бы одно должно быть в заголовке или описании)
-    const requiredKeywords = [
-      'palm', 'cpo', 'ffb', 'soybean', 'sunflower', 'rapeseed', 'coconut',
-      'biodiesel', 'vegetable oil', 'palm oil', 'cpo price', 'ffob'
-    ];
+async function fetchGoogleNews(query: string): Promise<NewsItem[]> {
+  try {
+    // Формируем ссылку на RSS Гугл-Новостей
+    // qdr:d = за последние 24 часа (как в твоем примере)
+    // hl=ru, gl=RU - можно менять под регион
+    const encodedQuery = encodeURIComponent(query);
+    const rssUrl = `https://news.google.com/rss/search?q=${encodedQuery}&hl=ru&gl=RU&ceid=RU:ru&qdr:d`;
     
-    // Стоп-слова (если есть в заголовке — отбрасываем)
-    const blacklist = [
-      'bible', 'prayer', 'recipe', 'award', 'bath', 'organics', 'pride',
-      'soap', 'cosmetic', 'shampoo', 'lotions', 'mindful', 'wellness'
-    ];
-
-    return data.articles
-      .filter((a: any) => a.title && a.title !== '[Removed]')
-      .map((a: any) => {
-        const title = a.title;
-        const desc = a.description || '';
-        const text = (title + ' ' + desc).toLowerCase();
-        
-        // 1. Фильтр по стоп-словам
-        if (blacklist.some(word => text.includes(word))) {
-          return null;
-        }
-        
-        // 2. Фильтр по обязательным ключевым словам
-        if (!requiredKeywords.some(kw => text.includes(kw))) {
-          return null;
-        }
-        
-        return {
-          title: title.replace(/<[^>]*>/g, ''),
-          url: a.url,
-          content: desc?.substring(0, 200) || "",
-          published_date: a.publishedAt,
-          source: a.source?.name || 'Unknown',
-          image: a.urlToImage || undefined
-        };
-      })
-      .filter((n: NewsItem | null) => n !== null) as NewsItem[];
-      
+    const res = await fetch(rssUrl, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+      next: { revalidate: 1800 } // Кэш на 30 минут
+    });
+    
+    if (!res.ok) return [];
+    
+    const xml = await res.text();
+    return parseGoogleRSS(xml);
+    
   } catch (e) {
-    console.error("💥 NewsAPI Exception:", e);
+    console.error(`❌ Google RSS Error for "${query}":`, e);
     return [];
   }
 }
@@ -87,50 +91,50 @@ export async function GET() {
   try {
     let allNews: NewsItem[] = [];
     
-    // Запросы с операторами исключения (-слово) и точными фразами ("...")
+    // Запросы, которые дают хорошую выдачу в Гугле
     const queries = [
-      '"palm oil" price market -crude -petroleum -coal -nickel -copper',
-      '"crude palm oil" export Indonesia -coal -mining -metal',
-      '"soybean oil" CBOT futures -crude -petroleum',
-      '"sunflower oil" export Ukraine -crude',
-      '"CPO" reference price Indonesia -crude -petroleum',
-      '"FFB" price palm oil Indonesia',
-      '"biodiesel" palm OR soybean OR sunflower -diesel -fuel -petroleum'
+      'vegetable oil market news',
+      'palm oil price Indonesia',
+      'crude palm oil export',
+      'soybean oil CBOT price',
+      'sunflower oil market Ukraine'
     ];
 
     for (const query of queries) {
-      const items = await fetchNewsAPI(query);
-      console.log(`🔍 Query "${query.substring(0, 40)}...": ${items.length} items`);
+      const items = await fetchGoogleNews(query);
+      console.log(`🔍 Google Query "${query}": ${items.length} items`);
       allNews = [...allNews, ...items];
-      if (allNews.length >= 20) break; // Достаточно, выходим
+      // Собираем побольше, потом отфильтруем дубли
+      if (allNews.length >= 30) break; 
     }
 
-    // Дедубликация по заголовку (нижний регистр)
+    // Умная дедубликация (по заголовку, игнорируя регистр)
     const seen = new Set<string>();
     const uniqueNews = allNews.filter(n => {
-      const key = n.title.toLowerCase().trim();
+      // Нормализуем заголовок для сравнения
+      const key = n.title.toLowerCase().replace(/[^\wа-яё]/gi, '');
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
     });
 
-    console.log(`✅ Final result: ${uniqueNews.length} unique news items`);
+    // Сортировка по дате (сначала новые)
+    uniqueNews.sort((a, b) => 
+      new Date(b.published_date).getTime() - new Date(a.published_date).getTime()
+    );
+
+    console.log(`✅ Final: ${uniqueNews.length} unique news`);
     
     return NextResponse.json({ 
       news: uniqueNews.slice(0, 25),
       meta: {
-        totalFound: allNews.length,
-        afterDedupe: uniqueNews.length,
-        source: 'NewsAPI.org',
+        source: 'Google News RSS',
         timestamp: new Date().toISOString()
       }
     });
     
   } catch (e) {
-    console.error("❌ GET handler error:", e);
-    return NextResponse.json(
-      { error: "Failed to fetch news", details: String(e) }, 
-      { status: 500 }
-    );
+    console.error("❌ Critical Error:", e);
+    return NextResponse.json({ error: "Failed to fetch news" }, { status: 500 });
   }
 }
