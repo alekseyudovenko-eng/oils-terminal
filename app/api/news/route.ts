@@ -9,77 +9,46 @@ interface NewsItem {
   image?: string;
 }
 
-async function fetchGoogleNews(query: string): Promise<NewsItem[]> {
-  const apiKey = process.env.GOOGLE_SEARCH_API_KEY;
-  const cx = process.env.GOOGLE_SEARCH_ENGINE_ID;
-
-  console.log("🔍 Google Search Debug:", { 
-    hasKey: !!apiKey, 
-    hasCx: !!cx, 
-    query 
-  });
-
-  if (!apiKey || !cx) {
-    console.error("❌ Missing env vars");
-    return [];
-  }
+async function fetchNewsAPI(query: string): Promise<NewsItem[]> {
+  const apiKey = process.env.NEWS_API_KEY;
+  if (!apiKey) return [];
 
   try {
-    // Убрали dateRestrict — ищем все новости без фильтра по дате
-    const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}&searchType=news&num=10`;
-    
-    console.log("🌐 Request URL:", url);
+    // Ищем новости за последние 2 дня, на английском
+    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&sortBy=publishedAt&pageSize=10&apiKey=${apiKey}`;
     
     const res = await fetch(url, { next: { revalidate: 1800 } });
-    
-    console.log("📡 Status:", res.status);
-    
-    if (!res.ok) {
-      const err = await res.text();
-      console.error("❌ API Error:", err);
-      return [];
-    }
-    
+    if (!res.ok) return [];
     const data = await res.json();
-    console.log("📦 Response:", { 
-      itemsCount: data.items?.length || 0, 
-      error: data.error?.message || null 
-    });
     
-    if (!data.items || data.items.length === 0) return [];
+    if (data.status !== 'ok' || !data.articles) return [];
 
-    return data.items.map((item: any) => ({
-      title: item.title?.replace(/<[^>]*>/g, '') || 'No title',
-      url: item.link,
-      content: item.snippet?.substring(0, 200) || "",
-      published_date: new Date().toISOString(),
-      source: 'Google Custom Search',
-      image: item.pagemap?.cse_image?.[0]?.src || undefined
-    }));
-    
+    return data.articles
+      .filter((a: any) => a.title !== '[Removed]') // Фильтр мусора
+      .map((a: any) => ({
+        title: a.title,
+        url: a.url,
+        content: a.description?.substring(0, 200) || "",
+        published_date: a.publishedAt,
+        source: a.source.name,
+        image: a.urlToImage || undefined
+      }));
   } catch (e) {
-    console.error("💥 Exception:", e);
+    console.error("NewsAPI Error:", e);
     return [];
   }
 }
 
 export async function GET() {
   let allNews: NewsItem[] = [];
-
-  // Запросы к Google (только они, без RSS!)
-  const queries = [
-    'palm oil price',
-    'crude palm oil news',
-    'soybean oil market'
-  ];
+  const queries = ['palm oil', 'crude palm oil', 'soybean oil', 'sunflower oil'];
 
   for (const query of queries) {
-    const items = await fetchGoogleNews(query);
+    const items = await fetchNewsAPI(query);
     allNews = [...allNews, ...items];
     if (allNews.length >= 15) break;
   }
 
-  // Убираем дубликаты
   const seen = new Set<string>();
   const uniqueNews = allNews.filter(n => {
     const key = n.title.toLowerCase();
@@ -88,14 +57,5 @@ export async function GET() {
     return true;
   });
 
-  console.log("✅ Final result:", { count: uniqueNews.length });
-
-  return NextResponse.json({ 
-    news: uniqueNews.slice(0, 25),
-    debug: {
-      totalFound: allNews.length,
-      afterDedupe: uniqueNews.length,
-      source: 'Google Custom Search ONLY'
-    }
-  });
+  return NextResponse.json({ news: uniqueNews.slice(0, 25) });
 }
