@@ -129,7 +129,7 @@ export default function OilBalanceTable() {
                 <td className={`p-3 text-right font-mono ${row.change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {row.change >= 0 ? '+' : ''}{row.change}%
                 </td>
-                <td className="p-3 text-gray-500">000' MT</td>
+                <td className="p-3 text-gray-500">{"000' MT"}</td>
               </tr>
             ))}
           </tbody>
