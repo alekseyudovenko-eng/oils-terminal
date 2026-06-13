@@ -9,7 +9,6 @@ interface NewsItem {
   image?: string;
 }
 
-// 🔧 Утилита: декодирование HTML-сущностей (&#8216; → ', &amp; → &)
 function decodeHtmlEntities(text: string): string {
   const map: Record<string, string> = {
     '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'",
@@ -19,7 +18,6 @@ function decodeHtmlEntities(text: string): string {
   return text.replace(/&[#a-z0-9]+;/gi, m => map[m.toLowerCase()] || m);
 }
 
-// 🔧 Утилита: парсинг RSS/Atom (универсальный)
 function parseRSS(xml: string, sourceName: string): NewsItem[] {
   const items: NewsItem[] = [];
   const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
@@ -27,7 +25,6 @@ function parseRSS(xml: string, sourceName: string): NewsItem[] {
 
   while ((match = itemRegex.exec(xml)) !== null) {
     const block = match[1];
-    
     const title = block.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i)?.[1] || '';
     const url = block.match(/<link>(.*?)<\/link>/i)?.[1] || '';
     let content = block.match(/<description>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/description>/i)?.[1] || '';
@@ -41,7 +38,6 @@ function parseRSS(xml: string, sourceName: string): NewsItem[] {
         const parsed = new Date(pubDate);
         if (!isNaN(parsed.getTime())) date = parsed.toISOString();
       } catch {}
-
       items.push({
         title: decodeHtmlEntities(title.trim()),
         url: url.trim(),
@@ -55,10 +51,10 @@ function parseRSS(xml: string, sourceName: string): NewsItem[] {
 }
 
 // ============================================================================
-// 🔰 ТРИ УРОВНЯ ФИЛЬТРАЦИИ
+// 🔰 ТРИ УРОВНЯ ФИЛЬТРАЦИИ (УЛУЧШЕННАЯ ВЕРСИЯ)
 // ============================================================================
 
-// 🔹 LEVEL 1: ПРОВЕРЕННЫЕ ИСТОЧНИКИ (только эти 20)
+// 🔹 LEVEL 1: ПРОВЕРЕННЫЕ ИСТОЧНИКИ (убраны источники с общим новостным потоком)
 const VERIFIED_SOURCES = [
   // === 🌴 PALM OIL / ID / MY ===
   { url: 'https://www.palmoilmagazine.com/feed/', name: 'Palmoil Magazine' },
@@ -80,11 +76,10 @@ const VERIFIED_SOURCES = [
   { url: 'https://www.foodnavigator.com/rss', name: 'FoodNavigator' },
   { url: 'https://www.biofuelsdigest.com/feed/', name: 'Biofuels Digest' },
   
-  // === 🇪🇺🇷🇺🇺🇦 BALKANS / CIS / TRADE ===
-  { url: 'https://www.seenews.com/feed', name: 'SeeNews (Balkans)' },
-  { url: 'https://www.balkaninsight.com/feed', name: 'Balkan Insight' },
+  // === 🇪🇺🇷🇺🇺🇦 CIS / TRADE (только агро-фокус) ===
   { url: 'https://www.zerno.ua/feed/', name: 'Zerno.ua' },
   { url: 'https://www.agrotimes.net/feed/', name: 'AgroTimes' },
+  { url: 'https://www.seenews.com/agriculture/feed', name: 'SeeNews Agriculture' }, // Только агро-раздел
   
   // === 💰 PRICES / MARKETS / COMMODITIES ===
   { url: 'https://www.barchart.com/news/rss', name: 'Barchart' },
@@ -92,8 +87,8 @@ const VERIFIED_SOURCES = [
   { url: 'https://www.investing.com/rss/news_106.rss', name: 'Investing.com Commodities' }
 ];
 
-// 🔹 LEVEL 2: БЕЛЫЙ СПИСОК КОНТЕНТА (хотя бы одно из этих слов должно быть в статье)
-const CONTENT_WHITELIST = [
+// 🔹 LEVEL 2: БЕЛЫЙ СПИСОК (разделён на категории для контекстной проверки)
+const WHITELIST_CORE = [
   // === МАСЛА И МАСЛИЧНЫЕ ===
   'palm oil', 'crude palm', 'cpo', 'ffb', 'fresh fruit bunch', 'palm kernel', 'pko',
   'soybean oil', 'soy oil', 'soyoil', 'soybean meal', 'soybeans', 'soy complex',
@@ -112,58 +107,76 @@ const CONTENT_WHITELIST = [
   'export duty', 'import tariff', 'reference price', 'cpo reference', 'ffb price',
   'crushing margin', 'trade flow', 'shipment', 'logistics', 'port clearance',
   'black sea', 'strait of malacca', 'rotterdam', 'hamburg', 'antwerp', 'gdańsk',
-  'serbia', 'poland', 'bulgaria', 'romania', 'caucasus', 'central asia', 'balkans',
   'food industry', 'food safety', 'labeling regulation', 'ingredient sourcing',
   
-  // === ПРОИЗВОДСТВО И ЦЕПОЧКИ ===
+  // === ПРОИЗВОДСТВО ===
   'palm oil production', 'palm oil yield', 'palm oil stock', 'palm oil demand',
   'smallholder', 'plantation', 'mill', 'refinery', 'crushing', 'processing',
-  'supply chain', 'traceability', 'sustainability report', 'esg reporting'
+  'supply chain', 'esg reporting', 'sustainability report'
 ];
 
-// 🔹 LEVEL 3: ЧЕРНЫЙ СПИСОК КОНТЕНТА (если есть любое из этих слов — статья удаляется)
-const CONTENT_BLACKLIST = [
-  // === СПОРТ / РАЗВЛЕЧЕНИЯ ===
-  'chess', 'fide', 'kasparov', 'carlsen', 'grandmaster', 'tournament',
-  'football', 'soccer', 'premier league', 'champions league',
+// Региональные слова (требуют подтверждения через WHITELIST_CORE)
+const WHITELIST_REGIONAL = [
+  'serbia', 'poland', 'bulgaria', 'romania', 'caucasus', 'central asia', 'balkans',
+  'ukraine', 'russia', 'indonesia', 'malaysia', 'european union', 'eu market'
+];
+
+// 🔹 LEVEL 3: ЧЕРНЫЙ СПИСОК (расширен)
+const BLACKLIST = [
+  // === ПОЛИТИКА / ВОЙНЫ ===
+  'police', 'arrest', 'prosecutor', 'court ruling', 'trial', 'investigation',
+  'shooting', 'killing', 'murder', 'violence', 'protest', 'demonstration',
+  'nato summit', 'fighter jet', 'defense spending', 'military aid', 'troops',
+  'war crime', 'genocide', 'sanctions package', 'diplomatic row',
   
-  // === ПОЛИТИКА / ВОЙНЫ (не связанные с торговлей маслами) ===
-  'trump iran', 'israel sanctions', 'gaza', 'hamas', 'hezbollah',
-  'ukraine battlefield', 'russian troops', 'front line', 'artillery',
-  'nato summit', 'fighter jet', 'defense spending', 'military aid',
+  // === ОБЩЕСТВО / КУЛЬТУРА ===
+  'exhibition', 'museum', 'art gallery', 'cultural heritage', 'festival',
+  'youth skills', 'media literacy', 'fake news', 'online fakes', 'disinformation',
+  'lgbt', 'pride parade', 'abortion', 'migration pact', 'asylum seeker',
   
-  // === ЗДОРОВЬЕ / МЕДИЦИНА / РЕЦЕПТЫ ===
-  'ebola', 'quarantine lab', 'pandemic response', 'vaccine',
+  // === ЭКОНОМИКА НЕ ПО ТЕМЕ ===
+  'gold mine', 'copper mine', 'mining sector', 'precious metal',
+  'real estate', 'property development', 'coastal development', 'illegal estate',
+  'banking scandal', 'fraud case', 'confiscation order', 'boiler-room',
+  
+  // === ЗДОРОВЬЕ / ЛАЙФСТАЙЛ ===
+  'recipe', 'chef', 'cooking', 'restaurant', 'diet tip', 'weight loss',
   'shampoo', 'conditioner', 'skin care', 'hair care', 'beauty award',
-  'weight loss', 'statin', 'cholesterol', 'heart health', 'diet tip',
-  'recipe', 'chef', 'blue zone', 'bath product', 'mindful award', 'cooking',
+  'statin', 'cholesterol', 'heart health', 'pandemic', 'vaccine',
   
-  // === IT / КРИПТО / ФИНАНСЫ (не товарные) ===
-  'crypto', 'bitcoin', 'ethereum', 'nft', 'web3', 'blockchain token',
-  'air passenger rights', 'flight delay', 'wizz air complaint',
-  'lgbt pride', 'family march', 'abortion law', 'migration pact',
-  
-  // === ОБЩЕЕ "ШУМОВОЕ" ===
-  'person of the year', 'award ceremony', 'celebrity', 'influencer',
-  'travel guide', 'tourism boom', 'hotel opening', 'restaurant review'
+  // === СПОРТ / РАЗВЛЕЧЕНИЯ ===
+  'chess', 'fide', 'football', 'soccer', 'premier league', 'tournament',
+  'celebrity', 'influencer', 'person of the year', 'award ceremony'
 ];
 
 // ============================================================================
-// 🔍 ФУНКЦИЯ ФИЛЬТРАЦИИ (3 уровня)
+// 🔍 УЛУЧШЕННАЯ ФУНКЦИЯ ФИЛЬТРАЦИИ
 // ============================================================================
 
 function passesFilters(news: NewsItem): boolean {
   const text = (news.title + ' ' + news.content).toLowerCase();
   
-  // 🔹 LEVEL 2: Белый список (обязательно хотя бы одно совпадение)
-  const hasWhitelist = CONTENT_WHITELIST.some(kw => text.includes(kw.toLowerCase()));
-  if (!hasWhitelist) return false;
+  // 🔹 LEVEL 3: Черный список (проверяем первым — быстрый отсев)
+  if (BLACKLIST.some(kw => text.includes(kw.toLowerCase()))) {
+    return false;
+  }
   
-  // 🔹 LEVEL 3: Черный список (любое совпадение = отклонить)
-  const hasBlacklist = CONTENT_BLACKLIST.some(kw => text.includes(kw.toLowerCase()));
-  if (hasBlacklist) return false;
+  // 🔹 LEVEL 2: Белый список
+  const hasCore = WHITELIST_CORE.some(kw => text.includes(kw.toLowerCase()));
+  const hasRegional = WHITELIST_REGIONAL.some(kw => text.includes(kw.toLowerCase()));
   
-  return true; // Прошло оба фильтра
+  // Если есть только региональное слово, но нет ядра (масла/рынок) — отклоняем
+  if (hasRegional && !hasCore) {
+    return false;
+  }
+  
+  // Если есть ядро — пропускаем (регион не обязателен)
+  if (hasCore) {
+    return true;
+  }
+  
+  // Если нет ни ядра, ни региона — отклоняем
+  return false;
 }
 
 // ============================================================================
@@ -174,7 +187,6 @@ export async function GET() {
   const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
   let allNews: NewsItem[] = [];
 
-  // 🔹 LEVEL 1: Загрузка только из проверенных источников
   const fetches = VERIFIED_SOURCES.map(async (src) => {
     try {
       const res = await fetch(src.url, {
@@ -194,17 +206,17 @@ export async function GET() {
   const results = await Promise.all(fetches);
   for (const items of results) allNews.push(...items);
 
-  console.log(`📥 [L1] Raw from ${VERIFIED_SOURCES.length} sources: ${allNews.length} items`);
+  console.log(`📥 [L1] Raw: ${allNews.length} from ${VERIFIED_SOURCES.length} sources`);
 
-  // 🔹 ФИЛЬТР ПО ДАТЕ (последние 7 дней)
+  // 🔹 ФИЛЬТР ПО ДАТЕ
   const recent = allNews.filter(n => new Date(n.published_date).getTime() >= weekAgo);
-  console.log(`📅 [Date] After 7-day filter: ${recent.length} items`);
+  console.log(`📅 [Date] After 7-day: ${recent.length}`);
 
-  // 🔹 LEVEL 2 + 3: Контентная фильтрация
+  // 🔹 LEVEL 2 + 3: Контекстная фильтрация
   const filtered = recent.filter(passesFilters);
-  console.log(`🎯 [L2+L3] After content filters: ${filtered.length} items`);
+  console.log(`🎯 [L2+L3] After content: ${filtered.length}`);
 
-  // 🔹 ДЕДУПЛИКАЦИЯ (по заголовку + источнику)
+  // 🔹 ДЕДУПЛИКАЦИЯ
   const seen = new Set<string>();
   const unique = filtered.filter(n => {
     const key = `${n.title.toLowerCase().trim()}|${n.source}`;
@@ -212,27 +224,21 @@ export async function GET() {
     seen.add(key);
     return true;
   });
-  console.log(`🔁 [Dedupe] After deduplication: ${unique.length} items`);
 
-  // 🔹 СОРТИРОВКА (сначала новые)
+  // 🔹 СОРТИРОВКА
   unique.sort((a, b) => new Date(b.published_date).getTime() - new Date(a.published_date).getTime());
 
   const result = unique.slice(0, 35);
-  console.log(`✅ [Final] Returning ${result.length} verified news items`);
+  console.log(`✅ [Final] Returning ${result.length} items`);
 
   return NextResponse.json({
     news: result,
     meta: {
-      strategy: '3-Tier Filter: Sources ✓ | Whitelist ✓ | Blacklist ✗',
-      levels: {
-        L1_sources: VERIFIED_SOURCES.length,
-        L2_whitelist_keywords: CONTENT_WHITELIST.length,
-        L3_blacklist_keywords: CONTENT_BLACKLIST.length
-      },
+      strategy: '3-Tier Filter v2: Sources ✓ | Contextual Whitelist ✓ | Expanded Blacklist ✗',
       pipeline: {
         raw: allNews.length,
         afterDate: recent.length,
-        afterContentFilters: filtered.length,
+        afterContent: filtered.length,
         afterDedupe: unique.length,
         returned: result.length
       },
