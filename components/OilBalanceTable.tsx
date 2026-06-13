@@ -1,76 +1,74 @@
-"use client";
-import { useState } from "react";
-import balanceData from '@/data/balance_data.json';
+'use client';
 
-const CURRENT_YEAR = "2025/2026"; // Реальный маркетинговый год
+import { useState, useEffect } from 'react';
+import { 
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  Area, ComposedChart
+} from 'recharts';
 
-const TABS = [
-  { key: "all", label: "All Data" },
-  { key: "Soybean Oil", label: "Soybean Oil" },
-  { key: "Palm Oil", label: "Palm Oil" },
-  { key: "Rapeseed Oil", label: "Rapeseed Oil" },
-  { key: "Sunflower Oil", label: "Sunflower Oil" },
-];
+// 🔹 Типы данных (встроены, чтобы не тянуть отдельные файлы)
+type Commodity = 'palm' | 'soybean' | 'sunflower' | 'rapeseed' | 'coconut';
+type Region = 'global' | 'indonesia' | 'malaysia' | 'eu' | 'ukraine' | 'central_asia' | 'caucasus';
+type Metric = 'production' | 'consumption' | 'exports' | 'imports' | 'ending_stocks';
+
+interface SeriesPoint { period: string; value: number; }
+interface BalanceSeries { commodity: Commodity; region: Region; metric: Metric; data: SeriesPoint[]; }
 
 export default function OilBalanceTable() {
-  const [activeTab, setActiveTab] = useState("all");
+  const [commodity, setCommodity] = useState<Commodity>('palm');
+  const [region, setRegion] = useState<Region>('global');
+  const [metric, setMetric] = useState<Metric | 'all'>('all');
+  const [series, setSeries] = useState<BalanceSeries[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredData = activeTab === 'all' 
-    ? balanceData 
-    : balanceData.filter(item => item.commodity === activeTab);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams({ commodity, region, periods: '12' });
+        if (metric !== 'all') params.append('metric', metric);
+        
+        const res = await fetch(`/api/usda-balance?${params}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        
+        // Преобразуем объект series в массив
+        const parsed: BalanceSeries[] = Object.entries(json.series || {}).map(([key, points]: [string, any]) => {
+          const [c, r, m] = key.split('|');
+          return { commodity: c as Commodity, region: r as Region, metric: m as Metric, data: points };
+        });
+        setSeries(parsed);
+      } catch (e) {
+        console.error('❌ Load error:', e);
+        setError('Не удалось загрузить данные баланса');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [commodity, region, metric]);
 
-  return (
-    <div className="w-full overflow-x-auto">
-      <div className="flex justify-between items-center mb-4 border-b border-slate-200 pb-2">
-        <div className="flex gap-2">
-          {TABS.map(tab => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`px-3 py-1 text-sm font-medium rounded-sm transition ${
-                activeTab === tab.key 
-                  ? 'bg-slate-900 text-white' 
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-        <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">
-          Marketing Year: {CURRENT_YEAR}
-        </span>
-      </div>
+  if (loading) return <div className="p-8 text-center text-gray-500">⏳ Загрузка данных баланса...</div>;
+  if (error) return <div className="p-8 text-center text-red-500">⚠️ {error}</div>;
 
-      <table className="w-full text-sm text-left border-collapse">
-        <thead>
-          <tr className="bg-slate-50 border-b border-slate-200">
-            <th className="p-3 font-semibold text-slate-700">Country</th>
-            <th className="p-3 font-semibold text-slate-700 text-right">Production</th>
-            <th className="p-3 font-semibold text-slate-700 text-right">Exports</th>
-            <th className="p-3 font-semibold text-slate-700 text-right">Imports</th>
-            <th className="p-3 font-semibold text-slate-700 text-right">Consumption</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-100">
-          {filteredData.length === 0 ? (
-            <tr>
-              <td colSpan={5} className="p-4 text-center text-slate-500">No data available.</td>
-            </tr>
-          ) : (
-            filteredData.map((row, idx) => (
-              <tr key={idx} className="hover:bg-slate-50">
-                <td className="p-3 font-medium text-slate-900">{row.country}</td>
-                <td className="p-3 text-right text-slate-700">{row.production.toLocaleString()}</td>
-                <td className="p-3 text-right text-slate-700">{row.exports.toLocaleString()}</td>
-                <td className="p-3 text-right text-slate-700">{row.imports.toLocaleString()}</td>
-                <td className="p-3 text-right text-slate-700">{row.consumption.toLocaleString()}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-      <p className="text-xs text-slate-400 mt-2 italic">Source: USDA FAS PSD & MPOB ({CURRENT_YEAR})</p>
-    </div>
-  );
-}
+  // 🔹 Таблица: текущие значения + динамика
+  const tableRows = series.map(s => {
+    const latest = s.data[s.data.length - 1];
+    const prev = s.data[s.data.length - 2];
+    const change = prev ? ((latest.value - prev.value) / prev.value * 100).toFixed(1) : '0';
+    return {
+      metric: s.metric,
+      current: latest.value,
+      previous: prev?.value || 0,
+      change: parseFloat(change)
+    };
+  });
+
+  // 🔹 Данные для сравнительного графика
+  const compareData = metric !== 'all' 
+    ? prepareComparisonData(series, metric)
+    : [];
+
+ 
