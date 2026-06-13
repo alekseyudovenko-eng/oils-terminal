@@ -181,7 +181,7 @@ export default function OilBalanceTable() {
 
 // 🔧 Вспомогательные функции
 function prepareComparisonData(series: BalanceSeries[], targetMetric: Metric) {
-  const periods = [...new Set(series.flatMap(s => s.data.map(d => d.period)))].sort();
+const periods = Array.from(new Set(series.flatMap(s => s.data.map(d => d.period)))).sort();
   return periods.map(period => {
     const row: Record<string, any> = { period };
     series.forEach(s => {
