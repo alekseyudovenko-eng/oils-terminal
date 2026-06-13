@@ -8,10 +8,6 @@
       "path": "/api/cron/market-report",
       "schedule": "0 9 * * *"
     }
-  ]
-}
-{
-  "crons": [
     {
       "path": "/api/cron/usda-sync",
       "schedule": "0 10 12 * *"
