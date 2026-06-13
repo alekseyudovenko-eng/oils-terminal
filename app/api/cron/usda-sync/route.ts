@@ -1,18 +1,18 @@
-// app/api/cron/usda-sync/route.ts — FIXED USDA API VERSION
+// app/api/cron/usda-sync/route.ts — OFFICIAL USDA PSD API v2
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
 export const dynamic = 'force-dynamic';
 
-// 🔹 ИСПРАВЛЕНО: коды товаров как СТРОКИ (не числа!)
+// 🔹 7-значные коды товаров (ОФИЦИАЛЬНЫЕ из Swagger UI)
 const COMMODITIES = [
-  { usdaCode: '42', name: 'palm', label: 'Palm Oil' },
-  { usdaCode: '44', name: 'soybean', label: 'Soybean Oil' },
-  { usdaCode: '46', name: 'sunflower', label: 'Sunflower Seed Oil' },
-  { usdaCode: '43', name: 'rapeseed', label: 'Rapeseed Oil' }
+  { usdaCode: '0422000', name: 'palm', label: 'Palm Oil' },
+  { usdaCode: '0442000', name: 'soybean', label: 'Soybean Oil' },
+  { usdaCode: '0462000', name: 'sunflower', label: 'Sunflower Seed Oil' },
+  { usdaCode: '0432000', name: 'rapeseed', label: 'Rapeseed Oil' }
 ];
 
-// 🔹 Регионы (коды верные)
+// 🔹 2-буквенные коды стран
 const REGIONS = [
   { usdaCode: 'XX', name: 'global', label: 'World' },
   { usdaCode: 'ID', name: 'indonesia', label: 'Indonesia' },
@@ -27,19 +27,20 @@ const REGIONS = [
   { usdaCode: 'RI', name: 'serbia', label: 'Serbia' }
 ];
 
-const METRICS = [
-  { usdaField: 'beginning_stocks', name: 'ending_stocks' },
-  { usdaField: 'production', name: 'production' },
-  { usdaField: 'domestic_consumption', name: 'consumption' },
-  { usdaField: 'exports', name: 'exports' },
-  { usdaField: 'imports', name: 'imports' }
-];
+// 🔹 AttributeId → наша метрика (из официальной документации)
+const ATTRIBUTE_MAP: Record<number, string> = {
+  1: 'ending_stocks',      // Beginning Stocks
+  2: 'production',         // Production  
+  5: 'imports',            // Imports
+  6: 'exports',            // Exports
+  9: 'consumption'         // Domestic Consumption
+};
 
-// 🔹 ИСПРАВЛЕНА функция запроса к USDA
-async function fetchUSDAData(commodityCode: string, countryCode: string, apiKey: string) {
-  // Правильный формат URL: годы через запятую, без пробелов
-  const years = '2024,2025,2026';
-  const url = `https://apps.fas.usda.gov/psdonline/api/v1/commodity/${commodityCode}/country/${countryCode}/measure/M/years/${years}?api_key=${apiKey}`;
+// 🔹 ОФИЦИАЛЬНЫЙ запрос к USDA PSD API v2
+async function fetchUSDAData(commodityCode: string, countryCode: string, marketYear: number, apiKey: string) {
+  // ✅ ПРАВИЛЬНЫЙ базовый URL из Swagger UI
+  const baseUrl = 'https://apps.fas.usda.gov/opendatawebV2/api/psd';
+  const url = `${baseUrl}/commodity/${commodityCode}/country/${countryCode}/year/${marketYear}?api_key=${apiKey}`;
   
   console.log(`🔍 USDA Request: ${url.replace(apiKey, '***')}`);
   
@@ -50,15 +51,14 @@ async function fetchUSDAData(commodityCode: string, countryCode: string, apiKey:
   
   if (!res.ok) {
     const text = await res.text().catch(() => 'no body');
-    // Логируем только первые 404 для отладки
     if (res.status === 404) {
-      console.warn(`⚠️ USDA 404: commodity=${commodityCode}, country=${countryCode}`);
+      console.warn(`⚠️ USDA 404: ${commodityCode}/${countryCode}/${marketYear}`);
     }
-    throw new Error(`USDA API HTTP ${res.status}`);
+    throw new Error(`USDA API HTTP ${res.status}: ${text.slice(0, 150)}`);
   }
   
   const json = await res.json();
-  return json.data || [];
+  return Array.isArray(json) ? json : [];
 }
 
 export async function GET(request: Request) {
@@ -93,31 +93,34 @@ export async function GET(request: Request) {
     
     let inserted = 0, errors = 0;
     const log: string[] = [];
+    const years = [2024, 2025, 2026];
     
     for (const comm of COMMODITIES) {
       for (const region of REGIONS) {
-        try {
-          const records = await fetchUSDAData(comm.usdaCode, region.usdaCode, usdaApiKey);
-          
-          if (records.length === 0) { 
-            log.push(`⚠️ No data: ${comm.label}/${region.label}`); 
-            continue; 
-          }
-          
-          for (const rec of records) {
-            const year = rec.year, month = rec.month;
-            if (!year || !month) continue;
-            const period = `${year}-${String(month).padStart(2,'0')}`;
+        for (const year of years) {
+          try {
+            const records = await fetchUSDAData(comm.usdaCode, region.usdaCode, year, usdaApiKey);
             
-            for (const metric of METRICS) {
-              const val = rec[metric.usdaField];
-              if (val == null || val === 0) continue;
-              const valueInKt = +(val / 1000).toFixed(2);
+            if (records.length === 0) continue;
+            
+            for (const rec of records) {
+              const attrId = rec.AttributeId;
+              const metricName = ATTRIBUTE_MAP[attrId];
+              if (!metricName) continue;
+              
+              const rawValue = rec.Value;
+              if (rawValue == null || rawValue === 0) continue;
+              
+              // USDA возвращает в 1000 MT → оставляем как есть
+              const valueInKt = +Number(rawValue).toFixed(2);
+              
+              const month = rec.Month ? String(rec.Month).padStart(2, '0') : '01';
+              const period = `${year}-${month}`;
               
               const { error } = await supabase.from('balance_sheet').upsert({
                 commodity: comm.name, 
                 region: region.name, 
-                metric: metric.name,
+                metric: metricName,
                 value: valueInKt, 
                 unit: '000 MT', 
                 period, 
@@ -128,13 +131,14 @@ export async function GET(request: Request) {
               if (error) { errors++; console.error(error.message); } 
               else { inserted++; }
             }
-          }
-          log.push(`✅ ${comm.label}/${region.label}: ${records.length} recs`);
-        } catch (e: any) { 
-          errors++; 
-          // Не спамим логами при 404 — это нормально для некоторых комбинаций
-          if (!e.message.includes('404')) {
-            log.push(`❌ ${comm.label}/${region.label}: ${e.message}`); 
+            if (records.length > 0) {
+              log.push(`✅ ${comm.label}/${region.label}/${year}: ${records.length} recs`);
+            }
+          } catch (e: any) { 
+            if (!e.message.includes('404')) {
+              errors++; 
+              log.push(`❌ ${comm.label}/${region.label}/${year}: ${e.message.slice(0, 80)}`); 
+            }
           }
         }
       }
@@ -144,7 +148,7 @@ export async function GET(request: Request) {
       success: true, 
       inserted, 
       errors, 
-      log: log.slice(0, 20), 
+      log: log.slice(0, 30), 
       timestamp: new Date().toISOString() 
     });
     
