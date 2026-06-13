@@ -1,4 +1,14 @@
 import OilBalanceTable from '@/components/OilBalanceTable';
+
+export default function BalancePage() {
+  return (
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6">
+      <h1 className="text-2xl font-bold mb-4">Balance Sheet</h1>
+      <OilBalanceTable />
+    </div>
+  );
+}
+
 import Layout from '@/components/Layout';
 
 export default function BalancePage() {
