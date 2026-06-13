@@ -1,7 +1,7 @@
 // components/MarketPriceBoard.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 type Currency = 'USD' | 'EUR' | 'MYR';
@@ -28,7 +28,8 @@ export default function MarketPriceBoard() {
   const [loading, setLoading] = useState(true);
   const [lastUpdate, setLastUpdate] = useState<string>('');
 
-  const fetchData = async () => {
+  // 🔹 fetchData обёрнута в useCallback для корректной работы useEffect
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const res = await fetch(`/api/market-data?currency=${currency}&period=${period}`);
@@ -50,14 +51,14 @@ export default function MarketPriceBoard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currency, period]); // ← Зависимости здесь
 
+  // 🔹 useEffect с зависимостью [fetchData]
   useEffect(() => {
     fetchData();
-    // Автообновление каждые 30 секунд
-    const interval = setInterval(fetchData, 30000);
+    const interval = setInterval(fetchData, 30000); // Автообновление каждые 30 сек
     return () => clearInterval(interval);
-  }, [currency, period]);
+  }, [fetchData]);
 
   if (loading && prices.length === 0) {
     return <div className="p-8 text-center text-slate-500">⏳ Загрузка рыночных данных...</div>;
@@ -68,7 +69,7 @@ export default function MarketPriceBoard() {
   return (
     <div className="space-y-6">
       {/* 🎛 Панель управления */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
         <div className="flex gap-3">
           {(['USD', 'EUR', 'MYR'] as Currency[]).map(c => (
             <button 
@@ -176,7 +177,7 @@ export default function MarketPriceBoard() {
   );
 }
 
-// Вспомогательный компонент для спреда
+// 🔹 Вспомогательный компонент для спреда
 function SpreadCard({ a, b, label }: { a?: PriceItem; b?: PriceItem; label: string }) {
   if (!a || !b) return null;
   const spread = a.convertedPrice - b.convertedPrice;
