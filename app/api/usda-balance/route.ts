@@ -1,74 +1,96 @@
+// app/api/usda-balance/route.ts
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-export async function GET() {
-  const apiKey = process.env.USDA_API_KEY;
-  
-  if (!apiKey) {
-    return NextResponse.json({ error: 'API Key missing' }, { status: 500 });
-  }
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+export const dynamic = 'force-dynamic';
+
+// 🟢 GET: Получение данных
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  
+  const commodity = searchParams.get('commodity') || null;
+  const region = searchParams.get('region') || null;
+  const metric = searchParams.get('metric') || null;
+  const periods = parseInt(searchParams.get('periods') || '12', 10);
 
   try {
-    // Используем 2025 год, так как данные за 2026 могут быть еще не полными
-    const targetYear = 2025; 
-    const url = `https://apps.fas.usda.gov/OpenData/api/psd?commodity_code=2222000&country_code=US&attribute_id=1,5,6,8&market_year=${targetYear}&api_key=${apiKey}`;
+    let query = supabase
+      .from('balance_sheet')
+      .select('commodity, region, metric, value, unit, period, updated_at, source')
+      .order('period', { ascending: true });
 
-    console.log("Fetching USDA data for year:", targetYear);
+    if (commodity) query = query.eq('commodity', commodity);
+    if (region) query = query.eq('region', region);
+    if (metric) query = query.eq('metric', metric);
+    
+    // Динамический фильтр по периодам
+    const lastPeriod = new Date().toISOString().slice(0, 7); // YYYY-MM
+    const monthsAgo = new Date();
+    monthsAgo.setMonth(monthsAgo.getMonth() - periods);
+    const fromPeriod = monthsAgo.toISOString().slice(0, 7);
+    
+    query = query.gte('period', fromPeriod).lte('period', lastPeriod);
 
-    const res = await fetch(url, {
-      headers: {
-        'User-Agent': 'OilsTerminal/1.0',
-        'Accept': 'application/json'
+    const { data, error } = await query;
+    if (error) throw error;
+
+    // Группировка для графиков
+    const series = data?.reduce((acc: Record<string, any[]>, item) => {
+      const key = `${item.commodity}|${item.region}|${item.metric}`;
+      if (!acc[key]) acc[key] = [];
+      acc[key].push({ period: item.period, value: item.value });
+      return acc;
+    }, {}) || {};
+
+    return NextResponse.json({
+      data,
+      series,
+      meta: {
+        count: data?.length || 0,
+        filters: { commodity, region, metric, periods },
+        timestamp: new Date().toISOString()
       }
     });
+
+  } catch (e) {
+    console.error('❌ Balance GET Error:', e);
+    return NextResponse.json({ error: 'Failed to fetch balance data' }, { status: 500 });
+  }
+}
+
+// 🔴 POST: Обновление/вставка данных (защищён ключом)
+export async function POST(request: Request) {
+  const authHeader = request.headers.get('authorization');
+  if (authHeader !== `Bearer ${process.env.INTERNAL_API_KEY}`) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const updates = await request.json();
     
-    if (!res.ok) {
-      const errorText = await res.text();
-      return NextResponse.json({ error: `USDA API Error: ${res.status}`, details: errorText }, { status: 500 });
+    if (!Array.isArray(updates) || updates.length === 0) {
+      return NextResponse.json({ error: 'Expected array of records' }, { status: 400 });
     }
 
-    const data = await res.json();
-    console.log("USDA Response records:", data.length);
+    const { data, error } = await supabase
+      .from('balance_sheet')
+      .upsert(updates, { onConflict: 'commodity,region,metric,period' });
+    
+    if (error) throw error;
 
-    if (data.length === 0) {
-      return NextResponse.json({ success: true, message: 'No data found for this year/country', count: 0 });
-    }
-
-    // Обрабатываем данные
-    const row = {
-      commodity: 'Soybean Oil',
-      country: 'US',
-      production: 0,
-      exports: 0,
-      imports: 0,
-      consumption: 0,
-      updated_at: new Date().toISOString()
-    };
-
-    data.forEach((d: any) => {
-      if (d.attribute_id === '1') row.production = d.value;
-      if (d.attribute_id === '5') row.exports = d.value;
-      if (d.attribute_id === '6') row.imports = d.value;
-      if (d.attribute_id === '8') row.consumption = d.value;
+    return NextResponse.json({ 
+      success: true, 
+      updated: updates.length,
+      timestamp: new Date().toISOString()
     });
 
-    // Сохраняем в Supabase
-    const { error: dbError } = await supabase.from('usda_balance_data').upsert(row, { onConflict: 'commodity,country' });
-    
-    if (dbError) {
-      console.error("Supabase Error:", dbError);
-      return NextResponse.json({ error: "Database save failed" }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, data: row, count: 1 });
-
-  } catch (error) {
-    console.error('Critical Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  } catch (e) {
+    console.error('❌ Balance POST Error:', e);
+    return NextResponse.json({ error: 'Failed to update balance data' }, { status: 500 });
   }
 }
