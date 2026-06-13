@@ -106,36 +106,36 @@ export default function OilBalanceTable() {
         </select>
       </div>
 
-      {/* 📋 Таблица баланса */}
-      <div className="overflow-x-auto border rounded-lg dark:border-gray-700">
-        <table className="w-full text-sm dark:text-gray-200">
-          <thead className="bg-gray-100 dark:bg-gray-700 uppercase text-xs tracking-wider">
-            <tr>
-              <th className="p-3 text-left">Metric</th>
-              <th className="p-3 text-right">Current</th>
-              <th className="p-3 text-right">Previous</th>
-              <th className="p-3 text-right">Δ %</th>
-              <th className="p-3 text-left">Unit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableRows.length === 0 ? (
-              <tr><td colSpan={5} className="p-4 text-center text-gray-400">Нет данных за выбранные фильтры</td></tr>
-            ) : tableRows.map((row, i) => (
-              <tr key={i} className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
-                <td className="p-3 font-medium capitalize">{row.metric.replace('_', ' ')}</td>
-                <td className="p-3 text-right font-mono">{row.current.toLocaleString()}</td>
-                <td className="p-3 text-right font-mono text-gray-500">{row.previous.toLocaleString()}</td>
-                <td className={`p-3 text-right font-mono ${row.change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {row.change >= 0 ? '+' : ''}{row.change}%
-                </td>
-                <td className="p-3 text-gray-500">{"000' MT"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
+      {/* Таблица */}
+<div className="overflow-x-auto border border-slate-200 rounded-lg shadow-sm bg-white">
+  <table className="w-full text-sm">
+    <thead className="bg-slate-100 text-slate-800 font-semibold uppercase tracking-wider">
+      <tr>
+        <th className="p-3 text-left">Metric</th>
+        <th className="p-3 text-right">Current</th>
+        <th className="p-3 text-right">Previous</th>
+        <th className="p-3 text-right">Δ %</th>
+        <th className="p-3 text-left">Unit</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-100">
+      {tableRows.length === 0 ? (
+        <tr><td colSpan={5} className="p-6 text-center text-slate-500">Нет данных</td></tr>
+      ) : tableRows.map((row, i) => (
+        <tr key={i} className="hover:bg-slate-50 transition-colors text-slate-700">
+          <td className="p-3 font-medium capitalize">{row.metric.replace('_', ' ')}</td>
+          <td className="p-3 text-right font-mono font-medium text-slate-900">{row.current.toLocaleString()}</td>
+          <td className="p-3 text-right font-mono text-slate-500">{row.previous.toLocaleString()}</td>
+          <td className={`p-3 text-right font-mono font-semibold ${row.change >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+            {row.change >= 0 ? '+' : ''}{row.change.toFixed(1)}%
+          </td>
+          <td className="p-3 text-slate-500 font-mono">000' MT</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+      
       {/* 📈 График динамики */}
       {series.length > 0 && series[0].data.length > 1 && (
         <div className="h-80 p-2 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700">
