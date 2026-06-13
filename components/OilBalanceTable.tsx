@@ -129,7 +129,7 @@ export default function OilBalanceTable() {
           <td className={`p-3 text-right font-mono font-semibold ${row.change >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             {row.change >= 0 ? '+' : ''}{row.change.toFixed(1)}%
           </td>
-          <td className="p-3 text-slate-500 font-mono">000' MT</td>
+          <td className="p-3 text-slate-500 font-mono">{"000' MT"}</td>
         </tr>
       ))}
     </tbody>
