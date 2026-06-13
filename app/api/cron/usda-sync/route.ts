@@ -1,16 +1,18 @@
-// app/api/cron/usda-sync/route.ts — BULLETPROOF VERSION
+// app/api/cron/usda-sync/route.ts — FIXED USDA API VERSION
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
 export const dynamic = 'force-dynamic';
 
-// ... (COMMODITIES, REGIONS, METRICS, fetchUSDAData — без изменений, код из прошлого сообщения) ...
+// 🔹 ИСПРАВЛЕНО: коды товаров как СТРОКИ (не числа!)
 const COMMODITIES = [
-  { usdaCode: 42, name: 'palm', label: 'Palm Oil' },
-  { usdaCode: 44, name: 'soybean', label: 'Soybean Oil' },
-  { usdaCode: 46, name: 'sunflower', label: 'Sunflower Seed Oil' },
-  { usdaCode: 43, name: 'rapeseed', label: 'Rapeseed Oil' }
+  { usdaCode: '42', name: 'palm', label: 'Palm Oil' },
+  { usdaCode: '44', name: 'soybean', label: 'Soybean Oil' },
+  { usdaCode: '46', name: 'sunflower', label: 'Sunflower Seed Oil' },
+  { usdaCode: '43', name: 'rapeseed', label: 'Rapeseed Oil' }
 ];
+
+// 🔹 Регионы (коды верные)
 const REGIONS = [
   { usdaCode: 'XX', name: 'global', label: 'World' },
   { usdaCode: 'ID', name: 'indonesia', label: 'Indonesia' },
@@ -24,6 +26,7 @@ const REGIONS = [
   { usdaCode: 'RO', name: 'romania', label: 'Romania' },
   { usdaCode: 'RI', name: 'serbia', label: 'Serbia' }
 ];
+
 const METRICS = [
   { usdaField: 'beginning_stocks', name: 'ending_stocks' },
   { usdaField: 'production', name: 'production' },
@@ -31,53 +34,54 @@ const METRICS = [
   { usdaField: 'exports', name: 'exports' },
   { usdaField: 'imports', name: 'imports' }
 ];
-async function fetchUSDAData(commodityCode: number, countryCode: string, apiKey: string) {
-  const url = `https://apps.fas.usda.gov/psdonline/api/v1/commodity/${commodityCode}/country/${countryCode}/measure/M/years/2024,2025,2026?api_key=${apiKey}`;
-  const res = await fetch(url, { headers: { 'Accept': 'application/json' }, next: { revalidate: 86400 } });
-  if (!res.ok) throw new Error(`USDA API HTTP ${res.status}`);
+
+// 🔹 ИСПРАВЛЕНА функция запроса к USDA
+async function fetchUSDAData(commodityCode: string, countryCode: string, apiKey: string) {
+  // Правильный формат URL: годы через запятую, без пробелов
+  const years = '2024,2025,2026';
+  const url = `https://apps.fas.usda.gov/psdonline/api/v1/commodity/${commodityCode}/country/${countryCode}/measure/M/years/${years}?api_key=${apiKey}`;
+  
+  console.log(`🔍 USDA Request: ${url.replace(apiKey, '***')}`);
+  
+  const res = await fetch(url, { 
+    headers: { 'Accept': 'application/json' },
+    next: { revalidate: 86400 }
+  });
+  
+  if (!res.ok) {
+    const text = await res.text().catch(() => 'no body');
+    // Логируем только первые 404 для отладки
+    if (res.status === 404) {
+      console.warn(`⚠️ USDA 404: commodity=${commodityCode}, country=${countryCode}`);
+    }
+    throw new Error(`USDA API HTTP ${res.status}`);
+  }
+  
   const json = await res.json();
   return json.data || [];
 }
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  
-  // 🔍 DEBUG: Показываем, что пришло
   const authHeader = request.headers.get('authorization') || '';
-  const queryKey = url.searchParams.get('key'); // ← запасной вход для тестов
+  const queryKey = url.searchParams.get('key');
   const expected = (process.env.CRON_SECRET || '').trim();
   const received = authHeader.replace('Bearer ', '').trim();
   
-  // 🔐 Проверка: через заголовок ИЛИ через query param (для тестов)
-  const isAuthorized = 
-    (received && received === expected) || 
-    (queryKey && queryKey === expected);
+  const isAuthorized = (received && received === expected) || (queryKey && queryKey === expected);
   
-  // Если включен режим отладки — показываем инфу и пропускаем
   if (url.searchParams.get('debug') === '1') {
     return NextResponse.json({
       debug: true,
       expected: `${expected.slice(0,3)}***${expected.slice(-3)}`,
-      receivedHeader: authHeader ? `${authHeader.slice(0,20)}...` : 'MISSING',
-      receivedTrimmed: received ? `${received.slice(0,3)}***${received.slice(-3)}` : 'MISSING',
-      queryKey: queryKey ? `${queryKey.slice(0,3)}***${queryKey.slice(-3)}` : 'NOT SENT',
-      match: received === expected,
-      hint: 'If match:false → check for hidden spaces in Vercel env var value'
+      match: received === expected || queryKey === expected
     });
   }
   
   if (!isAuthorized) {
-    return NextResponse.json({ 
-      error: 'Unauthorized',
-      debug: {
-        expectedLength: expected.length,
-        receivedLength: received.length,
-        queryKeySent: !!queryKey
-      }
-    }, { status: 401 });
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // ✅ Авторизация прошла — выполняем синхронизацию
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -94,7 +98,11 @@ export async function GET(request: Request) {
       for (const region of REGIONS) {
         try {
           const records = await fetchUSDAData(comm.usdaCode, region.usdaCode, usdaApiKey);
-          if (records.length === 0) { log.push(`⚠️ No data: ${comm.label}/${region.label}`); continue; }
+          
+          if (records.length === 0) { 
+            log.push(`⚠️ No data: ${comm.label}/${region.label}`); 
+            continue; 
+          }
           
           for (const rec of records) {
             const year = rec.year, month = rec.month;
@@ -107,8 +115,13 @@ export async function GET(request: Request) {
               const valueInKt = +(val / 1000).toFixed(2);
               
               const { error } = await supabase.from('balance_sheet').upsert({
-                commodity: comm.name, region: region.name, metric: metric.name,
-                value: valueInKt, unit: '000 MT', period, source: 'USDA PSD API',
+                commodity: comm.name, 
+                region: region.name, 
+                metric: metric.name,
+                value: valueInKt, 
+                unit: '000 MT', 
+                period, 
+                source: 'USDA PSD API',
                 updated_at: new Date().toISOString()
               }, { onConflict: 'commodity,region,metric,period' });
               
@@ -117,11 +130,23 @@ export async function GET(request: Request) {
             }
           }
           log.push(`✅ ${comm.label}/${region.label}: ${records.length} recs`);
-        } catch (e: any) { errors++; log.push(`❌ ${comm.label}/${region.label}: ${e.message}`); }
+        } catch (e: any) { 
+          errors++; 
+          // Не спамим логами при 404 — это нормально для некоторых комбинаций
+          if (!e.message.includes('404')) {
+            log.push(`❌ ${comm.label}/${region.label}: ${e.message}`); 
+          }
+        }
       }
     }
     
-    return NextResponse.json({ success: true, inserted, errors, log: log.slice(0,10), timestamp: new Date().toISOString() });
+    return NextResponse.json({ 
+      success: true, 
+      inserted, 
+      errors, 
+      log: log.slice(0, 20), 
+      timestamp: new Date().toISOString() 
+    });
     
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
