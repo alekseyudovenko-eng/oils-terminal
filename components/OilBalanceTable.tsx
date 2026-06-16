@@ -175,9 +175,8 @@ export default function OilBalanceTable() {
           </ResponsiveContainer>
         </div>
       )}
-    </div>
 
-{/* 🔽 Кнопка экспорта */}
+      {/* 🔽 Кнопка экспорта */}
 <div className="flex justify-end mt-4">
   <button
     onClick={() => exportToCSV(tableRows, commodity, region)}
@@ -189,6 +188,9 @@ export default function OilBalanceTable() {
     Export CSV
   </button>
 </div>
+
+      
+    </div>
     
   );
 }
