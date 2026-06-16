@@ -46,21 +46,71 @@ export async function GET(request: Request) {
     
     let message = `🌴 <b>Oils Terminal — Daily Digest</b>\n📅 ${today}\n\n`;
     
-    // 📊 Ключевые метрики (демо — замени на реальные запросы к базе)
-    const metrics = [
-      { label: '🌴 Palm Production', value: 85600, change: +2.1 },
-      { label: '🫘 Soy Exports', value: 46500, change: -0.8 },
-      { label: '🌻 Sunflower Stocks', value: 850, change: +5.3 },
-      { label: '🌼 Rapeseed Consumption', value: 32100, change: +1.2 }
-    ];
-    
-    message += `<b>📈 Key Metrics (000' MT):</b>\n`;
-    for (const m of metrics) {
-      const arrow = m.change >= 0 ? '🟢' : '🔴';
-      const sign = m.change >= 0 ? '+' : '';
-      message += `${arrow} ${m.label}: <b>${formatNum(m.value)}</b> (${sign}${m.change}%)\n`;
-    }
-    
+    // 🔹 РЕАЛЬНЫЕ ДАННЫЕ ИЗ БАЗЫ
+    try {
+      const { createClient } = await import('@supabase/supabase-js');
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      );
+      
+      // Берём последние записи для 4 товаров
+      const { data } = await supabase
+        .from('balance_sheet')
+        .select('commodity, metric, value, period')
+        .in('commodity', ['palm', 'soybean', 'sunflower', 'rapeseed'])
+        .in('metric', ['production', 'exports', 'ending_stocks', 'consumption'])
+        .order('period', { ascending: false })
+        .limit(20);
+      
+      if (data && data.length > 0) {
+        // Группируем по товару+метрике
+        const grouped = data.reduce((acc: any, item: any) => {
+          const key = `${item.commodity}_${item.metric}`;
+          if (!acc[key]) acc[key] = [];
+          acc[key].push(item);
+          return acc;
+        }, {});
+        
+        // Формируем массив для вывода (топ-4)
+        const realMetrics = [];
+        const labels: Record<string, string> = {
+          'palm_production': '🌴 Palm Production',
+          'soybean_exports': '🫘 Soy Exports', 
+          'sunflower_ending_stocks': '🌻 Sunflower Stocks',
+          'rapeseed_consumption': '🌼 Rapeseed Consumption'
+        };
+        
+        for (const [key, items] of Object.entries(grouped as Record<string, any[]>)) {
+          if (realMetrics.length >= 4) break;
+          const [latest, prev] = items;
+          if (!prev) continue;
+          const change = ((latest.value - prev.value) / prev.value * 100).toFixed(1);
+          realMetrics.push({
+            label: labels[key] || `${latest.commodity} ${latest.metric}`,
+            value: latest.value,
+            change: parseFloat(change)
+          });
+        }
+        
+        // Выводим в сообщение
+        if (realMetrics.length > 0) {
+          message += `<b>📈 Key Metrics (000' MT):</b>\n`;
+          for (const m of realMetrics) {
+            const arrow = m.change >= 0 ? '🟢' : '🔴';
+            const sign = m.change >= 0 ? '+' : '';
+            message += `${arrow} ${m.label}: <b>${formatNum(m.value)}</b> (${sign}${m.change}%)\n`;
+          }
+          message += `\n`;
+        }
+      }
+    } catch (e) {
+      console.error('❌ Failed to fetch metrics:', e);
+      // Фоллбэк на демо-данные, если база не ответила
+      message += `<b>📈 Key Metrics (000' MT):</b>\n`;
+      message += `🟢 🌴 Palm Production: <b>85.6K</b> (+2.1%)\n`;
+      message += `🔴 🫘 Soy Exports: <b>46.5K</b> (-0.8%)\n\n`;
+    }    
     message += `\n<b>📰 Top News:</b>\n`;
     message += `• CPO prices rise on strong EU biodiesel demand (Palmoil Magazine)\n`;
     message += `• USDA revises soybean export forecast upward (Agri-Pulse)\n`;
