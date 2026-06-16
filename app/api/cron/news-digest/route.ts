@@ -1,83 +1,52 @@
+// app/api/cron/telegram-digest/route.ts
 import { NextResponse } from 'next/server';
+import { sendTelegramMessage } from '@/lib/telegram';
+import { fetchFilteredNews } from '@/lib/news-parser'; // ← ИМПОРТ ТУ ЖЕ ФУНКЦИЮ
 
 export const dynamic = 'force-dynamic';
 
-interface NewsItem {
-  title: string;
-  url: string;
-}
-
-async function fetchGoogleNewsItems(query: string): Promise<NewsItem[]> {
-  const apiKey = process.env.GOOGLE_SEARCH_API_KEY;
-  const cx = process.env.GOOGLE_SEARCH_ENGINE_ID;
-
-  if (!apiKey || !cx) return [];
+export async function GET(request: Request) {
+  // ... авторизация (без изменений) ...
+  const url = new URL(request.url);
+  const authHeader = request.headers.get('authorization') || '';
+  const queryKey = url.searchParams.get('key');
+  const expected = (process.env.CRON_SECRET || '').trim();
+  const received = authHeader.replace('Bearer ', '').trim();
+  const isAuthorized = (received && received === expected) || (queryKey && queryKey === expected);
+  if (!isAuthorized) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
-    const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}&searchType=news&num=10`;
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.items ? data.items.map((i: any) => ({ 
-      title: i.title?.replace(/<[^>]*>/g, '') || 'No title', 
-      url: i.link 
-    })) : [];
-  } catch { 
-    return []; 
+    const today = new Date().toLocaleDateString('ru-RU', { 
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+    });
+    
+    let message = `🌴 <b>Oils Terminal — News</b>\n📅 ${today}\n\n`;
+    
+    // 🔹 Берём новости через общую функцию (никаких 401!)
+    const news = await fetchFilteredNews(10);
+    
+    if (news.length === 0) {
+      message += `ℹ️ Новостей за неделю не найдено\n\n`;
+    } else {
+      message += `<b>📰 Свежие новости:</b>\n\n`;
+      for (const item of news) {
+        const short = item.title.length > 55 ? item.title.slice(0, 52) + '...' : item.title;
+        message += `🔹 ${short}\n`;
+        message += `   <i>${item.source}</i>\n`;
+        message += `   <a href="${item.url}">Читать</a>\n\n`;
+      }
+    }
+    
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : 'https://oils-terminal.vercel.app';
+    message += `🔗 <a href="${baseUrl}">Открыть терминал</a>`;
+    
+    const sent = await sendTelegramMessage(message);
+    return NextResponse.json({ success: sent, timestamp: new Date().toISOString() });
+    
+  } catch (err: any) {
+    console.error('💥 Error:', err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
-}
-
-export async function GET() {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  
-  if (!token || !chatId) {
-    return new NextResponse(JSON.stringify({ error: "NO TOKENS" }), { status: 500 });
-  }
-
-  let allNews: NewsItem[] = [];
-  const queries = ['palm oil market', 'soybean oil price', 'vegetable oil news'];
-
-  for (const q of queries) {
-    const items = await fetchGoogleNewsItems(q);
-    allNews = [...allNews, ...items];
-    if (allNews.length >= 5) break;
-  }
-
-  // Дедубликация
-  const seen = new Set<string>();
-  const finalNews = allNews.filter(n => {
-    const key = n.title.toLowerCase();
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  }).slice(0, 5);
-
-  if (finalNews.length === 0) {
-    return new NextResponse(JSON.stringify({ 
-      error: "GOOGLE SEARCH RETURNED EMPTY",
-      debug: { queriesAttempted: queries.length }
-    }), { status: 500 });
-  }
-
-  let msg = `📰 <b>Google News Digest</b>\n🗓 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
-  finalNews.forEach((n, i) => {
-    msg += `<b>${i+1}. ${n.title}</b>\n<a href="${n.url}">Link</a>\n\n`;
-  });
-
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      chat_id: chatId, 
-      text: msg, 
-      parse_mode: 'HTML' 
-    })
-  });
-
-  return new NextResponse(JSON.stringify({ 
-    success: true, 
-    count: finalNews.length,
-    source: 'Google Custom Search ONLY'
-  }));
 }
