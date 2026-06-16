@@ -1,4 +1,4 @@
-// app/api/cron/telegram-digest/route.ts — SIMPLE NEWS ONLY
+// app/api/cron/telegram-digest/route.ts — DEBUG NEWS VERSION
 import { NextResponse } from 'next/server';
 import { sendTelegramMessage } from '@/lib/telegram';
 
@@ -21,35 +21,63 @@ export async function GET(request: Request) {
     
     let message = `🌴 <b>Oils Terminal — News Digest</b>\n📅 ${today}\n\n`;
     
-    // 🔹 ПРОСТО берём новости из твоего /api/news
+    // 🔹 Простой запрос к /api/news
     const baseUrl = process.env.VERCEL_URL 
       ? `https://${process.env.VERCEL_URL}` 
       : 'https://oils-terminal.vercel.app';
     
-    const res = await fetch(`${baseUrl}/api/news?limit=10`, { 
-      headers: { 'Accept': 'application/json' },
-      next: { revalidate: 1800 } // кэш на 30 мин
-    });
+    const newsUrl = `${baseUrl}/api/news?limit=10`;
+    message += `<i>🔍 Запрос: ${newsUrl}</i>\n\n`;
     
-    if (res.ok) {
-      const data = await res.json();
-      const articles = data.articles || data.news || data.items || [];
+    try {
+      const res = await fetch(newsUrl, { 
+        headers: { 'Accept': 'application/json' },
+        next: { revalidate: 0 } // без кэша для теста
+      });
       
-      if (articles.length > 0) {
-        message += `<b>📰 Свежие новости:</b>\n\n`;
-        for (const item of articles.slice(0, 10)) {
-          const title = item.title || item.headline || item.name || 'Без заголовка';
-          const source = item.source || item.publisher || item.site || 'Источник';
-          const link = item.url || item.link || item.sourceUrl || baseUrl;
-          // Короткий заголовок + эмодзи + ссылка
-          const short = title.length > 60 ? title.slice(0, 57) + '...' : title;
-          message += `🔹 ${short}\n   <i>${source}</i>\n   <a href="${link}">Читать</a>\n\n`;
-        }
+      message += `<i>📡 HTTP статус: ${res.status} ${res.statusText}</i>\n\n`;
+      
+      if (!res.ok) {
+        const errorText = await res.text().catch(() => 'no body');
+        message += `<b>❌ Ошибка ответа:</b>\n\`\`\`${errorText.slice(0, 300)}\`\`\`\n\n`;
       } else {
-        message += `<i>Новостей пока нет</i>\n\n`;
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          message += `<b>❌ Не JSON:</b>\n\`\`\`${text.slice(0, 300)}\`\`\`\n\n`;
+          data = null;
+        }
+        
+        if (data) {
+          // Пробуем разные возможные поля
+          const articles = 
+            data.articles || 
+            data.news || 
+            data.items || 
+            data.data || 
+            (Array.isArray(data) ? data : null);
+          
+          message += `<i>📦 Структура ответа:</i>\n\`\`\`${JSON.stringify(Object.keys(data)).slice(0, 200)}\`\`\`\n\n`;
+          
+          if (articles && articles.length > 0) {
+            message += `<b>📰 Найдено новостей: ${articles.length}</b>\n\n`;
+            for (const item of articles.slice(0, 5)) {
+              const title = item.title || item.headline || item.name || JSON.stringify(item).slice(0, 50);
+              const source = item.source || item.publisher || item.site || 'N/A';
+              const link = item.url || item.link || item.sourceUrl || '#';
+              const short = title.length > 50 ? title.slice(0, 47) + '...' : title;
+              message += `🔹 ${short}\n   <i>${source}</i>\n   <a href="${link}">Читать</a>\n\n`;
+            }
+          } else {
+            message += `<b>⚠️ Массив новостей пуст или не найден</b>\n`;
+            message += `<i>Доступные ключи:</i> ${Object.keys(data).join(', ')}\n\n`;
+          }
+        }
       }
-    } else {
-      message += `<i>Не удалось загрузить новости</i>\n\n`;
+    } catch (fetchErr: any) {
+      message += `<b>❌ Ошибка fetch:</b>\n\`\`\`${fetchErr.message || fetchErr}\`\`\`\n\n`;
     }
     
     message += `🔗 <a href="${baseUrl}">Открыть терминал</a>`;
@@ -58,7 +86,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ success: sent, timestamp: new Date().toISOString() });
     
   } catch (err: any) {
-    console.error('💥 Error:', err);
+    console.error('💥 Cron error:', err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
