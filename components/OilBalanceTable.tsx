@@ -176,6 +176,20 @@ export default function OilBalanceTable() {
         </div>
       )}
     </div>
+
+{/* 🔽 Кнопка экспорта */}
+<div className="flex justify-end mt-4">
+  <button
+    onClick={() => exportToCSV(tableRows, commodity, region)}
+    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md font-medium transition flex items-center gap-2"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    </svg>
+    Export CSV
+  </button>
+</div>
+    
   );
 }
 
@@ -201,4 +215,38 @@ function getColor(c: string) {
 function getLabel(c: string) {
   const map: Record<string, string> = { palm: 'Palm', soybean: 'Soybean', sunflower: 'Sunflower', rapeseed: 'Rapeseed' };
   return map[c] || c;
+}
+// 🔹 Функция экспорта в CSV
+function exportToCSV(rows: any[], commodity: string, region: string) {
+  // Заголовки
+  const headers = ['Metric', 'Current (000 MT)', 'Previous (000 MT)', 'Change %', 'Unit'];
+  
+  // Данные
+  const csvRows = rows.map(row => [
+    row.metric.replace('_', ' '),
+    row.current.toLocaleString(),
+    row.previous.toLocaleString(),
+    `${row.change >= 0 ? '+' : ''}${row.change.toFixed(1)}%`,
+    '000 MT'
+  ]);
+  
+  // Формируем CSV
+  const csvContent = [
+    headers.join(','),
+    ...csvRows.map(row => row.map(cell => `"${cell}"`).join(','))
+  ].join('\n');
+  
+  // Мета-информация
+  const meta = `# Oils Terminal — Balance Sheet Export\n# Commodity: ${commodity}\n# Region: ${region}\n# Generated: ${new Date().toISOString()}\n\n`;
+  
+  // Создаём blob и скачиваем
+  const blob = new Blob([meta + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', `balance_${commodity}_${region}_${new Date().toISOString().slice(0,10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
