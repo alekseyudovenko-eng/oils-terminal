@@ -1,4 +1,15 @@
+// app/api/news/route.ts
 import { NextResponse } from 'next/server';
+import { fetchFilteredNews } from '@/lib/news-parser'; // ← ИМПОРТ
+
+export async function GET() {
+  const news = await fetchFilteredNews(35); // ← ИСПОЛЬЗУЕМ
+  return NextResponse.json({
+    news,
+    meta: { timestamp: new Date().toISOString() }
+  });
+}
+
 
 interface NewsItem {
   title: string;
