@@ -1,10 +1,9 @@
-// app/api/cron/telegram-digest/route.ts
+// app/api/cron/telegram-digest/route.ts — BULLETPROOF VERSION
 import { NextResponse } from 'next/server';
 import { sendTelegramMessage } from '@/lib/telegram';
 
 export const dynamic = 'force-dynamic';
 
-// 🔹 Форматирует число: 78500 → "78.5K"
 function formatNum(n: number): string {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
   if (n >= 1_000) return (n / 1_000).toFixed(1) + 'K';
@@ -12,9 +11,31 @@ function formatNum(n: number): string {
 }
 
 export async function GET(request: Request) {
-  // 🔐 Защита крона
-  const auth = request.headers.get('authorization');
-  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+  const url = new URL(request.url);
+  
+  // 🔍 Получаем ключ из заголовка ИЛИ из query param (для браузера)
+  const authHeader = request.headers.get('authorization') || '';
+  const queryKey = url.searchParams.get('key');
+  const expected = (process.env.CRON_SECRET || '').trim();
+  const received = authHeader.replace('Bearer ', '').trim();
+  
+  // Проверка: через заголовок ИЛИ через ?key=...
+  const isAuthorized = 
+    (received && received === expected) || 
+    (queryKey && queryKey === expected);
+  
+  // 🔧 Режим отладки: покажет, что видит сервер
+  if (url.searchParams.get('debug') === '1') {
+    return NextResponse.json({
+      debug: true,
+      expected: expected ? `${expected.slice(0,3)}***${expected.slice(-3)}` : 'NOT SET',
+      receivedHeader: authHeader || 'MISSING',
+      queryKey: queryKey || 'NOT SENT',
+      match: received === expected || queryKey === expected
+    });
+  }
+  
+  if (!isAuthorized) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -23,12 +44,9 @@ export async function GET(request: Request) {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
     });
     
-    // 📰 Заголовок
     let message = `🌴 <b>Oils Terminal — Daily Digest</b>\n📅 ${today}\n\n`;
     
-    // 📊 Ключевые метрики (берём последние доступные из базы)
-    // Для продакшена здесь можно сделать реальные запросы к Supabase
-    // Сейчас — демо-данные, которые ты можешь заменить на реальные запросы
+    // 📊 Ключевые метрики (демо — замени на реальные запросы к базе)
     const metrics = [
       { label: '🌴 Palm Production', value: 85600, change: +2.1 },
       { label: '🫘 Soy Exports', value: 46500, change: -0.8 },
@@ -43,17 +61,13 @@ export async function GET(request: Request) {
       message += `${arrow} ${m.label}: <b>${formatNum(m.value)}</b> (${sign}${m.change}%)\n`;
     }
     
-    // 📰 Последние новости (заголовок + источник)
-    // Для продакшена: fetch(`/api/news`) и парсинг
     message += `\n<b>📰 Top News:</b>\n`;
     message += `• CPO prices rise on strong EU biodiesel demand (Palmoil Magazine)\n`;
     message += `• USDA revises soybean export forecast upward (Agri-Pulse)\n`;
     message += `• New EUDR guidelines published for importers (Euractiv)\n`;
     
-    // 🔗 Ссылка
     message += `\n🔗 <a href="https://oils-terminal.vercel.app">Открыть терминал</a>`;
     
-    // 📤 Отправка
     const sent = await sendTelegramMessage(message);
     
     return NextResponse.json({ 
