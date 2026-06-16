@@ -47,18 +47,17 @@ export function parseRSS(xml: string, sourceName: string): NewsItem[] {
   return items;
 }
 
-// === ФИЛЬТРЫ (сокращённо, скопируй свои полные списки) ===
-const BLACKLIST = ['police', 'arrest', 'shooting', 'war', 'football', 'recipe']; // ...твои
-const WHITELIST_CORE = ['palm oil', 'cpo', 'biodiesel', 'eudr', 'soybean']; // ...твои
+// === ФИЛЬТРЫ (сократи при необходимости) ===
+const BLACKLIST = ['police', 'arrest', 'shooting', 'war', 'football', 'recipe', 'museum', 'festival', 'lgbt', 'abortion', 'gold mine', 'real estate', 'shampoo', 'chess', 'celebrity'];
+const WHITELIST_CORE = ['palm oil', 'cpo', 'biodiesel', 'eudr', 'soybean', 'sunflower oil', 'rapeseed', 'biofuel', 'deforestation', 'export duty', 'crushing margin', 'sustainable palm'];
 
 export function passesFilters(news: NewsItem): boolean {
   const text = (news.title + ' ' + news.content).toLowerCase();
   if (BLACKLIST.some(kw => text.includes(kw.toLowerCase()))) return false;
-  const hasCore = WHITELIST_CORE.some(kw => text.includes(kw.toLowerCase()));
-  return hasCore;
+  return WHITELIST_CORE.some(kw => text.includes(kw.toLowerCase()));
 }
 
-// === ГЛАВНАЯ ФУНКЦИЯ: собрать новости ===
+// === ГЛАВНАЯ ФУНКЦИЯ ===
 export async function fetchFilteredNews(limit: number = 10) {
   const VERIFIED_SOURCES = [
     { url: 'https://www.palmoilmagazine.com/feed/', name: 'Palmoil Magazine' },
@@ -90,7 +89,6 @@ export async function fetchFilteredNews(limit: number = 10) {
     new Date(n.published_date).getTime() >= weekAgo && passesFilters(n)
   );
 
-  // Дедупликация
   const seen = new Set<string>();
   const unique = filtered.filter(n => {
     const key = `${n.title.toLowerCase().trim()}|${n.source}`;
