@@ -1,0 +1,33 @@
+# .github/workflows/telegram-digest.yml
+name: 📰 Telegram News Digest
+
+on:
+  schedule:
+    # 0 6 * * * = 6:00 UTC = 9:00 утра по Израилю (UTC+3)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # ← Позволяет запустить вручную кнопкой
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: 🚀 Trigger Telegram Digest
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" \
+            "https://${{ secrets.VERCEL_URL }}/api/cron/telegram-digest?key=${{ secrets.CRON_SECRET }}")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          echo "📡 Response: $BODY"
+          
+          if [ "$HTTP_CODE" -eq 200 ] && echo "$BODY" | grep -q '"success":true'; then
+            echo "✅ Digest sent successfully"
+            exit 0
+          else
+            echo "❌ Failed: HTTP $HTTP_CODE"
+            echo "Body: $BODY"
+            exit 1
+          fi
