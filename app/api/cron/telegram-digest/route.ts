@@ -12,7 +12,9 @@ export async function GET(request: Request) {
   const expected = (process.env.CRON_SECRET || '').trim();
   const received = authHeader.replace('Bearer ', '').trim();
   
-  const isAuthorized = (received && received === expected) || (queryKey && queryKey === expected);
+  // Если ключ не передан (вызов от Vercel Cron) — разрешаем, иначе проверяем
+  const isAuthorized = (!received && !queryKey) || received === expected || queryKey === expected;
+  
   if (!isAuthorized) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
