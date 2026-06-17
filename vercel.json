@@ -13,8 +13,8 @@
       "schedule": "0 10 12 * *"
     },
     {
-      "path": "/api/cron/telegram-digest",
-      "schedule": "0 9 * * *"
+  "path": "/api/cron/telegram-digest?x-vercel-protection-bypass=prj_ТВОЙ_ТОКЕН",
+  "schedule": "10 11 * * *"
     }
   ]
 }
