@@ -2,7 +2,7 @@ name: 📰 Telegram News Digest
 
 on:
   schedule:
-    - cron: '20 09 * * *'
+    - cron: '20 08 * * *'
   workflow_dispatch:
 
 jobs:
