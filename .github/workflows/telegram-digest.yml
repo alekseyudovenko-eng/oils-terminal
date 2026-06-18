@@ -2,9 +2,8 @@ name: 📰 Telegram News Digest
 
 on:
   schedule:
-    # 0 6 * * * = 06:00 UTC = 09:00 по Израилю
-    - cron: '0 6 * * *'
-  workflow_dispatch: # ← Кнопка ручного запуска
+    - cron: '40 11 * * *'  # ← 11:40 UTC = 14:40 Израиль
+  workflow_dispatch:
 
 jobs:
   trigger:
