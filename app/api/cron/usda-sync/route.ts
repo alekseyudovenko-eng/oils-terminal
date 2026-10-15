@@ -1,6 +1,7 @@
 // app/api/cron/usda-sync/route.ts — OFFICIAL USDA PSD API v2
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { isCronAuthorized } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -62,23 +63,7 @@ async function fetchUSDAData(commodityCode: string, countryCode: string, marketY
 }
 
 export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const authHeader = request.headers.get('authorization') || '';
-  const queryKey = url.searchParams.get('key');
-  const expected = (process.env.CRON_SECRET || '').trim();
-  const received = authHeader.replace('Bearer ', '').trim();
-  
-  const isAuthorized = (received && received === expected) || (queryKey && queryKey === expected);
-  
-  if (url.searchParams.get('debug') === '1') {
-    return NextResponse.json({
-      debug: true,
-      expected: `${expected.slice(0,3)}***${expected.slice(-3)}`,
-      match: received === expected || queryKey === expected
-    });
-  }
-  
-  if (!isAuthorized) {
+  if (!isCronAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

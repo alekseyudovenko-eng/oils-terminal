@@ -2,6 +2,7 @@ import { supabaseClient } from '@/lib/supabase';
 import AddPriceButton from '@/components/AddPriceButton';
 import Link from 'next/link';
 import Script from 'next/script';
+import { COMMODITIES } from '@/lib/prices';
 
 export const dynamic = 'force-dynamic';
 
@@ -66,20 +67,26 @@ export default async function Home() {
     return acc;
   }, []) || [];
 
-  // Сортируем цены в требуемом порядке
-  const desiredOrder = [
-    'Rapeseed Oil FOB Rotterdam',
-    'Soybean Oil CBOT (Chicago)',
-    'RBD Palm Olein FOB Malaysia',
-    'CPO Spot (Indonesia)',
+  // Порядок строк в таблице. Товары, которых нет в списке, идут в конце по алфавиту.
+  const desiredOrder: string[] = [
+    COMMODITIES.fcpo,
+    COMMODITIES.indoRef,
     'CPO Spot (Malaysia)',
+    'CPO Spot (Indonesia)',
+    'RBD Palm Olein FOB Malaysia',
+    COMMODITIES.soy,
+    'Rapeseed Oil FOB Rotterdam',
     'Sunflower Oil (FOB BS)',
     'Olive Oil (Europe)'
   ];
+  const rank = (name: string) => {
+    const i = desiredOrder.indexOf(name);
+    return i === -1 ? desiredOrder.length : i;
+  };
 
-  const sortedPrices = latestPrices.sort((a: any, b: any) => {
-    return desiredOrder.indexOf(a.commodity) - desiredOrder.indexOf(b.commodity);
-  });
+  const sortedPrices = latestPrices.sort((a: any, b: any) =>
+    rank(a.commodity) - rank(b.commodity) || String(a.commodity).localeCompare(String(b.commodity))
+  );
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans text-slate-900">
@@ -120,7 +127,7 @@ export default async function Home() {
         <div className="bg-white border border-slate-200 rounded-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
             <h3 className="font-bold text-slate-900">Market Quotes (USD/MT)</h3>
-            <span className="text-xs text-slate-500 uppercase tracking-wider">Live Data</span>
+            <span className="text-xs text-slate-500 uppercase tracking-wider">Daily update</span>
           </div>
           
           <table className="w-full text-left text-sm">
@@ -144,11 +151,11 @@ export default async function Home() {
                 sortedPrices.map((item: any) => (
                   <tr key={item.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-6 py-4 font-semibold text-slate-900">{item.commodity}</td>
-                    <td className="px-6 py-4 text-right font-mono text-slate-700">${item.value.toLocaleString()}</td>
+                    <td className="px-6 py-4 text-right font-mono text-slate-700">${Number(item.value).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
                     <td className="px-6 py-4 text-right text-slate-500">{item.unit || 'USD/MT'}</td>
                     <td className="px-6 py-4 text-slate-500 text-xs uppercase">{item.sources?.[0]?.source || 'N/A'}</td>
                     <td className="px-6 py-4 text-right text-slate-400 text-xs">
-                      {new Date(item.verified_at).toLocaleDateString()}
+                      {item.verified_at ? new Date(item.verified_at).toLocaleString('ru-RU', { timeZone: 'UTC', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' UTC' : '—'}
                     </td>
                   </tr>
                 ))

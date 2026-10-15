@@ -1,81 +1,66 @@
+// app/api/cron/market-report/route.ts — ежедневный отчёт по ценам в Telegram (Vercel Cron)
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { isCronAuthorized } from '@/lib/auth';
+import { escapeHtml, sendTelegramMessage, sendTelegramPhoto } from '@/lib/telegram';
 
-export async function GET() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-  
-  const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-  const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: Request) {
+  if (!isCronAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
   try {
-    // 1. Получаем последние цены из базы
-    // Мы берем данные, которые обновляет твой daily-update скрипт
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    // Все цены в USD/т: spot, futures и reference (раньше в отчёт попадал только spot).
     const { data: prices, error } = await supabase
       .from('market_data')
-      .select('commodity, value')
-      .eq('metric', 'price_spot')
+      .select('commodity, value, metric, verified_at')
+      .like('metric', 'price_%')
       .order('commodity');
-
     if (error) throw error;
 
-    let msg = "🛢️ <b>Daily Market Report</b>\n";
-    msg += `📅 ${new Date().toLocaleDateString('ru-RU')}\n\n`;
-    
+    const rows = (prices || []).filter((p: any) => Number(p.value) > 0);
+
+    let msg = '🛢️ <b>Daily Market Report</b>\n';
+    msg += `📅 ${new Date().toLocaleDateString('ru-RU', { timeZone: 'UTC' })}\n\n`;
+
     const labels: string[] = [];
     const values: number[] = [];
-
-    prices?.forEach((p: any) => {
-      // Фильтруем только масла для графика, чтобы не было каши
-      if (p.commodity.includes('Oil') || p.commodity.includes('Palm')) {
-        msg += `🔹 <b>${p.commodity}</b>: $${p.value}\n`;
-        // Для графика берем короткое имя
-        const shortName = p.commodity.split('(')[0].trim().substring(0, 12);
-        labels.push(shortName);
-        values.push(p.value);
-      }
-    });
+    for (const p of rows) {
+      const value = Number(p.value);
+      const date = p.verified_at ? new Date(p.verified_at).toLocaleDateString('ru-RU', { timeZone: 'UTC' }) : '';
+      msg += `🔹 <b>${escapeHtml(p.commodity)}</b>: $${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+      msg += date ? ` <i>(${date})</i>\n` : '\n';
+      labels.push(String(p.commodity).split('(')[0].trim().slice(0, 16));
+      values.push(value);
+    }
 
     if (values.length === 0) {
-       msg += "⚠️ No price data available today.";
+      msg += '⚠️ Нет данных о ценах.';
+      const sent = await sendTelegramMessage(msg);
+      return NextResponse.json({ success: sent, prices: 0 });
     }
 
-    // 2. Генерируем график через QuickChart
-    // Если данных нет, график не генерируем
-    let photoUrl = "";
-    if (values.length > 0) {
-      photoUrl = `https://quickchart.io/chart?c={type:'bar',data:{labels:['${labels.join("','")}'],datasets:[{label:'USD/MT',data:[${values.join(',')}],backgroundColor:'#3b82f6'}]}}&w=600&h=400`;
-    }
+    // График через QuickChart: конфиг кодируется, чтобы названия с пробелами и скобками не ломали URL.
+    const chartConfig = {
+      type: 'bar',
+      data: { labels, datasets: [{ label: 'USD/MT', data: values, backgroundColor: '#3b82f6' }] },
+      options: { legend: { display: false } },
+    };
+    const photoUrl = `https://quickchart.io/chart?w=600&h=400&c=${encodeURIComponent(JSON.stringify(chartConfig))}`;
 
-    // 3. Отправляем в Telegram
-    if (photoUrl) {
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          chat_id: CHAT_ID, 
-          photo: photoUrl, 
-          caption: msg, 
-          parse_mode: 'HTML' 
-        })
-      });
-    } else {
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          chat_id: CHAT_ID, 
-          text: msg, 
-          parse_mode: 'HTML' 
-        })
-      });
-    }
+    let sent = await sendTelegramPhoto(photoUrl, msg);
+    if (!sent) sent = await sendTelegramMessage(msg); // если фото не прошло — хотя бы текст
 
-    return NextResponse.json({ success: true });
-  } catch (e) {
-    console.error("Cron Market Error:", e);
-    return NextResponse.json({ error: String(e) }, { status: 500 });
+    return NextResponse.json({ success: sent, prices: values.length }, { status: sent ? 200 : 502 });
+  } catch (e: any) {
+    console.error('market-report error:', e);
+    return NextResponse.json({ error: String(e?.message || e) }, { status: 500 });
   }
 }
