@@ -9,12 +9,13 @@ import NewsList from '@/components/NewsList';
 import Section from '@/components/Section';
 import Notice from '@/components/Notice';
 import { getQuotes } from '@/lib/quotes';
-import { getNews } from '@/lib/news';
+import { getNewsFeed } from '@/lib/news';
+import { fmtTimeUtc } from '@/lib/format';
 
 export const revalidate = 600;
 
 export default async function OverviewPage() {
-  const [quotes, news] = await Promise.all([getQuotes(), getNews()]);
+  const [quotes, feed] = await Promise.all([getQuotes(), getNewsFeed()]);
 
   return (
     <>
@@ -31,9 +32,12 @@ export default async function OverviewPage() {
         <Section
           id="news"
           title="Новости"
+          note={feed.curated
+            ? <>Отобраны и проверены по первоисточникам{feed.updatedAt && <>, обновлено {fmtTimeUtc(feed.updatedAt)}</>}.</>
+            : 'Автоматическая лента: отобранных новостей пока нет.'}
           action={<Link href="/market#news" className="text-sm text-ink-2 hover:text-gold underline underline-offset-2">Все новости за месяц</Link>}
         >
-          <NewsList news={news} limit={12} />
+          <NewsList news={feed.items} limit={12} />
         </Section>
       </main>
 

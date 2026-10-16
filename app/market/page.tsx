@@ -12,7 +12,7 @@ import NewsList from '@/components/NewsList';
 import Section from '@/components/Section';
 import Notice from '@/components/Notice';
 import { getQuotes } from '@/lib/quotes';
-import { getNews } from '@/lib/news';
+import { getNewsFeed } from '@/lib/news';
 import { getPsd } from '@/lib/psd';
 import { buildPsdView } from '@/lib/psd-view';
 import { getHistory } from '@/lib/snapshots';
@@ -30,7 +30,8 @@ const ANCHORS = [
 ];
 
 export default async function MarketPage() {
-  const [quotes, news, psd, pogoHistory] = await Promise.all([getQuotes(), getNews(), getPsd(), getHistory('pogo')]);
+  const [quotes, feed, psd, pogoHistory] = await Promise.all([getQuotes(), getNewsFeed(), getPsd(), getHistory('pogo')]);
+  const news = feed.items;
   const views = buildPsdView(psd.rows);
   const hasPsd = views.some(v => v.years.length > 0);
 
@@ -82,7 +83,9 @@ export default async function MarketPage() {
           <RegionalBalances />
         </Section>
 
-        <Section id="news" title="Новости за месяц" note={`${news.length} материалов из отраслевых изданий и новостных агрегаторов, от свежих к старым.`}>
+        <Section id="news" title="Новости за месяц" note={feed.curated
+            ? <>{news.length} материалов, отобранных и проверенных по первоисточникам{feed.updatedAt && <>; обновлено {fmtTimeUtc(feed.updatedAt)}</>}. От свежих к старым.</>
+            : `${news.length} материалов из автоматической ленты (отобранных новостей пока нет).`}>
           <NewsList news={news} />
         </Section>
       </main>

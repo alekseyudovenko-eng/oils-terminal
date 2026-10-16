@@ -17,9 +17,10 @@ export default function NewsList({ news, limit }: { news: NewsItem[]; limit?: nu
             <a href={n.url} target="_blank" rel="noopener noreferrer" className="text-ink hover:text-gold hover:underline underline-offset-2 leading-snug">
               {n.title}
             </a>
-            {n.summary && <p className="mt-1 text-sm text-ink-2 line-clamp-2 max-w-[75ch]">{n.summary}</p>}
+            {n.summary && <p className="mt-1 text-sm text-ink-2 max-w-[75ch]">{n.summary}</p>}
             <p className="mt-1 text-xs text-ink-3">
               {n.source}
+              {n.region && <span className="ml-2">{n.region}</span>}
               {n.topics.length > 0 && <span className="ml-2">{n.topics.map(t => TOPIC_LABELS[t]).join(', ')}</span>}
             </p>
           </div>

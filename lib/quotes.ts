@@ -1,5 +1,6 @@
 // lib/quotes.ts — котировки и спреды (POGO и др.).
 import { unstable_cache } from 'next/cache';
+import { rethrowIfNextInternal } from './next-errors';
 import {
   CENTS_LB_TO_USD_T, GAL_PER_TONNE_DIESEL, INSTRUMENTS, Instrument, Group,
 } from './instruments';
@@ -55,7 +56,7 @@ async function fetchScanner(tickers: string[]): Promise<Map<string, Row>> {
       'User-Agent': 'Mozilla/5.0 (compatible; OilsTerminal/2.0)',
     },
     body: JSON.stringify({ symbols: { tickers, query: { types: [] } }, columns: COLUMNS }),
-    cache: 'no-store',
+    next: { revalidate: 600 },
     signal: AbortSignal.timeout(10000),
   });
   if (!res.ok) throw new Error(`TradingView HTTP ${res.status}`);
@@ -109,6 +110,7 @@ async function loadQuotes(): Promise<QuotesResult> {
   try {
     rows = await fetchScanner(allTickers);
   } catch (e: any) {
+    rethrowIfNextInternal(e);
     error = `Котировки недоступны: ${e?.message || e}`;
     console.error(error);
   }
@@ -191,6 +193,7 @@ export async function getQuotes(): Promise<QuotesResult> {
   try {
     return await cachedQuotes();
   } catch (e: any) {
+    rethrowIfNextInternal(e);
     return emptyResult(String(e?.message || e));
   }
 }
@@ -200,6 +203,7 @@ export async function getQuotesFresh(): Promise<QuotesResult> {
   try {
     return await loadQuotes();
   } catch (e: any) {
+    rethrowIfNextInternal(e);
     return emptyResult(String(e?.message || e));
   }
 }

@@ -2,6 +2,7 @@
 // Синхронизация: /api/cron/usda-sync раз в месяц, после выхода отчёта WASDE.
 // Нужен бесплатный ключ USDA_API_KEY (api.data.gov).
 import { unstable_cache } from 'next/cache';
+import { rethrowIfNextInternal } from './next-errors';
 import { getDb } from './db';
 
 import { METRICS, OILS, WORLD, myLabel, type Metric, type OilId, type PsdRow } from './psd-meta';
@@ -168,6 +169,7 @@ export async function getPsd(): Promise<PsdData> {
   try {
     return await cachedPsd();
   } catch (e) {
+    rethrowIfNextInternal(e);
     console.error('getPsd:', e);
     return { rows: [], updatedAt: null };
   }

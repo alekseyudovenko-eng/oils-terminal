@@ -1,5 +1,6 @@
 // lib/snapshots.ts — ежедневные снимки цен и спредов (для графика POGO на странице «Рынок»).
 import { unstable_cache } from 'next/cache';
+import { rethrowIfNextInternal } from './next-errors';
 import { getDb } from './db';
 import type { QuotesResult } from './quotes';
 
@@ -42,6 +43,7 @@ export async function getHistory(series: string): Promise<Point[]> {
   try {
     return await cachedHistory(series);
   } catch (e) {
+    rethrowIfNextInternal(e);
     console.error('getHistory:', e);
     return [];
   }
