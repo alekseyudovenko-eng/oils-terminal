@@ -1,15 +1,15 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { IBM_Plex_Sans, IBM_Plex_Sans_Condensed } from 'next/font/google';
+import { Fira_Sans, Fira_Sans_Condensed } from 'next/font/google';
 
-const sans = IBM_Plex_Sans({
+const sans = Fira_Sans({
   subsets: ['latin', 'cyrillic'],
   weight: ['400', '500', '600'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-const cond = IBM_Plex_Sans_Condensed({
+const cond = Fira_Sans_Condensed({
   subsets: ['latin', 'cyrillic'],
   weight: ['400', '500', '600'],
   variable: '--font-cond',
