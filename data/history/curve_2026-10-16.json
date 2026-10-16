@@ -1,0 +1,258 @@
+{
+ "capturedAt": "2026-10-16T11:20:00Z",
+ "source": "TradingView scanner (delayed)",
+ "contracts": [
+  {
+   "ticker": "MYX:FCPOX2026",
+   "close": 4535,
+   "volume": 2606,
+   "name": "Crude Palm Oil Futures (Nov 2026)",
+   "expiry": 20261113
+  },
+  {
+   "ticker": "MYX:FCPOZ2026",
+   "close": 4677,
+   "volume": 28561,
+   "name": "Crude Palm Oil Futures (Dec 2026)",
+   "expiry": 20261215
+  },
+  {
+   "ticker": "MYX:FCPOF2027",
+   "close": 4769,
+   "volume": 42457,
+   "name": "Crude Palm Oil Futures (Jan 2027)",
+   "expiry": 20270115
+  },
+  {
+   "ticker": "MYX:FCPOG2027",
+   "close": 4851,
+   "volume": 13120,
+   "name": "Crude Palm Oil Futures (Feb 2027)",
+   "expiry": 20270215
+  },
+  {
+   "ticker": "MYX:FCPOH2027",
+   "close": 4925,
+   "volume": 13830,
+   "name": "Crude Palm Oil Futures (Mar 2027)",
+   "expiry": 20270315
+  },
+  {
+   "ticker": "MYX:FCPOJ2027",
+   "close": 4984,
+   "volume": 6434,
+   "name": "Crude Palm Oil Futures (Apr 2027)",
+   "expiry": 20270415
+  },
+  {
+   "ticker": "MYX:FCPOK2027",
+   "close": 5021,
+   "volume": 8214,
+   "name": "Crude Palm Oil Futures (May 2027)",
+   "expiry": 20270514
+  },
+  {
+   "ticker": "MYX:FCPOM2027",
+   "close": 5029,
+   "volume": 3551,
+   "name": "Crude Palm Oil Futures (Jun 2027)",
+   "expiry": 20270615
+  },
+  {
+   "ticker": "MYX:FCPON2027",
+   "close": 5025,
+   "volume": 4260,
+   "name": "Crude Palm Oil Futures (Jul 2027)",
+   "expiry": 20270715
+  },
+  {
+   "ticker": "MYX:FCPOQ2027",
+   "close": 5005,
+   "volume": 3509,
+   "name": "Crude Palm Oil Futures (Aug 2027)",
+   "expiry": 20270813
+  },
+  {
+   "ticker": "MYX:FCPOU2027",
+   "close": 4980,
+   "volume": 4009,
+   "name": "Crude Palm Oil Futures (Sep 2027)",
+   "expiry": 20270915
+  },
+  {
+   "ticker": "MYX:FCPOV2027",
+   "close": 4916,
+   "volume": 1129,
+   "name": "Crude Palm Oil Futures (Oct 2027)",
+   "expiry": 20271015
+  },
+  {
+   "ticker": "MYX:FCPOX2027",
+   "close": 4887,
+   "volume": 1666,
+   "name": "Crude Palm Oil Futures (Nov 2027)",
+   "expiry": 20271115
+  },
+  {
+   "ticker": "MYX:FCPOF2028",
+   "close": 4802,
+   "volume": 49,
+   "name": "Crude Palm Oil Futures (Jan 2028)",
+   "expiry": 20280114
+  },
+  {
+   "ticker": "MYX:FCPOH2028",
+   "close": 4772,
+   "volume": 33,
+   "name": "Crude Palm Oil Futures (Mar 2028)",
+   "expiry": 20280315
+  },
+  {
+   "ticker": "MYX:FCPOK2028",
+   "close": 4730,
+   "volume": 0,
+   "name": "Crude Palm Oil Futures (May 2028)",
+   "expiry": 20280515
+  },
+  {
+   "ticker": "MYX:FCPON2028",
+   "close": 4730,
+   "volume": 0,
+   "name": "Crude Palm Oil Futures (Jul 2028)",
+   "expiry": 20280714
+  },
+  {
+   "ticker": "MYX:FCPOU2028",
+   "close": 4730,
+   "volume": 0,
+   "name": "Crude Palm Oil Futures (Sep 2028)",
+   "expiry": 20280915
+  },
+  {
+   "ticker": "MYX:FCPOX2028",
+   "close": 4730,
+   "volume": 0,
+   "name": "Crude Palm Oil Futures (Nov 2028)",
+   "expiry": 20281115
+  },
+  {
+   "ticker": "MYX:FCPOF2029",
+   "close": 4730,
+   "volume": 0,
+   "name": "Crude Palm Oil Futures (Jan 2029)",
+   "expiry": 20290115
+  },
+  {
+   "ticker": "MYX:FCPOH2029",
+   "close": 4730,
+   "volume": 0,
+   "name": "Crude Palm Oil Futures (Mar 2029)",
+   "expiry": 20290315
+  },
+  {
+   "ticker": "MYX:FCPOK2029",
+   "close": 4730,
+   "volume": 0,
+   "name": "Crude Palm Oil Futures (May 2029)",
+   "expiry": 20290515
+  },
+  {
+   "ticker": "MYX:FCPON2029",
+   "close": 4730,
+   "volume": 0,
+   "name": "Crude Palm Oil Futures (Jul 2029)",
+   "expiry": 20290713
+  },
+  {
+   "ticker": "MYX:FCPOU2029",
+   "close": 4730,
+   "volume": 0,
+   "name": "Crude Palm Oil Futures (Sep 2029)",
+   "expiry": 20290914
+  },
+  {
+   "ticker": "MYX:FCPO1!",
+   "close": 4769,
+   "volume": 42457,
+   "name": "Crude Palm Oil Futures",
+   "expiry": null
+  },
+  {
+   "ticker": "CBOT:ZL1!",
+   "close": 67.08,
+   "volume": 10600,
+   "name": "Soybean Oil Futures",
+   "expiry": null
+  },
+  {
+   "ticker": "CBOT:ZLF2027",
+   "close": 67.2,
+   "volume": 3356,
+   "name": "Soybean Oil Futures (Jan 2027)",
+   "expiry": 20270114
+  },
+  {
+   "ticker": "CBOT:ZLH2027",
+   "close": 67.44,
+   "volume": 2172,
+   "name": "Soybean Oil Futures (Mar 2027)",
+   "expiry": 20270312
+  },
+  {
+   "ticker": "CBOT:ZLK2027",
+   "close": 67.58,
+   "volume": 1160,
+   "name": "Soybean Oil Futures (May 2027)",
+   "expiry": 20270514
+  },
+  {
+   "ticker": "CBOT:ZLN2027",
+   "close": 67.63,
+   "volume": 487,
+   "name": "Soybean Oil Futures (Jul 2027)",
+   "expiry": 20270714
+  },
+  {
+   "ticker": "CBOT:ZLZ2027",
+   "close": 65.92,
+   "volume": 178,
+   "name": "Soybean Oil Futures (Dec 2027)",
+   "expiry": 20271214
+  },
+  {
+   "ticker": "ICEEUR:BRN1!",
+   "close": 106.15,
+   "volume": 79817,
+   "name": "Brent Crude Futures",
+   "expiry": null
+  },
+  {
+   "ticker": "ICEEUR:BRNF2027",
+   "close": 103.24,
+   "volume": 60983,
+   "name": "Brent Crude Futures (Jan 2027)",
+   "expiry": 20261130
+  },
+  {
+   "ticker": "ICEEUR:BRNM2027",
+   "close": 93.23,
+   "volume": 8212,
+   "name": "Brent Crude Futures (Jun 2027)",
+   "expiry": 20270430
+  },
+  {
+   "ticker": "ICEEUR:BRNZ2027",
+   "close": 85.15,
+   "volume": 5114,
+   "name": "Brent Crude Futures (Dec 2027)",
+   "expiry": 20271029
+  },
+  {
+   "ticker": "FX_IDC:USDMYR",
+   "close": 4.0795,
+   "volume": 0,
+   "name": "U.S. DOLLAR / MALAYSIAN RINGGIT",
+   "expiry": null
+  }
+ ]
+}

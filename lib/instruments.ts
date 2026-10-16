@@ -31,7 +31,7 @@ export type Instrument = {
 
 export const INSTRUMENTS: Instrument[] = [
   {
-    id: 'fcpo', name: 'Пальмовое масло CPO', short: 'FCPO', venue: 'Bursa Malaysia, ближайший',
+    id: 'fcpo', name: 'Пальмовое масло CPO', short: 'FCPO', venue: 'Bursa Malaysia, 3-й месяц',
     group: 'palm', unit: 'MYR/т', tickers: ['MYX:FCPO1!'], toUsdT: { kind: 'fx_t', fx: 'USDMYR' },
     expect: /palm/i,
   },
