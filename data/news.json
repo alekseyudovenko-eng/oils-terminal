@@ -1,4 +1,230 @@
 {
-  "updatedAt": null,
-  "items": []
+  "updatedAt": "2026-10-16T08:37:46Z",
+  "items": [
+    {
+      "id": "2026-10-15-malaysia-exports-oct-1-15",
+      "publishedAt": "2026-10-15",
+      "title": "Экспорт малайзийского пальмового масла 1–15 октября вырос на 43–58% к сентябрю, фьючерсы снизились",
+      "summary": "По оценкам сюрвейеров, экспорт за 1–15 октября вырос на 43,2–58,3% к тому же периоду сентября. Декабрьский контракт CPO на Bursa при этом упал на 78 ринггитов (−1,66%), до 4 622 ринггитов за тонну, вслед за соевым маслом в Даляне и Чикаго.",
+      "originalTitle": "Palm oil slips as weaker rival oils outweigh strong export outlook",
+      "source": "Business Recorder (Reuters)",
+      "url": "https://www.brecorder.com/news/40444373/palm-oil-slips-as-weaker-rival-oils-outweigh-strong-export-outlook",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "trade"
+      ],
+      "region": "Малайзия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-15-india-september-imports-sea",
+      "publishedAt": "2026-10-15",
+      "title": "Индия в сентябре нарастила импорт пальмового масла, а подсолнечного сократила на треть",
+      "summary": "По данным SEA, импорт пальмового масла вырос на 4,5% к августу, до 817 884 т; соевого — снизился на 2,2%, до 614 965 т; подсолнечного — упал на 32%, до 108 837 т.",
+      "originalTitle": "India's palm oil imports in September rose 4.5% month-on-month, trade body says",
+      "source": "Business Recorder (Reuters)",
+      "url": "https://www.brecorder.com/news/40444342/indias-palm-oil-imports-in-september-rose-45-month-on-month-trade-body-says",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "soy",
+        "sunflower",
+        "trade"
+      ],
+      "region": "Индия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-15-malaysia-exports-oct-1-10",
+      "publishedAt": "2026-10-15",
+      "title": "Экспорт пальмового масла из Малайзии за 1–10 октября вырос более чем на треть",
+      "summary": "AmSpec оценил экспорт за 1–10 октября в 491 954 т (+37,73% к 1–10 сентября), ITS — в 525 071 т (+33,51%). Декабрьский контракт CPO 14 октября закрылся на 4 700 ринггитах за тонну (+18).",
+      "originalTitle": "Malaysia CPO Futures Rise to RM4,700 as Early-October Exports Jump Up to 37.73%",
+      "source": "Palm Oil Magazine",
+      "url": "https://www.palmoilmagazine.com/cpo-price/2026/10/15/malaysia-cpo-futures-rise-to-rm4700-as-early-october-exports-jump-up-to-37-73/",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "trade"
+      ],
+      "region": "Малайзия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-14-ukraine-sunoil-logistics",
+      "publishedAt": "2026-10-14",
+      "title": "Цены на подсолнечное масло в Украине под давлением из-за логистики",
+      "summary": "Масло торгуется около $1 100/т FCA завод и $1 200/т на западной границе; рост стоимости перевозок и задержки отгрузок ведут к накоплению продукции на заводах. Предложения черноморского масла в Индию — $1 400–1 450/т CIF Мумбаи.",
+      "originalTitle": "Logistics challenges put pressure on sunflower oil prices in Ukraine despite strong global demand",
+      "source": "UkrAgroConsult (Graintrade)",
+      "url": "https://ukragroconsult.com/en/news/logistics-challenges-put-pressure-on-sunflower-oil-prices-in-ukraine-despite-strong-global-demand/",
+      "lang": "en",
+      "topics": [
+        "sunflower",
+        "trade"
+      ],
+      "region": "Украина",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-14-malaysia-record-stocks-analysts",
+      "publishedAt": "2026-10-14",
+      "title": "Аналитики: рекордные запасы будут сдерживать цены на CPO до начала 2027 года",
+      "summary": "Запасы в Малайзии на конец сентября — рекордные 3,51 млн т. BIMB ждёт среднюю цену CPO 4 400 ринггитов в 2026 году и 4 500 в 2027-м, RHB — 4 400 и 4 500. Поддержку спросу оказывают снижение пошлин в Индии и спред соя−пальма, расширившийся до $375/т в октябре.",
+      "originalTitle": "High inventory to weigh on CPO prices",
+      "source": "The Star",
+      "url": "https://www.thestar.com.my/business/business-news/2026/10/14/high-inventory-to-weigh-on-cpo-prices",
+      "lang": "en",
+      "topics": [
+        "palm"
+      ],
+      "region": "Малайзия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-13-gapki-august",
+      "publishedAt": "2026-10-13",
+      "title": "Запасы пальмового масла в Индонезии в августе упали на 19,7% на фоне спроса на биодизель",
+      "summary": "По данным GAPKI, запасы на конец августа — 2,214 млн т против 2,758 млн т в июле. Производство — 5,343 млн т (−0,5%), использование на биодизель выросло на 5% до 1,35 млн т. Экспорт за январь–август — 23,37 млн т.",
+      "originalTitle": "Indonesia Palm Oil Stocks Fall 19.72% to 2.214 Million Tonnes as Biodiesel Demand Rises",
+      "source": "Palm Oil Magazine (GAPKI)",
+      "url": "https://www.palmoilmagazine.com/ipoa/2026/10/13/indonesia-palm-oil-stocks-fall-19-72-to-2-214-million-tonnes-as-biodiesel-demand-rises/",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "biofuel"
+      ],
+      "region": "Индонезия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-12-mpob-september",
+      "publishedAt": "2026-10-12",
+      "title": "Запасы пальмового масла в Малайзии в сентябре выросли на 24,5% до рекордных 3,51 млн т",
+      "summary": "По данным MPOB, производство CPO в сентябре выросло на 16,5% к августу, до 2,11 млн т, а экспорт пальмового масла снизился на 12,1%.",
+      "originalTitle": "Malaysia’s total palm oil stocks up 24.5% to 3.5 mil tonnes in September — MPOB",
+      "source": "The Edge Malaysia",
+      "url": "https://theedgemalaysia.com/node/821487",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "trade"
+      ],
+      "region": "Малайзия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-12-kazakhstan-oilfat-exports",
+      "publishedAt": "2026-10-12",
+      "title": "Казахстан за пять сезонов увеличил экспортную выручку от масложировой продукции в пять раз",
+      "summary": "По данным Минсельхоза РК, выручка выросла с $247 млн до $1,232 млрд; экспорт в Китай за три сезона вырос более чем в 3,7 раза. Цель — $1,5 млрд к 2028 году.",
+      "source": "Inbusiness.kz",
+      "url": "https://inbusiness.kz/ru/last/kazahstan-narastil-eksport-maslozhirovoj-produkcii-v-pyat-raz",
+      "lang": "ru",
+      "topics": [
+        "sunflower",
+        "trade"
+      ],
+      "region": "Казахстан",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-09-uzbekistan-oil-marking",
+      "publishedAt": "2026-10-09",
+      "title": "Узбекистан предлагает обязательную маркировку растительных масел, включая пальмовое, с июля 2027 года",
+      "summary": "Налоговый комитет вынес на обсуждение проект цифровой маркировки масел по кодам ТН ВЭД 1507–1515, включая пальмовое и подсолнечное. Оператор — CRPT Turon; обсуждение проекта продлится до 24 октября.",
+      "source": "Spot.uz",
+      "url": "https://www.spot.uz/ru/2026/10/09/vegetable-oil-marking",
+      "lang": "ru",
+      "topics": [
+        "policy",
+        "palm"
+      ],
+      "region": "Узбекистан",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-08-mpoc-export-outlook",
+      "publishedAt": "2026-10-08",
+      "title": "Малайзия рассчитывает на экспорт пальмового масла выше 16 млн т в 2026 году",
+      "summary": "Ожидается, что программа B50 поднимет внутреннее потребление пальмового масла в Индонезии до 16,3–17 млн т; по оценке MPOC, сокращение индонезийского экспорта поможет Малайзии удержать позиции. Малайзия ждёт более 16 млн т экспорта против 15,2 млн т в 2025 году.",
+      "originalTitle": "Malaysia eyes stronger palm oil exports as Indonesia boosts domestic use",
+      "source": "UkrAgroConsult (BusinessWorld)",
+      "url": "https://ukragroconsult.com/en/news/malaysia-eyes-stronger-palm-oil-exports-as-indonesia-boosts-domestic-use/",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "biofuel",
+        "trade"
+      ],
+      "region": "Малайзия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-07-malaysia-output-minister",
+      "publishedAt": "2026-10-07",
+      "title": "Минплантаций Малайзии: производство пальмового масла в 2026 году составит 19,5–19,8 млн т",
+      "summary": "Министр Нораини Ахмад заявила, что выпуск идёт с опережением целевых показателей: за семь месяцев произведено 10,8 млн т.",
+      "originalTitle": "Malaysia’s 2026 palm oil output is on track to beat target, minister says",
+      "source": "Malay Mail",
+      "url": "https://www.malaymail.com/news/money/2026/10/07/malaysias-2026-palm-oil-output-is-on-track-to-beat-target-minister-says/238063",
+      "lang": "en",
+      "topics": [
+        "palm"
+      ],
+      "region": "Малайзия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-05-eudr-deadline",
+      "publishedAt": "2026-10-05",
+      "title": "EUDR вступает в силу для крупных компаний 30 декабря 2026 года; эксперты сомневаются в новых послаблениях",
+      "summary": "Для малых компаний срок — 30 июня 2027 года. Опрошенные юрист и представитель НКО Fern считают дальнейшее упрощение регламента маловероятным, хотя третью отсрочку полностью не исключают.",
+      "originalTitle": "The EUDR is on the horizon",
+      "source": "FoodNavigator",
+      "url": "https://www.foodnavigator.com/Article/2026/10/05/eudr-will-it-be-simplified-further/",
+      "lang": "en",
+      "topics": [
+        "policy",
+        "palm"
+      ],
+      "region": "ЕС",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-09-24-india-duty-cut",
+      "publishedAt": "2026-09-24",
+      "title": "Индия снизила ввозные пошлины на растительные масла: на сырое пальмовое и соевое — до 11%",
+      "summary": "С 24 сентября базовая пошлина на сырое пальмовое и соевое масло снижена с 10% до 5% (итоговая — с 16,5% до 11%), на сырое подсолнечное — обнулена (итоговая 5,5%). Цель — сдержать цены перед праздничным сезоном.",
+      "originalTitle": "Govt cuts customs duty on edible oil ahead of festive season",
+      "source": "Business Today",
+      "url": "https://www.businesstoday.in/latest/economy/story/govt-cuts-customs-duty-on-edible-oil-ahead-of-festive-season-557539-2026-09-24",
+      "lang": "en",
+      "topics": [
+        "policy",
+        "palm",
+        "soy",
+        "sunflower"
+      ],
+      "region": "Индия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-09-23-russia-sunoil-duty-cap",
+      "publishedAt": "2026-09-23",
+      "title": "Россия ограничила экспортную пошлину на подсолнечное масло до конца 2026 года уровнем августа",
+      "summary": "Минсельхоз пересчитал пошлину на сентябрь: 7 748 руб./т вместо объявленных 14 377,7 руб./т. До 31 декабря ставки на масло и шрот не превысят августовских — 7 748 и 312 руб./т.",
+      "source": "Альта-Софт (Интерфакс)",
+      "url": "https://www.alta.ru/external_news/131212/",
+      "lang": "ru",
+      "topics": [
+        "sunflower",
+        "policy",
+        "trade"
+      ],
+      "region": "Россия",
+      "addedAt": "2026-10-16T08:37:46Z"
+    }
+  ]
 }
