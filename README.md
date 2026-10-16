@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Oils Terminal
 
-## Getting Started
+Сайт с аналитикой рынка растительных масел: котировки, спред POGO, балансы USDA и новости.
 
-First, run the development server:
+## Страницы
+
+- **Обзор** (`/`) — бегущая строка котировок, FCPO и POGO крупно, таблица основных индексов, свежие новости.
+- **Рынок** (`/market`) — бегущая строка новостей, все котировки и спреды, график POGO, мировые балансы USDA
+  (производство, потребление, импорт, экспорт, запасы), региональные балансы, новости за месяц.
+
+## Откуда данные
+
+| Что | Источник | Обновление |
+|---|---|---|
+| Фьючерсы (FCPO, соя CBOT/DCE, рапс, нефть, газойль/ULSD) и курсы | сканер TradingView, задержка 10–15 мин | кэш 10 мин |
+| POGO, BOGO, соя − пальма | расчёт: обе ноги в USD/т | вместе с котировками |
+| Новости за 30 дней | `data/news.json`: ежедневный отбор с проверкой по первоисточникам (правила — `docs/news-curation.md`); если файл пуст — автоматическая RSS-лента | каждый день, коммит в репозиторий |
+| Мировые балансы | USDA FAS PSD API → таблица `psd_balances` | 14-го числа каждого месяца |
+| История POGO | ежедневный снимок → таблица `price_snapshots` | по будням |
+| Региональные балансы | `lib/regional-data.ts` (оценки, правятся вручную) | вручную |
+
+Если тикер газойля ICE недоступен, POGO считается по дизелю ULSD (NYMEX) в пересчёте на тонну; на сайте это отмечено.
+Список инструментов и тикеров — в `lib/instruments.ts`.
+
+## Настройка
+
+1. Supabase → SQL Editor: выполнить `supabase/schema.sql`.
+2. Переменные окружения в Vercel:
+
+| Переменная | Зачем |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | база (балансы, история) |
+| `CRON_SECRET` | защита cron-задач |
+| `USDA_API_KEY` | балансы USDA, бесплатный ключ: https://api.data.gov/signup/ |
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | рассылка в Telegram |
+| `SITE_URL` | адрес сайта для ссылок в Telegram (по умолчанию imaoils.vercel.app) |
+
+3. Первая загрузка балансов: открыть `/api/cron/usda-sync?key=<CRON_SECRET>`.
+
+## Cron-задачи (`vercel.json`, время UTC)
+
+| Задача | Когда | Что делает |
+|---|---|---|
+| `/api/cron/news-digest` | каждый день 08:00 | новости за сутки в Telegram |
+| `/api/cron/market-report` | будни 09:00 | котировки и спреды в Telegram |
+| `/api/cron/daily-update` | будни 10:30 | снимок цен для графика POGO |
+| `/api/cron/usda-sync` | 14-го числа 18:00 | балансы USDA |
+
+## Разработка
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`/api/quotes` отдаёт текущие котировки и спреды в JSON — удобно проверять, какие тикеры нашлись.

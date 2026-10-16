@@ -3,25 +3,51 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --ink: #17241f;        /* тёмно-зелёный, цвет пальмового листа */
+  --ink-2: #4a5a53;
+  --ink-3: #7c8a83;
+  --paper: #f2f4ef;
+  --panel: #ffffff;
+  --rule: #d9dfd6;
+  --gold: #a87612;       /* сырое пальмовое масло; единственный акцент */
+  --gold-soft: #f4e8c8;
+  --up: #1e7a4c;
+  --down: #b23a2e;
+  --band: #17241f;       /* верхняя полоса и бегущая строка */
+  --band-text: #e8ede6;
+  --band-muted: #9fb0a8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
+html { background: var(--paper); }
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: var(--paper);
+  color: var(--ink);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  -webkit-font-smoothing: antialiased;
 }
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Бегущая строка: контент продублирован, лента сдвигается на половину своей ширины. */
+.marquee { overflow: hidden; }
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 60s) linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; }
+  .marquee-track { animation: none; }
+  .marquee-copy { display: none; }
+}
+
+.num { font-variant-numeric: tabular-nums lining-nums; }

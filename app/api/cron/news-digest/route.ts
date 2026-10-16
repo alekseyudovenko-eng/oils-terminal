@@ -1,52 +1,38 @@
-// app/api/cron/telegram-digest/route.ts
+// app/api/cron/news-digest/route.ts — новостной дайджест в Telegram (Vercel Cron).
 import { NextResponse } from 'next/server';
-import { sendTelegramMessage } from '@/lib/telegram';
-import { fetchFilteredNews } from '@/lib/news-parser'; // ← ИМПОРТ ТУ ЖЕ ФУНКЦИЮ
+import { isCronAuthorized } from '@/lib/auth';
+import { escapeHtml, sendTelegramMessage } from '@/lib/telegram';
+import { getRecentlyAdded } from '@/lib/news';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: Request) {
-  // ... авторизация (без изменений) ...
-  const url = new URL(request.url);
-  const authHeader = request.headers.get('authorization') || '';
-  const queryKey = url.searchParams.get('key');
-  const expected = (process.env.CRON_SECRET || '').trim();
-  const received = authHeader.replace('Bearer ', '').trim();
-  const isAuthorized = (received && received === expected) || (queryKey && queryKey === expected);
-  if (!isAuthorized) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+const SITE_URL = process.env.SITE_URL || 'https://imaoils.vercel.app';
 
-  try {
-    const today = new Date().toLocaleDateString('ru-RU', { 
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-    });
-    
-    let message = `🌴 <b>Oils Terminal — News</b>\n📅 ${today}\n\n`;
-    
-    // 🔹 Берём новости через общую функцию (никаких 401!)
-    const news = await fetchFilteredNews(10);
-    
-    if (news.length === 0) {
-      message += `ℹ️ Новостей за неделю не найдено\n\n`;
-    } else {
-      message += `<b>📰 Свежие новости:</b>\n\n`;
-      for (const item of news) {
-        const short = item.title.length > 55 ? item.title.slice(0, 52) + '...' : item.title;
-        message += `🔹 ${short}\n`;
-        message += `   <i>${item.source}</i>\n`;
-        message += `   <a href="${item.url}">Читать</a>\n\n`;
-      }
-    }
-    
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'https://oils-terminal.vercel.app';
-    message += `🔗 <a href="${baseUrl}">Открыть терминал</a>`;
-    
-    const sent = await sendTelegramMessage(message);
-    return NextResponse.json({ success: sent, timestamp: new Date().toISOString() });
-    
-  } catch (err: any) {
-    console.error('💥 Error:', err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+export async function GET(request: Request) {
+  if (!isCronAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  // Новости, которые ежедневный отбор добавил за последние сутки (с запасом на задержку деплоя).
+  const news = getRecentlyAdded(26).slice(0, 8);
+
+  const today = new Date().toLocaleDateString('ru-RU', {
+    weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC',
+  });
+  let message = `🌴 <b>Oils Terminal — новости</b>\n📅 ${today}\n\n`;
+
+  if (news.length === 0) {
+    message += 'За сутки новых проверенных новостей не добавлено.\n\n';
+  } else {
+    for (const item of news) {
+      const title = item.title.length > 120 ? item.title.slice(0, 117) + '…' : item.title;
+      message += `🔹 <a href="${escapeHtml(item.url)}">${escapeHtml(title)}</a>\n`;
+      if (item.summary) message += `${escapeHtml(item.summary.length > 220 ? item.summary.slice(0, 217) + '…' : item.summary)}\n`;
+      message += `<i>${escapeHtml(item.source)}</i>\n\n`;
+    }
+  }
+  message += `🔗 <a href="${escapeHtml(SITE_URL + '/market')}">Все новости и показатели</a>`;
+
+  const sent = await sendTelegramMessage(message);
+  return NextResponse.json({ success: sent, items: news.length }, { status: sent ? 200 : 502 });
 }

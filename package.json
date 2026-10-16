@@ -1,5 +1,5 @@
 {
-  "name": "nextjs",
+  "name": "oils-terminal",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,14 +10,9 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",
-    "@tavily/core": "^0.0.2",
-    "lucide-react": "^1.17.0",
-    "next": "13.5.1",
+    "next": "^14.2.35",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "recharts": "^2.12.0",
-    "xlsx": "^0.18.5",
-    "rss-parser": "^3.13.0"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "20.6.2",
@@ -25,7 +20,7 @@
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "eslint": "8.49.0",
-    "eslint-config-next": "13.5.1",
+    "eslint-config-next": "^14.2.35",
     "postcss": "8.4.30",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2"

@@ -1,18 +1,19 @@
-name: 📰 Telegram News Digest
+name: 📰 Telegram News Digest (manual)
 
+# Ежедневную отправку делает Vercel Cron (vercel.json, 08:00 UTC).
+# Этот workflow оставлен только для ручного запуска, чтобы дайджест не дублировался.
 on:
-  schedule:
-    - cron: '20 08 * * *'
   workflow_dispatch:
 
 jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Vercel Cron
+      - name: Call news digest
         run: |
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            "https://${{ secrets.VERCEL_URL }}/api/cron/telegram-digest?key=${{ secrets.CRON_SECRET }}")
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "https://${{ secrets.VERCEL_URL }}/api/cron/news-digest")
           echo "HTTP Status: $STATUS"
           if [ "$STATUS" != "200" ]; then
             echo "❌ Failed"
