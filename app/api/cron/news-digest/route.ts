@@ -6,7 +6,7 @@ import { getRecentlyAdded } from '@/lib/news';
 
 export const dynamic = 'force-dynamic';
 
-const SITE_URL = process.env.SITE_URL || 'https://oils-terminal.vercel.app';
+const SITE_URL = process.env.SITE_URL || 'https://imaoils.vercel.app';
 
 export async function GET(request: Request) {
   if (!isCronAuthorized(request)) {

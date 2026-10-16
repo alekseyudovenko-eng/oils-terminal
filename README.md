@@ -33,7 +33,7 @@
 | `CRON_SECRET` | защита cron-задач |
 | `USDA_API_KEY` | балансы USDA, бесплатный ключ: https://api.data.gov/signup/ |
 | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | рассылка в Telegram |
-| `SITE_URL` | адрес сайта для ссылок в Telegram (по умолчанию oils-terminal.vercel.app) |
+| `SITE_URL` | адрес сайта для ссылок в Telegram (по умолчанию imaoils.vercel.app) |
 
 3. Первая загрузка балансов: открыть `/api/cron/usda-sync?key=<CRON_SECRET>`.
 

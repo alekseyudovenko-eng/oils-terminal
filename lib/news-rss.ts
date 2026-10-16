@@ -97,7 +97,7 @@ function parseFeed(xml: string, feed: Feed): NewsItem[] {
 async function fetchFeed(feed: Feed): Promise<NewsItem[]> {
   try {
     const res = await fetch(feed.url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; OilsTerminal/2.0; +https://oils-terminal.vercel.app)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; OilsTerminal/2.0; +https://imaoils.vercel.app)' },
       next: { revalidate: 1800 },
       signal: AbortSignal.timeout(8000),
     });
