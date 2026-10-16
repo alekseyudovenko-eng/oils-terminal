@@ -1,22 +1,30 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { IBM_Plex_Sans, IBM_Plex_Sans_Condensed } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const sans = IBM_Plex_Sans({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const cond = IBM_Plex_Sans_Condensed({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600'],
+  variable: '--font-cond',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'Oils Terminal — Vegetable Oils Market Analytics',
-  description: 'Prices, USDA balances, news and regional reviews for palm, soybean, sunflower and rapeseed oils.',
+  title: { default: 'Oils Terminal', template: '%s — Oils Terminal' },
+  description: 'Котировки пальмового, соевого, подсолнечного и рапсового масла, спред POGO, балансы USDA и новости рынка.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="ru" className={`${sans.variable} ${cond.variable}`}>
+      <body className="font-sans min-h-screen flex flex-col">{children}</body>
     </html>
   );
 }

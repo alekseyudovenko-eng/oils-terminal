@@ -1,8 +1,8 @@
-// app/api/cron/news-digest/route.ts — единственный новостной дайджест в Telegram (Vercel Cron)
+// app/api/cron/news-digest/route.ts — новостной дайджест в Telegram (Vercel Cron).
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
 import { escapeHtml, sendTelegramMessage } from '@/lib/telegram';
-import { fetchFilteredNews } from '@/lib/news-parser';
+import { getNewsFresh } from '@/lib/news';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,35 +13,28 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  try {
-    const today = new Date().toLocaleDateString('ru-RU', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
-    });
+  // Только за последние сутки; если их мало — за 3 дня.
+  const all = await getNewsFresh();
+  const since = (h: number) => all.filter(n => Date.now() - new Date(n.publishedAt).getTime() < h * 3600_000);
+  let news = since(24);
+  if (news.length < 5) news = since(72);
+  news = news.slice(0, 10);
 
-    let message = `🌴 <b>Oils Terminal — News</b>\n📅 ${today}\n\n`;
-    const news = await fetchFilteredNews(10);
+  const today = new Date().toLocaleDateString('ru-RU', {
+    weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC',
+  });
+  let message = `🌴 <b>Oils Terminal — новости</b>\n📅 ${today}\n\n`;
 
-    if (news.length === 0) {
-      message += 'ℹ️ Новостей за неделю не найдено\n\n';
-    } else {
-      message += '<b>📰 Свежие новости:</b>\n\n';
-      for (const item of news) {
-        const short = item.title.length > 80 ? item.title.slice(0, 77) + '...' : item.title;
-        message += `🔹 ${escapeHtml(short)}\n`;
-        message += `   <i>${escapeHtml(item.source)}</i> · <a href="${escapeHtml(item.url)}">Читать</a>\n\n`;
-      }
+  if (news.length === 0) {
+    message += 'За последние три дня новостей не найдено.\n\n';
+  } else {
+    for (const item of news) {
+      const title = item.title.length > 120 ? item.title.slice(0, 117) + '…' : item.title;
+      message += `🔹 <a href="${escapeHtml(item.url)}">${escapeHtml(title)}</a>\n   <i>${escapeHtml(item.source)}</i>\n\n`;
     }
-
-    // VERCEL_URL указывает на конкретный деплой, а не на сайт, поэтому используем постоянный адрес.
-    message += `🔗 <a href="${escapeHtml(SITE_URL)}">Открыть терминал</a>`;
-
-    const sent = await sendTelegramMessage(message);
-    return NextResponse.json(
-      { success: sent, items: news.length, timestamp: new Date().toISOString() },
-      { status: sent ? 200 : 502 }
-    );
-  } catch (err: any) {
-    console.error('news-digest error:', err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
   }
+  message += `🔗 <a href="${escapeHtml(SITE_URL + '/market')}">Все новости и показатели</a>`;
+
+  const sent = await sendTelegramMessage(message);
+  return NextResponse.json({ success: sent, items: news.length }, { status: sent ? 200 : 502 });
 }
