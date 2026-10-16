@@ -160,17 +160,19 @@ async function loadPsd(): Promise<PsdData> {
     }
     if (!data || data.length < 1000) break;
   }
+  // Пустой результат не кэшируем: после первой загрузки данные должны появиться сразу.
+  if (rows.length === 0) throw new Error('psd_balances пуста');
   return { rows, updatedAt };
 }
 
-const cachedPsd = unstable_cache(loadPsd, ['psd-v2'], { revalidate: 3600 });
+const cachedPsd = unstable_cache(loadPsd, ['psd-v3'], { revalidate: 3600 });
 
 export async function getPsd(): Promise<PsdData> {
   try {
     return await cachedPsd();
   } catch (e) {
     rethrowIfNextInternal(e);
-    console.error('getPsd:', e);
+    if (!String((e as any)?.message).includes('пуста')) console.error('getPsd:', e);
     return { rows: [], updatedAt: null };
   }
 }

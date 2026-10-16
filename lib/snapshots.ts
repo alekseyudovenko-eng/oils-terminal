@@ -34,17 +34,20 @@ async function loadHistory(series: string): Promise<Point[]> {
     .gte('day', since)
     .order('day');
   if (error) throw new Error(error.message);
-  return (data || []).filter((r: any) => r.usd_t != null).map((r: any) => ({ day: r.day, value: Number(r.usd_t) }));
+  const points = (data || []).filter((r: any) => r.usd_t != null).map((r: any) => ({ day: r.day, value: Number(r.usd_t) }));
+  // Меньше двух точек — график не строится; не кэшируем, чтобы новые снимки появлялись сразу.
+  if (points.length < 2) throw new Error('история пока короткая');
+  return points;
 }
 
-const cachedHistory = unstable_cache(loadHistory, ['history-v2'], { revalidate: 3600 });
+const cachedHistory = unstable_cache(loadHistory, ['history-v3'], { revalidate: 3600 });
 
 export async function getHistory(series: string): Promise<Point[]> {
   try {
     return await cachedHistory(series);
   } catch (e) {
     rethrowIfNextInternal(e);
-    console.error('getHistory:', e);
+    if (!String((e as any)?.message).includes('короткая')) console.error('getHistory:', e);
     return [];
   }
 }
