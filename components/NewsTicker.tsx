@@ -1,5 +1,5 @@
 import Marquee from './Marquee';
-import { fmtAgo } from '@/lib/format';
+import { fmtAgo, fmtDate } from '@/lib/format';
 import type { NewsItem } from '@/lib/news';
 
 export default function NewsTicker({ news }: { news: NewsItem[] }) {
@@ -15,7 +15,7 @@ export default function NewsTicker({ news }: { news: NewsItem[] }) {
           rel="noopener noreferrer"
           className="flex items-baseline gap-2 px-5 py-2 text-sm whitespace-nowrap border-r border-white/10 hover:text-white"
         >
-          <span className="text-band-muted">{fmtAgo(n.publishedAt)}</span>
+          <span className="text-band-muted">{n.publishedAt.length <= 10 ? fmtDate(n.publishedAt) : fmtAgo(n.publishedAt)}</span>
           <span>{n.title}</span>
           <span className="text-band-muted">{n.source}</span>
         </a>
