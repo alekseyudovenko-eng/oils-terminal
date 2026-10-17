@@ -1,6 +1,40 @@
 {
-  "updatedAt": "2026-10-16T08:37:46Z",
+  "updatedAt": "2026-10-17T04:53:53Z",
   "items": [
+    {
+      "id": "2026-10-16-palm-weekly-gain",
+      "publishedAt": "2026-10-16",
+      "addedAt": "2026-10-17T04:53:53Z",
+      "title": "Фьючерсы на пальмовое масло в Малайзии завершили неделю ростом на 3,85%",
+      "summary": "Январский контракт на Bursa Malaysia Derivatives вырос в пятницу на 44 ринггита (0,93%), до 4 769 ринггитов ($1 169,16) за тонну, на фоне сильного экспорта в первой половине октября. Малайзия снизила референсную цену CPO на ноябрь и сохранила экспортную пошлину на уровне 10%.",
+      "originalTitle": "Palm oil posts over 3% weekly gains",
+      "source": "Business Recorder (Reuters)",
+      "url": "https://www.brecorder.com/news/40444555/palm-oil-posts-over-3-weekly-gains",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "trade",
+        "policy"
+      ],
+      "region": "Малайзия"
+    },
+    {
+      "id": "2026-10-16-epa-sre-reallocation",
+      "publishedAt": "2026-10-16",
+      "addedAt": "2026-10-17T04:53:53Z",
+      "title": "EPA предложило перераспределить 770 млн RIN по освобождениям малых НПЗ за 2025 год",
+      "summary": "Освобождения малых НПЗ за 2025 год составили 1,76 млрд RIN против ожидавшихся 990 млн. Разницу в 770 млн RIN EPA предлагает либо поровну разделить между 2026 и 2027 годами, либо целиком отнести на 2027 год; комментарии принимаются до 4 декабря 2026 года.",
+      "originalTitle": "Renewable Fuel Standard (RFS) Program: Reallocation of Additional 2025 Small Refinery Exemptions",
+      "source": "Federal Register (EPA)",
+      "url": "https://www.federalregister.gov/documents/2026/10/16/2026-21155/renewable-fuel-standard-rfs-program-reallocation-of-additional-2025-small-refinery-exemptions",
+      "lang": "en",
+      "topics": [
+        "biofuel",
+        "policy",
+        "soy"
+      ],
+      "region": "США"
+    },
     {
       "id": "2026-10-15-malaysia-exports-oct-1-15",
       "publishedAt": "2026-10-15",
