@@ -1,4 +1,4 @@
-// app/api/cron/market-report/route.ts — итоги недели по котировкам в Telegram (раз в неделю, суббота).
+// app/api/cron/market-report/route.ts — итоги недели по котировкам в Telegram (пятница, 09:00 по Куала-Лумпуру).
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
 import { alreadySentToday, caller, markSentToday } from '@/lib/once-a-day';
