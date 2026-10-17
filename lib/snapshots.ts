@@ -51,3 +51,17 @@ export async function getHistory(series: string): Promise<Point[]> {
     return [];
   }
 }
+
+/** Значение ряда примерно `daysAgo` дней назад (ближайший снимок в пределах ±3 дней), без кэша. */
+export async function valueDaysAgo(series: string, daysAgo: number): Promise<number | null> {
+  const db = getDb();
+  if (!db) return null;
+  const target = Date.now() - daysAgo * 86400_000;
+  const from = new Date(target - 3 * 86400_000).toISOString().slice(0, 10);
+  const to = new Date(target + 3 * 86400_000).toISOString().slice(0, 10);
+  const { data } = await db.from('price_snapshots').select('day, usd_t').eq('series', series).gte('day', from).lte('day', to);
+  const rows = (data || []).filter((r: any) => r.usd_t != null);
+  if (rows.length === 0) return null;
+  rows.sort((a: any, b: any) => Math.abs(Date.parse(a.day) - target) - Math.abs(Date.parse(b.day) - target));
+  return Number(rows[0].usd_t);
+}

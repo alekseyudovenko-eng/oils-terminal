@@ -58,6 +58,14 @@ export function getRecentlyAdded(hours: number, now = Date.now()) {
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
 
+/** Новости, добавленные в отбор позже момента `since`, от свежих к старым. */
+export function getAddedSince(since: Date) {
+  const file = curated as unknown as CuratedFile;
+  return (file.items || [])
+    .filter(n => new Date(n.addedAt).getTime() > since.getTime())
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+}
+
 export async function getNewsFeed(): Promise<NewsFeed> {
   const items = getCuratedNews();
   const updatedAt = (curated as unknown as CuratedFile).updatedAt ?? null;
