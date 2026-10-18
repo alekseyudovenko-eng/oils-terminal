@@ -1,6 +1,37 @@
 {
-  "updatedAt": "2026-10-17T04:53:53Z",
+  "updatedAt": "2026-10-18T04:52:11Z",
   "items": [
+    {
+      "id": "2026-10-18-sarawak-smallholders-eudr",
+      "publishedAt": "2026-10-18",
+      "addedAt": "2026-10-18T04:52:11Z",
+      "title": "Около 58 тыс. мелких фермеров Саравака рискуют потерять доступ к рынку ЕС из-за EUDR",
+      "summary": "Ассоциация даякских плантаторов масличной пальмы Саравака (Doppa) предупреждает: многие мелкие хозяйства работают на землях обычного права без документов, что мешает выполнить требования EUDR по геолокации и прослеживаемости. Doppa предлагает засчитывать малайзийскую сертификацию MSPO при подтверждении соответствия EUDR.",
+      "originalTitle": "Doppa: 58,000 Sarawak oil palm smallholders risk losing market access under EUDR",
+      "source": "Borneo Post",
+      "url": "https://theborneopost.com/2026/10/18/doppa-58000-sarawak-oil-palm-smallholders-risk-losing-market-access-under-eudr",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "policy"
+      ],
+      "region": "Малайзия"
+    },
+    {
+      "id": "2026-10-17-cpo-outlook-next-week",
+      "publishedAt": "2026-10-17",
+      "addedAt": "2026-10-18T04:52:11Z",
+      "title": "Трейдеры разошлись в прогнозах на CPO на неделю: от RM4 100 до RM4 800 за тонну",
+      "summary": "По оценке Джима Те (Interband), фьючерсы CPO на Bursa Malaysia могут скорректироваться до RM4 100–4 200 за тонну из-за запасов около 3,5 млн т; Дэвид Нг (Iceberg X) ждёт диапазона RM4 600–4 800. Январский контракт за неделю вырос на RM60 до RM4 769.",
+      "originalTitle": "CPO Futures Expected To Trade Lower On Technical Correction Next Week",
+      "source": "Bernama",
+      "url": "https://www.bernama.com/en/market/news.php?id=2621590",
+      "lang": "en",
+      "topics": [
+        "palm"
+      ],
+      "region": "Малайзия"
+    },
     {
       "id": "2026-10-16-palm-weekly-gain",
       "publishedAt": "2026-10-16",
