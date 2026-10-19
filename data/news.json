@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T04:52:11Z",
+  "updatedAt": "2026-10-19T04:53:50Z",
   "items": [
     {
       "id": "2026-10-18-sarawak-smallholders-eudr",
@@ -290,6 +290,38 @@
       ],
       "region": "Россия",
       "addedAt": "2026-10-16T08:37:46Z"
+    },
+    {
+      "id": "2026-10-19-singapore-haze-palm-shares",
+      "publishedAt": "2026-10-19",
+      "addedAt": "2026-10-19T04:53:50Z",
+      "title": "Акции пальмовых компаний Сингапура упали на фоне расследования источников дымки",
+      "summary": "Сингапур выясняет, какие компании причастны к пожарам в Индонезии; акции Golden Agri-Resources упали на 3,5%, Wilmar — на 1,2% (16 октября). Индекс PSI в отдельных районах превышал 200, биржевой регулятор SGX направил компаниям запросы.",
+      "originalTitle": "Palm oil stocks tumble as S'pore probes haze links",
+      "source": "The Star (The Straits Times/ANN)",
+      "url": "https://www.thestar.com.my/business/business-news/2026/10/19/palm-oil-stocks-tumble-as-spore-probes-haze-links",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "policy"
+      ],
+      "region": "Сингапур, Индонезия"
+    },
+    {
+      "id": "2026-10-16-russia-oilseeds-record-35mt",
+      "publishedAt": "2026-10-16",
+      "addedAt": "2026-10-19T04:53:50Z",
+      "title": "Минсельхоз России ожидает рекордный сбор масличных — около 35 млн т",
+      "summary": "По данным Минсельхоза, приведённым в отчёте Банка России, сбор масличных в 2026 году будет на 1,9% выше рекорда 2025 года. По подсчётам OleoScope, к середине октября собрано 22,8 млн т, в т.ч. 11,4 млн т подсолнечника и 6,2 млн т рапса.",
+      "source": "OleoScope",
+      "url": "https://oleoscope.com/news/v-rossii-valovyj-sbor-maslichnyh-mozhet/",
+      "lang": "ru",
+      "topics": [
+        "sunflower",
+        "rapeseed",
+        "soy"
+      ],
+      "region": "Россия"
     }
   ]
 }
