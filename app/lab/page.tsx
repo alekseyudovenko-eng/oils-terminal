@@ -1,8 +1,8 @@
 // /lab — закрытая «Лаборатория IMA»: черновик прогноза цены пальмового масла.
 // Доступ только по паролю (middleware.ts), в меню сайта ссылки нет.
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import Section from '@/components/Section';
+import LabHeader from '@/components/LabHeader';
 import forecast from '@/data/forecast.json';
 import { fmtInt } from '@/lib/format';
 
@@ -76,17 +76,7 @@ function CurveChart() {
 export default function LabPage() {
   return (
     <>
-      <header className="bg-band text-band-text">
-        <div className="mx-auto max-w-page px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
-          <span className="font-cond text-xl font-semibold tracking-tight">Лаборатория IMA</span>
-          <Link href="/" className="text-sm text-band-muted hover:text-band-text">На сайт</Link>
-        </div>
-      </header>
-      <p className="bg-gold-soft text-ink text-sm">
-        <span className="mx-auto max-w-page px-4 sm:px-6 py-2 block">
-          Закрытая страница: её видят только те, у кого есть пароль. {F.label}
-        </span>
-      </p>
+      <LabHeader current="/lab" note={F.label} />
 
       <main className="mx-auto max-w-page w-full px-4 sm:px-6">
         <section aria-labelledby="fc-title" className="py-8 border-b border-rule">

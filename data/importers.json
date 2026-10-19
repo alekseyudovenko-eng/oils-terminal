@@ -1,0 +1,26 @@
+{
+  "updatedAt": "2026-10-19",
+  "countries": [
+    {
+      "id": "ru",
+      "name": "Россия",
+      "summary": "",
+      "market": [],
+      "companies": []
+    },
+    {
+      "id": "uz",
+      "name": "Узбекистан",
+      "summary": "",
+      "market": [],
+      "companies": []
+    },
+    {
+      "id": "az",
+      "name": "Азербайджан",
+      "summary": "",
+      "market": [],
+      "companies": []
+    }
+  ]
+}
