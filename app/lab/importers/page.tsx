@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+const plural = (n: number, one: string, few: string, many: string) =>
+  n % 10 === 1 && n % 100 !== 11 ? one : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? few : many;
+
 export default function ImportersPage() {
   const total = IMPORTERS.countries.reduce((s, c) => s + c.companies.length, 0);
   const updated = new Date(IMPORTERS.updatedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
@@ -24,7 +27,7 @@ export default function ImportersPage() {
             маргарина и кондитерских жиров, трейдеры и дистрибьюторы.
           </p>
           <p className="mt-1 text-xs text-ink-3 num">
-            {IMPORTERS.countries.length} страны · {total} компаний · обновлено {updated}
+            {IMPORTERS.countries.length} {plural(IMPORTERS.countries.length, 'страна', 'страны', 'стран')} · {total} {plural(total, 'компания', 'компании', 'компаний')} · обновлено {updated}
           </p>
         </section>
         <ImportersExplorer countries={IMPORTERS.countries} />
