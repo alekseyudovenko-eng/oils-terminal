@@ -3,6 +3,7 @@
 import type { Metadata } from 'next';
 import LabHeader from '@/components/LabHeader';
 import ImportersExplorer from '@/components/ImportersExplorer';
+import ImportersDashboard from '@/components/ImportersDashboard';
 import { IMPORTERS } from '@/lib/importers';
 
 export const metadata: Metadata = {
@@ -30,7 +31,11 @@ export default function ImportersPage() {
             {IMPORTERS.countries.length} {plural(IMPORTERS.countries.length, 'страна', 'страны', 'стран')} · {total} {plural(total, 'компания', 'компании', 'компаний')} · обновлено {updated}
           </p>
         </section>
-        <ImportersExplorer countries={IMPORTERS.countries} />
+        <ImportersDashboard countries={IMPORTERS.countries} />
+        <section aria-labelledby="cards-title" className="mt-14 pt-8 border-t border-rule">
+          <h2 id="cards-title" className="font-cond text-3xl font-semibold tracking-tight mb-4">Карточки стран</h2>
+          <ImportersExplorer countries={IMPORTERS.countries} />
+        </section>
       </main>
     </>
   );

@@ -15,15 +15,27 @@ export type Company = {
   notes?: string;
   sources?: string[];         // ссылки, по которым проверены сведения
   checkedAt?: string;         // дата последней проверки, YYYY-MM-DD
+  scale?: string;             // крупнейший / крупный / средний / малый / не указан — для фильтра
+  reliability?: string;       // высокая / средняя / низкая
 };
 
 export type MarketFact = { label: string; value: string; source?: string };
+
+/** Тонны по годам: { '2024': 108000, … }; пропущенный год = нет данных. */
+export type YearSeries = Record<string, number>;
+
+export type Trade = {
+  source: 'country' | 'mirror' | '';   // данные самой страны или зеркальные (по отчётам партнёров)
+  hs: Record<string, YearSeries>;      // код ТН ВЭД (1511, 1513, 1516, 1517) → тонны по годам, ITC TradeMap
+};
 
 export type Country = {
   id: string;
   name: string;
   summary: string;            // 1–3 предложения о рынке
   market: MarketFact[];       // ключевые цифры: импорт, доля пальмы, пошлины…
+  trade?: Trade;
+  suppliers1511?: { name: string; t: YearSeries }[];   // зеркальные данные; «Весь мир» = итог
   companies: Company[];
 };
 
