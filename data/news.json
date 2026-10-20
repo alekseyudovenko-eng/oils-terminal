@@ -1,6 +1,68 @@
 {
-  "updatedAt": "2026-10-19T04:53:50Z",
+  "updatedAt": "2026-10-20T04:58:00Z",
   "items": [
+    {
+      "id": "2026-10-19-mpoa-record-output",
+      "publishedAt": "2026-10-19",
+      "addedAt": "2026-10-20T04:58:00Z",
+      "title": "MPOA: производство пальмового масла в Малайзии в 2026 году может стать рекордным",
+      "summary": "Глава MPOA Рослин Азми Хасан ожидает месячного рекорда в октябре и годового выпуска на уровне или выше рекордных 20,28 млн т 2025 года; затем возможен спад. Отрасли не хватает около 18 тыс. сборщиков, из-за чего могут остаться несобранными 8,6 млн т свежих гроздей (около RM8 млрд).",
+      "originalTitle": "Palm output in Malaysia to hit record before drop, growers say",
+      "source": "The Star (Bloomberg)",
+      "url": "https://www.thestar.com.my/business/business-news/2026/10/19/palm-output-in-malaysia-to-hit-record-before-drop-growers-say",
+      "lang": "en",
+      "topics": [
+        "palm"
+      ],
+      "region": "Малайзия"
+    },
+    {
+      "id": "2026-10-19-china-us-soybean-imports-sept",
+      "publishedAt": "2026-10-19",
+      "addedAt": "2026-10-20T04:58:00Z",
+      "title": "Китай в сентябре импортировал 360,9 тыс. т американской сои после нуля годом ранее",
+      "summary": "Общий импорт сои Китаем в сентябре снизился на 7,7% г/г до 11,88 млн т, поставки из Бразилии — 10,7 млн т. По словам трейдеров, Китай уже закупил более 60% своего целевого объёма в 25 млн т американской сои на сезон 2026/27.",
+      "originalTitle": "China's September US soybean imports rebound from zero a year earlier, data shows",
+      "source": "Investing.com (Reuters)",
+      "url": "https://www.investing.com/news/economic-indicators/chinas-september-us-soybean-imports-rebound-from-zero-a-year-earlier-data-shows-4958675",
+      "lang": "en",
+      "topics": [
+        "soy",
+        "trade"
+      ],
+      "region": "Китай"
+    },
+    {
+      "id": "2026-10-19-kazakh-flaxseed-transit",
+      "publishedAt": "2026-10-19",
+      "addedAt": "2026-10-20T04:58:00Z",
+      "title": "Казахский лён в Европе подорожал до $670/т: РЖД отказывает в транзите к портам Балтии",
+      "summary": "По данным Зернового союза Казахстана, за 12–18 октября цена C&F ARAG выросла на $25 до $670/т. РЖД отклоняет заявки на перевозку льна в порты Эстонии и Латвии; обход через Беларусь и Литву добавляет $15–20/т.",
+      "originalTitle": "Kazakh flaxseed prices surge in Europe amid transit restrictions",
+      "source": "UkrAgroConsult (Зерновой союз Казахстана)",
+      "url": "https://ukragroconsult.com/en/news/kazakh-flaxseed-prices-surge-in-europe-amid-transit-restrictions/",
+      "lang": "en",
+      "topics": [
+        "trade"
+      ],
+      "region": "Казахстан"
+    },
+    {
+      "id": "2026-10-19-china-uco-exports",
+      "publishedAt": "2026-10-19",
+      "addedAt": "2026-10-20T04:58:00Z",
+      "title": "Экспорт отработанного масла (UCO) из Китая вырос на 55%, крупнейший покупатель — Европа",
+      "summary": "По данным Fastmarkets, за январь–август Китай экспортировал 2,57 млн т UCO против 1,66 млн т годом ранее; Европа закупила 850 тыс. т (+24%), США — 452 тыс. т.",
+      "originalTitle": "China's used cooking oil exports surge 55%, with Europe becoming the largest buyer",
+      "source": "UkrAgroConsult (Fastmarkets)",
+      "url": "https://ukragroconsult.com/en/news/chinas-used-cooking-oil-exports-surge-55-with-europe-becoming-the-largest-buyer/",
+      "lang": "en",
+      "topics": [
+        "biofuel",
+        "trade"
+      ],
+      "region": "Китай"
+    },
     {
       "id": "2026-10-18-sarawak-smallholders-eudr",
       "publishedAt": "2026-10-18",
