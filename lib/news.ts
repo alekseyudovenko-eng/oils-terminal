@@ -9,7 +9,8 @@ export type Topic = 'palm' | 'soy' | 'sunflower' | 'rapeseed' | 'biofuel' | 'pol
 
 export type NewsItem = {
   title: string;          // заголовок на русском
-  titleEn?: string;       // короткий заголовок на английском (для Daily Snapshot)
+  titleEn?: string;       // короткий заголовок на английском (Daily Snapshot, дайджест в Telegram)
+  summaryEn?: string;     // 1–2 предложения на английском (дайджест в Telegram)
   url: string;            // ссылка на первоисточник
   summary: string;        // 1–2 предложения с ключевой цифрой
   publishedAt: string;    // дата публикации первоисточника

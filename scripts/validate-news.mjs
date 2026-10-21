@@ -40,7 +40,10 @@ for (const [i, n] of (data.items || []).entries()) {
   if (!Array.isArray(n.topics) || n.topics.length === 0 || n.topics.some(t => !TOPICS.has(t))) {
     errors.push(`${at}: topics — непустой массив из ${[...TOPICS].join(', ')}`);
   }
+  // С 21.10.2026 дайджест в Telegram на английском: у новых записей titleEn и summaryEn обязательны.
+  if (Date.parse(n.addedAt) > Date.parse('2026-10-21T14:00:00Z') && (!n.titleEn || !n.summaryEn)) errors.push(`${at}: нужны titleEn и summaryEn (дайджест в Telegram на английском)`);
   if (n.titleEn !== undefined && (typeof n.titleEn !== 'string' || !n.titleEn.trim() || n.titleEn.length > 100)) errors.push(`${at}: titleEn — непустая строка до 100 символов`);
+  if (n.summaryEn !== undefined && (typeof n.summaryEn !== 'string' || !n.summaryEn.trim() || n.summaryEn.length > 400)) errors.push(`${at}: summaryEn — непустая строка до 400 символов`);
   if ((n.summary || '').length > 400) errors.push(`${at}: summary длиннее 400 символов`);
   if (n.lang === 'en' && !n.originalTitle) errors.push(`${at}: для англоязычного источника нужен originalTitle`);
 }

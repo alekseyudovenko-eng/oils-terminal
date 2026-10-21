@@ -11,6 +11,11 @@ export const dynamic = 'force-dynamic';
 
 const SITE_URL = process.env.SITE_URL || 'https://imaoils.vercel.app';
 const MAX_ITEMS = 10;
+
+/** Название издания латиницей: русские названия и пояснения в скобках заменяем/убираем. */
+const sourceEn = (s: string) =>
+  s.replace(/УкрАгроКонсалт/g, 'UkrAgroConsult').replace(/Интерфакс/g, 'Interfax').replace(/ТАСС/g, 'TASS')
+    .replace(/\s*\([^)]*[А-Яа-яЁё][^)]*\)/g, '').trim();
 const FIRST_RUN_WINDOW_H = 20; // если отметки о рассылке ещё нет — берём последние 20 часов (сегодняшний ручной дайджест не повторится)
 
 export async function GET(request: Request) {
@@ -30,19 +35,23 @@ export async function GET(request: Request) {
   }
 
   const news = fresh.slice(0, MAX_ITEMS);
-  const today = new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
-  let message = `🌴 <b>Oils Terminal — новости</b>\n📅 ${today}\n\n`;
+  // Дайджест на английском: основная аудитория канала англоязычная.
+  // Заголовок — titleEn (иначе заголовок англоязычного источника), текст — summaryEn.
+  // Русский текст в дайджест не попадает.
+  const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+  let message = `🌴 <b>Oils Terminal — Daily News</b>\n📅 ${today}\n\n`;
   for (const item of news) {
-    const title = item.title.length > 120 ? item.title.slice(0, 117) + '…' : item.title;
+    const en = item.titleEn || (item.lang === 'en' ? item.originalTitle : undefined) || item.title;
+    const title = en.length > 120 ? en.slice(0, 117) + '…' : en;
     message += `🔹 <a href="${escapeHtml(item.url)}">${escapeHtml(title)}</a>\n`;
-    if (item.summary) {
-      const s = item.summary.length > 220 ? item.summary.slice(0, 217) + '…' : item.summary;
+    if (item.summaryEn) {
+      const s = item.summaryEn.length > 220 ? item.summaryEn.slice(0, 217) + '…' : item.summaryEn;
       message += `${escapeHtml(s)}\n`;
     }
-    message += `<i>${escapeHtml(item.source)}</i>\n\n`;
+    message += `<i>${escapeHtml(sourceEn(item.source))}</i>\n\n`;
   }
-  if (fresh.length > news.length) message += `…и ещё ${fresh.length - news.length} на сайте.\n\n`;
-  message += `🔗 <a href="${escapeHtml(SITE_URL + '/market#news')}">Все новости и показатели</a>`;
+  if (fresh.length > news.length) message += `…and ${fresh.length - news.length} more on the website.\n\n`;
+  message += `🔗 <a href="${escapeHtml(SITE_URL + '/market#news')}">All news and market indicators</a>`;
 
   const sent = await sendTelegramMessage(message);
   if (sent) await markSentToday('news-digest', via);
