@@ -40,13 +40,13 @@ function headline(palm: number | null, crude: number | null): string {
 
 type Headline = { title: string; source: string; date: string };
 
-/** Свежие новости с английским заголовком: за 2 дня (в понедельник — с пятницы), до 5 штук. */
+/** Свежие новости с английским заголовком: за 2 дня (в понедельник — с пятницы), до 6 штук. */
 function pickNews(now: Date): Headline[] {
   const back = now.getUTCDay() === 1 ? 3 : 2;
   const from = new Date(now.getTime() - back * 86400_000).toISOString().slice(0, 10);
   let items = getCuratedNews(now.getTime()).filter(n => n.publishedAt >= from && n.titleEn);
-  if (items.length < 3) items = getCuratedNews(now.getTime()).filter(n => n.titleEn).slice(0, 5); // тихие дни — последние
-  return items.slice(0, 5).map(n => ({
+  if (items.length < 3) items = getCuratedNews(now.getTime()).filter(n => n.titleEn).slice(0, 6); // тихие дни — последние
+  return items.slice(0, 6).map(n => ({
     title: n.titleEn!,
     source: n.source.replace(/УкрАгроКонсалт/g, 'UkrAgroConsult').replace(/\s*\([^)]*[А-Яа-яЁё][^)]*\)/g, '').trim(),
     date: new Date(n.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }),
@@ -111,7 +111,7 @@ export async function renderSnapshot(now = new Date()): Promise<{ image: ImageRe
             {news.length === 0 ? (
               <div style={{ color: MUTED, fontSize: 22, padding: '22px 0' }}>No new verified headlines.</div>
             ) : news.map((n, i) => (
-              <div key={i} style={{ display: 'flex', padding: '17px 0', borderBottom: '1px solid #222' }}>
+              <div key={i} style={{ display: 'flex', padding: '19px 0', borderBottom: '1px solid #222' }}>
                 <div style={{ color: ORANGE, fontSize: 24, fontWeight: 800, width: 44 }}>{String(i + 1)}</div>
                 <div style={{ display: 'flex', flexDirection: 'column', width: 924 }}>
                   <div style={{ color: '#fff', fontSize: 25, fontWeight: 700, lineHeight: 1.25 }}>{n.title}</div>
@@ -123,7 +123,7 @@ export async function renderSnapshot(now = new Date()): Promise<{ image: ImageRe
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'auto', padding: '20px 56px', borderTop: `1px solid ${LINE}`, color: DIM, fontSize: 16 }}>
           <div style={{ display: 'flex' }}>
-            <span>Source:&nbsp;</span><span style={{ color: ORANGE, fontWeight: 700 }}>imaoils.vercel.app</span><span>&nbsp;· TradingView, curated news</span>
+            <span>Source:</span><span style={{ color: ORANGE, fontWeight: 700, marginLeft: 6 }}>imaoils.vercel.app</span><span style={{ marginLeft: 6 }}>· TradingView, curated news</span>
           </div>
           <div>International Marketing Agency</div>
         </div>
