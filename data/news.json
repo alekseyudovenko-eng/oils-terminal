@@ -1,6 +1,67 @@
 {
-  "updatedAt": "2026-10-20T04:58:00Z",
+  "updatedAt": "2026-10-21T04:52:56Z",
   "items": [
+    {
+      "id": "2026-10-20-malaysia-cpo-export-tax-waiver",
+      "publishedAt": "2026-10-20",
+      "addedAt": "2026-10-21T04:52:56Z",
+      "title": "Малайзия рассматривает временную отмену экспортной пошлины на CPO, чтобы сократить рекордные запасы",
+      "summary": "По данным Bloomberg, чиновники Минплантаций 20 октября должны были обсудить с отраслью временную отмену пошлины. Сейчас ставка от 3% до 10% (максимум — при цене выше RM4 050/т); на ноябрь сохранена 10% при референсной цене RM4 323,78. Индонезия на октябрь подняла пошлину и сбор в сумме до $308/т.",
+      "originalTitle": "Malaysia considers waiving palm oil export taxes to clear glut — Bloomberg",
+      "source": "The Edge Malaysia (Bloomberg)",
+      "url": "https://theedgemalaysia.com/node/822431",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "policy"
+      ],
+      "region": "Малайзия"
+    },
+    {
+      "id": "2026-10-20-palm-four-week-high",
+      "publishedAt": "2026-10-20",
+      "addedAt": "2026-10-21T04:52:56Z",
+      "title": "Фьючерсы на пальмовое масло в Малайзии поднялись до четырёхнедельного максимума — RM4 818/т",
+      "summary": "Январский контракт на Bursa Malaysia вырос на 52 ринггита (1,09%) до RM4 818/т (около $1 181) на фоне подорожания конкурирующих масел и ожиданий возможной отмены экспортной пошлины; официального решения нет.",
+      "originalTitle": "Palm oil prices in Malaysia rise to four-week high",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/palm-oil-prices-in-malaysia-rise-to-four-week-high/",
+      "lang": "en",
+      "topics": [
+        "palm"
+      ],
+      "region": "Малайзия"
+    },
+    {
+      "id": "2026-10-20-ukraine-oilseeds-harvest",
+      "publishedAt": "2026-10-20",
+      "addedAt": "2026-10-21T04:52:56Z",
+      "title": "Украина собрала почти 16 млн т масличных, подсолнечник обмолочен на 79% площадей",
+      "summary": "На 20 октября собрано 9,08 млн т подсолнечника (4,12 млн га, 2,2 т/га), 3,01 млн т сои (86% площадей) и 3,9 млн т рапса (уборка завершена) — всего около 15,99 млн т.",
+      "source": "УкрАгроКонсалт",
+      "url": "https://ukragroconsult.com/ru/news/v-ukraine-sobrali-pochti-16-mln-tonn-maslichnyh-kultur-uborka-podsolnechnika-i-soi-eshhe-prodolzhaetsya/",
+      "lang": "ru",
+      "topics": [
+        "sunflower",
+        "soy",
+        "rapeseed"
+      ],
+      "region": "Украина"
+    },
+    {
+      "id": "2026-10-20-ukraine-sunseed-prices",
+      "publishedAt": "2026-10-20",
+      "addedAt": "2026-10-21T04:52:56Z",
+      "title": "Закупочные цены на подсолнечник в Украине снизились до 15–16 тыс. грн/т",
+      "summary": "По данным E-ZERNO на 19 октября, большинство переработчиков предлагают 15–16 тыс. грн/т, максимум — 17,2 тыс. грн/т (Винницкая обл.); разница между минимальной и максимальной ценой — 2,2 тыс. грн/т.",
+      "source": "УкрАгроКонсалт",
+      "url": "https://ukragroconsult.com/ru/news/czeny-na-podsolnechnik-v-ukraine-snizilis-do-15-16-tys-grn-t/",
+      "lang": "ru",
+      "topics": [
+        "sunflower"
+      ],
+      "region": "Украина"
+    },
     {
       "id": "2026-10-19-mpoa-record-output",
       "publishedAt": "2026-10-19",
