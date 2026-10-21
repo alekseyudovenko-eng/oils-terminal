@@ -36,19 +36,21 @@ export async function GET(request: Request) {
 
   const news = fresh.slice(0, MAX_ITEMS);
   // Дайджест на английском: основная аудитория канала англоязычная.
-  // Заголовок — titleEn (иначе заголовок англоязычного источника), текст — summaryEn.
-  // Русский текст в дайджест не попадает.
+  // Если у новости нет английского текста, она идёт на языке оригинала:
+  // русская — на русском (title + summary), англоязычная — с заголовком источника.
   const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
   let message = `🌴 <b>Oils Terminal — Daily News</b>\n📅 ${today}\n\n`;
   for (const item of news) {
-    const en = item.titleEn || (item.lang === 'en' ? item.originalTitle : undefined) || item.title;
-    const title = en.length > 120 ? en.slice(0, 117) + '…' : en;
+    const english = !!item.titleEn;
+    const t = item.titleEn || (item.lang === 'en' && item.originalTitle) || item.title;
+    const sum = english ? item.summaryEn : item.lang === 'ru' ? item.summary : undefined;
+    const title = t.length > 120 ? t.slice(0, 117) + '…' : t;
     message += `🔹 <a href="${escapeHtml(item.url)}">${escapeHtml(title)}</a>\n`;
-    if (item.summaryEn) {
-      const s = item.summaryEn.length > 220 ? item.summaryEn.slice(0, 217) + '…' : item.summaryEn;
+    if (sum) {
+      const s = sum.length > 220 ? sum.slice(0, 217) + '…' : sum;
       message += `${escapeHtml(s)}\n`;
     }
-    message += `<i>${escapeHtml(sourceEn(item.source))}</i>\n\n`;
+    message += `<i>${escapeHtml(item.titleEn ? sourceEn(item.source) : item.source)}</i>\n\n`;
   }
   if (fresh.length > news.length) message += `…and ${fresh.length - news.length} more on the website.\n\n`;
   message += `🔗 <a href="${escapeHtml(SITE_URL + '/market#news')}">All news and market indicators</a>`;
