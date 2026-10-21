@@ -40,6 +40,7 @@ for (const [i, n] of (data.items || []).entries()) {
   if (!Array.isArray(n.topics) || n.topics.length === 0 || n.topics.some(t => !TOPICS.has(t))) {
     errors.push(`${at}: topics — непустой массив из ${[...TOPICS].join(', ')}`);
   }
+  if (n.titleEn !== undefined && (typeof n.titleEn !== 'string' || !n.titleEn.trim() || n.titleEn.length > 100)) errors.push(`${at}: titleEn — непустая строка до 100 символов`);
   if ((n.summary || '').length > 400) errors.push(`${at}: summary длиннее 400 символов`);
   if (n.lang === 'en' && !n.originalTitle) errors.push(`${at}: для англоязычного источника нужен originalTitle`);
 }

@@ -49,3 +49,29 @@ export async function sendTelegramPhoto(photoUrl: string, caption: string): Prom
   const r = await callTelegram('sendPhoto', { photo: photoUrl, caption: caption.slice(0, 1024) });
   return r.ok;
 }
+
+/**
+ * Картинка-файл (PNG) с подписью в указанный чат или канал (например '@oilpalm').
+ * Бот должен быть администратором канала с правом публиковать сообщения.
+ */
+export async function sendTelegramPhotoFile(png: ArrayBuffer, filename: string, caption: string, chatId: string): Promise<TelegramResult> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  if (!token) return { ok: false, error: 'Missing TELEGRAM_BOT_TOKEN' };
+  const form = new FormData();
+  form.append('chat_id', chatId);
+  form.append('caption', caption.slice(0, 1024));
+  form.append('parse_mode', 'HTML');
+  form.append('photo', new Blob([png], { type: 'image/png' }), filename);
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, { method: 'POST', body: form, cache: 'no-store' });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) {
+      const error = data.description || `HTTP ${res.status}`;
+      console.error('Telegram sendPhoto (file) error:', error);
+      return { ok: false, error };
+    }
+    return { ok: true };
+  } catch (e: any) {
+    return { ok: false, error: String(e?.message || e) };
+  }
+}
