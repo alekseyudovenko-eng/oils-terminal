@@ -31,7 +31,7 @@ export const GTT_REPORTERS: { code: string; name: string }[] = [
   { code: 'LV', name: 'Латвия' },
   { code: 'LT', name: 'Литва' },
   { code: 'HR', name: 'Хорватия' },
-  { code: 'RS', name: 'Сербия' },
+  { code: 'XS', name: 'Сербия' }  // в GTT (Geonom) Сербия — XS,
 ];
 
 export type TradeRow = {

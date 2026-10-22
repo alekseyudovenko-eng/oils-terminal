@@ -5,7 +5,7 @@
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
 import { getDb } from '@/lib/db';
-import { gttReport, type GttRow } from '@/lib/gtt';
+import { gttGet, gttReport, type GttRow } from '@/lib/gtt';
 import { GTT_HS, GTT_REPORTERS } from '@/lib/gtt-meta';
 
 export const dynamic = 'force-dynamic';
@@ -36,6 +36,21 @@ export async function GET(request: Request) {
   const to = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
   const stamp = now.toISOString();
   const report: Record<string, string> = {};
+
+  // До какого месяца у страны есть собственные данные (дальше — зеркальные, неполные).
+  try {
+    const countries = await gttGet('getreport/countries', { periods: false });
+    const list: any[] = Array.isArray(countries) ? countries : countries?.countries || [];
+    const wanted = new Set(GTT_REPORTERS.map(r => r.code));
+    const rows = list.map(x => x?.country ?? x).filter(c => c && wanted.has(c.alphageonom2) && String(c.reportingcountry) === 'true')
+      .map(c => ({
+        reporter: c.alphageonom2, name: c.name ?? null, source: c.source ?? null,
+        first_available: c.firstavailable_date ?? null, last_available: c.lastavailable_date ?? null,
+        data_last_received: c.data_lastreceived ?? null, updated_at: stamp,
+      }));
+    if (rows.length) await db.from('gtt_reporter_status').upsert(rows, { onConflict: 'reporter' });
+    report._status = `${rows.length} стран`;
+  } catch (e) { report._status = `ошибка: ${(e as Error).message.slice(0, 150)}`; }
 
   // Строго по одной: GTT отклоняет параллельные отчёты.
   const queue = [...reporters];
@@ -71,6 +86,6 @@ export async function GET(request: Request) {
     }
   };
   await worker();
-  const ok = Object.values(report).some(v => !v.startsWith('ошибка'));
+  const ok = Object.entries(report).some(([k, v]) => k !== '_status' && !v.startsWith('ошибка'));
   return NextResponse.json({ success: ok, from, to, report }, { status: ok ? 200 : 502 });
 }
