@@ -4,6 +4,7 @@ import Link from 'next/link';
 const PAGES = [
   { href: '/lab', title: 'Прогноз' },
   { href: '/lab/importers', title: 'Импортёры' },
+  { href: '/lab/trade', title: 'Импорт (GTT)' },
 ];
 
 export default function LabHeader({ current, note }: { current: string; note: string }) {
