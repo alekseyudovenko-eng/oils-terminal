@@ -1,5 +1,5 @@
 // /api/cron/gtt-sync — загрузка месячного импорта масел из Global Trade Tracker в Supabase (gtt_trade).
-// Vercel Cron 20–24 числа: за запуск обновляет 3 страны, давно не обновлявшиеся (GTT не даёт
+// Vercel Cron 20–26 числа: за запуск обновляет 2 страны, давно не обновлявшиеся (GTT не даёт
 // запускать отчёты параллельно, а функция живёт до 60 с). Вручную: ?key=<CRON_SECRET>[&reporters=RU,UZ][&years=3]
 // Пропущенные страной периоды дополняются зеркальными данными (по отчётам партнёров).
 import { NextResponse } from 'next/server';
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   const p = new URL(request.url).searchParams;
   let reporters = (p.get('reporters') || '').split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
   if (!reporters.length) {
-    // Выбираем 3 страны, обновлявшиеся давнее всего (или ещё не загруженные).
+    // Выбираем 2 страны, обновлявшиеся давнее всего (или ещё не загруженные).
     const { data } = await db.from('gtt_trade').select('reporter,updated_at').order('updated_at', { ascending: false }).limit(20000);
     const seen = new Map<string, string>();
     for (const r of data || []) if (!seen.has(r.reporter)) seen.set(r.reporter, r.updated_at);
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     reporters = GTT_REPORTERS.map(r => r.code)
       .filter(c => !seen.has(c) || Date.parse(seen.get(c)!) < ageLimit)
       .sort((a, b) => (seen.get(a) ?? '').localeCompare(seen.get(b) ?? ''))
-      .slice(0, 3);
+      .slice(0, 2);
     if (!reporters.length) return NextResponse.json({ success: true, skipped: 'all reporters fresh' });
   }
   const years = Math.min(Math.max(Number(p.get('years') || 3), 1), 6);
