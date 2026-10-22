@@ -1,5 +1,6 @@
 // /api/cron/gtt-sync — загрузка месячного импорта масел из Global Trade Tracker в Supabase (gtt_trade).
-// Раз в месяц (Vercel Cron) или вручную: ?key=<CRON_SECRET>[&reporters=RU,UZ][&years=3]
+// Vercel Cron 20–24 числа: за запуск обновляет 3 страны, давно не обновлявшиеся (GTT не даёт
+// запускать отчёты параллельно, а функция живёт до 60 с). Вручную: ?key=<CRON_SECRET>[&reporters=RU,UZ][&years=3]
 // Пропущенные страной периоды дополняются зеркальными данными (по отчётам партнёров).
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
@@ -16,7 +17,19 @@ export async function GET(request: Request) {
   if (!db) return NextResponse.json({ error: 'Supabase не настроен' }, { status: 500 });
 
   const p = new URL(request.url).searchParams;
-  const reporters = (p.get('reporters') || GTT_REPORTERS.map(r => r.code).join(',')).split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+  let reporters = (p.get('reporters') || '').split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+  if (!reporters.length) {
+    // Выбираем 3 страны, обновлявшиеся давнее всего (или ещё не загруженные).
+    const { data } = await db.from('gtt_trade').select('reporter,updated_at').order('updated_at', { ascending: false }).limit(20000);
+    const seen = new Map<string, string>();
+    for (const r of data || []) if (!seen.has(r.reporter)) seen.set(r.reporter, r.updated_at);
+    const ageLimit = Date.now() - 20 * 86400_000;
+    reporters = GTT_REPORTERS.map(r => r.code)
+      .filter(c => !seen.has(c) || Date.parse(seen.get(c)!) < ageLimit)
+      .sort((a, b) => (seen.get(a) ?? '').localeCompare(seen.get(b) ?? ''))
+      .slice(0, 3);
+    if (!reporters.length) return NextResponse.json({ success: true, skipped: 'all reporters fresh' });
+  }
   const years = Math.min(Math.max(Number(p.get('years') || 3), 1), 6);
   const now = new Date();
   const from = `${now.getUTCFullYear() - years + 1}-01`;
@@ -24,7 +37,7 @@ export async function GET(request: Request) {
   const stamp = now.toISOString();
   const report: Record<string, string> = {};
 
-  // По 3 страны параллельно, чтобы уложиться в лимит времени функции.
+  // Строго по одной: GTT отклоняет параллельные отчёты.
   const queue = [...reporters];
   const worker = async () => {
     for (let r = queue.shift(); r; r = queue.shift()) {
@@ -57,7 +70,7 @@ export async function GET(request: Request) {
       }
     }
   };
-  await Promise.all([worker(), worker(), worker()]);
+  await worker();
   const ok = Object.values(report).some(v => !v.startsWith('ошибка'));
   return NextResponse.json({ success: ok, from, to, report }, { status: ok ? 200 : 502 });
 }
