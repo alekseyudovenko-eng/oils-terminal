@@ -1,6 +1,40 @@
 {
-  "updatedAt": "2026-10-21T04:52:56Z",
+  "updatedAt": "2026-10-22T04:53:17Z",
   "items": [
+    {
+      "id": "2026-10-21-palm-falls-exports-oct-1-20",
+      "publishedAt": "2026-10-21",
+      "addedAt": "2026-10-22T04:53:17Z",
+      "title": "Фьючерсы на пальмовое масло упали на 1% до RM4 768/т после четырёхнедельного максимума",
+      "titleEn": "Palm oil slips 1% to RM4,768/t from four-week high despite export surge",
+      "summary": "Январский контракт на Bursa Malaysia 21 октября подешевел на 50 ринггитов (1,04%) до RM4 768/т. По оценкам сюрвейеров, экспорт пальмовой продукции Малайзии за 1–20 октября вырос на 58,5–78,4% к тому же периоду сентября; рост сдерживают высокие запасы.",
+      "summaryEn": "Bursa Malaysia's January contract fell 50 ringgit (1.04%) to RM4,768/t on October 21. Cargo surveyors estimated Malaysian palm product exports for October 1–20 up 58.5–78.4% from the same period in September; high stocks capped gains.",
+      "originalTitle": "Palm oil prices in Malaysia decline after reaching four-week high",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/palm-oil-prices-in-malaysia-decline-after-reaching-four-week-high/",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "trade"
+      ],
+      "region": "Малайзия"
+    },
+    {
+      "id": "2026-10-21-brent-five-month-high",
+      "publishedAt": "2026-10-21",
+      "addedAt": "2026-10-22T04:53:17Z",
+      "title": "Brent держится около пятимесячного максимума — $110,11 за баррель на фоне атак на суда в Заливе",
+      "titleEn": "Brent hovers near five-month high at $110 on Gulf shipping attacks",
+      "summary": "Brent 21 октября подорожала на $1,32 (1,2%) до $110,11/барр., WTI — до $99,00. По данным Kpler, за две недели зафиксировано не менее 18 атак на суда; по данным API, запасы нефти в США за неделю сократились на 4,9 млн баррелей.",
+      "summaryEn": "Brent rose $1.32 (1.2%) to $110.11/bbl on October 21 and WTI to $99.00. Kpler recorded at least 18 vessel attacks in two weeks, and API data showed US crude stocks down 4.9 million barrels on the week.",
+      "originalTitle": "Brent oil prices near 5-month high on Middle East supply fears, US inventory drawdowns",
+      "source": "Euronext (Reuters)",
+      "url": "https://live.euronext.com/en/financial-news/brent-oil-prices-near-5-month-high-middle-east-supply-fears-us-inventory-drawdowns",
+      "lang": "en",
+      "topics": [
+        "biofuel"
+      ]
+    },
     {
       "id": "2026-10-20-malaysia-cpo-export-tax-waiver",
       "publishedAt": "2026-10-20",
