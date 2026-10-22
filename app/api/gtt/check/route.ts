@@ -45,5 +45,13 @@ export async function GET(request: Request) {
       out[`test_${r}`] = { rows: rows.length, sample: short(rows.slice(0, 3), 900) };
     } catch (e) { out[`test_${r}`] = { error: (e as Error).message }; }
   }
+  // Структура ответа отчёта (ключи верхнего уровня), чтобы разобрать формат.
+  try {
+    const { gttGet } = await import('@/lib/gtt');
+    const raw = await gttGet('getreport', { layout: 'brief', format: 'json', source: 'DEFAULT', impexp: 'I', reporter: 'KZ', hscode: '1511', hslevel: 4, periodtype: 'M', latestavailablemonths: 1, currency: 'USD', unit: 'MT', dataelements: 'V,Q1' });
+    out.rawShape = Array.isArray(raw) ? `array(${raw.length})` : raw && typeof raw === 'object'
+      ? Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, Array.isArray(v) ? `array(${v.length}) ${short(v[0], 500)}` : short(v, 300)]))
+      : short(raw, 500);
+  } catch (e) { out.rawShapeError = (e as Error).message; }
   return NextResponse.json(out);
 }

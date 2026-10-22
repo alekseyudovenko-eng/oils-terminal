@@ -61,5 +61,8 @@ export async function gttReport(p: GttParams): Promise<GttRow[]> {
   const data = await gttGet('getreport', { layout: 'brief', format: 'json', source: 'DEFAULT', ...p });
   if (Array.isArray(data)) return data;
   for (const k of ['data', 'rows', 'records', 'result']) if (Array.isArray(data?.[k])) return data[k];
+  if (data && typeof data === 'object') {
+    for (const v of Object.values(data)) if (Array.isArray(v) && v.length && typeof v[0] === 'object') return v as GttRow[];
+  }
   throw new Error(`GTT getreport: неожиданный ответ ${JSON.stringify(data).slice(0, 300)}`);
 }
