@@ -48,8 +48,22 @@ export async function GET(request: Request) {
         first_available: c.firstavailable_date ?? null, last_available: c.lastavailable_date ?? null,
         data_last_received: c.data_lastreceived ?? null, updated_at: stamp,
       }));
-    if (rows.length) await db.from('gtt_reporter_status').upsert(rows, { onConflict: 'reporter' });
-    report._status = `${rows.length} стран`;
+    // У страны может быть несколько источников (национальный, Eurostat, Comtrade): берём источник
+    // по умолчанию, иначе тот, где данные свежее.
+    const best = new Map<string, (typeof rows)[number] & { def: boolean }>();
+    list.map(x => x?.country ?? x).forEach(c => {
+      const r = rows.find(z => z.reporter === c?.alphageonom2 && z.source === (c.source ?? null));
+      if (!r) return;
+      const cand = { ...r, def: String(c.defaultReporter) === 'true' };
+      const cur = best.get(r.reporter);
+      if (!cur || (cand.def && !cur.def) || (cand.def === cur.def && String(cand.last_available) > String(cur.last_available))) best.set(r.reporter, cand);
+    });
+    const unique = Array.from(best.values()).map(({ def, ...r }) => r);
+    if (unique.length) {
+      const { error } = await db.from('gtt_reporter_status').upsert(unique, { onConflict: 'reporter' });
+      if (error) throw new Error(error.message);
+    }
+    report._status = `${unique.length} стран`;
   } catch (e) { report._status = `ошибка: ${(e as Error).message.slice(0, 150)}`; }
 
   // Строго по одной: GTT отклоняет параллельные отчёты.
