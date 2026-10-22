@@ -8,7 +8,7 @@ import { escapeHtml, sendTelegramPhotoFile } from '@/lib/telegram';
 import { renderSnapshot } from '@/lib/snapshot';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 const SITE_URL = process.env.SITE_URL || 'https://imaoils.vercel.app';
 

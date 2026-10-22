@@ -2,8 +2,89 @@
 // цена пальмового масла, нефть, курс ринггита и главные новости из отобранной ленты.
 // Используется в /api/snapshot (просмотр) и /api/cron/daily-snapshot (публикация в Telegram).
 import { ImageResponse } from 'next/og';
-import { getQuotesFresh, type Quote } from './quotes';
+import { getQuotes, getQuotesFresh, type Quote } from './quotes';
 import { getCuratedNews } from './news';
+import { getDb } from './db';
+
+const KEY_IDS = ['fcpo', 'brent', 'wti', 'usdmyr'] as const;
+const hasPrice = (q: Quote | undefined) => q?.price != null;
+
+/** Последние сохранённые значения из базы (снимки цен сайта): цена и изменение к предыдущему дню. */
+async function storedQuotes(ids: string[]): Promise<{ quotes: Map<string, Quote>; day: string | null }> {
+  const out = new Map<string, Quote>();
+  let latestDay: string | null = null;
+  const db = getDb();
+  if (!db || ids.length === 0) return { quotes: out, day: null };
+  try {
+    const since = new Date(Date.now() - 14 * 86400_000).toISOString().slice(0, 10);
+    const { data, error } = await db
+      .from('price_snapshots')
+      .select('day, series, price, usd_t, ticker')
+      .in('series', ids)
+      .gte('day', since)
+      .order('day', { ascending: false });
+    if (error) throw new Error(error.message);
+    for (const id of ids) {
+      const rows = (data || []).filter((r: any) => r.series === id && r.price != null);
+      if (rows.length === 0) continue;
+      const [last, prev] = rows;
+      const price = Number(last.price);
+      const prevPrice = prev ? Number(prev.price) : null;
+      out.set(id, {
+        id, name: id, short: id, venue: '', group: 'palm' as const, unit: '', ticker: last.ticker ?? null,
+        price,
+        changeAbs: prevPrice != null ? price - prevPrice : null,
+        changePct: prevPrice ? ((price - prevPrice) / prevPrice) * 100 : null,
+        perfW: null, perf1M: null, perfYTD: null,
+        usdT: last.usd_t != null ? Number(last.usd_t) : null, prevUsdT: null,
+      });
+      if (!latestDay || last.day > latestDay) latestDay = last.day;
+    }
+  } catch (e) {
+    console.warn('snapshot: stored quotes not loaded:', (e as Error).message);
+  }
+  return { quotes: out, day: latestDay };
+}
+
+/**
+ * Котировки для картинки — те же данные, что на сайте, с запасными вариантами:
+ * 1) свежий запрос к TradingView (до 2 попыток); 2) кэш сайта (то, что показывает страница);
+ * 3) последние значения, сохранённые в базе. Так картинка выходит, даже если источник на минуту недоступен.
+ */
+async function snapshotQuotes(): Promise<{ quotes: Quote[]; fetchedAt: string; storedDay: string | null; sources: string[] }> {
+  const merged = new Map<string, Quote>();
+  const sources: string[] = [];
+  let fetchedAt: string | null = null;
+  const take = (list: Quote[], label: string, at: string) => {
+    let used = false;
+    for (const q of list) {
+      if (q.price == null) continue;
+      if (!merged.has(q.id)) { merged.set(q.id, q); used = true; }
+    }
+    if (used) { sources.push(label); if (!fetchedAt) fetchedAt = at; }
+  };
+  const missing = () => KEY_IDS.filter(id => !hasPrice(merged.get(id)));
+
+  for (let attempt = 0; attempt < 2 && missing().length > 0; attempt++) {
+    if (attempt > 0) await new Promise(r => setTimeout(r, 2000));
+    const fresh = await getQuotesFresh();
+    if (fresh.error) console.warn('snapshot: fresh quotes failed:', fresh.error);
+    take(fresh.quotes, 'fresh', fresh.fetchedAt);
+  }
+  if (missing().length > 0) {
+    const cached = await getQuotes();
+    take(cached.quotes, 'site-cache', cached.fetchedAt);
+  }
+  let storedDay: string | null = null;
+  const stillMissing = missing();
+  if (stillMissing.length > 0) {
+    const stored = await storedQuotes(stillMissing);
+    for (const [id, q] of stored.quotes) merged.set(id, q);
+    if (stored.quotes.size > 0) { sources.push('stored'); storedDay = stored.day; }
+  }
+  console.log('snapshot quotes from:', sources.join(', ') || 'none', 'missing:', missing().join(',') || '-');
+  return { quotes: [...merged.values()], fetchedAt: fetchedAt ?? new Date().toISOString(), storedDay, sources };
+}
 
 const W = 1080, H = 1350;
 const ORANGE = '#fb8b1e', UP = '#4ade80', DOWN = '#ff5a4f', MUTED = '#9a9a9a', DIM = '#7a7a7a', LINE = '#2a2a2a';
@@ -71,7 +152,7 @@ function PriceCell({ label, inst, value, unit, q, sub, last }: {
 }
 
 export async function renderSnapshot(now = new Date()): Promise<{ image: ImageResponse; ok: boolean; title: string }> {
-  const [{ quotes, fetchedAt }, fonts] = await Promise.all([getQuotesFresh(), loadFonts()]);
+  const [{ quotes, fetchedAt, storedDay }, fonts] = await Promise.all([snapshotQuotes(), loadFonts()]);
   const q = (id: string) => quotes.find(x => x.id === id);
   const fcpo = q('fcpo'), brent = q('brent'), wti = q('wti'), myr = q('usdmyr');
   const ok = fcpo?.price != null && brent?.price != null && myr?.price != null;
@@ -79,6 +160,10 @@ export async function renderSnapshot(now = new Date()): Promise<{ image: ImageRe
   const news = pickNews(now);
   const day = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur' }).toUpperCase();
   const asOf = new Date(fetchedAt).toISOString().slice(11, 16);
+  // Если часть цен взята из сохранённых в базе — честно пишем, что это последнее доступное закрытие.
+  const asOfLine = storedDay
+    ? `Market data: latest available (${new Date(`${storedDay}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })}) · Delayed quotes`
+    : `Market data as of ${asOf} UTC · Delayed quotes`;
   const ringgit = myr?.changePct == null || Math.abs(myr.changePct) < 0.05 ? 'Ringgit little changed against the dollar'
     : myr.changePct < 0 ? 'Ringgit firmer against the dollar' : 'Ringgit weaker against the dollar';
 
@@ -92,7 +177,7 @@ export async function renderSnapshot(now = new Date()): Promise<{ image: ImageRe
         <div style={{ display: 'flex', flexDirection: 'column', padding: '40px 56px 0' }}>
           <div style={{ color: ORANGE, fontSize: 18, fontWeight: 700, letterSpacing: 2.8 }}>DAILY SNAPSHOT</div>
           <div style={{ color: '#fff', fontSize: 58, fontWeight: 800, letterSpacing: -1.2, lineHeight: 1.05, marginTop: 10 }}>{title}</div>
-          <div style={{ color: MUTED, fontSize: 20, marginTop: 12 }}>{`Market data as of ${asOf} UTC · Delayed quotes`}</div>
+          <div style={{ color: MUTED, fontSize: 20, marginTop: 12 }}>{asOfLine}</div>
           <div style={{ display: 'flex', marginTop: 34, borderTop: `2px solid ${ORANGE}` }}>
             <PriceCell label="PALM OIL" inst="FCPO · Bursa Malaysia, 3rd month" q={fcpo}
               value={fcpo?.price != null ? fmt(fcpo.price) : '—'} unit="MYR/t"
