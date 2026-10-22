@@ -21,6 +21,17 @@ export const GTT_REPORTERS: { code: string; name: string }[] = [
   { code: 'AM', name: 'Армения' },
   { code: 'BY', name: 'Беларусь' },
   { code: 'UA', name: 'Украина' },
+  // Остальные страны таблицы MPOB из ежемесячного отчёта (Europe & Central Asia)
+  { code: 'PL', name: 'Польша' },
+  { code: 'CZ', name: 'Чехия' },
+  { code: 'HU', name: 'Венгрия' },
+  { code: 'RO', name: 'Румыния' },
+  { code: 'BG', name: 'Болгария' },
+  { code: 'EE', name: 'Эстония' },
+  { code: 'LV', name: 'Латвия' },
+  { code: 'LT', name: 'Литва' },
+  { code: 'HR', name: 'Хорватия' },
+  { code: 'RS', name: 'Сербия' },
 ];
 
 export type TradeRow = {
