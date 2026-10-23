@@ -2,6 +2,7 @@ import Marquee from './Marquee';
 import { fmtAgo, fmtDate } from '@/lib/format';
 import type { NewsItem } from '@/lib/news';
 import { getDict } from '@/lib/i18n-server';
+import { newsText } from '@/lib/news-i18n';
 
 export default function NewsTicker({ news }: { news: NewsItem[] }) {
   const { lang, t } = getDict();
@@ -18,7 +19,7 @@ export default function NewsTicker({ news }: { news: NewsItem[] }) {
           className="flex items-baseline gap-2 px-5 py-2 text-sm whitespace-nowrap border-r border-white/10 hover:text-white"
         >
           <span className="text-band-muted">{n.publishedAt.length <= 10 ? fmtDate(n.publishedAt, lang) : fmtAgo(n.publishedAt, lang)}</span>
-          <span>{n.title}</span>
+          <span>{newsText(n, lang).title}</span>
           <span className="text-band-muted">{n.source}</span>
         </a>
       ))}

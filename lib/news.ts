@@ -11,6 +11,9 @@ export type NewsItem = {
   title: string;          // заголовок на русском
   titleEn?: string;       // короткий заголовок на английском (Daily Snapshot, дайджест в Telegram)
   summaryEn?: string;     // 1–2 предложения на английском (дайджест в Telegram)
+  titleUz?: string; summaryUz?: string;   // узбекский (латиница) — версия сайта на узбекском
+  titleKk?: string; summaryKk?: string;   // казахский
+  titleMs?: string; summaryMs?: string;   // малайский
   url: string;            // ссылка на первоисточник
   summary: string;        // 1–2 предложения с ключевой цифрой
   publishedAt: string;    // дата публикации первоисточника

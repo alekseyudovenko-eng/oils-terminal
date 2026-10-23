@@ -57,6 +57,12 @@
       "titleEn": "Malaysia palm oil stocks rise to X Mt in September",
       "summaryEn": "Stocks rose N% month on month, per MPOB; output X Mt, exports Y Mt.",
       "summary": "По данным MPOB, запасы выросли на N% за месяц; производство — X млн т, экспорт — Y млн т.",
+      "titleUz": "Malayziyada palma yogʻi zaxiralari sentabrda X mln t gacha oshdi",
+      "summaryUz": "MPOB maʼlumotiga koʻra, zaxiralar bir oyda N% oshdi; ishlab chiqarish — X mln t, eksport — Y mln t.",
+      "titleKk": "Малайзияда пальма майы қорлары қыркүйекте X млн т-ға дейін өсті",
+      "summaryKk": "MPOB деректері бойынша қорлар бір айда N%-ға өсті; өндіріс — X млн т, экспорт — Y млн т.",
+      "titleMs": "Stok minyak sawit Malaysia naik ke X juta tan pada September",
+      "summaryMs": "Menurut MPOB, stok naik N% bulan ke bulan; pengeluaran X juta tan, eksport Y juta tan.",
       "originalTitle": "Malaysia's September palm oil stocks rise to ...",
       "source": "Reuters",
       "url": "https://www.reuters.com/...",
@@ -73,6 +79,7 @@
 - `titleEn` — тот же факт коротко по-английски, своими словами, в стиле заголовков Bloomberg (до 90 символов, максимум 100). Обязателен для всех новостей: из него собираются картинка Daily Snapshot и утренний дайджест в Telegram.
 - `summaryEn` — то же, что `summary`, по-английски: 1–2 предложения с главной цифрой, до 400 символов, те же факты и цифры, ничего не добавлять. Желателен для всех новостей: утренний дайджест в Telegram публикуется на английском. Если английского текста нет, новость всё равно добавляется и уходит в дайджест на языке оригинала.
 - `summary` — 1–2 предложения на русском с главной цифрой; до 400 символов.
+- `titleUz`/`summaryUz`, `titleKk`/`summaryKk`, `titleMs`/`summaryMs` — те же заголовок и краткое изложение на узбекском (латиница), казахском и малайском. Обязательны для всех новых новостей: сайт показывает новости на языке, выбранном посетителем (русский, английский, узбекский, казахский, малайский). Переводить с русской или английской версии; те же факты и цифры, ничего не добавлять. Заголовок до 140 символов, изложение до 500. Десятичная запятая в узбекском и казахском («3,51 млн т»), точка — в малайском и английском.
 - `originalTitle` — обязателен, если источник не на русском.
 - `topics` — одно или несколько: `palm`, `soy`, `sunflower`, `rapeseed`, `biofuel`, `policy`, `trade`.
 - `region` — страна или регион, если новость про конкретный рынок; иначе поле не указывается.

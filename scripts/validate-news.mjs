@@ -42,6 +42,11 @@ for (const [i, n] of (data.items || []).entries()) {
   }
   if (n.titleEn !== undefined && (typeof n.titleEn !== 'string' || !n.titleEn.trim() || n.titleEn.length > 100)) errors.push(`${at}: titleEn — непустая строка до 100 символов`);
   if (n.summaryEn !== undefined && (typeof n.summaryEn !== 'string' || !n.summaryEn.trim() || n.summaryEn.length > 400)) errors.push(`${at}: summaryEn — непустая строка до 400 символов`);
+  for (const L of ['Uz', 'Kk', 'Ms']) {
+    const tt = n[`title${L}`], ss = n[`summary${L}`];
+    if (tt !== undefined && (typeof tt !== 'string' || !tt.trim() || tt.length > 140)) errors.push(`${at}: title${L} — непустая строка до 140 символов`);
+    if (ss !== undefined && (typeof ss !== 'string' || !ss.trim() || ss.length > 500)) errors.push(`${at}: summary${L} — непустая строка до 500 символов`);
+  }
   if ((n.summary || '').length > 400) errors.push(`${at}: summary длиннее 400 символов`);
   if (n.lang === 'en' && !n.originalTitle) errors.push(`${at}: для англоязычного источника нужен originalTitle`);
 }
