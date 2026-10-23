@@ -57,7 +57,7 @@ export default function RegulationPage() {
                 {r.contentLang && <> {r.contentLang}</>}
               </p>
             </div>
-            <a href="/lab/regulation.xlsx" download
+            <a href={lang === 'ru' ? '/lab/regulation.xlsx' : '/lab/regulation-en.xlsx'} download
               className="inline-flex items-center gap-2 rounded-sm bg-ink px-4 py-2 text-sm font-medium text-paper hover:bg-ink-2">
               <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>
               {r.download}

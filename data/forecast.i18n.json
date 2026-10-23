@@ -1,0 +1,363 @@
+{
+  "_comment": "Переводы текстов data/forecast.json. Структура повторяет исходный файл: массивы сопоставляются по порядку. При изменении forecast.json обновите и этот файл; чего нет здесь, показывается по-русски.",
+  "en": {
+    "title": "Palm oil price forecast (FCPO)",
+    "label": "IMA analytical assessment. Draft, not for publication.",
+    "benchmark": "FCPO, Bursa Malaysia, 3rd month (benchmark), MYR/t",
+    "spot": { "note": "January 2027 contract, 16.10.2026" },
+    "horizons": [
+      {
+        "name": "Short term",
+        "period": "To end-January 2027 (≈3 months)",
+        "ensemble": [
+          { "source": "Futures curve (January 2027)" },
+          { "source": "Fund model (3 months, bias-adjusted)" },
+          { "source": "Analyst consensus (4,400–5,000)" }
+        ],
+        "drivers": {
+          "base": "Malaysia's record stocks (3.51 Mt at end-September) cap the price, but October exports are strong and peak output has passed. The price holds in the range expected by Mistry (4,500–5,000) and the banks (4,400–4,600).",
+          "bull": "October exports above 1.6 Mt and stocks start falling as early as October–November; Brent above $100 supports biodiesel; India steps up buying after the duty cut to 11%.",
+          "bear": "October stocks rise above 3.7 Mt; Brent slides to $85–90; India switches to soybean and sunflower oil; the ringgit strengthens."
+        },
+        "triggers": [
+          "MPOB October data (~10–12 November): stocks above 3.7 Mt shift towards bearish, below 3.4 Mt towards bullish.",
+          "ITS/AmSpec export estimates for 1–25 October and 1–15 November.",
+          "POGO spread: a move above zero weakens biodiesel demand."
+        ]
+      },
+      {
+        "name": "Medium term",
+        "period": "Q2 2027 (≈6–9 months)",
+        "ensemble": [
+          { "source": "Futures curve (June 2027)" },
+          { "source": "Fund model (8 months, interpolated 6–12 months)" },
+          { "source": "Analyst consensus (Apex H1 2027 — 4,800, CIMB 2027 — 4,550)" }
+        ],
+        "drivers": {
+          "base": "El Niño (ONI +2.16 in August) moderately cuts the H1 2027 crop; B50 in Indonesia reduces its exports; Malaysian stocks return to normal by spring. The market already prices in a rise: the futures curve climbs to ~5,030 by May–June 2027.",
+          "bull": "A strong, prolonged El Niño, as in 1997–98 and 2015–16: drought cuts Malaysian and Indonesian output by 5–10%; B50 is fully rolled out; Brent stays above $100. Historically, palm oil rose 23–37% within 6–12 months of such an El Niño.",
+          "bear": "El Niño fades quickly and new varieties cope better with drought; stocks stay high for long; Brent drops to $80 (the Brent curve is already in backwardation); B50 is postponed."
+        },
+        "triggers": [
+          "ONI index and rainfall in Malaysia and Indonesia (NOAA, monthly): ONI above 2 until January shifts towards bullish.",
+          "MPOB output in January–March 2027 more than 5% below last year.",
+          "Indonesia's decision on B50 timing and export levies.",
+          "Brent: below $85 shifts towards bearish."
+        ]
+      },
+      {
+        "name": "Long term",
+        "period": "2028 average (≈15–24 months)",
+        "ensemble": [
+          { "source": "2028 futures curve (illiquid)" },
+          { "source": "Analyst forecasts for 2027 (4,500–4,800); the World Bank expects prices to stabilise in 2027" },
+          { "source": "Model: post-El Niño peak and mean reversion in the second year" }
+        ],
+        "drivers": {
+          "base": "After the 2027 spike the crop recovers, but structural factors keep prices above the 2020–2025 average: ageing plantations and slow replanting, Indonesia's moratorium on new areas, growing biofuel demand.",
+          "bull": "Indonesia moves towards B60, output stagnates as trees age, oil stays expensive on geopolitics; a vegetable oil deficit driven by biofuel demand in the US and Brazil.",
+          "bear": "The crop recovers quickly after El Niño, oil falls to $65–70, EUDR and RED III reduce EU demand; India raises duties to protect its farmers."
+        },
+        "triggers": [
+          "USDA/Oil World reports on the 2027/28 vegetable oil balance.",
+          "Biofuel policy: Indonesia (B50/B60), US RFS, Brazil.",
+          "The long-term Brent curve and IEA forecasts.",
+          "Replanting pace in Malaysia and Indonesia."
+        ]
+      }
+    ],
+    "backtest": {
+      "period": "January 2012 — July 2026, monthly IMF data, the forecast is re-trained at every step",
+      "note": "Error (RMSE) is the typical deviation of the forecast from the outcome, in per cent. The model gets the direction right in 61–64% of cases over 3–12 months, but its error size is barely better than ‘the price will not change’. That is why the base case blends the model, the market and analysts rather than using the model alone."
+    },
+    "elNino": {
+      "note": "The month when the ONI index first rose to 1.5 or higher, and the change in the palm oil price (USD) afterwards.",
+      "current": "ONI in August 2026 is +2.16, a strong El Niño."
+    },
+    "curve": { "note": "Contracts after November 2027 hardly trade; their prices are indicative." },
+    "external": [
+      { "who": "Dorab Mistry (Godrej International)", "view": "4,500–5,000 MYR/t until December 2026; El Niño will reduce output in 2027" },
+      { "who": "MPOC", "view": "above 4,700 MYR/t until end-2026; drought since August will hit the crop in 6–9 months" },
+      { "who": "HLIB, CIMB, Apex, MBSB", "view": "2026 average 4,450–4,500; 2027 — 4,500–4,550 (Apex: H1 2027 — 4,800); 90% probability of a strong El Niño (MBSB)" },
+      { "who": "BIMB, RHB, HLIB", "view": "BIMB: 4,300–4,800 in Q4 2026, 4,500–5,000 in H1 2027; RHB: 4,400 (2026), 4,500 (2027)" },
+      { "who": "World Bank (CMO)", "view": "about $1,089/t in 2026, stabilising in 2027" }
+    ],
+    "method": [
+      "Data: IMF monthly prices (via FRED) for palm, soybean, sunflower and rapeseed oil and Brent since 1992; the ONI index (NOAA); the USD/MYR rate; the FCPO futures curve as of 16.10.2026.",
+      "Fund model: a direct forecast of the price change over 1, 3, 6 and 12 months from the deviation of the soy/palm spread from its 5-year average, the ONI index (current and lagged 3 months), Brent momentum and palm's own momentum. Re-trained on an expanding window and tested on 2012–2026.",
+      "Bull and bear corridors are the 20th and 80th percentiles of the model's historical errors at that horizon, refined with triggers and analyst views.",
+      "The base case is a weighted blend of the futures curve, the model and analyst consensus (weights shown for each horizon).",
+      "Scenario probabilities are an expert judgement that takes into account El Niño strength and stock levels."
+    ]
+  },
+  "uz": {
+    "title": "Palma yogʻi narxi prognozi (FCPO)",
+    "label": "IMA tahliliy bahosi. Qoralama, eʼlon qilish uchun emas.",
+    "benchmark": "FCPO, Bursa Malaysia, 3-oy (benchmark), MYR/t",
+    "spot": { "note": "2027-yil yanvar kontrakti, 16.10.2026" },
+    "horizons": [
+      {
+        "name": "Qisqa muddatli",
+        "period": "2027-yil yanvar oxirigacha (≈3 oy)",
+        "ensemble": [
+          { "source": "Fyuchers egri chizigʻi (2027-yil yanvar)" },
+          { "source": "Fund modeli (3 oy, siljish tuzatilgan)" },
+          { "source": "Tahlilchilar konsensusi (4 400–5 000)" }
+        ],
+        "drivers": {
+          "base": "Malayziyaning rekord zaxiralari (sentabr oxirida 3,51 mln t) narxni cheklab turibdi, ammo oktabrdagi eksport kuchli, ishlab chiqarish choʻqqisi esa oʻtdi. Narx Mistri (4 500–5 000) va banklar (4 400–4 600) kutgan oraliqda saqlanadi.",
+          "bull": "Oktabr eksporti 1,6 mln t dan yuqori, zaxiralar oktabr–noyabrdayoq kamaya boshlaydi; Brent $100 dan yuqori boʻlib biodizelni qoʻllab-quvvatlaydi; Hindiston boj 11% gacha pasaytirilgach xaridlarni oshiradi.",
+          "bear": "Oktabr zaxiralari 3,7 mln t dan oshadi; Brent $85–90 gacha tushadi; Hindiston soya va kungaboqar yogʻiga oʻtadi; ringgit mustahkamlanadi."
+        },
+        "triggers": [
+          "MPOBning oktabr maʼlumotlari (~10–12-noyabr): zaxiralar 3,7 mln t dan yuqori — ayiqlar ssenariysi tomon, 3,4 mln t dan past — buqalar ssenariysi tomon siljish.",
+          "ITS/AmSpec’ning 1–25-oktabr va 1–15-noyabr uchun eksport baholari.",
+          "POGO spredi: noldan yuqoriga chiqishi biodizel talabini susaytiradi."
+        ]
+      },
+      {
+        "name": "Oʻrta muddatli",
+        "period": "2027-yil 2-chorak (≈6–9 oy)",
+        "ensemble": [
+          { "source": "Fyuchers egri chizigʻi (2027-yil iyun)" },
+          { "source": "Fund modeli (8 oy, 6–12 oy interpolyatsiyasi)" },
+          { "source": "Tahlilchilar konsensusi (Apex 2027-yil 1-yarim — 4 800, CIMB 2027 — 4 550)" }
+        ],
+        "drivers": {
+          "base": "El-Ninyo (avgustda ONI +2,16) 2027-yil 1-yarmida hosilni oʻrtacha kamaytiradi; Indoneziyadagi B50 uning eksportini qisqartiradi; Malayziya zaxiralari bahorga kelib meʼyorga qaytadi. Bozor oʻsishni allaqachon hisobga olmoqda: fyuchers egri chizigʻi 2027-yil may–iyunigacha ~5 030 ga koʻtariladi.",
+          "bull": "1997–98 va 2015–16-yillardagidek kuchli va choʻzilgan El-Ninyo: qurgʻoqchilik Malayziya va Indoneziya hosilini 5–10% kamaytiradi; B50 toʻliq joriy etiladi; Brent $100 dan yuqori qoladi. Tarixan bunday El-Ninyodan keyin 6–12 oy ichida palma yogʻi 23–37% qimmatlagan.",
+          "bear": "El-Ninyo tez susayadi, yangi navlar qurgʻoqchilikka yaxshiroq bardosh beradi; zaxiralar uzoq vaqt yuqori qoladi; Brent $80 gacha tushadi (Brent egri chizigʻi allaqachon bekvordatsiyada); B50 kechiktiriladi."
+        },
+        "triggers": [
+          "Malayziya va Indoneziyadagi ONI indeksi va yogʻingarchilik (NOAA, har oy): yanvargacha ONI 2 dan yuqori — buqalar ssenariysi tomon siljish.",
+          "2027-yil yanvar–mart oylarida MPOB ishlab chiqarishi oʻtgan yildan 5% dan koʻproq past.",
+          "Indoneziyaning B50 muddatlari va eksport yigʻimlari boʻyicha qarori.",
+          "Brent: $85 dan past — ayiqlar ssenariysi tomon siljish."
+        ]
+      },
+      {
+        "name": "Uzoq muddatli",
+        "period": "2028-yil oʻrtachasi (≈15–24 oy)",
+        "ensemble": [
+          { "source": "2028-yil fyuchers egri chizigʻi (likvidligi past)" },
+          { "source": "Tahlilchilarning 2027-yil prognozlari (4 500–4 800); Jahon banki 2027-yilda narxlar barqarorlashishini kutmoqda" },
+          { "source": "Model: El-Ninyodan keyingi choʻqqi va ikkinchi yilda oʻrtachaga qaytish" }
+        ],
+        "drivers": {
+          "base": "2027-yildagi sakrashdan soʻng hosil tiklanadi, ammo tarkibiy omillar narxni 2020–2025-yillar oʻrtachasidan yuqori ushlab turadi: plantatsiyalarning qarishi va sekin qayta ekish, Indoneziyaning yangi maydonlarga moratoriysi, bioyoqilgʻiga talabning oʻsishi.",
+          "bull": "Indoneziya B60 sari boradi, daraxtlar qarigani sababli ishlab chiqarish turgʻunlashadi, geosiyosat tufayli neft qimmat; AQSH va Braziliyadagi bioyoqilgʻi talabi tufayli oʻsimlik yogʻlari taqchilligi.",
+          "bear": "El-Ninyodan keyin hosil tez tiklanadi, neft $65–70 gacha arzonlaydi, EUDR va RED III YeI talabini qisqartiradi; Hindiston oʻz fermerlarini himoya qilish uchun bojlarni oshiradi."
+        },
+        "triggers": [
+          "USDA/Oil World’ning 2027/28-yillar uchun oʻsimlik yogʻlari balansi boʻyicha hisobotlari.",
+          "Bioyoqilgʻi siyosati: Indoneziya (B50/B60), US RFS, Braziliya.",
+          "Brentning uzoq muddatli egri chizigʻi va XEA prognozlari.",
+          "Malayziya va Indoneziyada plantatsiyalarni qayta ekish surʼati."
+        ]
+      }
+    ],
+    "backtest": {
+      "period": "2012-yil yanvar — 2026-yil iyul, IMFning oylik maʼlumotlari, prognoz har qadamda qayta oʻqitiladi",
+      "note": "Xato (RMSE) — prognozning haqiqatdan odatiy chetlanishi, foizda. Model 3–12 oyda yoʻnalishni 61–64% hollarda toʻgʻri topadi, ammo xato kattaligi boʻyicha «narx oʻzgarmaydi» taxminidan deyarli yaxshi emas. Shu sababli bazaviy ssenariy sof model emas, balki model, bozor va tahlilchilar aralashmasi."
+    },
+    "elNino": {
+      "note": "ONI indeksi birinchi marta 1,5 va undan yuqoriga koʻtarilgan oy va undan keyin palma yogʻi narxining (USD) oʻzgarishi.",
+      "current": "2026-yil avgustda ONI +2,16 — bu kuchli El-Ninyo."
+    },
+    "curve": { "note": "2027-yil noyabridan keyingi kontraktlar deyarli savdo qilinmaydi, ularning narxlari taxminiy." },
+    "external": [
+      { "who": "Dorab Mistri (Godrej International)", "view": "2026-yil dekabrigacha 4 500–5 000 MYR/t; El-Ninyo 2027-yilda ishlab chiqarishni kamaytiradi" },
+      { "who": "MPOC", "view": "2026-yil oxirigacha 4 700 MYR/t dan yuqori; avgustdan boshlangan qurgʻoqchilik hosilga 6–9 oydan keyin taʼsir qiladi" },
+      { "who": "HLIB, CIMB, Apex, MBSB", "view": "2026-yil oʻrtachasi — 4 450–4 500; 2027 — 4 500–4 550 (Apex: 2027-yil 1-yarim — 4 800); kuchli El-Ninyo ehtimoli 90% (MBSB)" },
+      { "who": "BIMB, RHB, HLIB", "view": "BIMB: 2026-yil 4-chorakda 4 300–4 800, 2027-yil 1-yarmida 4 500–5 000; RHB: 4 400 (2026), 4 500 (2027)" },
+      { "who": "Jahon banki (CMO)", "view": "2026-yilda taxminan $1 089/t, 2027-yilda barqarorlashish" }
+    ],
+    "method": [
+      "Maʼlumotlar: 1992-yildan beri IMF’ning (FRED orqali) palma, soya, kungaboqar, raps yogʻi va Brent oylik narxlari; ONI indeksi (NOAA); USD/MYR kursi; 16.10.2026 holatiga FCPO fyuchers egri chizigʻi.",
+      "Fund modeli: soya/palma spredining 5 yillik oʻrtachadan chetlanishi, ONI indeksi (joriy va 3 oy kechikish bilan), Brent va palmaning oʻz impulsi boʻyicha 1, 3, 6, 12 oyga narx oʻzgarishining toʻgʻridan-toʻgʻri prognozi. Kengayib boruvchi oynada qayta oʻqitiladi, 2012–2026-yillarda tekshirilgan.",
+      "Buqalar va ayiqlar ssenariylari koridorlari — shu gorizontdagi model tarixiy xatolarining 20- va 80-protsentillari, triggerlar va tahlilchilar boʻyicha aniqlashtirilgan.",
+      "Bazaviy ssenariy — fyuchers egri chizigʻi, model va tahlilchilar konsensusining vaznli aralashmasi (vaznlar har bir gorizontda koʻrsatilgan).",
+      "Ssenariylar ehtimoli — El-Ninyo kuchi va zaxiralar darajasini hisobga olgan ekspert bahosi."
+    ]
+  },
+  "kk": {
+    "title": "Пальма майы бағасының болжамы (FCPO)",
+    "label": "IMA аналитикалық бағалауы. Жоба, жариялауға арналмаған.",
+    "benchmark": "FCPO, Bursa Malaysia, 3-ай (бенчмарк), MYR/т",
+    "spot": { "note": "2027 жылғы қаңтар келісімшарты, 16.10.2026" },
+    "horizons": [
+      {
+        "name": "Қысқа мерзімді",
+        "period": "2027 жылғы қаңтардың соңына дейін (≈3 ай)",
+        "ensemble": [
+          { "source": "Фьючерстер қисығы (2027 жылғы қаңтар)" },
+          { "source": "Fund моделі (3 ай, ығысуға түзетілген)" },
+          { "source": "Сарапшылар консенсусы (4 400–5 000)" }
+        ],
+        "drivers": {
+          "base": "Малайзияның рекордтық қорлары (қыркүйек соңында 3,51 млн т) бағаны тежейді, бірақ қазандағы экспорт күшті, ал өндіріс шыңы өтті. Баға Мистри (4 500–5 000) мен банктер (4 400–4 600) күткен аралықта сақталады.",
+          "bull": "Қазандағы экспорт 1,6 млн т-дан жоғары, қорлар қазан–қарашада-ақ азая бастайды; Brent $100-ден жоғары болып, биодизельді қолдайды; Үндістан баж 11%-ға төмендегеннен кейін сатып алуды арттырады.",
+          "bear": "Қазандағы қорлар 3,7 млн т-дан асады; Brent $85–90-ға дейін түседі; Үндістан соя мен күнбағыс майына ауысады; ринггит нығаяды."
+        },
+        "triggers": [
+          "MPOB-тың қазан деректері (~10–12 қараша): қорлар 3,7 млн т-дан жоғары — аюлар сценарийіне, 3,4 млн т-дан төмен — бұқалар сценарийіне ығысу.",
+          "ITS/AmSpec-тің 1–25 қазан және 1–15 қараша кезеңдеріне экспорт бағалаулары.",
+          "POGO спреді: нөлден жоғары шығуы биодизельге сұранысты әлсіретеді."
+        ]
+      },
+      {
+        "name": "Орта мерзімді",
+        "period": "2027 жылғы 2-тоқсан (≈6–9 ай)",
+        "ensemble": [
+          { "source": "Фьючерстер қисығы (2027 жылғы маусым)" },
+          { "source": "Fund моделі (8 ай, 6–12 ай интерполяциясы)" },
+          { "source": "Сарапшылар консенсусы (Apex 2027 ж. 1-жартыжылдық — 4 800, CIMB 2027 — 4 550)" }
+        ],
+        "drivers": {
+          "base": "Эль-Ниньо (тамызда ONI +2,16) 2027 жылдың 1-жартысында өнімді орташа азайтады; Индонезиядағы B50 оның экспортын қысқартады; Малайзия қорлары көктемге қарай қалыпқа келеді. Нарық өсуді қазірдің өзінде ескеріп отыр: фьючерстер қисығы 2027 жылғы мамыр–маусымға қарай ~5 030-ға көтеріледі.",
+          "bull": "1997–98 және 2015–16 жылдардағыдай күшті әрі ұзаққа созылған Эль-Ниньо: құрғақшылық Малайзия мен Индонезия өнімін 5–10%-ға азайтады; B50 толық енгізіледі; Brent $100-ден жоғары қалады. Тарихта мұндай Эль-Ниньодан кейін 6–12 айда пальма майы 23–37%-ға қымбаттаған.",
+          "bear": "Эль-Ниньо тез әлсірейді, жаңа сорттар құрғақшылыққа жақсы төтеп береді; қорлар ұзақ уақыт жоғары болып қалады; Brent $80-ге дейін түседі (Brent қисығы қазірдің өзінде бэквордацияда); B50 кейінге қалдырылады."
+        },
+        "triggers": [
+          "Малайзия мен Индонезиядағы ONI индексі және жауын-шашын (NOAA, ай сайын): қаңтарға дейін ONI 2-ден жоғары — бұқалар сценарийіне ығысу.",
+          "2027 жылғы қаңтар–наурызда MPOB өндірісі өткен жылдан 5%-дан астам төмен.",
+          "Индонезияның B50 мерзімдері мен экспорттық алымдар туралы шешімі.",
+          "Brent: $85-тен төмен — аюлар сценарийіне ығысу."
+        ]
+      },
+      {
+        "name": "Ұзақ мерзімді",
+        "period": "2028 жылғы орташа (≈15–24 ай)",
+        "ensemble": [
+          { "source": "2028 жылғы фьючерстер қисығы (өтімділігі төмен)" },
+          { "source": "Сарапшылардың 2027 жылға болжамдары (4 500–4 800); Дүниежүзілік банк 2027 жылы бағалар тұрақтанады деп күтеді" },
+          { "source": "Модель: Эль-Ниньодан кейінгі шың және екінші жылы орташаға оралу" }
+        ],
+        "drivers": {
+          "base": "2027 жылғы секірістен кейін өнім қалпына келеді, бірақ құрылымдық факторлар бағаны 2020–2025 жылдардың орташасынан жоғары ұстайды: плантациялардың қартаюы және баяу қайта отырғызу, Индонезияның жаңа алқаптарға мораторийі, биоотынға сұраныстың өсуі.",
+          "bull": "Индонезия B60-қа қарай жылжиды, ағаштар қартайғандықтан өндіріс тоқырайды, геосаясатқа байланысты мұнай қымбат; АҚШ пен Бразилиядағы биоотынға сұраныс салдарынан өсімдік майларының тапшылығы.",
+          "bear": "Эль-Ниньодан кейін өнім тез қалпына келеді, мұнай $65–70-ке дейін арзандайды, EUDR мен RED III ЕО сұранысын қысқартады; Үндістан өз фермерлерін қорғау үшін бажды көтереді."
+        },
+        "triggers": [
+          "USDA/Oil World-тің 2027/28 жылдарға өсімдік майлары балансы туралы есептері.",
+          "Биоотын саясаты: Индонезия (B50/B60), US RFS, Бразилия.",
+          "Brent-тің ұзақ мерзімді қисығы және ХЭА болжамдары.",
+          "Малайзия мен Индонезиядағы плантацияларды қайта отырғызу қарқыны."
+        ]
+      }
+    ],
+    "backtest": {
+      "period": "2012 жылғы қаңтар — 2026 жылғы шілде, IMF-тің айлық деректері, болжам әр қадамда қайта оқытылады",
+      "note": "Қате (RMSE) — болжамның нақты мәннен әдеттегі ауытқуы, пайызбен. Модель 3–12 айда бағытты 61–64% жағдайда дұрыс табады, бірақ қатенің шамасы бойынша «баға өзгермейді» болжамынан әрең ғана жақсы. Сондықтан базалық сценарий таза модель емес, модель, нарық және сарапшылар қоспасы."
+    },
+    "elNino": {
+      "note": "ONI индексі алғаш рет 1,5 және одан жоғары көтерілген ай және одан кейін пальма майы бағасының (USD) өзгерісі.",
+      "current": "2026 жылғы тамызда ONI +2,16 — бұл күшті Эль-Ниньо."
+    },
+    "curve": { "note": "2027 жылғы қарашадан кейінгі келісімшарттар іс жүзінде сатылмайды, олардың бағалары шамамен." },
+    "external": [
+      { "who": "Дораб Мистри (Godrej International)", "view": "2026 жылғы желтоқсанға дейін 4 500–5 000 MYR/т; Эль-Ниньо 2027 жылы өндірісті азайтады" },
+      { "who": "MPOC", "view": "2026 жылдың соңына дейін 4 700 MYR/т-дан жоғары; тамыздан басталған құрғақшылық өнімге 6–9 айдан кейін әсер етеді" },
+      { "who": "HLIB, CIMB, Apex, MBSB", "view": "2026 жылғы орташа — 4 450–4 500; 2027 — 4 500–4 550 (Apex: 2027 ж. 1-жартыжылдық — 4 800); күшті Эль-Ниньо ықтималдығы 90% (MBSB)" },
+      { "who": "BIMB, RHB, HLIB", "view": "BIMB: 2026 ж. 4-тоқсанда 4 300–4 800, 2027 ж. 1-жартыжылдықта 4 500–5 000; RHB: 4 400 (2026), 4 500 (2027)" },
+      { "who": "Дүниежүзілік банк (CMO)", "view": "2026 жылы шамамен $1 089/т, 2027 жылы тұрақтану" }
+    ],
+    "method": [
+      "Деректер: 1992 жылдан бергі IMF-тің (FRED арқылы) пальма, соя, күнбағыс, рапс майы және Brent айлық бағалары; ONI индексі (NOAA); USD/MYR бағамы; 16.10.2026 жағдайындағы FCPO фьючерстер қисығы.",
+      "Fund моделі: соя/пальма спредінің 5 жылдық орташадан ауытқуы, ONI индексі (ағымдағы және 3 ай кешігумен), Brent пен пальманың өз импульсі бойынша 1, 3, 6, 12 айға баға өзгерісін тікелей болжау. Кеңейетін терезеде қайта оқытылады, 2012–2026 жылдарда тексерілген.",
+      "Бұқалар мен аюлар сценарийлерінің дәліздері — осы көкжиектегі модельдің тарихи қателерінің 20-шы және 80-ші процентильдері, триггерлер мен сарапшылар бойынша нақтыланған.",
+      "Базалық сценарий — фьючерстер қисығы, модель және сарапшылар консенсусының салмақты қоспасы (салмақтар әр көкжиекте көрсетілген).",
+      "Сценарийлердің ықтималдығы — Эль-Ниньо күші мен қорлар деңгейін ескеретін сараптамалық бағалау."
+    ]
+  },
+  "ms": {
+    "title": "Unjuran harga minyak sawit (FCPO)",
+    "label": "Penilaian analitikal IMA. Draf, bukan untuk diterbitkan.",
+    "benchmark": "FCPO, Bursa Malaysia, bulan ke-3 (penanda aras), MYR/t",
+    "spot": { "note": "Kontrak Januari 2027, 16.10.2026" },
+    "horizons": [
+      {
+        "name": "Jangka pendek",
+        "period": "Hingga akhir Januari 2027 (≈3 bulan)",
+        "ensemble": [
+          { "source": "Keluk niaga hadapan (Januari 2027)" },
+          { "source": "Model fund (3 bulan, diselaraskan bias)" },
+          { "source": "Konsensus penganalisis (4,400–5,000)" }
+        ],
+        "drivers": {
+          "base": "Stok rekod Malaysia (3.51 juta tan pada akhir September) mengehadkan harga, tetapi eksport Oktober kukuh dan puncak pengeluaran telah berlalu. Harga kekal dalam julat yang dijangka oleh Mistry (4,500–5,000) dan bank (4,400–4,600).",
+          "bull": "Eksport Oktober melebihi 1.6 juta tan dan stok mula menurun seawal Oktober–November; Brent melebihi $100 menyokong biodiesel; India meningkatkan pembelian selepas duti dipotong kepada 11%.",
+          "bear": "Stok Oktober naik melebihi 3.7 juta tan; Brent jatuh ke $85–90; India beralih kepada minyak soya dan bunga matahari; ringgit mengukuh."
+        },
+        "triggers": [
+          "Data MPOB Oktober (~10–12 November): stok melebihi 3.7 juta tan beralih ke senario menurun, di bawah 3.4 juta tan ke senario menaik.",
+          "Anggaran eksport ITS/AmSpec bagi 1–25 Oktober dan 1–15 November.",
+          "Spread POGO: pergerakan melebihi sifar melemahkan permintaan biodiesel."
+        ]
+      },
+      {
+        "name": "Jangka sederhana",
+        "period": "S2 2027 (≈6–9 bulan)",
+        "ensemble": [
+          { "source": "Keluk niaga hadapan (Jun 2027)" },
+          { "source": "Model fund (8 bulan, interpolasi 6–12 bulan)" },
+          { "source": "Konsensus penganalisis (Apex H1 2027 — 4,800, CIMB 2027 — 4,550)" }
+        ],
+        "drivers": {
+          "base": "El Niño (ONI +2.16 pada Ogos) mengurangkan hasil H1 2027 secara sederhana; B50 di Indonesia mengurangkan eksportnya; stok Malaysia kembali normal menjelang musim bunga. Pasaran sudah mengambil kira kenaikan: keluk niaga hadapan naik ke ~5,030 menjelang Mei–Jun 2027.",
+          "bull": "El Niño yang kuat dan berpanjangan, seperti pada 1997–98 dan 2015–16: kemarau mengurangkan pengeluaran Malaysia dan Indonesia sebanyak 5–10%; B50 dilaksanakan sepenuhnya; Brent kekal melebihi $100. Dari segi sejarah, minyak sawit naik 23–37% dalam tempoh 6–12 bulan selepas El Niño sedemikian.",
+          "bear": "El Niño cepat lemah dan varieti baharu lebih tahan kemarau; stok kekal tinggi untuk tempoh lama; Brent jatuh ke $80 (keluk Brent sudah dalam backwardation); B50 ditangguhkan."
+        },
+        "triggers": [
+          "Indeks ONI dan hujan di Malaysia dan Indonesia (NOAA, bulanan): ONI melebihi 2 hingga Januari beralih ke senario menaik.",
+          "Pengeluaran MPOB pada Januari–Mac 2027 lebih 5% di bawah tahun lalu.",
+          "Keputusan Indonesia tentang jadual B50 dan levi eksport.",
+          "Brent: di bawah $85 beralih ke senario menurun."
+        ]
+      },
+      {
+        "name": "Jangka panjang",
+        "period": "Purata 2028 (≈15–24 bulan)",
+        "ensemble": [
+          { "source": "Keluk niaga hadapan 2028 (kurang cair)" },
+          { "source": "Unjuran penganalisis bagi 2027 (4,500–4,800); Bank Dunia menjangka harga stabil pada 2027" },
+          { "source": "Model: puncak selepas El Niño dan kembali ke purata pada tahun kedua" }
+        ],
+        "drivers": {
+          "base": "Selepas lonjakan 2027 hasil pulih, tetapi faktor struktur mengekalkan harga di atas purata 2020–2025: ladang yang semakin tua dan penanaman semula yang perlahan, moratorium Indonesia ke atas kawasan baharu, permintaan biobahan api yang meningkat.",
+          "bull": "Indonesia bergerak ke arah B60, pengeluaran tidak berkembang kerana pokok semakin tua, minyak kekal mahal akibat geopolitik; kekurangan minyak sayuran didorong permintaan biobahan api di AS dan Brazil.",
+          "bear": "Hasil pulih dengan cepat selepas El Niño, minyak jatuh ke $65–70, EUDR dan RED III mengurangkan permintaan EU; India menaikkan duti untuk melindungi petaninya."
+        },
+        "triggers": [
+          "Laporan USDA/Oil World mengenai imbangan minyak sayuran 2027/28.",
+          "Dasar biobahan api: Indonesia (B50/B60), US RFS, Brazil.",
+          "Keluk Brent jangka panjang dan unjuran IEA.",
+          "Kadar penanaman semula di Malaysia dan Indonesia."
+        ]
+      }
+    ],
+    "backtest": {
+      "period": "Januari 2012 — Julai 2026, data bulanan IMF, unjuran dilatih semula pada setiap langkah",
+      "note": "Ralat (RMSE) ialah sisihan tipikal unjuran daripada hasil sebenar, dalam peratus. Model meneka arah dengan betul dalam 61–64% kes bagi 3–12 bulan, tetapi saiz ralatnya hampir tidak lebih baik daripada ‘harga tidak berubah’. Oleh itu senario asas ialah gabungan model, pasaran dan penganalisis, bukan model semata-mata."
+    },
+    "elNino": {
+      "note": "Bulan apabila indeks ONI pertama kali naik ke 1.5 atau lebih, dan perubahan harga minyak sawit (USD) selepas itu.",
+      "current": "ONI pada Ogos 2026 ialah +2.16, iaitu El Niño yang kuat."
+    },
+    "curve": { "note": "Kontrak selepas November 2027 hampir tidak didagangkan; harganya hanya petunjuk." },
+    "external": [
+      { "who": "Dorab Mistry (Godrej International)", "view": "4,500–5,000 MYR/t hingga Disember 2026; El Niño akan mengurangkan pengeluaran pada 2027" },
+      { "who": "MPOC", "view": "melebihi 4,700 MYR/t hingga akhir 2026; kemarau sejak Ogos akan menjejaskan hasil dalam 6–9 bulan" },
+      { "who": "HLIB, CIMB, Apex, MBSB", "view": "purata 2026 — 4,450–4,500; 2027 — 4,500–4,550 (Apex: H1 2027 — 4,800); kebarangkalian El Niño kuat 90% (MBSB)" },
+      { "who": "BIMB, RHB, HLIB", "view": "BIMB: 4,300–4,800 pada S4 2026, 4,500–5,000 pada H1 2027; RHB: 4,400 (2026), 4,500 (2027)" },
+      { "who": "Bank Dunia (CMO)", "view": "kira-kira $1,089/t pada 2026, stabil pada 2027" }
+    ],
+    "method": [
+      "Data: harga bulanan IMF (melalui FRED) bagi minyak sawit, soya, bunga matahari, rapeseed dan Brent sejak 1992; indeks ONI (NOAA); kadar USD/MYR; keluk niaga hadapan FCPO pada 16.10.2026.",
+      "Model fund: unjuran langsung perubahan harga bagi 1, 3, 6 dan 12 bulan berdasarkan sisihan spread soya/sawit daripada purata 5 tahun, indeks ONI (semasa dan lat 3 bulan), momentum Brent dan momentum sawit sendiri. Dilatih semula pada tetingkap yang berkembang dan diuji pada 2012–2026.",
+      "Koridor senario menaik dan menurun ialah persentil ke-20 dan ke-80 bagi ralat sejarah model pada ufuk tersebut, diperhalusi dengan pencetus dan pandangan penganalisis.",
+      "Senario asas ialah gabungan berwajaran keluk niaga hadapan, model dan konsensus penganalisis (wajaran ditunjukkan bagi setiap ufuk).",
+      "Kebarangkalian senario ialah penilaian pakar yang mengambil kira kekuatan El Niño dan paras stok."
+    ]
+  }
+}

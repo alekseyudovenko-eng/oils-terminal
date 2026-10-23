@@ -2,10 +2,13 @@
 // Таблица импортёров: вкладки стран, поиск и фильтр по сегменту.
 import { useMemo, useState } from 'react';
 import type { Country } from '@/lib/importers';
+import type { LabDict } from '@/lib/dict-lab';
+import { INTL, type Locale } from '@/lib/i18n';
+import { fill } from '@/lib/dict';
 
 const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е');
 
-export default function ImportersExplorer({ countries }: { countries: Country[] }) {
+export default function ImportersExplorer({ countries, lang, L }: { countries: Country[]; lang: Locale; L: LabDict['imp'] }) {
   const [cid, setCid] = useState(countries[0]?.id ?? '');
   const [q, setQ] = useState('');
   const [seg, setSeg] = useState('');
@@ -31,7 +34,7 @@ export default function ImportersExplorer({ countries }: { countries: Country[] 
 
   return (
     <div>
-      <div role="tablist" aria-label="Страна" className="flex flex-wrap gap-2 border-b border-rule">
+      <div role="tablist" aria-label={L.country} className="flex flex-wrap gap-2 border-b border-rule">
         {countries.map(c => (
           <button key={c.id} type="button" role="tab" aria-selected={c.id === country.id}
             onClick={() => { setCid(c.id); setSeg(''); setQ(''); }}
@@ -62,13 +65,13 @@ export default function ImportersExplorer({ countries }: { countries: Country[] 
 
       {country.companies.length === 0 ? (
         <p className="py-10 text-center text-ink-3 border border-dashed border-rule rounded">
-          Список компаний по стране {country.name} ещё не загружен.
+          {fill(L.notLoaded, { c: country.name })}
         </p>
       ) : (
         <>
           <div className="flex flex-wrap items-center gap-2 mb-3">
-            <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Компания, город, продукт"
-              aria-label="Поиск по компаниям"
+            <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder={L.searchPh}
+              aria-label={L.searchAria}
               className="w-full sm:w-72 rounded border border-rule bg-panel px-3 py-1.5 text-sm" />
             {segments.map(([s, n]) => (
               <button key={s} type="button" aria-pressed={seg === s} onClick={() => setSeg(seg === s ? '' : s)}
@@ -79,14 +82,14 @@ export default function ImportersExplorer({ countries }: { countries: Country[] 
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[760px]">
-              <caption className="sr-only">Импортёры и покупатели растительных масел: {country.name}</caption>
+              <caption className="sr-only">{fill(L.tableCaption, { c: country.name })}</caption>
               <thead>
                 <tr className="text-xs text-ink-3 border-b border-rule text-left">
-                  <th scope="col" className="py-2 pr-4 font-normal">Компания</th>
-                  <th scope="col" className="py-2 px-4 font-normal">Сегмент</th>
-                  <th scope="col" className="py-2 px-4 font-normal">Масла и жиры</th>
-                  <th scope="col" className="py-2 px-4 font-normal">Объём</th>
-                  <th scope="col" className="py-2 pl-4 font-normal">Примечание</th>
+                  <th scope="col" className="py-2 pr-4 font-normal">{L.cols.company}</th>
+                  <th scope="col" className="py-2 px-4 font-normal">{L.cols.segment}</th>
+                  <th scope="col" className="py-2 px-4 font-normal">{L.cols.products}</th>
+                  <th scope="col" className="py-2 px-4 font-normal">{L.cols.volume}</th>
+                  <th scope="col" className="py-2 pl-4 font-normal">{L.cols.notes}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-rule">
@@ -108,10 +111,10 @@ export default function ImportersExplorer({ countries }: { countries: Country[] 
                         <span className="block mt-1 text-xs text-ink-3">
                           {co.sources?.map((s, i) => (
                             <a key={s} href={s} target="_blank" rel="noopener noreferrer" className="underline decoration-rule hover:text-gold mr-2">
-                              источник{co.sources!.length > 1 ? ` ${i + 1}` : ''}
+                              {L.source}{co.sources!.length > 1 ? ` ${i + 1}` : ''}
                             </a>
                           ))}
-                          {co.checkedAt && <>проверено {new Date(co.checkedAt).toLocaleDateString('ru-RU', { timeZone: 'UTC' })}</>}
+                          {co.checkedAt && <>{fill(L.checked, { d: new Date(co.checkedAt).toLocaleDateString(INTL[lang], { timeZone: 'UTC' }) })}</>}
                         </span>
                       )}
                     </td>
@@ -119,7 +122,7 @@ export default function ImportersExplorer({ countries }: { countries: Country[] 
                 ))}
               </tbody>
             </table>
-            {list.length === 0 && <p className="py-6 text-center text-ink-3">Ничего не найдено.</p>}
+            {list.length === 0 && <p className="py-6 text-center text-ink-3">{L.nothing}</p>}
           </div>
         </>
       )}

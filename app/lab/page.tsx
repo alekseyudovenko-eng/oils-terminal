@@ -4,12 +4,17 @@ import type { Metadata } from 'next';
 import Section from '@/components/Section';
 import LabHeader from '@/components/LabHeader';
 import forecast from '@/data/forecast.json';
+import forecastI18n from '@/data/forecast.i18n.json';
 import { fmtInt } from '@/lib/format';
+import { fill } from '@/lib/dict';
+import { INTL, type Locale } from '@/lib/i18n';
+import { getLabDict, overlay, monthLabel } from '@/lib/lab-i18n';
+import type { LabDict } from '@/lib/dict-lab';
 
-export const metadata: Metadata = {
-  title: 'Лаборатория IMA',
-  robots: { index: false, follow: false },
-};
+export function generateMetadata(): Metadata {
+  const { L } = getLabDict();
+  return { title: L.fc.h1, robots: { index: false, follow: false } };
+}
 
 type Range = { low: number; high: number; point?: number; prob: number };
 type Horizon = {
@@ -20,7 +25,7 @@ type Horizon = {
   triggers: string[];
 };
 
-const F = forecast as unknown as {
+type FC = {
   label: string; asOf: string; benchmark: string;
   spot: { myr: number; usd: number; usdmyr: number; note: string };
   horizons: Horizon[];
@@ -30,19 +35,24 @@ const F = forecast as unknown as {
   external: { who: string; date: string; view: string; url: string }[];
   method: string[];
 };
+const BASE = forecast as unknown as FC;
 
-const SC = [
-  { id: 'bear', name: 'Медвежий' },
-  { id: 'base', name: 'Базовый' },
-  { id: 'bull', name: 'Бычий' },
-] as const;
+const SC_IDS = ['bear', 'base', 'bull'] as const;
 
-const usd = (myr: number) => fmtInt(myr / F.spot.usdmyr);
-const pct = (v: number | null) => (v == null ? '—' : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toLocaleString('ru-RU', { maximumFractionDigits: 1 })}%`);
-const date = (d: string) => new Date(d).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+function fmtFor(lang: Locale, F: FC) {
+  const n = (v: number) => fmtInt(v, lang);
+  return {
+    n,
+    usd: (myr: number) => n(myr / F.spot.usdmyr),
+    dec: (v: number) => v.toLocaleString(INTL[lang], { maximumFractionDigits: 2 }),
+    pct: (v: number | null) => (v == null ? '—' : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toLocaleString(INTL[lang], { maximumFractionDigits: 1 })}%`),
+    date: (d: string) => new Date(d).toLocaleDateString(INTL[lang], { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }),
+  };
+}
 
-function CurveChart() {
-  const pts = F.curve.points;
+function CurveChart({ F, lang, L }: { F: FC; lang: Locale; L: LabDict }) {
+  const { n: fmtN, date } = fmtFor(lang, F);
+  const pts = F.curve.points.map(p => ({ ...p, m: monthLabel(p.m, lang) }));
   const W = 720, H = 200, PL = 44, PR = 8, PT = 10, PB = 26;
   const vals = pts.map(p => p.v).concat(F.spot.myr);
   const min = Math.floor(Math.min(...vals) / 100) * 100 - 100;
@@ -56,42 +66,47 @@ function CurveChart() {
   return (
     <figure>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img"
-        aria-label={`Кривая фьючерсов FCPO: от ${fmtInt(pts[0].v)} в ${pts[0].m} до пика ${fmtInt(peak.v)} в ${peak.m}`}>
+        aria-label={fill(L.fc.curveAria, { a: fmtN(pts[0].v), am: pts[0].m, b: fmtN(peak.v), bm: peak.m })}>
         {ticks.map(t => (
           <g key={t}>
             <line x1={PL} x2={W - PR} y1={y(t)} y2={y(t)} stroke="var(--rule)" />
-            <text x={PL - 6} y={y(t) + 4} textAnchor="end" fontSize="11" fill="var(--ink-3)">{fmtInt(t)}</text>
+            <text x={PL - 6} y={y(t) + 4} textAnchor="end" fontSize="11" fill="var(--ink-3)">{fmtN(t)}</text>
           </g>
         ))}
         <path d={d} fill="none" stroke="var(--gold)" strokeWidth="2.5" />
         {pts.map((p, i) => <circle key={p.m} cx={x(i)} cy={y(p.v)} r="2.5" fill="var(--gold)" />)}
-        <text x={x(peakI)} y={y(peak.v) - 8} textAnchor="middle" fontSize="11" fill="var(--ink)">{fmtInt(peak.v)}</text>
+        <text x={x(peakI)} y={y(peak.v) - 8} textAnchor="middle" fontSize="11" fill="var(--ink)">{fmtN(peak.v)}</text>
         {pts.map((p, i) => (i % 2 === 0 ? <text key={p.m} x={x(i)} y={H - 8} textAnchor="middle" fontSize="10.5" fill="var(--ink-3)">{p.m}</text> : null))}
       </svg>
-      <figcaption className="mt-1 text-xs text-ink-3">MYR/т, цены закрытия на {date(F.curve.capturedAt)}. {F.curve.note}</figcaption>
+      <figcaption className="mt-1 text-xs text-ink-3">{fill(L.fc.curveCaption, { date: date(F.curve.capturedAt) })} {F.curve.note}</figcaption>
     </figure>
   );
 }
 
 export default function LabPage() {
+  const { lang, L } = getLabDict();
+  const F: FC = lang === 'ru' ? BASE : overlay(BASE, (forecastI18n as Record<string, unknown>)[lang]);
+  if (lang !== 'ru') F.elNino = { ...F.elNino, rows: F.elNino.rows.map(r => ({ ...r, start: monthLabel(r.start, lang, false) })) };
+  const { n: fmtInt, usd, pct, date, dec } = fmtFor(lang, F);
+  const SC = SC_IDS.map(id => ({ id, name: L.fc.sc[id] }));
   return (
     <>
-      <LabHeader current="/lab" note={F.label} />
+      <LabHeader current="/lab" note={F.label} translated />
 
       <main className="mx-auto max-w-page w-full px-4 sm:px-6">
         <section aria-labelledby="fc-title" className="py-8 border-b border-rule">
-          <h1 id="fc-title" className="font-cond text-3xl sm:text-4xl font-semibold tracking-tight">Прогноз цены пальмового масла</h1>
+          <h1 id="fc-title" className="font-cond text-3xl sm:text-4xl font-semibold tracking-tight">{L.fc.h1}</h1>
           <p className="mt-2 text-ink-2 max-w-[70ch]">
-            {F.benchmark}. Отправная точка: {fmtInt(F.spot.myr)} MYR/т (≈ ${fmtInt(F.spot.usd)}) — {F.spot.note}.
-            Оценка от {date(F.asOf)}.
+            {fill(L.fc.start, { benchmark: F.benchmark, myr: fmtInt(F.spot.myr), usd: fmtInt(F.spot.usd), note: F.spot.note })}{' '}
+            {fill(L.fc.asOf, { date: date(F.asOf) })}
           </p>
 
           <div className="mt-6 overflow-x-auto">
             <table className="w-full text-sm min-w-[640px]">
-              <caption className="sr-only">Диапазоны цены по горизонтам и сценариям, MYR за тонну</caption>
+              <caption className="sr-only">{L.fc.caption}</caption>
               <thead>
                 <tr className="text-xs text-ink-3 border-b border-rule">
-                  <th scope="col" className="py-2 pr-4 text-left font-normal">Горизонт</th>
+                  <th scope="col" className="py-2 pr-4 text-left font-normal">{L.fc.horizon}</th>
                   {SC.map(s => (
                     <th key={s.id} scope="col" className={`py-2 px-4 text-left font-normal ${s.id === 'base' ? 'text-ink' : ''}`}>{s.name}</th>
                   ))}
@@ -111,7 +126,7 @@ export default function LabPage() {
                           <span className={`block font-cond num ${s.id === 'base' ? 'text-2xl font-semibold' : 'text-xl font-medium'}`}>
                             {fmtInt(r.low)}–{fmtInt(r.high)}
                           </span>
-                          <span className="block text-xs text-ink-3 num">${usd(r.low)}–{usd(r.high)} · вероятность {r.prob}%</span>
+                          <span className="block text-xs text-ink-3 num">${usd(r.low)}–{usd(r.high)} · {fill(L.fc.prob, { p: r.prob })}</span>
                         </td>
                       );
                     })}
@@ -123,7 +138,7 @@ export default function LabPage() {
         </section>
 
         {F.horizons.map(h => (
-          <Section key={h.id} id={h.id} title={`${h.name}: ${h.period.toLowerCase()}`}>
+          <Section key={h.id} id={h.id} title={`${h.name}: ${lang === 'ru' ? h.period.toLowerCase() : h.period}`}>
             <div className="grid gap-6 lg:grid-cols-3">
               {SC.map(s => (
                 <div key={s.id} className={s.id === 'base' ? 'lg:order-none' : ''}>
@@ -136,13 +151,13 @@ export default function LabPage() {
             </div>
             <div className="mt-6 grid gap-6 lg:grid-cols-2">
               <div>
-                <h3 className="font-cond text-lg font-semibold mb-2">Что сдвинет сценарий</h3>
+                <h3 className="font-cond text-lg font-semibold mb-2">{L.fc.triggers}</h3>
                 <ul className="text-sm text-ink-2 list-disc pl-5 space-y-1">
                   {h.triggers.map(t => <li key={t}>{t}</li>)}
                 </ul>
               </div>
               <div>
-                <h3 className="font-cond text-lg font-semibold mb-2">Из чего сложен базовый сценарий</h3>
+                <h3 className="font-cond text-lg font-semibold mb-2">{L.fc.ensemble}</h3>
                 <table className="w-full text-sm">
                   <tbody className="divide-y divide-rule">
                     {h.ensemble.map(e => (
@@ -153,7 +168,7 @@ export default function LabPage() {
                       </tr>
                     ))}
                     <tr className="font-medium">
-                      <td className="py-1.5 pr-3">Итог (взвешенное среднее)</td>
+                      <td className="py-1.5 pr-3">{L.fc.total}</td>
                       <td className="py-1.5 px-3 text-right num">{fmtInt(h.scenarios.base.point ?? 0)}</td>
                       <td />
                     </tr>
@@ -164,27 +179,27 @@ export default function LabPage() {
           </Section>
         ))}
 
-        <Section id="curve" title="Что закладывает рынок" note="Цены фьючерсов FCPO по месяцам поставки. Рост к середине 2027 года — ожидание дефицита из-за Эль-Ниньо, снижение к 2028 году — ожидание восстановления урожая.">
-          <CurveChart />
+        <Section id="curve" title={L.fc.curveTitle} note={L.fc.curveNote}>
+          <CurveChart F={F} lang={lang} L={L} />
         </Section>
 
-        <Section id="elnino" title="Эль-Ниньо: что было раньше" note={`${F.elNino.current} ${F.elNino.note}`}>
+        <Section id="elnino" title={L.fc.elTitle} note={`${F.elNino.current} ${F.elNino.note}`}>
           <div className="overflow-x-auto">
             <table className="w-full text-sm max-w-xl">
               <thead>
                 <tr className="text-xs text-ink-3 border-b border-rule">
-                  <th scope="col" className="py-2 pr-4 text-left font-normal">Начало</th>
+                  <th scope="col" className="py-2 pr-4 text-left font-normal">{L.fc.elCols.start}</th>
                   <th scope="col" className="py-2 px-3 text-right font-normal">ONI</th>
-                  <th scope="col" className="py-2 px-3 text-right font-normal">Через 6 мес.</th>
-                  <th scope="col" className="py-2 pl-3 text-right font-normal">Через 12 мес.</th>
+                  <th scope="col" className="py-2 px-3 text-right font-normal">{L.fc.elCols.after6}</th>
+                  <th scope="col" className="py-2 pl-3 text-right font-normal">{L.fc.elCols.after12}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-rule">
                 {F.elNino.rows.map(r => (
                   <tr key={r.start} className={r.after6 == null ? 'bg-gold-soft/60' : ''}>
                     <th scope="row" className="py-2 pr-4 text-left font-normal">{r.start}</th>
-                    <td className="py-2 px-3 text-right num">{r.oni.toLocaleString('ru-RU')}</td>
-                    <td className="py-2 px-3 text-right num">{r.after6 == null ? 'сейчас' : pct(r.after6)}</td>
+                    <td className="py-2 px-3 text-right num">{dec(r.oni)}</td>
+                    <td className="py-2 px-3 text-right num">{r.after6 == null ? L.fc.now : pct(r.after6)}</td>
                     <td className="py-2 pl-3 text-right num">{pct(r.after12)}</td>
                   </tr>
                 ))}
@@ -193,24 +208,24 @@ export default function LabPage() {
           </div>
         </Section>
 
-        <Section id="accuracy" title="Насколько можно верить модели" note={F.backtest.note}>
+        <Section id="accuracy" title={L.fc.accTitle} note={F.backtest.note}>
           <div className="overflow-x-auto">
             <table className="w-full text-sm max-w-2xl">
-              <caption className="text-left text-xs text-ink-3 pb-2">Проверка на истории: {F.backtest.period}</caption>
+              <caption className="text-left text-xs text-ink-3 pb-2">{fill(L.fc.accCaption, { period: F.backtest.period })}</caption>
               <thead>
                 <tr className="text-xs text-ink-3 border-b border-rule">
-                  <th scope="col" className="py-2 pr-4 text-left font-normal">Горизонт</th>
-                  <th scope="col" className="py-2 px-3 text-right font-normal">Ошибка «цена не изменится»</th>
-                  <th scope="col" className="py-2 px-3 text-right font-normal">Ошибка модели</th>
-                  <th scope="col" className="py-2 pl-3 text-right font-normal">Угадано направление</th>
+                  <th scope="col" className="py-2 pr-4 text-left font-normal">{L.fc.accCols.horizon}</th>
+                  <th scope="col" className="py-2 px-3 text-right font-normal">{L.fc.accCols.rw}</th>
+                  <th scope="col" className="py-2 px-3 text-right font-normal">{L.fc.accCols.model}</th>
+                  <th scope="col" className="py-2 pl-3 text-right font-normal">{L.fc.accCols.hit}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-rule">
                 {F.backtest.rows.map(r => (
                   <tr key={r.h}>
-                    <th scope="row" className="py-2 pr-4 text-left font-normal">{r.h} мес.</th>
-                    <td className="py-2 px-3 text-right num">±{r.rmseRw.toLocaleString('ru-RU')}%</td>
-                    <td className={`py-2 px-3 text-right num ${r.skill > 0 ? 'text-up' : 'text-down'}`}>±{r.rmseModel.toLocaleString('ru-RU')}%</td>
+                    <th scope="row" className="py-2 pr-4 text-left font-normal">{fill(L.fc.months, { h: r.h })}</th>
+                    <td className="py-2 px-3 text-right num">±{dec(r.rmseRw)}%</td>
+                    <td className={`py-2 px-3 text-right num ${r.skill > 0 ? 'text-up' : 'text-down'}`}>±{dec(r.rmseModel)}%</td>
                     <td className="py-2 pl-3 text-right num">{r.hit}%</td>
                   </tr>
                 ))}
@@ -219,24 +234,24 @@ export default function LabPage() {
           </div>
         </Section>
 
-        <Section id="external" title="Что прогнозируют другие">
+        <Section id="external" title={L.fc.extTitle}>
           <ul className="divide-y divide-rule text-sm">
             {F.external.map(e => (
               <li key={e.who} className="py-2.5 grid sm:grid-cols-[14rem_1fr] gap-x-6 gap-y-0.5">
                 <span className="font-medium">{e.who} <span className="block text-xs font-normal text-ink-3">{date(e.date)}</span></span>
                 <span className="text-ink-2">
-                  {e.view}. <a href={e.url} target="_blank" rel="noopener noreferrer" className="text-ink-3 underline underline-offset-2 hover:text-gold">Источник</a>
+                  {e.view}. <a href={e.url} target="_blank" rel="noopener noreferrer" className="text-ink-3 underline underline-offset-2 hover:text-gold">{L.fc.source}</a>
                 </span>
               </li>
             ))}
           </ul>
         </Section>
 
-        <Section id="method" title="Как считали">
+        <Section id="method" title={L.fc.methodTitle}>
           <ol className="list-decimal pl-5 space-y-1.5 text-sm text-ink-2 max-w-[80ch]">
             {F.method.map(m => <li key={m}>{m}</li>)}
           </ol>
-          <p className="mt-4 text-xs text-ink-3">Аналитическая оценка IMA. Не является инвестиционной рекомендацией.</p>
+          <p className="mt-4 text-xs text-ink-3">{L.fc.footer}</p>
         </Section>
       </main>
     </>

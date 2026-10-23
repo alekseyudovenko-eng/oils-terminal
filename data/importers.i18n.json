@@ -1,0 +1,2190 @@
+{
+ "_comment": "Переводы базы импортёров (data/importers.json) на en/uz/kk/ms. Собрано из таблиц терминов; чего нет здесь, сайт показывает по-русски. Ключи — русский текст как в importers.json.",
+ "terms": {
+  "кондитерка": {
+   "en": "confectionery",
+   "uz": "qandolatchilik",
+   "kk": "кондитер өнімдері",
+   "ms": "konfeksi"
+  },
+  "маргарин и спреды": {
+   "en": "margarine and spreads",
+   "uz": "margarin va spredlar",
+   "kk": "маргарин және спредтер",
+   "ms": "marjerin dan sapuan"
+  },
+  "переработка": {
+   "en": "processing",
+   "uz": "qayta ishlash",
+   "kk": "өңдеу",
+   "ms": "pemprosesan"
+  },
+  "хлебопечение": {
+   "en": "bakery",
+   "uz": "non mahsulotlari",
+   "kk": "нан пісіру",
+   "ms": "bakeri"
+  },
+  "молочка": {
+   "en": "dairy",
+   "uz": "sut mahsulotlari",
+   "kk": "сүт өнімдері",
+   "ms": "tenusu"
+  },
+  "мороженое": {
+   "en": "ice cream",
+   "uz": "muzqaymoq",
+   "kk": "балмұздақ",
+   "ms": "aiskrim"
+  },
+  "импорт и трейдинг": {
+   "en": "import and trading",
+   "uz": "import va savdo",
+   "kk": "импорт және трейдинг",
+   "ms": "import dan perdagangan"
+  },
+  "продукты питания": {
+   "en": "food products",
+   "uz": "oziq-ovqat mahsulotlari",
+   "kk": "азық-түлік өнімдері",
+   "ms": "produk makanan"
+  },
+  "дистрибуция": {
+   "en": "distribution",
+   "uz": "distribyutsiya",
+   "kk": "дистрибуция",
+   "ms": "pengedaran"
+  },
+  "снеки": {
+   "en": "snacks",
+   "uz": "sneklar",
+   "kk": "снектер",
+   "ms": "snek"
+  },
+  "пальмовое масло и фракции": {
+   "en": "palm oil and fractions",
+   "uz": "palma yogʻi va fraksiyalari",
+   "kk": "пальма майы және фракциялары",
+   "ms": "minyak sawit dan pecahan"
+  },
+  "крупнейший": {
+   "en": "largest",
+   "uz": "eng yirik",
+   "kk": "ең ірі",
+   "ms": "terbesar"
+  },
+  "крупный": {
+   "en": "large",
+   "uz": "yirik",
+   "kk": "ірі",
+   "ms": "besar"
+  },
+  "средний": {
+   "en": "medium",
+   "uz": "oʻrta",
+   "kk": "орташа",
+   "ms": "sederhana"
+  },
+  "малый": {
+   "en": "small",
+   "uz": "kichik",
+   "kk": "шағын",
+   "ms": "kecil"
+  },
+  "не указан": {
+   "en": "not stated",
+   "uz": "koʻrsatilmagan",
+   "kk": "көрсетілмеген",
+   "ms": "tidak dinyatakan"
+  },
+  "высокая": {
+   "en": "high",
+   "uz": "yuqori",
+   "kk": "жоғары",
+   "ms": "tinggi"
+  },
+  "средняя": {
+   "en": "medium",
+   "uz": "oʻrta",
+   "kk": "орташа",
+   "ms": "sederhana"
+  },
+  "низкая": {
+   "en": "low",
+   "uz": "past",
+   "kk": "төмен",
+   "ms": "rendah"
+  },
+  "печенье": {
+   "en": "biscuits",
+   "uz": "pechenye",
+   "kk": "печенье",
+   "ms": "biskut"
+  },
+  "шоколад": {
+   "en": "chocolate",
+   "uz": "shokolad",
+   "kk": "шоколад",
+   "ms": "coklat"
+  },
+  "конфеты": {
+   "en": "sweets",
+   "uz": "konfetlar",
+   "kk": "кәмпиттер",
+   "ms": "gula-gula"
+  },
+  "маргарины": {
+   "en": "margarines",
+   "uz": "margarinlar",
+   "kk": "маргариндер",
+   "ms": "marjerin"
+  },
+  "вафли": {
+   "en": "wafers",
+   "uz": "vaflilar",
+   "kk": "вафлилер",
+   "ms": "wafer"
+  },
+  "спреды": {
+   "en": "spreads",
+   "uz": "spredlar",
+   "kk": "спредтер",
+   "ms": "sapuan"
+  },
+  "выпечка": {
+   "en": "baked goods",
+   "uz": "pishiriqlar",
+   "kk": "тоқаш өнімдері",
+   "ms": "produk bakeri"
+  },
+  "масла": {
+   "en": "oils",
+   "uz": "yogʻlar",
+   "kk": "майлар",
+   "ms": "minyak"
+  },
+  "майонез": {
+   "en": "mayonnaise",
+   "uz": "mayonez",
+   "kk": "майонез",
+   "ms": "mayonis"
+  },
+  "кулинария": {
+   "en": "culinary products",
+   "uz": "kulinariya",
+   "kk": "аспаздық өнімдер",
+   "ms": "produk masakan"
+  },
+  "маргарин": {
+   "en": "margarine",
+   "uz": "margarin",
+   "kk": "маргарин",
+   "ms": "marjerin"
+  },
+  "торты": {
+   "en": "cakes",
+   "uz": "tortlar",
+   "kk": "торттар",
+   "ms": "kek"
+  },
+  "промышленные жиры": {
+   "en": "industrial fats",
+   "uz": "sanoat yogʻlari",
+   "kk": "өнеркәсіптік майлар",
+   "ms": "lemak industri"
+  },
+  "глазури": {
+   "en": "glazes",
+   "uz": "glazurlar",
+   "kk": "глазурьлер",
+   "ms": "sadur"
+  },
+  "хлопья": {
+   "en": "cereals",
+   "uz": "yorma bodroqlari",
+   "kk": "жарма үлпектері",
+   "ms": "bijirin"
+  },
+  "молочные продукты": {
+   "en": "dairy products",
+   "uz": "sut mahsulotlari",
+   "kk": "сүт өнімдері",
+   "ms": "produk tenusu"
+  },
+  "кексы": {
+   "en": "muffins",
+   "uz": "kekslar",
+   "kk": "кекстер",
+   "ms": "kek cawan"
+  },
+  "импорт и продажа пальмового масла": {
+   "en": "palm oil import and sales",
+   "uz": "palma yogʻi importi va savdosi",
+   "kk": "пальма майын импорттау және сату",
+   "ms": "import dan jualan minyak sawit"
+  },
+  "растительные масла": {
+   "en": "vegetable oils",
+   "uz": "oʻsimlik yogʻlari",
+   "kk": "өсімдік майлары",
+   "ms": "minyak sayuran"
+  },
+  "пасты": {
+   "en": "spreads",
+   "uz": "pastalar",
+   "kk": "пасталар",
+   "ms": "pes"
+  },
+  "бисквиты": {
+   "en": "sponge cakes",
+   "uz": "biskvitlar",
+   "kk": "бисквиттер",
+   "ms": "kek span"
+  },
+  "мороженое с растительными жирами": {
+   "en": "ice cream with vegetable fats",
+   "uz": "oʻsimlik yogʻli muzqaymoq",
+   "kk": "өсімдік майы қосылған балмұздақ",
+   "ms": "aiskrim dengan lemak sayuran"
+  },
+  "жиры для слоёного теста": {
+   "en": "puff pastry fats",
+   "uz": "qatlamali xamir yogʻlari",
+   "kk": "қабатты қамыр майлары",
+   "ms": "lemak pastri berlapis"
+  },
+  "шоколадные изделия": {
+   "en": "chocolate products",
+   "uz": "shokolad mahsulotlari",
+   "kk": "шоколад өнімдері",
+   "ms": "produk coklat"
+  },
+  "фритюр": {
+   "en": "deep frying",
+   "uz": "frityur",
+   "kk": "фритюр",
+   "ms": "gorengan"
+  },
+  "кулинарные жиры": {
+   "en": "cooking fats",
+   "uz": "oshpazlik yogʻlari",
+   "kk": "аспаздық майлар",
+   "ms": "lemak masakan"
+  },
+  "слоёная выпечка": {
+   "en": "puff pastry products",
+   "uz": "qatlamali pishiriqlar",
+   "kk": "қабатты тоқаштар",
+   "ms": "pastri berlapis"
+  },
+  "глазированные сырки (глазурь)": {
+   "en": "glazed curd bars (glaze)",
+   "uz": "glazurlangan tvorog sirkalari (glazur)",
+   "kk": "глазурьленген ірімшік сырниктері (глазурь)",
+   "ms": "bar dadih bersadur (sadur)"
+  },
+  "шоколадные конфеты": {
+   "en": "chocolate sweets",
+   "uz": "shokoladli konfetlar",
+   "kk": "шоколад кәмпиттер",
+   "ms": "gula-gula coklat"
+  },
+  "специальные жиры (заменители какао-масла, фритюрные, кондитерские)": {
+   "en": "specialty fats (cocoa butter substitutes, frying, confectionery)",
+   "uz": "maxsus yogʻlar (kakao-moy oʻrinbosarlari, frityur, qandolat)",
+   "kk": "арнайы майлар (какао майын алмастырғыштар, фритюр, кондитерлік)",
+   "ms": "lemak khusus (pengganti mentega koko, gorengan, konfeksi)"
+  },
+  "фасованные жиры": {
+   "en": "packaged fats",
+   "uz": "qadoqlangan yogʻlar",
+   "kk": "қапталған майлар",
+   "ms": "lemak berbungkus"
+  },
+  "снеки (фритюр)": {
+   "en": "snacks (deep frying)",
+   "uz": "sneklar (frityur)",
+   "kk": "снектер (фритюр)",
+   "ms": "snek (gorengan)"
+  },
+  "шоколадные батончики": {
+   "en": "chocolate bars",
+   "uz": "shokolad batonchiklari",
+   "kk": "шоколад батончиктері",
+   "ms": "bar coklat"
+  },
+  "рафинированное масло": {
+   "en": "refined oil",
+   "uz": "rafinatsiyalangan yogʻ",
+   "kk": "тазартылған май",
+   "ms": "minyak ditapis"
+  },
+  "фракции": {
+   "en": "fractions",
+   "uz": "fraksiyalar",
+   "kk": "фракциялар",
+   "ms": "pecahan"
+  },
+  "спецжиры для кондитерки": {
+   "en": "specialty fats for confectionery",
+   "uz": "qandolat uchun maxsus yogʻlar",
+   "kk": "кондитерлікке арналған арнайы майлар",
+   "ms": "lemak khusus untuk konfeksi"
+  },
+  "молочки": {
+   "en": "dairy",
+   "uz": "sut mahsulotlari",
+   "kk": "сүт өнімдері",
+   "ms": "tenusu"
+  },
+  "хлебопечения": {
+   "en": "bakery",
+   "uz": "non mahsulotlari",
+   "kk": "нан пісіру",
+   "ms": "bakeri"
+  },
+  "мороженое (растительные жиры)": {
+   "en": "ice cream (vegetable fats)",
+   "uz": "muzqaymoq (oʻsimlik yogʻlari)",
+   "kk": "балмұздақ (өсімдік майлары)",
+   "ms": "aiskrim (lemak sayuran)"
+  },
+  "сырные продукты с растительными жирами": {
+   "en": "cheese products with vegetable fats",
+   "uz": "oʻsimlik yogʻli pishloq mahsulotlari",
+   "kk": "өсімдік майы қосылған ірімшік өнімдері",
+   "ms": "produk keju dengan lemak sayuran"
+  },
+  "промышленные жиры для хлебопечения и кондитерки": {
+   "en": "industrial fats for bakery and confectionery",
+   "uz": "non va qandolat uchun sanoat yogʻlari",
+   "kk": "нан пісіру мен кондитерлікке арналған өнеркәсіптік майлар",
+   "ms": "lemak industri untuk bakeri dan konfeksi"
+  },
+  "кулинарные и кондитерские жиры": {
+   "en": "cooking and confectionery fats",
+   "uz": "oshpazlik va qandolat yogʻlari",
+   "kk": "аспаздық және кондитерлік майлар",
+   "ms": "lemak masakan dan konfeksi"
+  },
+  "шоколадные изделия (rspo)": {
+   "en": "chocolate products (RSPO)",
+   "uz": "shokolad mahsulotlari (RSPO)",
+   "kk": "шоколад өнімдері (RSPO)",
+   "ms": "produk coklat (RSPO)"
+  },
+  "слоёная выпечка (жиры для ламинирования)": {
+   "en": "puff pastry (laminating fats)",
+   "uz": "qatlamali pishiriqlar (laminatsiya yogʻlari)",
+   "kk": "қабатты тоқаштар (ламинациялау майлары)",
+   "ms": "pastri berlapis (lemak laminasi)"
+  },
+  "молочно-растительные смеси": {
+   "en": "dairy-vegetable blends",
+   "uz": "sut-oʻsimlik aralashmalari",
+   "kk": "сүт-өсімдік қоспалары",
+   "ms": "campuran tenusu-sayuran"
+  },
+  "паштеты": {
+   "en": "pâtés",
+   "uz": "pashtetlar",
+   "kk": "паштеттер",
+   "ms": "pes daging"
+  },
+  "соусы": {
+   "en": "sauces",
+   "uz": "souslar",
+   "kk": "соустар",
+   "ms": "sos"
+  },
+  "готовые блюда": {
+   "en": "ready meals",
+   "uz": "tayyor taomlar",
+   "kk": "дайын тағамдар",
+   "ms": "hidangan sedia"
+  },
+  "медовые торты": {
+   "en": "honey cakes",
+   "uz": "asalli tortlar",
+   "kk": "бал торттары",
+   "ms": "kek madu"
+  },
+  "десерты": {
+   "en": "desserts",
+   "uz": "desertlar",
+   "kk": "десерттер",
+   "ms": "pencuci mulut"
+  },
+  "бульоны": {
+   "en": "stocks",
+   "uz": "bulyonlar",
+   "kk": "сорпалар",
+   "ms": "stok sup"
+  },
+  "смеси с растительным жиром": {
+   "en": "blends with vegetable fat",
+   "uz": "oʻsimlik yogʻli aralashmalar",
+   "kk": "өсімдік майы бар қоспалар",
+   "ms": "campuran dengan lemak sayuran"
+  },
+  "драже": {
+   "en": "dragées",
+   "uz": "drajelar",
+   "kk": "драже",
+   "ms": "drage"
+  },
+  "круассаны": {
+   "en": "croissants",
+   "uz": "kruassanlar",
+   "kk": "круассандар",
+   "ms": "croissant"
+  },
+  "пасты (lino lada)": {
+   "en": "spreads (Lino Lada)",
+   "uz": "pastalar (Lino Lada)",
+   "kk": "пасталар (Lino Lada)",
+   "ms": "pes (Lino Lada)"
+  },
+  "кофе": {
+   "en": "coffee",
+   "uz": "qahva",
+   "kk": "кофе",
+   "ms": "kopi"
+  },
+  "слоёное тесто": {
+   "en": "puff pastry",
+   "uz": "qatlamali xamir",
+   "kk": "қабатты қамыр",
+   "ms": "pastri berlapis"
+  },
+  "чипсы": {
+   "en": "crisps",
+   "uz": "chipslar",
+   "kk": "чипсылар",
+   "ms": "kerepek"
+  },
+  "слоёная и замороженная выпечка": {
+   "en": "puff and frozen pastry",
+   "uz": "qatlamali va muzlatilgan pishiriqlar",
+   "kk": "қабатты және мұздатылған тоқаштар",
+   "ms": "pastri berlapis dan sejuk beku"
+  },
+  "зефир": {
+   "en": "marshmallow",
+   "uz": "zefir",
+   "kk": "зефир",
+   "ms": "marshmallow"
+  },
+  "мармелад": {
+   "en": "jellies",
+   "uz": "marmelad",
+   "kk": "мармелад",
+   "ms": "jeli"
+  },
+  "глазированные сырки": {
+   "en": "glazed curd bars",
+   "uz": "glazurlangan tvorog sirkalari",
+   "kk": "глазурьленген ірімшік сырниктері",
+   "ms": "bar dadih bersadur"
+  },
+  "закупка масложировой продукции": {
+   "en": "purchasing of oil and fat products",
+   "uz": "yogʻ-moy mahsulotlarini xarid qilish",
+   "kk": "май-тоң өнімдерін сатып алу",
+   "ms": "pembelian produk minyak dan lemak"
+  },
+  "пряники": {
+   "en": "gingerbread",
+   "uz": "pryaniklar",
+   "kk": "прянниктер",
+   "ms": "roti halia"
+  },
+  "кондитерские жиры": {
+   "en": "confectionery fats",
+   "uz": "qandolat yogʻlari",
+   "kk": "кондитерлік майлар",
+   "ms": "lemak konfeksi"
+  },
+  "карамель": {
+   "en": "caramel",
+   "uz": "karamel",
+   "kk": "карамель",
+   "ms": "karamel"
+  },
+  "ирис": {
+   "en": "toffee",
+   "uz": "iris",
+   "kk": "ирис",
+   "ms": "tofi"
+  },
+  "растительные масла (хлопок, сафлор, соя, подсолнечник)": {
+   "en": "vegetable oils (cotton, safflower, soy, sunflower)",
+   "uz": "oʻsimlik yogʻlari (paxta, maxsar, soya, kungaboqar)",
+   "kk": "өсімдік майлары (мақта, мақсары, соя, күнбағыс)",
+   "ms": "minyak sayuran (kapas, kesumba, soya, bunga matahari)"
+  },
+  "розлив": {
+   "en": "bottling",
+   "uz": "quyish",
+   "kk": "құю",
+   "ms": "pembotolan"
+  },
+  "слоёные изделия": {
+   "en": "puff products",
+   "uz": "qatlamali mahsulotlar",
+   "kk": "қабатты өнімдер",
+   "ms": "produk berlapis"
+  },
+  "песочное печенье": {
+   "en": "shortbread",
+   "uz": "qumloq pechenye",
+   "kk": "құмды печенье",
+   "ms": "biskut mentega"
+  },
+  "батончики": {
+   "en": "bars",
+   "uz": "batonchiklar",
+   "kk": "батончиктер",
+   "ms": "bar"
+  },
+  "глазированное печенье и вафли": {
+   "en": "glazed biscuits and wafers",
+   "uz": "glazurlangan pechenye va vaflilar",
+   "kk": "глазурьленген печенье мен вафлилер",
+   "ms": "biskut dan wafer bersadur"
+  }
+ },
+ "countries": {
+  "Россия": {
+   "en": "Russia",
+   "uz": "Rossiya",
+   "kk": "Ресей",
+   "ms": "Rusia"
+  },
+  "Украина": {
+   "en": "Ukraine",
+   "uz": "Ukraina",
+   "kk": "Украина",
+   "ms": "Ukraine"
+  },
+  "Польша": {
+   "en": "Poland",
+   "uz": "Polsha",
+   "kk": "Польша",
+   "ms": "Poland"
+  },
+  "Чехия": {
+   "en": "Czech Republic",
+   "uz": "Chexiya",
+   "kk": "Чехия",
+   "ms": "Republik Czech"
+  },
+  "Словакия": {
+   "en": "Slovakia",
+   "uz": "Slovakiya",
+   "kk": "Словакия",
+   "ms": "Slovakia"
+  },
+  "Венгрия": {
+   "en": "Hungary",
+   "uz": "Vengriya",
+   "kk": "Венгрия",
+   "ms": "Hungary"
+  },
+  "Румыния": {
+   "en": "Romania",
+   "uz": "Ruminiya",
+   "kk": "Румыния",
+   "ms": "Romania"
+  },
+  "Болгария": {
+   "en": "Bulgaria",
+   "uz": "Bolgariya",
+   "kk": "Болгария",
+   "ms": "Bulgaria"
+  },
+  "Хорватия": {
+   "en": "Croatia",
+   "uz": "Xorvatiya",
+   "kk": "Хорватия",
+   "ms": "Croatia"
+  },
+  "Эстония": {
+   "en": "Estonia",
+   "uz": "Estoniya",
+   "kk": "Эстония",
+   "ms": "Estonia"
+  },
+  "Латвия": {
+   "en": "Latvia",
+   "uz": "Latviya",
+   "kk": "Латвия",
+   "ms": "Latvia"
+  },
+  "Литва": {
+   "en": "Lithuania",
+   "uz": "Litva",
+   "kk": "Литва",
+   "ms": "Lithuania"
+  },
+  "Беларусь": {
+   "en": "Belarus",
+   "uz": "Belarus",
+   "kk": "Беларусь",
+   "ms": "Belarus"
+  },
+  "Молдова": {
+   "en": "Moldova",
+   "uz": "Moldova",
+   "kk": "Молдова",
+   "ms": "Moldova"
+  },
+  "Казахстан": {
+   "en": "Kazakhstan",
+   "uz": "Qozogʻiston",
+   "kk": "Қазақстан",
+   "ms": "Kazakhstan"
+  },
+  "Узбекистан": {
+   "en": "Uzbekistan",
+   "uz": "Oʻzbekiston",
+   "kk": "Өзбекстан",
+   "ms": "Uzbekistan"
+  },
+  "Кыргызстан": {
+   "en": "Kyrgyzstan",
+   "uz": "Qirgʻiziston",
+   "kk": "Қырғызстан",
+   "ms": "Kyrgyzstan"
+  },
+  "Таджикистан": {
+   "en": "Tajikistan",
+   "uz": "Tojikiston",
+   "kk": "Тәжікстан",
+   "ms": "Tajikistan"
+  },
+  "Туркменистан": {
+   "en": "Turkmenistan",
+   "uz": "Turkmaniston",
+   "kk": "Түрікменстан",
+   "ms": "Turkmenistan"
+  },
+  "Армения": {
+   "en": "Armenia",
+   "uz": "Armaniston",
+   "kk": "Армения",
+   "ms": "Armenia"
+  },
+  "Азербайджан": {
+   "en": "Azerbaijan",
+   "uz": "Ozarbayjon",
+   "kk": "Әзербайжан",
+   "ms": "Azerbaijan"
+  },
+  "Австрия": {
+   "en": "Austria",
+   "uz": "Avstriya",
+   "kk": "Австрия",
+   "ms": "Austria"
+  },
+  "Бельгия": {
+   "en": "Belgium",
+   "uz": "Belgiya",
+   "kk": "Бельгия",
+   "ms": "Belgium"
+  },
+  "Босния и Герцеговина": {
+   "en": "Bosnia and Herzegovina",
+   "uz": "Bosniya va Gersegovina",
+   "kk": "Босния және Герцеговина",
+   "ms": "Bosnia dan Herzegovina"
+  },
+  "Великобритания": {
+   "en": "United Kingdom",
+   "uz": "Buyuk Britaniya",
+   "kk": "Ұлыбритания",
+   "ms": "United Kingdom"
+  },
+  "Весь мир": {
+   "en": "World",
+   "uz": "Butun dunyo",
+   "kk": "Бүкіл әлем",
+   "ms": "Seluruh dunia"
+  },
+  "Вьетнам": {
+   "en": "Vietnam",
+   "uz": "Vyetnam",
+   "kk": "Вьетнам",
+   "ms": "Vietnam"
+  },
+  "Гватемала": {
+   "en": "Guatemala",
+   "uz": "Gvatemala",
+   "kk": "Гватемала",
+   "ms": "Guatemala"
+  },
+  "Германия": {
+   "en": "Germany",
+   "uz": "Germaniya",
+   "kk": "Германия",
+   "ms": "Jerman"
+  },
+  "Гондурас": {
+   "en": "Honduras",
+   "uz": "Gonduras",
+   "kk": "Гондурас",
+   "ms": "Honduras"
+  },
+  "Греция": {
+   "en": "Greece",
+   "uz": "Gretsiya",
+   "kk": "Грекия",
+   "ms": "Greece"
+  },
+  "Грузия": {
+   "en": "Georgia",
+   "uz": "Gruziya",
+   "kk": "Грузия",
+   "ms": "Georgia"
+  },
+  "Дания": {
+   "en": "Denmark",
+   "uz": "Daniya",
+   "kk": "Дания",
+   "ms": "Denmark"
+  },
+  "Египет": {
+   "en": "Egypt",
+   "uz": "Misr",
+   "kk": "Мысыр",
+   "ms": "Mesir"
+  },
+  "Израиль": {
+   "en": "Israel",
+   "uz": "Isroil",
+   "kk": "Израиль",
+   "ms": "Israel"
+  },
+  "Индия": {
+   "en": "India",
+   "uz": "Hindiston",
+   "kk": "Үндістан",
+   "ms": "India"
+  },
+  "Индонезия": {
+   "en": "Indonesia",
+   "uz": "Indoneziya",
+   "kk": "Индонезия",
+   "ms": "Indonesia"
+  },
+  "Иран (Исламская Республика)": {
+   "en": "Iran",
+   "uz": "Eron",
+   "kk": "Иран",
+   "ms": "Iran"
+  },
+  "Испания": {
+   "en": "Spain",
+   "uz": "Ispaniya",
+   "kk": "Испания",
+   "ms": "Sepanyol"
+  },
+  "Италия": {
+   "en": "Italy",
+   "uz": "Italiya",
+   "kk": "Италия",
+   "ms": "Itali"
+  },
+  "Камерун": {
+   "en": "Cameroon",
+   "uz": "Kamerun",
+   "kk": "Камерун",
+   "ms": "Cameroon"
+  },
+  "Китай": {
+   "en": "China",
+   "uz": "Xitoy",
+   "kk": "Қытай",
+   "ms": "China"
+  },
+  "Колумбия": {
+   "en": "Colombia",
+   "uz": "Kolumbiya",
+   "kk": "Колумбия",
+   "ms": "Colombia"
+  },
+  "Кот-д'Ивуар": {
+   "en": "Côte d'Ivoire",
+   "uz": "Kot-d'Ivuar",
+   "kk": "Кот-д'Ивуар",
+   "ms": "Côte d'Ivoire"
+  },
+  "Малайзия": {
+   "en": "Malaysia",
+   "uz": "Malayziya",
+   "kk": "Малайзия",
+   "ms": "Malaysia"
+  },
+  "Нигерия": {
+   "en": "Nigeria",
+   "uz": "Nigeriya",
+   "kk": "Нигерия",
+   "ms": "Nigeria"
+  },
+  "Нидерланды": {
+   "en": "Netherlands",
+   "uz": "Niderlandiya",
+   "kk": "Нидерланд",
+   "ms": "Belanda"
+  },
+  "Норвегия": {
+   "en": "Norway",
+   "uz": "Norvegiya",
+   "kk": "Норвегия",
+   "ms": "Norway"
+  },
+  "Объединенные Арабские Эмираты": {
+   "en": "United Arab Emirates",
+   "uz": "Birlashgan Arab Amirliklari",
+   "kk": "Біріккен Араб Әмірліктері",
+   "ms": "Emiriah Arab Bersatu"
+  },
+  "Португалия": {
+   "en": "Portugal",
+   "uz": "Portugaliya",
+   "kk": "Португалия",
+   "ms": "Portugal"
+  },
+  "Республика Корея": {
+   "en": "South Korea",
+   "uz": "Janubiy Koreya",
+   "kk": "Оңтүстік Корея",
+   "ms": "Korea Selatan"
+  },
+  "Северная Македония": {
+   "en": "North Macedonia",
+   "uz": "Shimoliy Makedoniya",
+   "kk": "Солтүстік Македония",
+   "ms": "Macedonia Utara"
+  },
+  "Сенегал": {
+   "en": "Senegal",
+   "uz": "Senegal",
+   "kk": "Сенегал",
+   "ms": "Senegal"
+  },
+  "Сербия": {
+   "en": "Serbia",
+   "uz": "Serbiya",
+   "kk": "Сербия",
+   "ms": "Serbia"
+  },
+  "Сингапур": {
+   "en": "Singapore",
+   "uz": "Singapur",
+   "kk": "Сингапур",
+   "ms": "Singapura"
+  },
+  "Словения": {
+   "en": "Slovenia",
+   "uz": "Sloveniya",
+   "kk": "Словения",
+   "ms": "Slovenia"
+  },
+  "Соединенные Штаты Америки": {
+   "en": "United States",
+   "uz": "AQSH",
+   "kk": "АҚШ",
+   "ms": "Amerika Syarikat"
+  },
+  "Соломоновы Острова": {
+   "en": "Solomon Islands",
+   "uz": "Solomon orollari",
+   "kk": "Соломон аралдары",
+   "ms": "Kepulauan Solomon"
+  },
+  "Турция": {
+   "en": "Turkey",
+   "uz": "Turkiya",
+   "kk": "Түркия",
+   "ms": "Turkiye"
+  },
+  "Финляндия": {
+   "en": "Finland",
+   "uz": "Finlandiya",
+   "kk": "Финляндия",
+   "ms": "Finland"
+  },
+  "Франция": {
+   "en": "France",
+   "uz": "Fransiya",
+   "kk": "Франция",
+   "ms": "Perancis"
+  },
+  "Чили": {
+   "en": "Chile",
+   "uz": "Chili",
+   "kk": "Чили",
+   "ms": "Chile"
+  },
+  "Швейцария": {
+   "en": "Switzerland",
+   "uz": "Shveytsariya",
+   "kk": "Швейцария",
+   "ms": "Switzerland"
+  },
+  "Швеция": {
+   "en": "Sweden",
+   "uz": "Shvetsiya",
+   "kk": "Швеция",
+   "ms": "Sweden"
+  },
+  "Шри-Ланка": {
+   "en": "Sri Lanka",
+   "uz": "Shri-Lanka",
+   "kk": "Шри-Ланка",
+   "ms": "Sri Lanka"
+  },
+  "Япония": {
+   "en": "Japan",
+   "uz": "Yaponiya",
+   "kk": "Жапония",
+   "ms": "Jepun"
+  }
+ },
+ "phrases": {
+  "По знанию рынка, требует проверки.": {
+   "en": "Based on market knowledge; needs verification.",
+   "uz": "Bozorni bilish asosida; tekshirish talab etiladi.",
+   "kk": "Нарықты білу негізінде; тексеруді қажет етеді.",
+   "ms": "Berdasarkan pengetahuan pasaran; perlu disahkan."
+  },
+  "Сайт не проверен.": {
+   "en": "Website not checked.",
+   "uz": "Sayt tekshirilmagan.",
+   "kk": "Сайт тексерілмеген.",
+   "ms": "Laman web belum disemak."
+  },
+  "Объём 480 тыс. т включает и подсолнечное масло.": {
+   "en": "The 480 thousand t also includes sunflower oil.",
+   "uz": "480 ming t hajmga kungaboqar yogʻi ham kiradi.",
+   "kk": "480 мың т көлемге күнбағыс майы да кіреді.",
+   "ms": "Jumlah 480 ribu tan juga termasuk minyak bunga matahari."
+  },
+  "Уточнить объём пальмы в портфеле.": {
+   "en": "Check the share of palm oil in the portfolio.",
+   "uz": "Portfeldagi palma yogʻi hajmini aniqlashtirish kerak.",
+   "kk": "Портфельдегі пальма майының көлемін нақтылау керек.",
+   "ms": "Semak bahagian minyak sawit dalam portfolio."
+  },
+  "Бренд «Яшкино» относится к KDV.": {
+   "en": "The Yashkino brand belongs to KDV.",
+   "uz": "«Yashkino» brendi KDV’ga tegishli.",
+   "kk": "«Яшкино» бренді KDV-ге тиесілі.",
+   "ms": "Jenama Yashkino milik KDV."
+  },
+  "Закупки через глобальные контракты.": {
+   "en": "Purchases via global contracts.",
+   "uz": "Xaridlar global shartnomalar orqali.",
+   "kk": "Сатып алу жаһандық келісімшарттар арқылы.",
+   "ms": "Pembelian melalui kontrak global."
+  },
+  "Проверить текущую загрузку мощностей.": {
+   "en": "Check current capacity utilisation.",
+   "uz": "Joriy quvvatlar yuklamasini tekshirish kerak.",
+   "kk": "Қуаттардың ағымдағы жүктемесін тексеру керек.",
+   "ms": "Semak penggunaan kapasiti semasa."
+  },
+  "Список уточнить по рынку мороженого.": {
+   "en": "Refine the list using ice cream market data.",
+   "uz": "Roʻyxatni muzqaymoq bozori boʻyicha aniqlashtirish kerak.",
+   "kk": "Тізімді балмұздақ нарығы бойынша нақтылау керек.",
+   "ms": "Perhalusi senarai berdasarkan pasaran aiskrim."
+  },
+  "Сделка ожидалась к закрытию в 2026 г.": {
+   "en": "The deal was expected to close in 2026.",
+   "uz": "Bitim 2026-yilda yakunlanishi kutilgan edi.",
+   "kk": "Мәміле 2026 жылы жабылады деп күтілген.",
+   "ms": "Urus niaga dijangka selesai pada 2026."
+  },
+  "Проверить долю пальмы в рецептурах.": {
+   "en": "Check the share of palm oil in recipes.",
+   "uz": "Retseptlardagi palma yogʻi ulushini tekshirish kerak.",
+   "kk": "Рецептуралардағы пальма майының үлесін тексеру керек.",
+   "ms": "Semak bahagian minyak sawit dalam resipi."
+  },
+  "Проверить, где сейчас производство.": {
+   "en": "Check where production is currently located.",
+   "uz": "Hozir ishlab chiqarish qayerda ekanini tekshirish kerak.",
+   "kk": "Қазір өндіріс қай жерде екенін тексеру керек.",
+   "ms": "Semak lokasi pengeluaran semasa."
+  },
+  "Часто фритюр на подсолнечном масле.": {
+   "en": "Frying is often done in sunflower oil.",
+   "uz": "Frityur koʻpincha kungaboqar yogʻida.",
+   "kk": "Фритюр жиі күнбағыс майында.",
+   "ms": "Gorengan selalunya menggunakan minyak bunga matahari."
+  },
+  "Проверить, есть ли маргарин в RO после сделки с Vandemoortele.": {
+   "en": "Check whether margarine remains in RO after the Vandemoortele deal.",
+   "uz": "Vandemoortele bilan bitimdan keyin RO’da margarin qolganini tekshirish kerak.",
+   "kk": "Vandemoortele-мен мәміледен кейін RO-да маргарин қалғанын тексеру керек.",
+   "ms": "Semak sama ada marjerin masih ada di RO selepas urus niaga dengan Vandemoortele."
+  },
+  "Профиль — подсолнечник; потенциальный покупатель для купажей.": {
+   "en": "Focus on sunflower oil; potential buyer for blends.",
+   "uz": "Profili — kungaboqar; aralashmalar uchun potensial xaridor.",
+   "kk": "Бейіні — күнбағыс; қоспаларға әлеуетті сатып алушы.",
+   "ms": "Tumpuan pada bunga matahari; pembeli berpotensi untuk adunan."
+  },
+  "Сделка требовала одобрения AZTN.": {
+   "en": "The deal required AZTN approval.",
+   "uz": "Bitim AZTN roziligini talab qilgan.",
+   "kk": "Мәміле AZTN мақұлдауын талап еткен.",
+   "ms": "Urus niaga memerlukan kelulusan AZTN."
+  },
+  "Пальма поступает в основном транзитом/реэкспортом через РФ.": {
+   "en": "Palm oil arrives mainly via transit/re-export through Russia.",
+   "uz": "Palma yogʻi asosan Rossiya orqali tranzit/reeksport bilan keladi.",
+   "kk": "Пальма майы негізінен Ресей арқылы транзитпен/реэкспортпен келеді.",
+   "ms": "Minyak sawit kebanyakannya tiba melalui transit/eksport semula melalui Rusia."
+  },
+  "Профиль — подсолнечник; потенциальный трейдер.": {
+   "en": "Focus on sunflower oil; potential trader.",
+   "uz": "Profili — kungaboqar; potensial treyder.",
+   "kk": "Бейіні — күнбағыс; әлеуетті трейдер.",
+   "ms": "Tumpuan pada bunga matahari; pedagang berpotensi."
+  },
+  "Директор Н. Солохина выступает за ограничение импорта пальмы.": {
+   "en": "Director N. Solokhina advocates restricting palm oil imports.",
+   "uz": "Direktor N. Soloxina palma yogʻi importini cheklash tarafdori.",
+   "kk": "Директор Н. Солохина пальма майы импортын шектеуді жақтайды.",
+   "ms": "Pengarah N. Solokhina menyokong sekatan import minyak sawit."
+  },
+  "Импортирует продукцию Balam (Туркменистан).": {
+   "en": "Imports Balam products (Turkmenistan).",
+   "uz": "Balam (Turkmaniston) mahsulotlarini import qiladi.",
+   "kk": "Balam (Түрікменстан) өнімдерін импорттайды.",
+   "ms": "Mengimport produk Balam (Turkmenistan)."
+  },
+  "Маргарин закупает у российского дистрибьютора.": {
+   "en": "Buys margarine from a Russian distributor.",
+   "uz": "Margarinni rossiyalik distribyutordan xarid qiladi.",
+   "kk": "Маргаринді ресейлік дистрибьютордан сатып алады.",
+   "ms": "Membeli marjerin daripada pengedar Rusia."
+  },
+  "Рынок закрывается в основном поставками из РФ/РК; импорт пальмы: ~2,2 тыс. т за 8 мес. 2023 г.": {
+   "en": "The market is supplied mainly from Russia/Kazakhstan; palm oil imports: ~2.2 thousand t in 8 months of 2023.",
+   "uz": "Bozor asosan Rossiya/Qozogʻistondan yetkazib berish bilan taʼminlanadi; palma yogʻi importi: 2023-yil 8 oyida ~2,2 ming t.",
+   "kk": "Нарық негізінен РФ/ҚР жеткізілімдерімен қамтылады; пальма импорты: 2023 жылдың 8 айында ~2,2 мың т.",
+   "ms": "Pasaran kebanyakannya dibekalkan dari Rusia/Kazakhstan; import minyak sawit: ~2.2 ribu tan dalam 8 bulan 2023."
+  },
+  "Потенциальный покупатель для купажей/фасовки.": {
+   "en": "Potential buyer for blending/packing.",
+   "uz": "Aralashtirish/qadoqlash uchun potensial xaridor.",
+   "kk": "Қоспа/қаптау үшін әлеуетті сатып алушы.",
+   "ms": "Pembeli berpotensi untuk adunan/pembungkusan."
+  },
+  "Импортирует продукцию Balam.": {
+   "en": "Imports Balam products.",
+   "uz": "Balam mahsulotlarini import qiladi.",
+   "kk": "Balam өнімдерін импорттайды.",
+   "ms": "Mengimport produk Balam."
+  },
+  "Крупный потребитель жиров для слоёного теста.": {
+   "en": "Large user of puff pastry fats.",
+   "uz": "Qatlamali xamir yogʻlarining yirik isteʼmolchisi.",
+   "kk": "Қабатты қамыр майларының ірі тұтынушысы.",
+   "ms": "Pengguna besar lemak pastri berlapis."
+  },
+  "Сам импортирует сырьё и товары.": {
+   "en": "Imports raw materials and goods itself.",
+   "uz": "Xomashyo va tovarlarni oʻzi import qiladi.",
+   "kk": "Шикізат пен тауарларды өзі импорттайды.",
+   "ms": "Mengimport sendiri bahan mentah dan barangan."
+  },
+  "Возможный покупатель жиров для смесей.": {
+   "en": "Possible buyer of fats for blends.",
+   "uz": "Aralashmalar uchun yogʻlarning ehtimoliy xaridori.",
+   "kk": "Қоспаларға арналған майлардың ықтимал сатып алушысы.",
+   "ms": "Pembeli berkemungkinan lemak untuk adunan."
+  },
+  "Перспективный крупный покупатель.": {
+   "en": "Promising large buyer.",
+   "uz": "Istiqbolli yirik xaridor.",
+   "kk": "Болашағы бар ірі сатып алушы.",
+   "ms": "Pembeli besar yang berpotensi."
+  }
+ },
+ "volumes": {
+  "Крупнейший (входит в тройку импортёров)": {
+   "en": "Largest (among the top three importers)",
+   "uz": "Eng yirik (uchta yetakchi importyor qatorida)",
+   "kk": "Ең ірі (үш ірі импорттаушының бірі)",
+   "ms": "Terbesar (antara tiga pengimport utama)"
+  },
+  "Крупнейший; цель перевалки пальмового и подсолнечного масел через ПНТ (СПб) 480 тыс. т в 2025 г.": {
+   "en": "Largest; target of 480 thousand t of palm and sunflower oil handled via PNT (St Petersburg) in 2025",
+   "uz": "Eng yirik; 2025-yilda PNT (Sankt-Peterburg) orqali 480 ming t palma va kungaboqar yogʻini oʻtkazish maqsadi",
+   "kk": "Ең ірі; 2025 жылы ПНТ (Санкт-Петербург) арқылы 480 мың т пальма және күнбағыс майын ауыстырып тиеу мақсаты",
+   "ms": "Terbesar; sasaran 480 ribu tan minyak sawit dan bunga matahari dikendalikan melalui PNT (St Petersburg) pada 2025"
+  },
+  "Крупный": {
+   "en": "Large",
+   "uz": "Yirik",
+   "kk": "Ірі",
+   "ms": "Besar"
+  },
+  "Крупный потребитель жиров": {
+   "en": "Large fat user",
+   "uz": "Yogʻlarning yirik isteʼmolchisi",
+   "kk": "Майлардың ірі тұтынушысы",
+   "ms": "Pengguna lemak yang besar"
+  },
+  "Средний/крупный": {
+   "en": "Medium/large",
+   "uz": "Oʻrta/yirik",
+   "kk": "Орташа/ірі",
+   "ms": "Sederhana/besar"
+  },
+  "Средний": {
+   "en": "Medium",
+   "uz": "Oʻrta",
+   "kk": "Орташа",
+   "ms": "Sederhana"
+  },
+  "Крупнейший импортёр пальмы в стране": {
+   "en": "Largest palm oil importer in the country",
+   "uz": "Mamlakatdagi eng yirik palma yogʻi importyori",
+   "kk": "Елдегі ең ірі пальма майы импорттаушысы",
+   "ms": "Pengimport minyak sawit terbesar di negara ini"
+  },
+  "Средний (активы частично в прифронтовой зоне)": {
+   "en": "Medium (some assets near the front line)",
+   "uz": "Oʻrta (aktivlarning bir qismi front oldi hududida)",
+   "kk": "Орташа (активтердің бір бөлігі майдан маңындағы аймақта)",
+   "ms": "Sederhana (sebahagian aset berhampiran barisan hadapan)"
+  },
+  "Средние": {
+   "en": "Medium",
+   "uz": "Oʻrta",
+   "kk": "Орташа",
+   "ms": "Sederhana"
+  },
+  "Крупнейший": {
+   "en": "Largest",
+   "uz": "Eng yirik",
+   "kk": "Ең ірі",
+   "ms": "Terbesar"
+  },
+  "Крупнейший на рынке": {
+   "en": "Largest in the market",
+   "uz": "Bozordagi eng yirik",
+   "kk": "Нарықтағы ең ірі",
+   "ms": "Terbesar di pasaran"
+  },
+  "Малый/средний": {
+   "en": "Small/medium",
+   "uz": "Kichik/oʻrta",
+   "kk": "Шағын/орташа",
+   "ms": "Kecil/sederhana"
+  },
+  "Крупнейший локальный": {
+   "en": "Largest local player",
+   "uz": "Eng yirik mahalliy",
+   "kk": "Ең ірі жергілікті",
+   "ms": "Pemain tempatan terbesar"
+  },
+  "Лидер рынка: 51% в 2022 г.": {
+   "en": "Market leader: 51% in 2022",
+   "uz": "Bozor yetakchisi: 2022-yilda 51%",
+   "kk": "Нарық көшбасшысы: 2022 жылы 51%",
+   "ms": "Peneraju pasaran: 51% pada 2022"
+  },
+  "Крупнейший; 84 тыс. т готовой продукции в 2024 г., выручка €155 млн": {
+   "en": "Largest; 84 thousand t of finished products in 2024, revenue €155 mn",
+   "uz": "Eng yirik; 2024-yilda 84 ming t tayyor mahsulot, tushum €155 mln",
+   "kk": "Ең ірі; 2024 жылы 84 мың т дайын өнім, түсім €155 млн",
+   "ms": "Terbesar; 84 ribu tan produk siap pada 2024, hasil €155 juta"
+  },
+  "Крупнейший в стране": {
+   "en": "Largest in the country",
+   "uz": "Mamlakatdagi eng yirik",
+   "kk": "Елдегі ең ірі",
+   "ms": "Terbesar di negara ini"
+  },
+  "Крупный по Балтии": {
+   "en": "Large on a Baltic scale",
+   "uz": "Boltiqboʻyi miqyosida yirik",
+   "kk": "Балтық бойынша ірі",
+   "ms": "Besar di peringkat Baltik"
+  },
+  "Объявлял закупки у переработчиков РК на $60 млн": {
+   "en": "Announced $60 mn of purchases from Kazakh processors",
+   "uz": "Qozogʻiston qayta ishlovchilaridan $60 mln lik xaridlarni eʼlon qilgan",
+   "kk": "ҚР өңдеушілерінен $60 млн-ға сатып алуды жариялаған",
+   "ms": "Mengumumkan pembelian $60 juta daripada pemproses Kazakhstan"
+  },
+  "Крупнейшая кондитерская фабрика страны": {
+   "en": "Largest confectionery factory in the country",
+   "uz": "Mamlakatdagi eng yirik qandolat fabrikasi",
+   "kk": "Елдегі ең ірі кондитер фабрикасы",
+   "ms": "Kilang konfeksi terbesar di negara ini"
+  },
+  "Новый завод до 5 тыс. т/год (запуск в 2026 г.)": {
+   "en": "New plant of up to 5 thousand t/year (start-up in 2026)",
+   "uz": "Yiliga 5 ming t gacha yangi zavod (2026-yilda ishga tushadi)",
+   "kk": "Жылына 5 мың т-ға дейінгі жаңа зауыт (2026 жылы іске қосылады)",
+   "ms": "Kilang baharu sehingga 5 ribu tan/tahun (bermula 2026)"
+  },
+  "—": {
+   "en": "—",
+   "uz": "—",
+   "kk": "—",
+   "ms": "—"
+  },
+  "Одна из двух крупнейших": {
+   "en": "One of the two largest",
+   "uz": "Ikki eng yirikdan biri",
+   "kk": "Екі ең ірінің бірі",
+   "ms": "Salah satu daripada dua terbesar"
+  },
+  "Новый крупный завод": {
+   "en": "New large plant",
+   "uz": "Yangi yirik zavod",
+   "kk": "Жаңа ірі зауыт",
+   "ms": "Kilang besar baharu"
+  },
+  "До 2,5 тыс. т продукции в месяц": {
+   "en": "Up to 2.5 thousand t of products a month",
+   "uz": "Oyiga 2,5 ming t gacha mahsulot",
+   "kk": "Айына 2,5 мың т-ға дейін өнім",
+   "ms": "Sehingga 2.5 ribu tan produk sebulan"
+  },
+  "Средний; экспорт в 6 стран": {
+   "en": "Medium; exports to 6 countries",
+   "uz": "Oʻrta; 6 mamlakatga eksport",
+   "kk": "Орташа; 6 елге экспорт",
+   "ms": "Sederhana; eksport ke 6 negara"
+  },
+  "Плановая мощность 200 т/сутки; инвестиции €145 млн": {
+   "en": "Planned capacity 200 t/day; investment €145 mn",
+   "uz": "Rejalashtirilgan quvvat sutkasiga 200 t; investitsiyalar €145 mln",
+   "kk": "Жоспарлы қуат тәулігіне 200 т; инвестиция €145 млн",
+   "ms": "Kapasiti dirancang 200 tan/hari; pelaburan €145 juta"
+  }
+ },
+ "summaries": {
+  "ru": {
+   "en": "Key buyers: a concentrated market — EFKO, Rusagro (NMZhK + Solnechnye Produkty), Yug Rusi; then confectionery, dairy and bakery. Logistics are shifting to Russian ports (PNT, Taman).",
+   "uz": "Asosiy xaridorlar: bozor jamlangan — EFKO, Rusagro (NMJK + Solnechnye Produkty), Yug Rusi; keyin qandolat, sut mahsulotlari va non. Logistika Rossiya portlariga (PNT, Taman) koʻchmoqda.",
+   "kk": "Негізгі сатып алушылар: нарық шоғырланған — ЭФКО, Русагро (НМЖК + Солнечные продукты), Юг Руси; одан кейін кондитер, сүт және нан өнімдері. Логистика РФ порттарына (ПНТ, Тамань) ауысуда.",
+   "ms": "Pembeli utama: pasaran tertumpu — EFKO, Rusagro (NMZhK + Solnechnye Produkty), Yug Rusi; kemudian konfeksi, tenusu dan bakeri. Logistik beralih ke pelabuhan Rusia (PNT, Taman)."
+  },
+  "ua": {
+   "en": "Key buyers: the main importer and refiner is Delta Wilmar (Pivdennyi port); then confectionery (Roshen, Mondelēz, Nestlé) and ice cream. The source gives no tonnage; at ~$1,000/t that is about 120 thousand t (estimate).",
+   "uz": "Asosiy xaridorlar: asosiy importyor va rafinatsiyachi — Delta Wilmar (Pivdenniy porti); keyin qandolat (Roshen, Mondelēz, Nestlé) va muzqaymoq. Manbada hajm koʻrsatilmagan; ~$1 000/t narxda bu taxminan 120 ming t (baho).",
+   "kk": "Негізгі сатып алушылар: басты импорттаушы және тазартушы — Delta Wilmar (Пивденный порты); одан кейін кондитер (Roshen, Mondelēz, Nestlé) және балмұздақ. Дереккөзде тоннаж көрсетілмеген; ~$1 000/т бағамен бұл шамамен 120 мың т (бағалау).",
+   "ms": "Pembeli utama: pengimport dan penapis utama ialah Delta Wilmar (pelabuhan Pivdennyi); diikuti konfeksi (Roshen, Mondelēz, Nestlé) dan aiskrim. Sumber tidak menyatakan tan; pada ~$1,000/t ia kira-kira 120 ribu tan (anggaran)."
+  },
+  "pl": {
+   "en": "Key buyers: Bunge (Kruszwica), Upfield, Bielmar; confectionery (Mondelēz, Ferrero, Wedel, Colian). Most volume moves within the EU via NL/DE refiners (AAK, Bunge Loders, Wilmar, Cargill), so real consumption is much higher; check Eurostat Comext (HS 1511, 1513, 1516, 1517).",
+   "uz": "Asosiy xaridorlar: Bunge (Kruszwica), Upfield, Bielmar; qandolat (Mondelēz, Ferrero, Wedel, Colian). Asosiy hajm YeI ichida NL/DE rafinatsiyachilari (AAK, Bunge Loders, Wilmar, Cargill) orqali keladi, shuning uchun haqiqiy isteʼmol ancha yuqori; Eurostat Comext (HS 1511, 1513, 1516, 1517) boʻyicha tekshirish kerak.",
+   "kk": "Негізгі сатып алушылар: Bunge (Kruszwica), Upfield, Bielmar; кондитер (Mondelēz, Ferrero, Wedel, Colian). Негізгі көлем ЕО ішінде NL/DE тазартушылары (AAK, Bunge Loders, Wilmar, Cargill) арқылы келеді, сондықтан нақты тұтыну әлдеқайда көп; Eurostat Comext (HS 1511, 1513, 1516, 1517) бойынша тексеру керек.",
+   "ms": "Pembeli utama: Bunge (Kruszwica), Upfield, Bielmar; konfeksi (Mondelēz, Ferrero, Wedel, Colian). Kebanyakan jumlah bergerak dalam EU melalui penapis NL/DE (AAK, Bunge Loders, Wilmar, Cargill), jadi penggunaan sebenar jauh lebih tinggi; semak Eurostat Comext (HS 1511, 1513, 1516, 1517)."
+  },
+  "cz": {
+   "en": "Key buyers: Upfield, Nestlé and Mondelēz confectionery, Agrofert bakery. Purchases go mainly through EU refiners.",
+   "uz": "Asosiy xaridorlar: Upfield, Nestlé va Mondelēz qandolati, Agrofert non mahsulotlari. Xaridlar asosan YeI rafinatsiyachilari orqali.",
+   "kk": "Негізгі сатып алушылар: Upfield, Nestlé және Mondelēz кондитері, Agrofert нан өнімдері. Сатып алу негізінен ЕО тазартушылары арқылы.",
+   "ms": "Pembeli utama: Upfield, konfeksi Nestlé dan Mondelēz, bakeri Agrofert. Pembelian kebanyakannya melalui penapis EU."
+  },
+  "sk": {
+   "en": "Key buyers: Palma (Agrofert), I.D.C. Holding.",
+   "uz": "Asosiy xaridorlar: Palma (Agrofert), I.D.C. Holding.",
+   "kk": "Негізгі сатып алушылар: Palma (Agrofert), I.D.C. Holding.",
+   "ms": "Pembeli utama: Palma (Agrofert), I.D.C. Holding."
+  },
+  "hu": {
+   "en": "Key buyers: Upfield, Bunge (→ Vandemoortele), Foltin Globe; Mondelēz confectionery.",
+   "uz": "Asosiy xaridorlar: Upfield, Bunge (→ Vandemoortele), Foltin Globe; Mondelēz qandolati.",
+   "kk": "Негізгі сатып алушылар: Upfield, Bunge (→ Vandemoortele), Foltin Globe; Mondelēz кондитері.",
+   "ms": "Pembeli utama: Upfield, Bunge (→ Vandemoortele), Foltin Globe; konfeksi Mondelēz."
+  },
+  "ro": {
+   "en": "Key buyers: Bunge Romania, Upfield, Mondelēz, Kandia Dulce, bakeries.",
+   "uz": "Asosiy xaridorlar: Bunge Romania, Upfield, Mondelēz, Kandia Dulce, novvoyxonalar.",
+   "kk": "Негізгі сатып алушылар: Bunge Romania, Upfield, Mondelēz, Kandia Dulce, наубайханалар.",
+   "ms": "Pembeli utama: Bunge Romania, Upfield, Mondelēz, Kandia Dulce, kedai roti."
+  },
+  "bg": {
+   "en": "Key buyers: Upfield, Mondelēz (Svoge), Nestlé, local confectionery.",
+   "uz": "Asosiy xaridorlar: Upfield, Mondelēz (Svoge), Nestlé, mahalliy qandolat.",
+   "kk": "Негізгі сатып алушылар: Upfield, Mondelēz (Своге), Nestlé, жергілікті кондитер.",
+   "ms": "Pembeli utama: Upfield, Mondelēz (Svoge), Nestlé, konfeksi tempatan."
+  },
+  "hr": {
+   "en": "Key buyers: Zvijezda (→ Žito), Kraš, Podravka, Ledo.",
+   "uz": "Asosiy xaridorlar: Zvijezda (→ Žito), Kraš, Podravka, Ledo.",
+   "kk": "Негізгі сатып алушылар: Zvijezda (→ Žito), Kraš, Podravka, Ledo.",
+   "ms": "Pembeli utama: Zvijezda (→ Žito), Kraš, Podravka, Ledo."
+  },
+  "ee": {
+   "en": "Key buyers: Orkla (Kalev), bakeries, ice cream. Small market.",
+   "uz": "Asosiy xaridorlar: Orkla (Kalev), novvoyxonalar, muzqaymoq. Kichik bozor.",
+   "kk": "Негізгі сатып алушылар: Orkla (Kalev), наубайханалар, балмұздақ. Шағын нарық.",
+   "ms": "Pembeli utama: Orkla (Kalev), kedai roti, aiskrim. Pasaran kecil."
+  },
+  "lv": {
+   "en": "Key buyers: Orkla (Laima), Fazer, Food Union. Small market.",
+   "uz": "Asosiy xaridorlar: Orkla (Laima), Fazer, Food Union. Kichik bozor.",
+   "kk": "Негізгі сатып алушылар: Orkla (Laima), Fazer, Food Union. Шағын нарық.",
+   "ms": "Pembeli utama: Orkla (Laima), Fazer, Food Union. Pasaran kecil."
+  },
+  "lt": {
+   "en": "Key buyers: Mantinga, Pergalė, Rūta, dairy. Small market.",
+   "uz": "Asosiy xaridorlar: Mantinga, Pergalė, Rūta, sut mahsulotlari. Kichik bozor.",
+   "kk": "Негізгі сатып алушылар: Mantinga, Pergalė, Rūta, сүт өнімдері. Шағын нарық.",
+   "ms": "Pembeli utama: Mantinga, Pergalė, Rūta, tenusu. Pasaran kecil."
+  },
+  "by": {
+   "en": "Key buyers: Gomel Fat Plant, Minsk Margarine Plant, Kommunarka, Spartak. Palm oil comes mainly via Russia.",
+   "uz": "Asosiy xaridorlar: Gomel yogʻ kombinati, Minsk margarin zavodi, Kommunarka, Spartak. Palma yogʻi asosan Rossiya orqali keladi.",
+   "kk": "Негізгі сатып алушылар: Гомель май комбинаты, Минск маргарин зауыты, Коммунарка, Спартак. Пальма майы негізінен Ресей арқылы келеді.",
+   "ms": "Pembeli utama: Kilang Lemak Gomel, Kilang Marjerin Minsk, Kommunarka, Spartak. Minyak sawit kebanyakannya tiba melalui Rusia."
+  },
+  "md": {
+   "en": "Key buyers: Bucuria, Franzeluța, Floarea Soarelui. Small market.",
+   "uz": "Asosiy xaridorlar: Bucuria, Franzeluța, Floarea Soarelui. Kichik bozor.",
+   "kk": "Негізгі сатып алушылар: Bucuria, Franzeluța, Floarea Soarelui. Шағын нарық.",
+   "ms": "Pembeli utama: Bucuria, Franzeluța, Floarea Soarelui. Pasaran kecil."
+  },
+  "kz": {
+   "en": "Key buyers: Shymkentmai, Maslo-Del; confectionery Rakhat, Bayan Sulu; dairy. Local oil producers lobby for import restrictions.",
+   "uz": "Asosiy xaridorlar: Shymkentmay, Maslo-Del; qandolat Raxat, Bayan Sulu; sut mahsulotlari. Mahalliy yogʻ ishlab chiqaruvchilar importni cheklash uchun lobbi qilmoqda.",
+   "kk": "Негізгі сатып алушылар: Шымкентмай, Масло-Дел; кондитер Рахат, Баян Сулу; сүт өнімдері. Жергілікті май өндірушілер импортты шектеуді лоббилейді.",
+   "ms": "Pembeli utama: Shymkentmai, Maslo-Del; konfeksi Rakhat, Bayan Sulu; tenusu. Pengeluar minyak tempatan melobi sekatan import."
+  },
+  "uz": {
+   "en": "Key buyers: Crafers; margarines Top Oil, Chromos, Dairy's Best and others. Mandatory testing of palm oil since 2025; import benefits have been extended.",
+   "uz": "Asosiy xaridorlar: Crafers; margarinlar Top Oil, Chromos, Dairy's Best va boshqalar. 2025-yildan palma yogʻini majburiy sinovdan oʻtkazish; import imtiyozlari uzaytirilgan.",
+   "kk": "Негізгі сатып алушылар: Crafers; маргариндер Top Oil, Chromos, Dairy's Best және т.б. 2025 жылдан пальма майын міндетті сынау; импорт жеңілдіктері ұзартылған.",
+   "ms": "Pembeli utama: Crafers; marjerin Top Oil, Chromos, Dairy's Best dan lain-lain. Ujian wajib minyak sawit sejak 2025; insentif import telah dilanjutkan."
+  },
+  "kg": {
+   "en": "Key buyers: Barbol, Kulikovsky; margarines come mainly from Russia. A small but fast-growing market.",
+   "uz": "Asosiy xaridorlar: Barbol, Kulikovskiy; margarinlar asosan Rossiyadan. Kichik, ammo tez oʻsayotgan bozor.",
+   "kk": "Негізгі сатып алушылар: Барбол, Куликовский; маргариндер негізінен Ресейден. Шағын, бірақ тез өсіп келе жатқан нарық.",
+   "ms": "Pembeli utama: Barbol, Kulikovsky; marjerin kebanyakannya dari Rusia. Pasaran kecil tetapi berkembang pesat."
+  },
+  "tj": {
+   "en": "Key buyers: Shirin, Amiri, Faizi Barakat. The five Central Asian countries combined: 54,665 t from Malaysia, RM288 mn.",
+   "uz": "Asosiy xaridorlar: Shirin, Amiri, Fayzi Barakat. Markaziy Osiyoning beshta davlati jami: Malayziyadan 54 665 t, RM288 mln.",
+   "kk": "Негізгі сатып алушылар: Ширин, Амири, Файзи баракат. Орталық Азияның бес елі жиыны: Малайзиядан 54 665 т, RM288 млн.",
+   "ms": "Pembeli utama: Shirin, Amiri, Faizi Barakat. Lima negara Asia Tengah keseluruhannya: 54,665 tan dari Malaysia, RM288 juta."
+  },
+  "tm": {
+   "en": "Key buyers: Balam, Altyn Ýunus. See the Tajikistan row: the figure is for Central Asia as a whole (ofimagazine.com, 2024).",
+   "uz": "Asosiy xaridorlar: Balam, Altyn Ýunus. Tojikiston qatoriga qarang: raqam butun Markaziy Osiyo boʻyicha (ofimagazine.com, 2024).",
+   "kk": "Негізгі сатып алушылар: Balam, Altyn Ýunus. Тәжікстан жолын қараңыз: көрсеткіш тұтас Орталық Азия бойынша (ofimagazine.com, 2024).",
+   "ms": "Pembeli utama: Balam, Altyn Ýunus. Lihat baris Tajikistan: angka itu bagi Asia Tengah secara keseluruhan (ofimagazine.com, 2024)."
+  },
+  "am": {
+   "en": "Key buyers: importers Alfa Food Service, San Food, Ardis; Grand Candy; Vellar Group (new plant).",
+   "uz": "Asosiy xaridorlar: importyorlar Alfa Food Service, San Food, Ardis; Grand Candy; Vellar Group (yangi zavod).",
+   "kk": "Негізгі сатып алушылар: импорттаушылар Альфа Фуд Сервис, Сан Фуд, Ардис; Grand Candy; Vellar Group (жаңа зауыт).",
+   "ms": "Pembeli utama: pengimport Alfa Food Service, San Food, Ardis; Grand Candy; Vellar Group (kilang baharu)."
+  }
+ },
+ "names": {
+  "ГК «ЭФКО»": {
+   "en": "EFKO Group",
+   "uz": "EFKO Group",
+   "ms": "EFKO Group"
+  },
+  "Группа «Русагро» (масложировой бизнес: НМЖК, Солнечные продукты, Самарский и Екатеринбургский ЖК)": {
+   "en": "Rusagro Group (oils and fats: NMZhK, Solnechnye Produkty, Samara and Yekaterinburg fat plants)",
+   "uz": "Rusagro guruhi (yogʻ-moy biznesi: NMJK, Solnechnye Produkty, Samara va Yekaterinburg yogʻ kombinatlari)",
+   "ms": "Kumpulan Rusagro (perniagaan minyak dan lemak: NMZhK, Solnechnye Produkty, kilang lemak Samara dan Yekaterinburg)"
+  },
+  "ГК «Юг Руси»": {
+   "en": "Yug Rusi Group",
+   "uz": "Yug Rusi Group",
+   "ms": "Yug Rusi Group"
+  },
+  "«Объединённые кондитеры» (холдинг)": {
+   "en": "United Confectioners (holding)",
+   "uz": "United Confectioners (xolding)",
+   "ms": "United Confectioners (syarikat induk)"
+  },
+  "KDV Групп": {
+   "en": "KDV Group",
+   "uz": "KDV Group",
+   "ms": "KDV Group"
+  },
+  "Акконд": {
+   "en": "Akkond",
+   "uz": "Akkond",
+   "ms": "Akkond"
+  },
+  "Славянка": {
+   "en": "Slavyanka",
+   "uz": "Slavyanka",
+   "ms": "Slavyanka"
+  },
+  "Nestlé Россия": {
+   "en": "Nestlé Russia",
+   "uz": "Nestlé Russia",
+   "ms": "Nestlé Russia"
+  },
+  "Mars Россия": {
+   "en": "Mars Russia",
+   "uz": "Mars Russia",
+   "ms": "Mars Russia"
+  },
+  "Кондитерская фабрика «Победа»": {
+   "en": "Pobeda confectionery factory",
+   "uz": "«Pobeda» qandolat fabrikasi",
+   "ms": "Kilang konfeksi Pobeda"
+  },
+  "Дельта Вилмар Украина (Delta Wilmar Ukraine)": {
+   "en": "Delta Wilmar Ukraine",
+   "uz": "Delta Wilmar Ukraine",
+   "ms": "Delta Wilmar Ukraine"
+  },
+  "Mondelēz Україна": {
+   "en": "Mondelēz Ukraine",
+   "uz": "Mondelēz Ukraine",
+   "ms": "Mondelēz Ukraine"
+  },
+  "Nestlé Україна": {
+   "en": "Nestlé Ukraine",
+   "uz": "Nestlé Ukraine",
+   "ms": "Nestlé Ukraine"
+  },
+  "Конти": {
+   "en": "Konti",
+   "uz": "Konti",
+   "ms": "Konti"
+  },
+  "АВК": {
+   "en": "AVK",
+   "uz": "AVK",
+   "ms": "AVK"
+  },
+  "Житомирские Ласощи": {
+   "en": "Zhytomyrski Lasoshchi",
+   "uz": "Zhytomyrski Lasoshchi",
+   "ms": "Zhytomyrski Lasoshchi"
+  },
+  "Бисквит-Шоколад": {
+   "en": "Biscuit-Chocolate",
+   "uz": "Biscuit-Chocolate",
+   "ms": "Biscuit-Chocolate"
+  },
+  "Рудь": {
+   "en": "Rud",
+   "uz": "Rud",
+   "ms": "Rud"
+  },
+  "Лимо / Три Медведя / Ласунка (рынок мороженого)": {
+   "en": "Limo / Tri Medvedya / Lasunka (ice cream market)",
+   "uz": "Limo / Tri Medvedya / Lasunka (muzqaymoq bozori)",
+   "ms": "Limo / Tri Medvedya / Lasunka (pasaran aiskrim)",
+   "kk": "Лимо / Три Медведя / Ласунка (балмұздақ нарығы)"
+  },
+  "Терра Фуд": {
+   "en": "Terra Food",
+   "uz": "Terra Food",
+   "ms": "Terra Food"
+  },
+  "Bunge Polska (ZT Kruszwica; маргариновый бизнес передаётся Vandemoortele)": {
+   "en": "Bunge Polska (ZT Kruszwica; margarine business being transferred to Vandemoortele)",
+   "uz": "Bunge Polska (ZT Kruszwica; margarin biznesi Vandemoortele’ga oʻtkazilmoqda)",
+   "ms": "Bunge Polska (ZT Kruszwica; perniagaan marjerin dipindahkan kepada Vandemoortele)",
+   "kk": "Bunge Polska (ZT Kruszwica; маргарин бизнесі Vandemoortele-ге берілуде)"
+  },
+  "Palma (группа Agrofert)": {
+   "en": "Palma (Agrofert group)",
+   "uz": "Palma (Agrofert guruhi)",
+   "ms": "Palma (kumpulan Agrofert)",
+   "kk": "Palma (Agrofert тобы)"
+  },
+  "Bunge Zrt. (маргариновый бизнес передаётся Vandemoortele)": {
+   "en": "Bunge Zrt. (margarine business being transferred to Vandemoortele)",
+   "uz": "Bunge Zrt. (margarin biznesi Vandemoortele’ga oʻtkazilmoqda)",
+   "ms": "Bunge Zrt. (perniagaan marjerin dipindahkan kepada Vandemoortele)",
+   "kk": "Bunge Zrt. (маргарин бизнесі Vandemoortele-ге берілуде)"
+  },
+  "Upfield Bulgaria (бывший маргариновый завод Unilever)": {
+   "en": "Upfield Bulgaria (former Unilever margarine plant)",
+   "uz": "Upfield Bulgaria (Unilever’ning sobiq margarin zavodi)",
+   "ms": "Upfield Bulgaria (bekas kilang marjerin Unilever)",
+   "kk": "Upfield Bulgaria (Unilever-дің бұрынғы маргарин зауыты)"
+  },
+  "Mondelēz България": {
+   "en": "Mondelēz Bulgaria",
+   "uz": "Mondelēz Bulgaria",
+   "ms": "Mondelēz Bulgaria"
+  },
+  "Победа АД": {
+   "en": "Pobeda AD",
+   "uz": "Pobeda AD",
+   "ms": "Pobeda AD"
+  },
+  "Престиж-96": {
+   "en": "Prestige-96",
+   "uz": "Prestige-96",
+   "ms": "Prestige-96"
+  },
+  "Калиакра (Bunge), Добрич": {
+   "en": "Kaliakra (Bunge), Dobrich",
+   "uz": "Kaliakra (Bunge), Dobrich",
+   "ms": "Kaliakra (Bunge), Dobrich"
+  },
+  "Zvijezda plus (покупает Žito Group, 2025)": {
+   "en": "Zvijezda plus (being acquired by Žito Group, 2025)",
+   "uz": "Zvijezda plus (Žito Group sotib olmoqda, 2025)",
+   "ms": "Zvijezda plus (sedang dibeli oleh Žito Group, 2025)",
+   "kk": "Zvijezda plus (Žito Group сатып алуда, 2025)"
+  },
+  "ОАО «Гомельский жировой комбинат»": {
+   "en": "Gomel Fat Plant OJSC",
+   "uz": "«Gomel yogʻ kombinati» OAJ",
+   "ms": "Kilang Lemak Gomel OJSC"
+  },
+  "Минский маргариновый завод": {
+   "en": "Minsk Margarine Plant",
+   "uz": "Minsk margarin zavodi",
+   "ms": "Kilang Marjerin Minsk"
+  },
+  "СОАО «Коммунарка»": {
+   "en": "Kommunarka",
+   "uz": "Kommunarka",
+   "ms": "Kommunarka"
+  },
+  "ОАО «Спартак»": {
+   "en": "Spartak OJSC",
+   "uz": "Spartak OJSC",
+   "ms": "Spartak OJSC"
+  },
+  "ОАО «Красный пищевик»": {
+   "en": "Krasny Pishchevik OJSC",
+   "uz": "Krasny Pishchevik OJSC",
+   "ms": "Krasny Pishchevik OJSC"
+  },
+  "ОАО «Слодыч»": {
+   "en": "Slodych OJSC",
+   "uz": "Slodych OJSC",
+   "ms": "Slodych OJSC"
+  },
+  "Савушкин продукт": {
+   "en": "Savushkin Product",
+   "uz": "Savushkin Product",
+   "ms": "Savushkin Product"
+  },
+  "АО «Шымкентмай»": {
+   "en": "Shymkentmai JSC",
+   "uz": "Shymkentmai JSC",
+   "ms": "Shymkentmai JSC"
+  },
+  "ТОО «Масло-Дел»": {
+   "en": "Maslo-Del LLP",
+   "uz": "Maslo-Del LLP",
+   "ms": "Maslo-Del LLP"
+  },
+  "АО «Рахат»": {
+   "en": "Rakhat JSC",
+   "uz": "Rakhat JSC",
+   "ms": "Rakhat JSC"
+  },
+  "АО «Баян Сулу»": {
+   "en": "Bayan Sulu JSC",
+   "uz": "Bayan Sulu JSC",
+   "ms": "Bayan Sulu JSC"
+  },
+  "ТОО «Шин-Лайн»": {
+   "en": "Shin-Line LLP",
+   "uz": "Shin-Line LLP",
+   "ms": "Shin-Line LLP"
+  },
+  "СП ООО «Top Oil»": {
+   "en": "Top Oil JV LLC",
+   "uz": "Top Oil JV LLC",
+   "ms": "Top Oil JV LLC"
+  },
+  "ООО «Chromos Production»": {
+   "en": "Chromos Production LLC",
+   "uz": "Chromos Production LLC",
+   "ms": "Chromos Production LLC"
+  },
+  "ЧП «Best Butter Production»": {
+   "en": "Best Butter Production",
+   "uz": "Best Butter Production",
+   "ms": "Best Butter Production"
+  },
+  "СП ООО «Dairy's Best»": {
+   "en": "Dairy's Best JV LLC",
+   "uz": "Dairy's Best JV LLC",
+   "ms": "Dairy's Best JV LLC"
+  },
+  "СП ООО «Milk Euro Food»": {
+   "en": "Milk Euro Food JV LLC",
+   "uz": "Milk Euro Food JV LLC",
+   "ms": "Milk Euro Food JV LLC"
+  },
+  "АО «Тошкент ёғ-мой комбинати»": {
+   "en": "Toshkent Yogʻ-Moy Kombinati JSC",
+   "uz": "Toshkent Yogʻ-Moy Kombinati JSC",
+   "ms": "Toshkent Yogʻ-Moy Kombinati JSC"
+  },
+  "«Барбол»": {
+   "en": "Barbol",
+   "uz": "Barbol",
+   "ms": "Barbol"
+  },
+  "Кондитерский дом «Куликовский»": {
+   "en": "Kulikovsky confectionery house",
+   "uz": "«Kulikovskiy» qandolat uyi",
+   "ms": "Rumah konfeksi Kulikovsky"
+  },
+  "Дистрибьюторы российских и казахстанских жиров": {
+   "en": "Distributors of Russian and Kazakh fats",
+   "uz": "Rossiya va Qozogʻiston yogʻlari distribyutorlari",
+   "ms": "Pengedar lemak Rusia dan Kazakhstan",
+   "kk": "Ресей және Қазақстан майларының дистрибьюторлары"
+  },
+  "Кондитерская фабрика «Ширин»": {
+   "en": "Shirin confectionery factory",
+   "uz": "«Shirin» qandolat fabrikasi",
+   "ms": "Kilang konfeksi Shirin"
+  },
+  "«Амири»": {
+   "en": "Amiri",
+   "uz": "Amiri",
+   "ms": "Amiri"
+  },
+  "ООО «Файзи баракат»": {
+   "en": "Faizi Barakat LLC",
+   "uz": "Faizi Barakat LLC",
+   "ms": "Faizi Barakat LLC"
+  },
+  "ИП «Altyn Ýunus»": {
+   "en": "Altyn Ýunus",
+   "uz": "Altyn Ýunus",
+   "ms": "Altyn Ýunus"
+  },
+  "ИП «Elin»": {
+   "en": "Elin",
+   "uz": "Elin",
+   "ms": "Elin"
+  },
+  "Vellar Group (группа GNG)": {
+   "en": "Vellar Group (GNG group)",
+   "uz": "Vellar Group (GNG guruhi)",
+   "ms": "Vellar Group (kumpulan GNG)",
+   "kk": "Vellar Group (GNG тобы)"
+  },
+  "ЗАО «Альфа Фуд Сервис»": {
+   "en": "Alfa Food Service CJSC",
+   "uz": "Alfa Food Service CJSC",
+   "ms": "Alfa Food Service CJSC"
+  },
+  "ООО «Сан Фуд»": {
+   "en": "San Food LLC",
+   "uz": "San Food LLC",
+   "ms": "San Food LLC"
+  },
+  "«Ардис»": {
+   "en": "Ardis",
+   "uz": "Ardis",
+   "ms": "Ardis"
+  }
+ },
+ "brands": {
+  "Слобода, Пышка, ЭФКО Пищевые Ингредиенты; терминал в Тамани; Алексеевка": {
+   "en": "Sloboda, Pyshka, EFKO Food Ingredients; terminal in Taman; Alekseyevka",
+   "uz": "Sloboda, Pyshka, EFKO Food Ingredients; Tamandagi terminal; Alekseyevka",
+   "kk": "Слобода, Пышка, ЭФКО Пищевые Ингредиенты; Тамандағы терминал; Алексеевка",
+   "ms": "Sloboda, Pyshka, EFKO Food Ingredients; terminal di Taman; Alekseyevka"
+  },
+  "Солнечная линия, Провансаль ЕЖК, Mechta, Ряба; НМЖК": {
+   "en": "Solnechnaya Liniya, Provansal EZhK, Mechta, Ryaba; NMZhK",
+   "uz": "Solnechnaya Liniya, Provansal EZhK, Mechta, Ryaba; NMZhK",
+   "ms": "Solnechnaya Liniya, Provansal EZhK, Mechta, Ryaba; NMZhK"
+  },
+  "Золотая семечка, Затея": {
+   "en": "Zolotaya Semechka, Zateya",
+   "uz": "Zolotaya Semechka, Zateya",
+   "ms": "Zolotaya Semechka, Zateya"
+  },
+  "Красный Октябрь, Бабаевский, Рот Фронт и др": {
+   "en": "Krasny Oktyabr, Babayevsky, Rot Front and others",
+   "uz": "Krasny Oktyabr, Babayevskiy, Rot Front va boshqalar",
+   "kk": "Красный Октябрь, Бабаевский, Рот Фронт және т.б.",
+   "ms": "Krasny Oktyabr, Babayevsky, Rot Front dan lain-lain"
+  },
+  "Яшкино, Кириешки, Кузя": {
+   "en": "Yashkino, Kirieshki, Kuzya",
+   "uz": "Yashkino, Kirieshki, Kuzya",
+   "ms": "Yashkino, Kirieshki, Kuzya"
+  },
+  "Essen, Ozera, Маяма": {
+   "en": "Essen, Ozera, Mayama",
+   "uz": "Essen, Ozera, Mayama",
+   "ms": "Essen, Ozera, Mayama"
+  },
+  "Акконд, Чебоксары": {
+   "en": "Akkond, Cheboksary",
+   "uz": "Akkond, Cheboksary",
+   "ms": "Akkond, Cheboksary"
+  },
+  "Старый Оскол": {
+   "en": "Stary Oskol",
+   "uz": "Stary Oskol",
+   "ms": "Stary Oskol"
+  },
+  "Покров, Владимир, Собинка; Alpen Gold, Юбилейное": {
+   "en": "Pokrov, Vladimir, Sobinka; Alpen Gold, Yubileinoye",
+   "uz": "Pokrov, Vladimir, Sobinka; Alpen Gold, Yubileinoye",
+   "ms": "Pokrov, Vladimir, Sobinka; Alpen Gold, Yubileinoye"
+  },
+  "Россия, Nesquik, Maggi": {
+   "en": "Rossiya, Nesquik, Maggi",
+   "uz": "Rossiya, Nesquik, Maggi",
+   "ms": "Rossiya, Nesquik, Maggi"
+  },
+  "Ступино, Новосибирск": {
+   "en": "Stupino, Novosibirsk",
+   "uz": "Stupino, Novosibirsk",
+   "ms": "Stupino, Novosibirsk"
+  },
+  "Владимир": {
+   "en": "Vladimir",
+   "uz": "Vladimir",
+   "ms": "Vladimir"
+  },
+  "Москва/Калужская обл": {
+   "en": "Moscow/Kaluga region",
+   "uz": "Moskva/Kaluga viloyati",
+   "kk": "Мәскеу/Калуга облысы",
+   "ms": "Moscow/wilayah Kaluga"
+  },
+  "Завод в порту Пивденный (Южный); группа Wilmar": {
+   "en": "Plant at Pivdennyi (Yuzhny) port; Wilmar group",
+   "uz": "Pivdenniy (Yujniy) portidagi zavod; Wilmar guruhi",
+   "kk": "Пивденный (Южный) портындағы зауыт; Wilmar тобы",
+   "ms": "Kilang di pelabuhan Pivdennyi (Yuzhny); kumpulan Wilmar"
+  },
+  "Киев, Винница, Кременчуг": {
+   "en": "Kyiv, Vinnytsia, Kremenchuk",
+   "uz": "Kyiv, Vinnytsia, Kremenchuk",
+   "ms": "Kyiv, Vinnytsia, Kremenchuk"
+  },
+  "Тростянец (Корона), Вышгород": {
+   "en": "Trostianets (Korona), Vyshhorod",
+   "uz": "Trostianets (Korona), Vyshhorod",
+   "ms": "Trostianets (Korona), Vyshhorod"
+  },
+  "Свиточ (Львов)": {
+   "en": "Svitoch (Lviv)",
+   "uz": "Svitoch (Lviv)",
+   "ms": "Svitoch (Lviv)"
+  },
+  "Днепр": {
+   "en": "Dnipro",
+   "uz": "Dnipro",
+   "ms": "Dnipro"
+  },
+  "Житомир": {
+   "en": "Zhytomyr",
+   "uz": "Zhytomyr",
+   "ms": "Zhytomyr"
+  },
+  "Харьков": {
+   "en": "Kharkiv",
+   "uz": "Kharkiv",
+   "ms": "Kharkiv"
+  },
+  "Терра Фуд": {
+   "en": "Terra Food",
+   "uz": "Terra Food",
+   "ms": "Terra Food"
+  },
+  "Flora, Rama, Delma; завод в Катовице": {
+   "en": "Flora, Rama, Delma; plant in Katowice",
+   "uz": "Flora, Rama, Delma; Katovitsedagi zavod",
+   "kk": "Flora, Rama, Delma; Катовицедегі зауыт",
+   "ms": "Flora, Rama, Delma; kilang di Katowice"
+  },
+  "Варшава": {
+   "en": "Warsaw",
+   "uz": "Warsaw",
+   "ms": "Warsaw"
+  },
+  "Краков, Добчице": {
+   "en": "Kraków, Dobczyce",
+   "uz": "Kraków, Dobczyce",
+   "ms": "Kraków, Dobczyce"
+  },
+  "Рацибуж": {
+   "en": "Racibórz",
+   "uz": "Racibórz",
+   "ms": "Racibórz"
+  },
+  "Kalisz, Toruń и др": {
+   "en": "Kalisz, Toruń and others",
+   "uz": "Kalisz, Toruń va boshqalar",
+   "kk": "Kalisz, Toruń және т.б.",
+   "ms": "Kalisz, Toruń dan lain-lain"
+  },
+  "Orion, Sfinx (Голешов), Zora (Оломоуц)": {
+   "en": "Orion, Sfinx (Holešov), Zora (Olomouc)",
+   "uz": "Orion, Sfinx (Holešov), Zora (Olomouc)",
+   "ms": "Orion, Sfinx (Holešov), Zora (Olomouc)"
+  },
+  "Opavia (Опава), Figaro, Kolonáda": {
+   "en": "Opavia (Opava), Figaro, Kolonáda",
+   "uz": "Opavia (Opava), Figaro, Kolonáda",
+   "ms": "Opavia (Opava), Figaro, Kolonáda"
+  },
+  "Прьевидза": {
+   "en": "Prievidza",
+   "uz": "Prievidza",
+   "ms": "Prievidza"
+  },
+  "Братислава": {
+   "en": "Bratislava",
+   "uz": "Bratislava",
+   "ms": "Bratislava"
+  },
+  "Győri Keksz (Дьёр), Budapest": {
+   "en": "Győri Keksz (Győr), Budapest",
+   "uz": "Győri Keksz (Győr), Budapest",
+   "ms": "Győri Keksz (Győr), Budapest"
+  },
+  "Брашов; Poiana, Milka, Chipita/7Days": {
+   "en": "Brașov; Poiana, Milka, Chipita/7Days",
+   "uz": "Brașov; Poiana, Milka, Chipita/7Days",
+   "ms": "Brașov; Poiana, Milka, Chipita/7Days"
+  },
+  "Констанца": {
+   "en": "Constanța",
+   "uz": "Constanța",
+   "ms": "Constanța"
+  },
+  "Своге (Milka, Svoge)": {
+   "en": "Svoge (Milka, Svoge)",
+   "uz": "Svoge (Milka, Svoge)",
+   "ms": "Svoge (Milka, Svoge)"
+  },
+  "София": {
+   "en": "Sofia",
+   "uz": "Sofia",
+   "ms": "Sofia"
+  },
+  "Бургас": {
+   "en": "Burgas",
+   "uz": "Burgas",
+   "ms": "Burgas"
+  },
+  "Велико-Тырново": {
+   "en": "Veliko Tarnovo",
+   "uz": "Veliko Tarnovo",
+   "ms": "Veliko Tarnovo"
+  },
+  "Бьеловар": {
+   "en": "Bjelovar",
+   "uz": "Bjelovar",
+   "ms": "Bjelovar"
+  },
+  "Загреб": {
+   "en": "Zagreb",
+   "uz": "Zagreb",
+   "ms": "Zagreb"
+  },
+  "проверить": {
+   "en": "to be checked",
+   "uz": "tekshirish kerak",
+   "kk": "тексеру керек",
+   "ms": "perlu disemak"
+  },
+  "Вильнюс": {
+   "en": "Vilnius",
+   "uz": "Vilnius",
+   "ms": "Vilnius"
+  },
+  "Шяуляй": {
+   "en": "Šiauliai",
+   "uz": "Šiauliai",
+   "ms": "Šiauliai"
+  },
+  "Гомель": {
+   "en": "Gomel",
+   "uz": "Gomel",
+   "ms": "Gomel"
+  },
+  "Минск": {
+   "en": "Minsk",
+   "uz": "Minsk",
+   "ms": "Minsk"
+  },
+  "Бобруйск": {
+   "en": "Bobruisk",
+   "uz": "Bobruisk",
+   "ms": "Bobruisk"
+  },
+  "Могилёв": {
+   "en": "Mogilev",
+   "uz": "Mogilev",
+   "ms": "Mogilev"
+  },
+  "Брест": {
+   "en": "Brest",
+   "uz": "Brest",
+   "ms": "Brest"
+  },
+  "Кишинёв": {
+   "en": "Chișinău",
+   "uz": "Chișinău",
+   "ms": "Chișinău"
+  },
+  "Бельцы": {
+   "en": "Bălți",
+   "uz": "Bălți",
+   "ms": "Bălți"
+  },
+  "Шымкент": {
+   "en": "Shymkent",
+   "uz": "Shymkent",
+   "ms": "Shymkent"
+  },
+  "Алматы, Шымкент; группа Lotte": {
+   "en": "Almaty, Shymkent; Lotte group",
+   "uz": "Almati, Shymkent; Lotte guruhi",
+   "kk": "Алматы, Шымкент; Lotte тобы",
+   "ms": "Almaty, Shymkent; kumpulan Lotte"
+  },
+  "Костанай": {
+   "en": "Kostanay",
+   "uz": "Kostanay",
+   "ms": "Kostanay"
+  },
+  "Алматы": {
+   "en": "Almaty",
+   "uz": "Almaty",
+   "ms": "Almaty"
+  },
+  "Ангрен; ТМ MILTER": {
+   "en": "Angren; MILTER brand",
+   "uz": "Angren; MILTER savdo belgisi",
+   "kk": "Ангрен; MILTER сауда белгісі",
+   "ms": "Angren; jenama MILTER"
+  },
+  "ТМ APPETITO, Ташкент": {
+   "en": "APPETITO brand, Tashkent",
+   "uz": "APPETITO savdo belgisi, Toshkent",
+   "kk": "APPETITO сауда белгісі, Ташкент",
+   "ms": "jenama APPETITO, Tashkent"
+  },
+  "Ташкент": {
+   "en": "Tashkent",
+   "uz": "Toshkent",
+   "kk": "Ташкент",
+   "ms": "Tashkent"
+  },
+  "Чирчик": {
+   "en": "Chirchiq",
+   "uz": "Chirchiq",
+   "ms": "Chirchiq"
+  },
+  "Наманган": {
+   "en": "Namangan",
+   "uz": "Namangan",
+   "ms": "Namangan"
+  },
+  "Ош; 21 фирменный магазин (2023)": {
+   "en": "Osh; 21 brand stores (2023)",
+   "uz": "Oʻsh; 21 ta firma doʻkoni (2023)",
+   "kk": "Ош; 21 фирмалық дүкен (2023)",
+   "ms": "Osh; 21 kedai jenama (2023)"
+  },
+  "Бишкек, Ош": {
+   "en": "Bishkek, Osh",
+   "uz": "Bishkek, Osh",
+   "ms": "Bishkek, Osh"
+  },
+  "Душанбе": {
+   "en": "Dushanbe",
+   "uz": "Dushanbe",
+   "ms": "Dushanbe"
+  },
+  "Ашхабад; экспорт в UZ и TJ": {
+   "en": "Ashgabat; exports to UZ and TJ",
+   "uz": "Ashxobod; UZ va TJ ga eksport",
+   "kk": "Ашхабад; UZ және TJ-ге экспорт",
+   "ms": "Ashgabat; eksport ke UZ dan TJ"
+  },
+  "Ереван": {
+   "en": "Yerevan",
+   "uz": "Yerevan",
+   "ms": "Yerevan"
+  }
+ },
+ "marketLabels": {
+  "Импорт 1511, зеркальные": {
+   "en": "Imports 1511, mirror data",
+   "uz": "Import 1511, koʻzgu maʼlumotlari",
+   "kk": "Импорт 1511, айналық деректер",
+   "ms": "Import 1511, data cermin"
+  },
+  "Импорт 1511, TradeMap": {
+   "en": "Imports 1511, TradeMap",
+   "uz": "Import 1511, TradeMap",
+   "kk": "Импорт 1511, TradeMap",
+   "ms": "Import 1511, TradeMap"
+  },
+  "Поставщики 1511": {
+   "en": "Suppliers 1511",
+   "uz": "Yetkazib beruvchilar 1511",
+   "kk": "Жеткізушілер 1511",
+   "ms": "Pembekal 1511"
+  },
+  "Малайзия / Индонезия": {
+   "en": "Malaysia / Indonesia",
+   "uz": "Malayziya / Indoneziya",
+   "kk": "Малайзия / Индонезия",
+   "ms": "Malaysia / Indonesia"
+  },
+  "Импорт 1511, $ млн (Comtrade)": {
+   "en": "Imports 1511, $ mn (Comtrade)",
+   "uz": "Import 1511, $ mln (Comtrade)",
+   "kk": "Импорт 1511, $ млн (Comtrade)",
+   "ms": "Import 1511, $ juta (Comtrade)"
+  }
+ },
+ "otherEstimates": {
+  "en": "Other estimates",
+  "uz": "Boshqa baholar",
+  "kk": "Басқа бағалаулар",
+  "ms": "Anggaran lain"
+ },
+ "marketValues": {
+  "2019: 668; 2020: 793; 2021: 1 272 (более свежих данных РФ в Comtrade нет)": {
+   "en": "2019: 668; 2020: 793; 2021: 1,272 (no newer Russian data in Comtrade)",
+   "uz": "2019: 668; 2020: 793; 2021: 1 272 (Comtrade’da Rossiyaning yangiroq maʼlumotlari yoʻq)",
+   "kk": "2019: 668; 2020: 793; 2021: 1 272 (Comtrade-та РФ-тің жаңарақ деректері жоқ)",
+   "ms": "2019: 668; 2020: 793; 2021: 1,272 (tiada data Rusia yang lebih baharu dalam Comtrade)"
+  },
+  "2019: 7,3; 2020: 9,8; 2021: 14,7 (позже данные не публикуются)": {
+   "en": "2019: 7.3; 2020: 9.8; 2021: 14.7 (no data published since)",
+   "uz": "2019: 7,3; 2020: 9,8; 2021: 14,7 (keyin maʼlumotlar eʼlon qilinmaydi)",
+   "kk": "2019: 7,3; 2020: 9,8; 2021: 14,7 (кейін деректер жарияланбайды)",
+   "ms": "2019: 7.3; 2020: 9.8; 2021: 14.7 (tiada data diterbitkan selepas itu)"
+  },
+  "24,2 тыс. т, $27 млн (2023: 39,7 тыс. т); производство маргарина и спредов >28 тыс. т за 11 мес.": {
+   "en": "24.2 thousand t, $27 mn (2023: 39.7 thousand t); margarine and spread output >28 thousand t in 11 months",
+   "uz": "24,2 ming t, $27 mln (2023: 39,7 ming t); 11 oyda margarin va spred ishlab chiqarish >28 ming t",
+   "kk": "24,2 мың т, $27 млн (2023: 39,7 мың т); 11 айда маргарин мен спред өндірісі >28 мың т",
+   "ms": "24.2 ribu tan, $27 juta (2023: 39.7 ribu tan); pengeluaran marjerin dan sapuan >28 ribu tan dalam 11 bulan"
+  },
+  "HS 1511: $124,9 млн (2022: $164,1 млн; 2021: $277,3 млн); Индонезия 56%, Малайзия 36%": {
+   "en": "HS 1511: $124.9 mn (2022: $164.1 mn; 2021: $277.3 mn); Indonesia 56%, Malaysia 36%",
+   "uz": "HS 1511: $124,9 mln (2022: $164,1 mln; 2021: $277,3 mln); Indoneziya 56%, Malayziya 36%",
+   "kk": "HS 1511: $124,9 млн (2022: $164,1 млн; 2021: $277,3 млн); Индонезия 56%, Малайзия 36%",
+   "ms": "HS 1511: $124.9 juta (2022: $164.1 juta; 2021: $277.3 juta); Indonesia 56%, Malaysia 36%"
+  },
+  "Zvijezda: 84 тыс. т готовой продукции": {
+   "en": "Zvijezda: 84 thousand t of finished products",
+   "uz": "Zvijezda: 84 ming t tayyor mahsulot",
+   "kk": "Zvijezda: 84 мың т дайын өнім",
+   "ms": "Zvijezda: 84 ribu tan produk siap"
+  },
+  "~2,2 тыс. т, $2,9 млн за янв.–авг. 2023 (+45%); янв.–фев. 2025: 511 т (+35%)": {
+   "en": "~2.2 thousand t, $2.9 mn in Jan–Aug 2023 (+45%); Jan–Feb 2025: 511 t (+35%)",
+   "uz": "~2,2 ming t, $2,9 mln 2023-yil yanvar–avgustda (+45%); 2025-yil yanvar–fevral: 511 t (+35%)",
+   "kk": "~2,2 мың т, $2,9 млн 2023 ж. қаңтар–тамызда (+45%); 2025 ж. қаңтар–ақпан: 511 т (+35%)",
+   "ms": "~2.2 ribu tan, $2.9 juta pada Jan–Ogos 2023 (+45%); Jan–Feb 2025: 511 tan (+35%)"
+  },
+  "Официально 30–49 тыс. т/год; по оценке переработчиков фактически >160 тыс. т (вкл. пальму в составе готовых продуктов)": {
+   "en": "Officially 30–49 thousand t/year; processors estimate actual volume >160 thousand t (incl. palm oil in finished products)",
+   "uz": "Rasman yiliga 30–49 ming t; qayta ishlovchilar bahosiga koʻra amalda >160 ming t (tayyor mahsulotlar tarkibidagi palma bilan)",
+   "kk": "Ресми түрде жылына 30–49 мың т; өңдеушілердің бағалауынша іс жүзінде >160 мың т (дайын өнім құрамындағы пальманы қоса)",
+   "ms": "Secara rasmi 30–49 ribu tan/tahun; pemproses menganggarkan jumlah sebenar >160 ribu tan (termasuk sawit dalam produk siap)"
+  },
+  "Пальмовое масло и фракции: >900 тыс. т/год (2024: −1,9% к 2023)": {
+   "en": "Palm oil and fractions: >900 thousand t/year (2024: −1.9% vs 2023)",
+   "uz": "Palma yogʻi va fraksiyalari: yiliga >900 ming t (2024: 2023-yilga nisbatan −1,9%)",
+   "kk": "Пальма майы және фракциялары: жылына >900 мың т (2024: 2023 жылға қарағанда −1,9%)",
+   "ms": "Minyak sawit dan pecahan: >900 ribu tan/tahun (2024: −1.9% berbanding 2023)"
+  },
+  "Прямой импорт из-за пределов ЕС: 31 793 т": {
+   "en": "Direct imports from outside the EU: 31,793 t",
+   "uz": "YeIdan tashqaridan toʻgʻridan-toʻgʻri import: 31 793 t",
+   "kk": "ЕО-дан тыс жерден тікелей импорт: 31 793 т",
+   "ms": "Import langsung dari luar EU: 31,793 tan"
+  },
+  "маргарин: Upfield 51% рынка": {
+   "en": "margarine: Upfield 51% of the market",
+   "uz": "margarin: Upfield — bozorning 51%",
+   "kk": "маргарин: Upfield — нарықтың 51%-ы",
+   "ms": "marjerin: Upfield 51% pasaran"
+  },
+  "нет в зеркале; вне ЕС 11 416 т (2023)": {
+   "en": "not in mirror data; from outside the EU 11,416 t (2023)",
+   "uz": "koʻzgu maʼlumotlarida yoʻq; YeIdan tashqaridan 11 416 t (2023)",
+   "kk": "айналық деректерде жоқ; ЕО-дан тыс 11 416 т (2023)",
+   "ms": "tiada dalam data cermin; dari luar EU 11,416 tan (2023)"
+  },
+  "нет в зеркале; вне ЕС всего 164 т (2023)": {
+   "en": "not in mirror data; only 164 t from outside the EU (2023)",
+   "uz": "koʻzgu maʼlumotlarida yoʻq; YeIdan tashqaridan jami 164 t (2023)",
+   "kk": "айналық деректерде жоқ; ЕО-дан тыс барлығы 164 т (2023)",
+   "ms": "tiada dalam data cermin; hanya 164 tan dari luar EU (2023)"
+  },
+  "нет в зеркале; вне ЕС всего 2 457 т (2023)": {
+   "en": "not in mirror data; only 2,457 t from outside the EU (2023)",
+   "uz": "koʻzgu maʼlumotlarida yoʻq; YeIdan tashqaridan jami 2 457 t (2023)",
+   "kk": "айналық деректерде жоқ; ЕО-дан тыс барлығы 2 457 т (2023)",
+   "ms": "tiada dalam data cermin; hanya 2,457 tan dari luar EU (2023)"
+  },
+  "нет в зеркале; по ГТК 2024: $27 млн (24,2 тыс. т)": {
+   "en": "not in mirror data; per State Customs Committee 2024: $27 mn (24.2 thousand t)",
+   "uz": "koʻzgu maʼlumotlarida yoʻq; DBQ maʼlumotiga koʻra 2024: $27 mln (24,2 ming t)",
+   "kk": "айналық деректерде жоқ; МКК бойынша 2024: $27 млн (24,2 мың т)",
+   "ms": "tiada dalam data cermin; menurut Jawatankuasa Kastam Negeri 2024: $27 juta (24.2 ribu tan)"
+  },
+  "нет в зеркале; янв.–авг. 2023: $2,9 млн": {
+   "en": "not in mirror data; Jan–Aug 2023: $2.9 mn",
+   "uz": "koʻzgu maʼlumotlarida yoʻq; 2023-yil yanvar–avgust: $2,9 mln",
+   "kk": "айналық деректерде жоқ; 2023 ж. қаңтар–тамыз: $2,9 млн",
+   "ms": "tiada dalam data cermin; Jan–Ogos 2023: $2.9 juta"
+  },
+  "нет данных в зеркале": {
+   "en": "no mirror data",
+   "uz": "koʻzgu maʼlumotlari yoʻq",
+   "kk": "айналық деректер жоқ",
+   "ms": "tiada data cermin"
+  }
+ },
+ "units": {
+  "thousand_t": {
+   "en": "thousand t",
+   "uz": "ming t",
+   "kk": "мың т",
+   "ms": "ribu tan"
+  },
+  "t": {
+   "en": "t",
+   "uz": "t",
+   "kk": "т",
+   "ms": "tan"
+  },
+  "mirror": {
+   "en": "mirror",
+   "uz": "koʻzgu",
+   "kk": "айналық",
+   "ms": "cermin"
+  }
+ }
+}
