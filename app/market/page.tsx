@@ -17,22 +17,23 @@ import { getPsd } from '@/lib/psd';
 import { buildPsdView } from '@/lib/psd-view';
 import { getHistory } from '@/lib/snapshots';
 import { fmtTimeUtc } from '@/lib/format';
+import { getDict } from '@/lib/i18n-server';
+import { fill } from '@/lib/dict';
+import { METRICS } from '@/lib/psd-meta';
 
 export const revalidate = 600;
-export const metadata: Metadata = { title: 'Рынок' };
+export function generateMetadata(): Metadata {
+  return { title: getDict().t.meta.market };
+}
 
-const ANCHORS = [
-  { href: '#prices', label: 'Цены' },
-  { href: '#spreads', label: 'Спреды' },
-  { href: '#usda', label: 'Мировые балансы' },
-  { href: '#regions', label: 'Регионы' },
-  { href: '#news', label: 'Новости' },
-];
+const ANCHORS = ['prices', 'spreads', 'usda', 'regions', 'news'] as const;
 
 export default async function MarketPage() {
   const [quotes, feed, psd, pogoHistory] = await Promise.all([getQuotes(), getNewsFeed(), getPsd(), getHistory('pogo')]);
+  const { lang, t } = getDict();
+  const m = t.market;
   const news = feed.items;
-  const views = buildPsdView(psd.rows);
+  const views = buildPsdView(psd.rows, lang).map(v => ({ ...v, label: t.psd.oils[v.id] }));
   const hasPsd = views.some(v => v.years.length > 0);
 
   return (
@@ -40,27 +41,27 @@ export default async function MarketPage() {
       <SiteHeader active="market" />
       <NewsTicker news={news} />
 
-      <nav aria-label="На странице" className="border-b border-rule bg-panel">
+      <nav aria-label={m.onPage} className="border-b border-rule bg-panel">
         <ul className="mx-auto max-w-page px-4 sm:px-6 flex gap-5 overflow-x-auto text-sm py-2.5">
           {ANCHORS.map(a => (
-            <li key={a.href}><a href={a.href} className="text-ink-2 hover:text-ink whitespace-nowrap">{a.label}</a></li>
+            <li key={a}><a href={`#${a}`} className="text-ink-2 hover:text-ink whitespace-nowrap">{m.anchors[a]}</a></li>
           ))}
         </ul>
       </nav>
 
       <main className="mx-auto max-w-page w-full px-4 sm:px-6">
-        <h1 className="sr-only">Рыночные показатели</h1>
+        <h1 className="sr-only">{m.h1}</h1>
 
-        <Section id="prices" title="Цены" note="Ближайшие фьючерсы. В долларах за тонну — по текущему курсу валют.">
-          {quotes.error && <Notice>Котировки сейчас недоступны. Попробуйте обновить страницу через несколько минут.</Notice>}
+        <Section id="prices" title={m.anchors.prices} note={m.pricesNote}>
+          {quotes.error && <Notice>{t.quotes.unavailable}</Notice>}
           <QuotesTable quotes={quotes.quotes} />
         </Section>
 
-        <Section id="spreads" title="Спреды" note="Отрицательный POGO означает, что пальмовое масло дешевле газойля и подмешивать его в биодизель выгодно без субсидий.">
+        <Section id="spreads" title={m.anchors.spreads} note={m.spreadsNote}>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-            {quotes.spreads.length > 0 ? <SpreadsTable spreads={quotes.spreads} /> : <p className="text-ink-2">Спреды появятся вместе с котировками.</p>}
+            {quotes.spreads.length > 0 ? <SpreadsTable spreads={quotes.spreads} /> : <p className="text-ink-2">{m.spreadsEmpty}</p>}
             <div>
-              <h3 className="font-cond text-lg font-semibold mb-2">POGO за год, $/т</h3>
+              <h3 className="font-cond text-lg font-semibold mb-2">{m.pogoYear}</h3>
               <Sparkline points={pogoHistory} label="POGO" />
             </div>
           </div>
@@ -68,24 +69,25 @@ export default async function MarketPage() {
 
         <Section
           id="usda"
-          title="Мировые балансы"
-          note={<>Производство, потребление, торговля и запасы по данным USDA, тыс. т готового масла.{psd.updatedAt && <> Загружено {fmtTimeUtc(psd.updatedAt)}.</>}</>}
+          title={m.anchors.usda}
+          note={<>{m.usdaNote}{psd.updatedAt && fill(m.usdaLoaded, { time: fmtTimeUtc(psd.updatedAt, lang) })}</>}
         >
-          {hasPsd ? <PsdExplorer views={views} /> : (
-            <Notice>
-              Данные USDA ещё не загружены. Они подтягиваются раз в месяц автоматически; чтобы загрузить сейчас,
-              запустите задачу <code>/api/cron/usda-sync</code> с ключом CRON_SECRET. Нужен ключ USDA_API_KEY в настройках Vercel.
-            </Notice>
-          )}
+          {hasPsd ? (
+            <PsdExplorer
+              views={views}
+              lang={lang}
+              t={{ ...t.psd, metricList: METRICS.map(x => ({ id: x.id, label: t.psd.metrics[x.id] })) }}
+            />
+          ) : <Notice>{m.usdaMissing}</Notice>}
         </Section>
 
-        <Section id="regions" title="Региональные балансы" note="Оценки по странам, которых нет в детальной разбивке USDA. Источник каждой строки указан в последней колонке.">
-          <RegionalBalances />
+        <Section id="regions" title={m.regionsTitle} note={m.regionsNote}>
+          <RegionalBalances lang={lang} t={t.regional} />
         </Section>
 
-        <Section id="news" title="Новости за месяц" note={feed.curated
-            ? <>{news.length} материалов, отобранных и проверенных по первоисточникам{feed.updatedAt && <>; обновлено {fmtTimeUtc(feed.updatedAt)}</>}. От свежих к старым.</>
-            : `${news.length} материалов из автоматической ленты (отобранных новостей пока нет).`}>
+        <Section id="news" title={m.newsTitle} note={feed.curated
+            ? <>{fill(m.newsCurated, { n: news.length })}{feed.updatedAt && fill(m.newsUpdated, { time: fmtTimeUtc(feed.updatedAt, lang) })}{m.newsOrder}</>
+            : fill(m.newsAuto, { n: news.length })}>
           <NewsList news={news} />
         </Section>
       </main>

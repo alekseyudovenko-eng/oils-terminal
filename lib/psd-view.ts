@@ -1,5 +1,6 @@
 // lib/psd-view.ts — готовит компактные таблицы из балансов USDA для страницы «Рынок».
 import { METRICS, OILS, WORLD, type Metric, type OilId, type PsdRow } from './psd-meta';
+import type { Locale } from './i18n';
 
 export type Ranked = { name: string; value: number; share: number | null };
 
@@ -32,7 +33,9 @@ const FOCUS = ['Kazakhstan', 'Uzbekistan', 'Kyrgyzstan', 'Tajikistan', 'Turkmeni
 
 export const ruCountry = (name: string) => RU[name] ?? name;
 
-export function buildPsdView(rows: PsdRow[]): OilView[] {
+/** Названия стран: по-русски для русской версии, иначе как у USDA (по-английски). */
+export function buildPsdView(rows: PsdRow[], lang: Locale = 'ru'): OilView[] {
+  const cname = (n: string) => (lang === 'ru' ? ruCountry(n) : n === 'European Union' ? 'EU' : n);
   return OILS.map(oil => {
     const mine = rows.filter(r => r.commodity === oil.id);
     const worldRows = mine.filter(r => r.country_code === WORLD);
@@ -52,7 +55,7 @@ export function buildPsdView(rows: PsdRow[]): OilView[] {
           .filter(r => r.attribute === m && r.value > 0)
           .sort((a, b) => b.value - a.value)
           .slice(0, 10)
-          .map(r => ({ name: ruCountry(r.country_name), value: r.value, share: total ? (r.value / total) * 100 : null }));
+          .map(r => ({ name: cname(r.country_name), value: r.value, share: total ? (r.value / total) * 100 : null }));
       }
       const byCountry = new Map<string, Partial<Record<Metric, number>>>();
       for (const r of countries.filter(c => FOCUS.includes(c.country_name))) {
@@ -61,7 +64,7 @@ export function buildPsdView(rows: PsdRow[]): OilView[] {
         byCountry.set(r.country_name, v);
       }
       focus[y] = Array.from(byCountry.entries())
-        .map(([name, values]) => ({ name: ruCountry(name), values }))
+        .map(([name, values]) => ({ name: cname(name), values }))
         .sort((a, b) => (b.values.consumption ?? 0) - (a.values.consumption ?? 0));
     }
 

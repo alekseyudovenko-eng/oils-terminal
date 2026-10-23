@@ -1,0 +1,931 @@
+{
+  "updatedAt": "2026-10-23",
+  "period": {
+    "ru": "октябрь 2025 – октябрь 2026 (и действующие нормы прошлых лет)",
+    "en": "October 2025 – October 2026 (plus earlier rules still in force)"
+  },
+  "countries": [
+    {
+      "code": "PL",
+      "bloc": "EU",
+      "name": {
+        "ru": "Польша",
+        "en": "Poland",
+        "uz": "Polsha",
+        "kk": "Польша",
+        "ms": "Poland"
+      },
+      "claimPhrase": "bez oleju palmowego",
+      "claimUse": "high",
+      "practice": {
+        "ru": "Żabka: 100% собственных марок без пальмового масла, в брендах поставщиков — только RSPO. Заявка на снеках, пастах, детских смесях, B2B-маргаринах.",
+        "en": "Żabka: 100% of private label palm-free, supplier brands RSPO-only. Claim used on snacks, spreads, infant formula, B2B bakery margarines."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле нет; действуют общие правила ЕС.",
+        "en": "No national palm-specific rules; EU rules apply."
+      }
+    },
+    {
+      "code": "CZ",
+      "bloc": "EU",
+      "name": {
+        "ru": "Чехия",
+        "en": "Czech Republic",
+        "uz": "Chexiya",
+        "kk": "Чехия",
+        "ms": "Republik Czech"
+      },
+      "claimPhrase": "bez palmového oleje",
+      "claimUse": "high",
+      "practice": {
+        "ru": "Заявка в названиях товаров онлайн-ритейла (Rohlik: Lef, Chocoland). Родина «Дня без пальмового масла» (1 февраля).",
+        "en": "Claim built into product names in online retail (Rohlik: Lef, Chocoland). Home of the 1 February ‘Palm Oil Free Day’."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле нет; действуют общие правила ЕС.",
+        "en": "No national palm-specific rules; EU rules apply."
+      }
+    },
+    {
+      "code": "SK",
+      "bloc": "EU",
+      "name": {
+        "ru": "Словакия",
+        "en": "Slovakia",
+        "uz": "Slovakiya",
+        "kk": "Словакия",
+        "ms": "Slovakia"
+      },
+      "claimPhrase": "bez palmového oleja",
+      "claimUse": "medium",
+      "practice": {
+        "ru": "Локальные бренды ореховых паст; тема «двойного качества» (пальмовое масло вместо масла в рецептурах для Востока).",
+        "en": "Local nut-spread brands; ‘dual quality’ debate (palm oil instead of butter in recipes for the East)."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле нет; общие правила ЕС, включая запрет «двойного качества».",
+        "en": "No national palm-specific rules; EU rules apply, including the dual-quality ban."
+      }
+    },
+    {
+      "code": "HU",
+      "bloc": "EU",
+      "name": {
+        "ru": "Венгрия",
+        "en": "Hungary",
+        "uz": "Vengriya",
+        "kk": "Венгрия",
+        "ms": "Hungary"
+      },
+      "claimPhrase": "pálmaolaj-mentes",
+      "claimUse": "low",
+      "practice": {
+        "ru": "Ниша free-from; в СМИ тема звучит через цены и EUDR.",
+        "en": "Free-from niche; media focus on prices and EUDR."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле не выявлено; действуют общие правила ЕС.",
+        "en": "No national palm-specific rules found; EU rules apply."
+      }
+    },
+    {
+      "code": "RO",
+      "bloc": "EU",
+      "name": {
+        "ru": "Румыния",
+        "en": "Romania",
+        "uz": "Ruminiya",
+        "kk": "Румыния",
+        "ms": "Romania"
+      },
+      "claimPhrase": "fără ulei de palmier",
+      "claimUse": "medium",
+      "practice": {
+        "ru": "Штатный фильтр «Fara ulei de palmier» на eMAG; free-from магазины.",
+        "en": "Standard ‘Fara ulei de palmier’ filter on eMAG; free-from shops."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле не выявлено; действуют общие правила ЕС.",
+        "en": "No national palm-specific rules found; EU rules apply."
+      }
+    },
+    {
+      "code": "BG",
+      "bloc": "EU",
+      "name": {
+        "ru": "Болгария",
+        "en": "Bulgaria",
+        "uz": "Bolgariya",
+        "kk": "Болгария",
+        "ms": "Bulgaria"
+      },
+      "claimPhrase": "без палмово масло",
+      "claimUse": "nodata",
+      "practice": {
+        "ru": "Публикаций за период не найдено; заявка встречается на импорте из ЕС.",
+        "en": "No publications found for the period; claim seen on EU imports."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле не выявлено; действуют общие правила ЕС.",
+        "en": "No national palm-specific rules found; EU rules apply."
+      }
+    },
+    {
+      "code": "EE",
+      "bloc": "EU",
+      "name": {
+        "ru": "Эстония",
+        "en": "Estonia",
+        "uz": "Estoniya",
+        "kk": "Эстония",
+        "ms": "Estonia"
+      },
+      "claimPhrase": "palmiõlita",
+      "claimUse": "nodata",
+      "practice": {
+        "ru": "Публикаций за период не найдено.",
+        "en": "No publications found for the period."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле не выявлено; действуют общие правила ЕС.",
+        "en": "No national palm-specific rules found; EU rules apply."
+      }
+    },
+    {
+      "code": "LV",
+      "bloc": "EU",
+      "name": {
+        "ru": "Латвия",
+        "en": "Latvia",
+        "uz": "Latviya",
+        "kk": "Латвия",
+        "ms": "Latvia"
+      },
+      "claimPhrase": "bez palmu eļļas",
+      "claimUse": "low",
+      "practice": {
+        "ru": "Дискуссия о пальмовом масле в детских смесях (LSM).",
+        "en": "Debate about palm oil in infant formula (LSM)."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле не выявлено; действуют общие правила ЕС.",
+        "en": "No national palm-specific rules found; EU rules apply."
+      }
+    },
+    {
+      "code": "LT",
+      "bloc": "EU",
+      "name": {
+        "ru": "Литва",
+        "en": "Lithuania",
+        "uz": "Litva",
+        "kk": "Литва",
+        "ms": "Lithuania"
+      },
+      "claimPhrase": "be palmių aliejaus",
+      "claimUse": "low",
+      "practice": {
+        "ru": "Повестка — пальмовое масло в биотопливе, а не упаковка.",
+        "en": "Debate centres on palm oil in biofuel, not packaging."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле не выявлено; действуют общие правила ЕС.",
+        "en": "No national palm-specific rules found; EU rules apply."
+      }
+    },
+    {
+      "code": "HR",
+      "bloc": "EU",
+      "name": {
+        "ru": "Хорватия",
+        "en": "Croatia",
+        "uz": "Xorvatiya",
+        "kk": "Хорватия",
+        "ms": "Croatia"
+      },
+      "claimPhrase": "bez palminog ulja",
+      "claimUse": "low",
+      "practice": {
+        "ru": "В основном косметика и мыло; Lidl Hrvatska — политика RSPO, а не отказа.",
+        "en": "Mostly cosmetics and soap; Lidl Hrvatska follows RSPO sourcing, not avoidance."
+      },
+      "summary": {
+        "ru": "Национальных норм о пальмовом масле не выявлено; действуют общие правила ЕС.",
+        "en": "No national palm-specific rules found; EU rules apply."
+      }
+    },
+    {
+      "code": "BY",
+      "bloc": "EAEU",
+      "name": {
+        "ru": "Беларусь",
+        "en": "Belarus",
+        "uz": "Belarus",
+        "kk": "Беларусь",
+        "ms": "Belarus"
+      },
+      "claimPhrase": "без пальмового масла",
+      "claimUse": "nodata",
+      "practice": {
+        "ru": "Данных о добровольной заявке за период не найдено. НАН разработала методику выявления пальмового масла в продуктах.",
+        "en": "No data on voluntary claims for the period. The National Academy of Sciences developed a method to detect palm oil in food."
+      },
+      "summary": {
+        "ru": "Нормы ЕАЭС. Беларусь — инициатор обязательного указания вида растительного масла в составе.",
+        "en": "EAEU rules. Belarus initiated the push to require the specific vegetable oil in ingredient lists."
+      }
+    },
+    {
+      "code": "MD",
+      "bloc": "other",
+      "name": {
+        "ru": "Молдова",
+        "en": "Moldova",
+        "uz": "Moldova",
+        "kk": "Молдова",
+        "ms": "Moldova"
+      },
+      "claimPhrase": "fără ulei de palmier",
+      "claimUse": "low",
+      "practice": {
+        "ru": "Заявка встречается на импорте из ЕС и Румынии.",
+        "en": "Claim seen on imports from the EU and Romania."
+      },
+      "summary": {
+        "ru": "Усиленный контроль импортных партий пальмового масла (3-MCPD).",
+        "en": "Tighter checks on imported palm oil lots (3-MCPD)."
+      }
+    },
+    {
+      "code": "UA",
+      "bloc": "other",
+      "name": {
+        "ru": "Украина",
+        "en": "Ukraine",
+        "uz": "Ukraina",
+        "kk": "Украина",
+        "ms": "Ukraine"
+      },
+      "claimPhrase": "без пальмової олії",
+      "claimUse": "medium",
+      "practice": {
+        "ru": "Заявка у брендов и на маркетплейсах (Prom.ua).",
+        "en": "Claim used by brands and on marketplaces (Prom.ua)."
+      },
+      "summary": {
+        "ru": "Самое жёсткое законодательство региона: запреты в молочке, детском питании и кондитерке плюс маркировка.",
+        "en": "Strictest law in the region: bans in dairy, baby food and confectionery plus labelling."
+      }
+    },
+    {
+      "code": "RU",
+      "bloc": "EAEU",
+      "name": {
+        "ru": "Россия",
+        "en": "Russia",
+        "uz": "Rossiya",
+        "kk": "Ресей",
+        "ms": "Rusia"
+      },
+      "claimPhrase": "без пальмового масла",
+      "claimUse": "high",
+      "practice": {
+        "ru": "Каталог «Безпальмы.рф» (дек. 2025); сети продвигают «полезный» ассортимент; Роскачество проверяет шоколад на отсутствие пальмового масла.",
+        "en": "‘Bezpalmy.rf’ catalogue (Dec 2025); retailers push ‘healthy’ ranges; Roskachestvo tests chocolate for palm oil."
+      },
+      "summary": {
+        "ru": "Нормы ЕАЭС + ГОСТ 31647–2025 и цифровая маркировка масел «Честный знак»; в Госдуме обсуждаются новые ограничения.",
+        "en": "EAEU rules + GOST 31647–2025 and ‘Chestny Znak’ digital marking of oils; new limits debated in the Duma."
+      }
+    },
+    {
+      "code": "KZ",
+      "bloc": "EAEU",
+      "name": {
+        "ru": "Казахстан",
+        "en": "Kazakhstan",
+        "uz": "Qozogʻiston",
+        "kk": "Қазақстан",
+        "ms": "Kazakhstan"
+      },
+      "claimPhrase": "без пальмового масла",
+      "claimUse": "low",
+      "practice": {
+        "ru": "Заявка единичная.",
+        "en": "Claim is rare."
+      },
+      "summary": {
+        "ru": "Нормы ЕАЭС; обязательная цифровая маркировка растительных масел с 1.04.2027.",
+        "en": "EAEU rules; mandatory digital marking of vegetable oils from 1 Apr 2027."
+      }
+    },
+    {
+      "code": "KG",
+      "bloc": "EAEU",
+      "name": {
+        "ru": "Кыргызстан",
+        "en": "Kyrgyzstan",
+        "uz": "Qirgʻiziston",
+        "kk": "Қырғызстан",
+        "ms": "Kyrgyzstan"
+      },
+      "claimPhrase": "без пальмового масла",
+      "claimUse": "low",
+      "practice": {
+        "ru": "Заявка единичная.",
+        "en": "Claim is rare."
+      },
+      "summary": {
+        "ru": "Нормы ЕАЭС; борьба с фальсификатом молока на пальмовом масле.",
+        "en": "EAEU rules; crackdown on milk adulterated with palm oil."
+      }
+    },
+    {
+      "code": "TJ",
+      "bloc": "other",
+      "name": {
+        "ru": "Таджикистан",
+        "en": "Tajikistan",
+        "uz": "Tojikiston",
+        "kk": "Тәжікстан",
+        "ms": "Tajikistan"
+      },
+      "claimPhrase": "—",
+      "claimUse": "none",
+      "practice": {
+        "ru": "Заявка не встречается.",
+        "en": "Claim not seen."
+      },
+      "summary": {
+        "ru": "Запрет ввоза пальмового масла, кроме сырья для промышленной переработки.",
+        "en": "Import ban on palm oil except raw material for industrial processing."
+      }
+    },
+    {
+      "code": "TM",
+      "bloc": "other",
+      "name": {
+        "ru": "Туркменистан",
+        "en": "Turkmenistan",
+        "uz": "Turkmaniston",
+        "kk": "Түрікменстан",
+        "ms": "Turkmenistan"
+      },
+      "claimPhrase": "—",
+      "claimUse": "nodata",
+      "practice": {
+        "ru": "Публичных данных нет.",
+        "en": "No public data."
+      },
+      "summary": {
+        "ru": "Публичных данных о специальном регулировании не найдено.",
+        "en": "No public data on specific rules."
+      }
+    },
+    {
+      "code": "UZ",
+      "bloc": "other",
+      "name": {
+        "ru": "Узбекистан",
+        "en": "Uzbekistan",
+        "uz": "Oʻzbekiston",
+        "kk": "Өзбекстан",
+        "ms": "Uzbekistan"
+      },
+      "claimPhrase": "без пальмового масла / palma moyisiz",
+      "claimUse": "low",
+      "practice": {
+        "ru": "Заявка у отдельных брендов; в прессе звучит критика таких заявок как вводящих в заблуждение.",
+        "en": "Used by a few brands; local press criticises such claims as misleading."
+      },
+      "summary": {
+        "ru": "Обязательный лабораторный контроль (2025), проект акциза $139/т (2026), цифровая маркировка масел с 1.07.2027.",
+        "en": "Mandatory lab testing (2025), draft excise of $139/t (2026), digital marking of oils from 1 Jul 2027."
+      }
+    },
+    {
+      "code": "AM",
+      "bloc": "EAEU",
+      "name": {
+        "ru": "Армения",
+        "en": "Armenia",
+        "uz": "Armaniston",
+        "kk": "Армения",
+        "ms": "Armenia"
+      },
+      "claimPhrase": "без пальмового масла",
+      "claimUse": "low",
+      "practice": {
+        "ru": "Заявка единичная.",
+        "en": "Claim is rare."
+      },
+      "summary": {
+        "ru": "Нормы ЕАЭС + надпись «содержит заменитель молочного жира» и отдельная выкладка с 27.04.2025.",
+        "en": "EAEU rules + ‘contains milk fat substitute’ label and separate shelving from 27 Apr 2025."
+      }
+    }
+  ],
+  "measures": [
+    {
+      "id": "eu-fic",
+      "scope": "EU",
+      "type": "disclosure",
+      "status": "in_force",
+      "date": "2014-12-13",
+      "act": {
+        "ru": "Регламент (ЕС) № 1169/2011 (FIC)",
+        "en": "Regulation (EU) No 1169/2011 (FIC)"
+      },
+      "title": {
+        "ru": "Обязательное указание вида растительного масла",
+        "en": "Mandatory naming of the vegetable oil"
+      },
+      "text": {
+        "ru": "Рафинированные масла в составе указываются с ботаническим происхождением — «пальмовое» нельзя скрыть за «растительным жиром». Добровольная заявка «без пальмового масла» допустима, если правдива и не вводит в заблуждение.",
+        "en": "Refined oils in the ingredient list must state their vegetable origin, so palm oil cannot hide behind ‘vegetable fat’. A voluntary ‘palm oil free’ claim is allowed if true and not misleading."
+      },
+      "url": "https://eur-lex.europa.eu/eli/reg/2011/1169/oj"
+    },
+    {
+      "id": "eu-dual",
+      "scope": "EU",
+      "type": "claims",
+      "status": "in_force",
+      "date": "2022-05-28",
+      "act": {
+        "ru": "Директива (ЕС) 2019/2161 (Omnibus), ст. 6(2)(c) UCPD",
+        "en": "Directive (EU) 2019/2161 (Omnibus), Art. 6(2)(c) UCPD"
+      },
+      "title": {
+        "ru": "Запрет «двойного качества»",
+        "en": "Ban on ‘dual quality’"
+      },
+      "text": {
+        "ru": "Нельзя продавать под одним брендом товар заметно иного состава в разных странах ЕС без объективной причины — основание споров о замене масла на пальмовое в рецептурах для Восточной Европы.",
+        "en": "A product marketed as identical across EU countries may not differ markedly in composition without an objective reason — the basis of disputes over palm oil replacing butter in East European recipes."
+      },
+      "url": "https://eur-lex.europa.eu/eli/dir/2019/2161/oj"
+    },
+    {
+      "id": "eu-empco",
+      "scope": "EU",
+      "type": "claims",
+      "status": "in_force",
+      "date": "2026-09-27",
+      "act": {
+        "ru": "Директива (ЕС) 2024/825 (EmpCo)",
+        "en": "Directive (EU) 2024/825 (EmpCo)"
+      },
+      "title": {
+        "ru": "Запрет общих эко-заявок и самодельных эко-значков",
+        "en": "Ban on generic green claims and self-made eco labels"
+      },
+      "text": {
+        "ru": "Общие экологические заявки без признанной выдающейся экологичности и собственные эко-лейблы без сертификации запрещены. «Без пальмового масла» само по себе не запрещено, но эко-обоснование («ради лесов») и самодельные значки «palm oil free» — под риском.",
+        "en": "Generic environmental claims without recognised excellent performance and uncertified own eco labels are banned. ‘Palm oil free’ itself is not banned, but eco framing (‘to save forests’) and home-made ‘palm oil free’ badges are at risk."
+      },
+      "url": "https://eur-lex.europa.eu/eli/dir/2024/825/oj"
+    },
+    {
+      "id": "eu-eudr",
+      "scope": "EU",
+      "type": "sustainability",
+      "status": "upcoming",
+      "date": "2026-12-30",
+      "act": {
+        "ru": "Регламент (ЕС) 2023/1115 (EUDR), ред. 2025/2650",
+        "en": "Regulation (EU) 2023/1115 (EUDR), as amended by 2025/2650"
+      },
+      "title": {
+        "ru": "Пальмовое масло только «deforestation-free»",
+        "en": "Palm oil must be deforestation-free"
+      },
+      "text": {
+        "ru": "Операторы обязаны доказать, что пальмовое масло не связано с вырубкой лесов после 31.12.2020 (геолокация плантаций). Средние и крупные — с 30.12.2026, малые и микро — с 30.06.2027.",
+        "en": "Operators must prove palm oil is not linked to deforestation after 31 Dec 2020 (plot geolocation). Medium and large firms from 30 Dec 2026, micro and small from 30 Jun 2027."
+      },
+      "url": "https://vinciworks.com/blog/eudr-delayed-again-what-changed-what-is-now-fixed-and-what-businesses-should-do-in-2026/"
+    },
+    {
+      "id": "eu-eudr-deriv",
+      "scope": "EU",
+      "type": "sustainability",
+      "status": "proposal",
+      "date": "2026-05-04",
+      "act": {
+        "ru": "Проект делегированного акта к EUDR",
+        "en": "Draft delegated act under EUDR"
+      },
+      "title": {
+        "ru": "Расширение EUDR на производные пальмового масла",
+        "en": "EUDR extended to palm oil derivatives"
+      },
+      "text": {
+        "ru": "Еврокомиссия предложила включить олеохимию (жирные кислоты, их эфиры, мыло на пальмовом масле).",
+        "en": "The Commission proposed adding oleochemicals (fatty acids, their esters, palm-based soap)."
+      },
+      "url": "https://blog.foodsconnected.com/7-key-takeaways-from-the-april-2026-eudr-review"
+    },
+    {
+      "id": "eaeu-022",
+      "scope": "EAEU",
+      "type": "disclosure",
+      "status": "in_force",
+      "date": "2013-07-01",
+      "act": {
+        "ru": "ТР ТС 022/2011 «Пищевая продукция в части её маркировки»",
+        "en": "TR CU 022/2011 “Food products: labelling”"
+      },
+      "title": {
+        "ru": "Допускается общее название «масло растительное»",
+        "en": "Generic ‘vegetable oil’ name allowed"
+      },
+      "text": {
+        "ru": "Рафинированные масла можно указывать в составе как «масло (жир) растительное» без вида — главная лазейка, позволяющая не называть пальмовое масло.",
+        "en": "Refined oils may be listed as ‘vegetable oil (fat)’ without the species — the main loophole for not naming palm oil."
+      },
+      "url": "https://eec.eaeunion.org/comission/department/deptexreg/tr/PischevkaMarkirovka.php"
+    },
+    {
+      "id": "eaeu-022-amend",
+      "scope": "EAEU",
+      "type": "disclosure",
+      "status": "proposal",
+      "date": "",
+      "act": {
+        "ru": "Изменения в ТР ТС 022/2011 (разработчик — Беларусь)",
+        "en": "Amendments to TR CU 022/2011 (drafted by Belarus)"
+      },
+      "title": {
+        "ru": "Обязательное указание вида растительного масла",
+        "en": "Mandatory naming of the vegetable oil species"
+      },
+      "text": {
+        "ru": "Предложено обязать указывать вид масла в составе; Минздрав Казахстана поддержал, «Атамекен» возражал. Изменение пока не принято.",
+        "en": "Proposal to require the oil species in the ingredient list; Kazakhstan’s health ministry supported it, Atameken objected. Not adopted yet."
+      },
+      "url": "https://nkprom.ru/news/v-tr-ts-022-2011-pishchevaya-produktsiya-v-chasti-ee-markirovki-i-tr-ts-022-2011-o-bezopasnosti-sred/"
+    },
+    {
+      "id": "eaeu-024",
+      "scope": "EAEU",
+      "type": "standard",
+      "status": "in_force",
+      "date": "2024-12-22",
+      "act": {
+        "ru": "ТР ТС 024/2011 «Технический регламент на масложировую продукцию» (новая ред.)",
+        "en": "TR CU 024/2011 “Oil and fat products” (new version)"
+      },
+      "title": {
+        "ru": "Обновлённые требования к масложировой продукции",
+        "en": "Updated rules for oil and fat products"
+      },
+      "text": {
+        "ru": "Новые определения спредов, топлёных смесей, переэтерифицированных жиров, понятие повторной рафинации.",
+        "en": "New definitions of spreads, blended fats, interesterified fats; concept of re-refining."
+      },
+      "url": "https://foodsmi.com/zakonodatelstvo/izmeneniya-v-tekhreglamente-na-maslozhirovuyu-produktsiyu/"
+    },
+    {
+      "id": "eaeu-033",
+      "scope": "EAEU",
+      "type": "dairy",
+      "status": "in_force",
+      "date": "",
+      "act": {
+        "ru": "ТР ТС 033/2013 «О безопасности молока и молочной продукции»",
+        "en": "TR CU 033/2013 “Safety of milk and dairy products”"
+      },
+      "title": {
+        "ru": "Продукты с заменителем молочного жира — отдельная категория",
+        "en": "Products with milk fat substitute are a separate category"
+      },
+      "text": {
+        "ru": "Продукция с растительными жирами называется «молокосодержащий продукт с заменителем молочного жира» («спред», «сырный продукт» и т. п.) и не может называться маслом или сыром.",
+        "en": "Products with vegetable fats must be called ‘milk-containing product with milk fat substitute’ (spread, cheese product, etc.), not butter or cheese."
+      },
+      "url": ""
+    },
+    {
+      "id": "ua-3947",
+      "scope": "UA",
+      "type": "ban",
+      "status": "in_force",
+      "date": "2025-11",
+      "act": {
+        "ru": "Закон України № 3947-IX від 04.09.2024",
+        "en": "Law of Ukraine No. 3947-IX of 04.09.2024"
+      },
+      "title": {
+        "ru": "Запреты пальмового масла в молочке, детском питании и кондитерке",
+        "en": "Palm oil bans in dairy, baby food and confectionery"
+      },
+      "text": {
+        "ru": "Запрет пальмового масла в традиционных молочных продуктах; гидрогенизированных жиров — в детском питании и кондитерке (шоколад, мороженое); лимит трансжиров ≤ 2 г на 100 г жира; штрафы 45–65 минимальных зарплат. Подписан 6.11.2024, вводится в действие через год после опубликования.",
+        "en": "Bans palm oil in traditional dairy; hydrogenated fats in baby food and confectionery (chocolate, ice cream); trans fat ≤ 2 g per 100 g of fat; fines of 45–65 minimum wages. Signed 6 Nov 2024, enacted one year after publication."
+      },
+      "url": "https://biz.ligazakon.net/news/231710_prezident-pdpisav-zakon-pro-obmezhennya-vikoristannya-palmovo-ol-u-produktakh-kharchuvannya"
+    },
+    {
+      "id": "ua-3947-label",
+      "scope": "UA",
+      "type": "disclosure",
+      "status": "in_force",
+      "date": "2025-11",
+      "act": {
+        "ru": "Закон України № 3947-IX",
+        "en": "Law of Ukraine No. 3947-IX"
+      },
+      "title": {
+        "ru": "Маркировка продуктов с пальмовым маслом",
+        "en": "Labelling of products containing palm oil"
+      },
+      "text": {
+        "ru": "Закон требует «чёткой и понятной» маркировки. Законопроект предусматривал надпись «містить пальмову олію»; разъяснения 2026 года указывают, что отдельного значка на лицевой стороне нет — формат требует проверки по тексту закона.",
+        "en": "The law requires ‘clear and understandable’ labelling. The bill foresaw a ‘contains palm oil’ statement; 2026 guidance says there is no separate front-of-pack mark — format to verify against the law text."
+      },
+      "url": "https://ngu.com.ua/palmova-oliia-shkoda-sklad-doza-i-etyketka/"
+    },
+    {
+      "id": "md-ansa",
+      "scope": "MD",
+      "type": "import",
+      "status": "in_force",
+      "date": "2025-09-04",
+      "act": {
+        "ru": "Приказ ANSA № 352 от 04.09.2025 (изм. приказом № 369)",
+        "en": "ANSA Order No. 352 of 04.09.2025 (amended by Order No. 369)"
+      },
+      "title": {
+        "ru": "Усиленный контроль импортного пальмового масла",
+        "en": "Tighter control of imported palm oil"
+      },
+      "text": {
+        "ru": "Партии пальмового масла на границе проходят лабораторные испытания, в том числе на 3-MCPD, после выявленных превышений.",
+        "en": "Palm oil lots are lab-tested at the border, including for 3-MCPD, after exceedances were found."
+      },
+      "url": "https://ansa.gov.md/sites/default/files/documents/Ordine/Ordin%20nr.%20369.pdf"
+    },
+    {
+      "id": "ru-gost",
+      "scope": "RU",
+      "type": "standard",
+      "status": "in_force",
+      "date": "2026-01-01",
+      "act": {
+        "ru": "ГОСТ 31647–2025 «Масло пальмовое рафинированное…»",
+        "en": "GOST 31647–2025 “Refined palm oil…”"
+      },
+      "title": {
+        "ru": "Новый стандарт на пальмовое масло",
+        "en": "New palm oil standard"
+      },
+      "text": {
+        "ru": "Ужесточены требования к очистке, безопасности, происхождению сырья, контролю, хранению и маркировке пальмового масла для пищевой промышленности.",
+        "en": "Tighter requirements on refining, safety, origin, control, storage and labelling of palm oil for food use."
+      },
+      "url": "https://www.retail.ru/news/v-rossii-poyavilsya-edinyy-katalog-produktov-bez-palmy-23-dekabrya-2025-272975/"
+    },
+    {
+      "id": "ru-cz",
+      "scope": "RU",
+      "type": "traceability",
+      "status": "upcoming",
+      "date": "2026-11-01",
+      "act": {
+        "ru": "Маркировка «Честный знак» (растительные масла, ТН ВЭД 1511 и др.)",
+        "en": "“Chestny Znak” marking (vegetable oils, HS 1511 etc.)"
+      },
+      "title": {
+        "ru": "Поэкземплярный учёт растительных масел",
+        "en": "Unit-level tracking of vegetable oils"
+      },
+      "text": {
+        "ru": "Маркировка производителей и импортёров — с 1.10.2024 и 1.02.2025, вывод из оборота на кассе — с 1.11.2025, УПД с кодом каждой упаковки — с 1.11.2026.",
+        "en": "Producer and importer marking since 1 Oct 2024 and 1 Feb 2025, checkout reporting since 1 Nov 2025, invoices with each pack’s code from 1 Nov 2026."
+      },
+      "url": "https://www.klerk.ru/buh/articles/713288/"
+    },
+    {
+      "id": "ru-retail",
+      "scope": "RU",
+      "type": "dairy",
+      "status": "in_force",
+      "date": "2019-07-01",
+      "act": {
+        "ru": "Правила продажи товаров (розница)",
+        "en": "Retail trade rules"
+      },
+      "title": {
+        "ru": "Отдельная выкладка молочки без ЗМЖ",
+        "en": "Separate shelving of dairy without milk fat substitute"
+      },
+      "text": {
+        "ru": "Молочные продукты без заменителя молочного жира выкладываются отдельно и обозначаются на полке; продукция с ЗМЖ визуально отделена.",
+        "en": "Dairy without milk fat substitute is displayed separately and marked on the shelf; products with substitutes are kept apart."
+      },
+      "url": "https://www.gazeta.ru/business/2019/07/01/12467725.shtml"
+    },
+    {
+      "id": "ru-duma",
+      "scope": "RU",
+      "type": "ban",
+      "status": "proposal",
+      "date": "2025",
+      "act": {
+        "ru": "Предложения депутатов Госдумы (Н. Школкина)",
+        "en": "Proposals by State Duma deputies (N. Shkolkina)"
+      },
+      "title": {
+        "ru": "Маркировка пальмового сырья и запрет в детском питании",
+        "en": "Tracking of palm raw material and baby-food ban"
+      },
+      "text": {
+        "ru": "Предложено маркировать всё пальмовое сырьё в «Честном знаке» и запретить пальмовое масло в детском питании. Запрет в детском питании депутаты не поддержали: СанПиН уже ограничивает его в питании детей.",
+        "en": "Proposals to track all palm raw material in Chestny Znak and ban palm oil in baby food. The Duma did not back the ban: sanitary rules already limit it in children’s catering."
+      },
+      "url": "https://oleoscope.com/analytics/gosduma-predlozhila-markirovku-dlja-masla/"
+    },
+    {
+      "id": "ru-warning",
+      "scope": "RU",
+      "type": "disclosure",
+      "status": "proposal",
+      "date": "2026-07-22",
+      "act": {
+        "ru": "Обращение «Здоровое Отечество» к председателю Госдумы",
+        "en": "“Healthy Fatherland” appeal to the State Duma speaker"
+      },
+      "title": {
+        "ru": "Предупредительная маркировка продуктов с пальмовым маслом",
+        "en": "Warning labels for products with palm oil"
+      },
+      "text": {
+        "ru": "Предложено показывать содержание сахара, соли, жиров и калорий относительно норм на продуктах с пальмовым маслом.",
+        "en": "Proposal to show sugar, salt, fat and calories against reference intakes on products with palm oil."
+      },
+      "url": "https://ria.ru/20260722/markirovka-2106133235.html"
+    },
+    {
+      "id": "kz-mark",
+      "scope": "KZ",
+      "type": "traceability",
+      "status": "upcoming",
+      "date": "2027-04-01",
+      "act": {
+        "ru": "Перечень товаров, подлежащих маркировке (ред. 2026)",
+        "en": "List of goods subject to marking (2026 edition)"
+      },
+      "title": {
+        "ru": "Обязательная цифровая маркировка растительных масел",
+        "en": "Mandatory digital marking of vegetable oils"
+      },
+      "text": {
+        "ru": "Пилот — с сентября 2025. С 1.04.2027 маркируются масла в потребительской упаковке, включая пальмовое, маргарин и заменители какао-масла.",
+        "en": "Pilot since September 2025. From 1 Apr 2027 consumer-packed oils are marked, including palm oil, margarine and cocoa butter substitutes."
+      },
+      "url": "https://inbusiness.kz/ru/news/v-kazahstane-pochti-vdvoe-rasshirili-markirovku-tovarov"
+    },
+    {
+      "id": "kz-industry",
+      "scope": "KZ",
+      "type": "disclosure",
+      "status": "proposal",
+      "date": "",
+      "act": {
+        "ru": "Позиция отраслевой ассоциации маслопереработчиков",
+        "en": "Position of the oil processors’ association"
+      },
+      "title": {
+        "ru": "Обязательное указание пальмового масла в составе",
+        "en": "Mandatory naming of palm oil in ingredients"
+      },
+      "text": {
+        "ru": "Маслопереработчики выступают за раскрытие пальмового масла; «Атамекен» возражает, ссылаясь на отсутствие методик.",
+        "en": "Oil processors back disclosure of palm oil; Atameken objects, citing lack of test methods."
+      },
+      "url": "https://kapital.kz/business/134274/maslopererabotchiki-rk-vystupayut-za-ukazaniye-nalichiya-v-produktakh-pal-movogo-masla.html"
+    },
+    {
+      "id": "kg-milk",
+      "scope": "KG",
+      "type": "dairy",
+      "status": "in_force",
+      "date": "",
+      "act": {
+        "ru": "Нормы ЕАЭС; заявление Минсельхоза КР",
+        "en": "EAEU rules; statement by the Kyrgyz agriculture ministry"
+      },
+      "title": {
+        "ru": "Запрет пальмового масла в молоке",
+        "en": "No palm oil in milk"
+      },
+      "text": {
+        "ru": "Минсельхоз заявил, что использовать пальмовое масло в производстве молока запрещено, и передал ГКНБ данные о поставщиках фальсификата.",
+        "en": "The agriculture ministry stated palm oil may not be used in milk and passed data on adulterating suppliers to the security service."
+      },
+      "url": "https://dairynews.today/kz/news/v-kyrgyzstane-obsuzhdayut-ispolzovanie-palmovogo-masla-v-proizvodstve-moloka.html"
+    },
+    {
+      "id": "tj-ban",
+      "scope": "TJ",
+      "type": "import",
+      "status": "in_force",
+      "date": "2020-05-01",
+      "act": {
+        "ru": "Постановление Правительства РТ № 260 от 01.05.2020",
+        "en": "Government of Tajikistan Resolution No. 260 of 01.05.2020"
+      },
+      "title": {
+        "ru": "Запрет ввоза пальмового масла",
+        "en": "Palm oil import ban"
+      },
+      "text": {
+        "ru": "Запрещён ввоз всех видов пальмового масла, кроме сырья для промышленной переработки и производства конечной продукции.",
+        "en": "Import of all palm oil is banned except as raw material for industrial processing."
+      },
+      "url": "https://base.spinform.ru/show_doc.fwx?rgn=124770"
+    },
+    {
+      "id": "uz-lab",
+      "scope": "UZ",
+      "type": "import",
+      "status": "in_force",
+      "date": "2025-03-01",
+      "act": {
+        "ru": "Постановление Президента РУз от 30.01.2025",
+        "en": "Presidential Resolution of Uzbekistan of 30.01.2025"
+      },
+      "title": {
+        "ru": "Обязательный лабораторный контроль",
+        "en": "Mandatory lab testing"
+      },
+      "text": {
+        "ru": "Импортное пальмовое масло, молочная продукция и продукты с трансжирами проходят испытания в аккредитованных лабораториях для санэпидзаключения; проверки предприятий по всей цепочке. Льготы по пошлинам на пальмовое и кокосовое масло продлены на два года.",
+        "en": "Imported palm oil, dairy and trans-fat products are tested in accredited labs for sanitary clearance; inspections along the chain. Duty exemptions on palm and coconut oil extended for two years."
+      },
+      "url": "https://podrobno.uz/cat/obchestvo/v-uzbekistane-vvodyat-obyazatelnyy-laboratornyy-kontrol-palmovogo-masla-i-transzhirov/"
+    },
+    {
+      "id": "uz-excise",
+      "scope": "UZ",
+      "type": "tax",
+      "status": "proposal",
+      "date": "2026-07-30",
+      "act": {
+        "ru": "Предложение института при Минэкономфине РУз",
+        "en": "Proposal by an institute under Uzbekistan’s Ministry of Economy and Finance"
+      },
+      "title": {
+        "ru": "Акциз на пальмовое масло $139/т",
+        "en": "Palm oil excise of $139/t"
+      },
+      "text": {
+        "ru": "Ожидаемые поступления — 21,7 млрд сумов. Авторы считают, что одной маркировки недостаточно и нужен ценовой сигнал.",
+        "en": "Expected revenue 21.7 bn soums. Authors argue labelling alone is not enough and a price signal is needed."
+      },
+      "url": "https://www.spot.uz/ru/2026/07/30/palm-oil"
+    },
+    {
+      "id": "uz-mark",
+      "scope": "UZ",
+      "type": "traceability",
+      "status": "upcoming",
+      "date": "2027-07-01",
+      "act": {
+        "ru": "Постановление Кабмина № 23 от 23.01.2026; проект порядка (обсуждение до 24.10.2026)",
+        "en": "Cabinet Resolution No. 23 of 23.01.2026; draft procedure (consultation until 24.10.2026)"
+      },
+      "title": {
+        "ru": "Цифровая маркировка растительных масел",
+        "en": "Digital marking of vegetable oils"
+      },
+      "text": {
+        "ru": "Пилот 1.07–31.12.2026, обязательная маркировка с 1.07.2027: код GS1 DataMatrix, система Asl Belgisi, товарные группы 1507–1515, включая пальмовое масло.",
+        "en": "Pilot 1 Jul–31 Dec 2026, mandatory from 1 Jul 2027: GS1 DataMatrix, Asl Belgisi system, HS 1507–1515 incl. palm oil."
+      },
+      "url": "https://vzglyad.uz/2026/10/09/obsuzhdenie-poryadka-markirovki-rastitelnogo-masla"
+    },
+    {
+      "id": "am-dairy",
+      "scope": "AM",
+      "type": "dairy",
+      "status": "in_force",
+      "date": "2025-04-27",
+      "act": {
+        "ru": "Поправки в Кодекс РА об административных правонарушениях",
+        "en": "Amendments to Armenia’s Code of Administrative Offences"
+      },
+      "title": {
+        "ru": "«Содержит заменитель молочного жира»",
+        "en": "‘Contains milk fat substitute’"
+      },
+      "text": {
+        "ru": "Продукты с заменителями молочного жира выкладываются отдельно и маркируются надписью «содержит заменитель молочного жира».",
+        "en": "Products with milk fat substitutes are shelved separately and labelled ‘contains milk fat substitute’."
+      },
+      "url": "https://dairynews.today/kz/news/armenia-to-enforce-stricter-labeling-rules-for-dairy-and-meat-products.html"
+    }
+  ]
+}

@@ -1,12 +1,15 @@
 import { fmtTimeUtc } from '@/lib/format';
+import { getDict } from '@/lib/i18n-server';
+import { fill } from '@/lib/dict';
 
 export default function SiteFooter({ updatedAt }: { updatedAt: string }) {
+  const { lang, t } = getDict();
   return (
     <footer className="mt-auto border-t border-rule bg-panel text-xs text-ink-3">
       <div className="mx-auto max-w-page px-4 sm:px-6 py-5 grid gap-1">
-        <p>Страница обновлена {fmtTimeUtc(updatedAt)}. Котировки фьючерсов идут с задержкой 10–15 минут; данные TradingView.</p>
-        <p>Пересчёт в доллары за тонну — по текущему курсу. Балансы — USDA FAS PSD; региональные оценки — USDA GAIN, Eurostat и национальная статистика.</p>
-        <p>Информация справочная и не является инвестиционной рекомендацией.</p>
+        <p>{fill(t.footer.updated, { time: fmtTimeUtc(updatedAt, lang) })}</p>
+        <p>{t.footer.conv}</p>
+        <p>{t.footer.disclaimer}</p>
       </div>
     </footer>
   );

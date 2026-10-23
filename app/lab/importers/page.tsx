@@ -5,6 +5,7 @@ import LabHeader from '@/components/LabHeader';
 import ImportersExplorer from '@/components/ImportersExplorer';
 import ImportersDashboard from '@/components/ImportersDashboard';
 import { IMPORTERS } from '@/lib/importers';
+import { getDict } from '@/lib/i18n-server';
 
 export const metadata: Metadata = {
   title: 'Импортёры по странам · Лаборатория IMA',
@@ -19,7 +20,7 @@ export default function ImportersPage() {
   const updated = new Date(IMPORTERS.updatedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
   return (
     <>
-      <LabHeader current="/lab/importers" note="Рабочая база, не для публикации." />
+      <LabHeader current="/lab/importers" note={getDict().t.lab.notes.importers} />
       <main className="mx-auto max-w-page w-full px-4 sm:px-6 pb-16">
         <section aria-labelledby="imp-title" className="pt-8 pb-6">
           <h1 id="imp-title" className="font-cond text-3xl sm:text-4xl font-semibold tracking-tight">Ключевые импортёры по странам</h1>

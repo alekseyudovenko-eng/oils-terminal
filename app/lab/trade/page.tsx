@@ -2,6 +2,7 @@
 // Данные GTT лицензированы и показываются только здесь, под паролем лаборатории.
 import type { Metadata } from 'next';
 import LabHeader from '@/components/LabHeader';
+import { getDict } from '@/lib/i18n-server';
 import TradeExplorer, { type TradeData, type SeriesPoint, type Supplier } from '@/components/TradeExplorer';
 import { getTrade } from '@/lib/gtt-data';
 import { GTT_HS, GTT_REPORTERS } from '@/lib/gtt-meta';
@@ -65,7 +66,7 @@ export default async function TradePage() {
   const updated = updatedAt ? new Date(updatedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) : null;
   return (
     <>
-      <LabHeader current="/lab/trade" note="Данные Global Trade Tracker по подписке IMA — не для публикации." />
+      <LabHeader current="/lab/trade" note={getDict().t.lab.notes.trade} />
       <main className="mx-auto max-w-page w-full px-4 sm:px-6 pb-16">
         <section className="pt-8 pb-6">
           <h1 className="font-cond text-3xl sm:text-4xl font-semibold tracking-tight">Импорт масел и жиров по странам</h1>

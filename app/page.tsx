@@ -11,11 +11,14 @@ import Notice from '@/components/Notice';
 import { getQuotes } from '@/lib/quotes';
 import { getNewsFeed } from '@/lib/news';
 import { fmtTimeUtc } from '@/lib/format';
+import { getDict } from '@/lib/i18n-server';
+import { fill } from '@/lib/dict';
 
 export const revalidate = 600;
 
 export default async function OverviewPage() {
   const [quotes, feed] = await Promise.all([getQuotes(), getNewsFeed()]);
+  const { lang, t } = getDict();
 
   return (
     <>
@@ -24,18 +27,18 @@ export default async function OverviewPage() {
       <Hero data={quotes} />
 
       <main className="mx-auto max-w-page w-full px-4 sm:px-6 grid gap-x-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-        <Section id="indices" title="Основные индексы">
-          {quotes.error && <Notice>Котировки сейчас недоступны. Попробуйте обновить страницу через несколько минут.</Notice>}
+        <Section id="indices" title={t.overview.indices}>
+          {quotes.error && <Notice>{t.quotes.unavailable}</Notice>}
           <QuotesTable quotes={quotes.quotes} compact />
         </Section>
 
         <Section
           id="news"
-          title="Новости"
+          title={t.overview.news}
           note={feed.curated
-            ? <>Отобраны и проверены по первоисточникам{feed.updatedAt && <>, обновлено {fmtTimeUtc(feed.updatedAt)}</>}.</>
-            : 'Автоматическая лента: отобранных новостей пока нет.'}
-          action={<Link href="/market#news" className="text-sm text-ink-2 hover:text-gold underline underline-offset-2">Все новости за месяц</Link>}
+            ? <>{t.overview.newsCurated}{feed.updatedAt && fill(t.overview.newsUpdated, { time: fmtTimeUtc(feed.updatedAt, lang) })}.</>
+            : t.overview.newsAuto}
+          action={<Link href="/market#news" className="text-sm text-ink-2 hover:text-gold underline underline-offset-2">{t.overview.allNews}</Link>}
         >
           <NewsList news={feed.items} limit={12} />
         </Section>
