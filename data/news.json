@@ -1,6 +1,79 @@
 {
-  "updatedAt": "2026-10-22T04:53:17Z",
+  "updatedAt": "2026-10-23T04:52:00Z",
   "items": [
+    {
+      "id": "2026-10-22-brent-113-houthi-saudi",
+      "publishedAt": "2026-10-22",
+      "addedAt": "2026-10-23T04:52:00Z",
+      "title": "Brent подорожала на 4% до $113,17 — максимум закрытия с 4 мая — на фоне атак хуситов в Саудовской Аравии",
+      "titleEn": "Brent jumps 4% to $113.17, highest close since May, on Houthi attacks in Saudi Arabia",
+      "summary": "22 октября Brent выросла на $4,35 (4%) до $113,17 за баррель, WTI — на 2,4% до $99,47. Поводом стали атаки хуситов в Саудовской Аравии и опасения новых перебоев поставок с Ближнего Востока.",
+      "summaryEn": "Brent rose $4.35 (4%) to settle at $113.17 a barrel on October 22, its highest close since May 4, while WTI gained 2.4% to $99.47. Houthi attacks in Saudi Arabia raised fears of further Middle East supply disruption.",
+      "originalTitle": "Brent rises 4% on October 22 as Houthi attacks fuel supply fears",
+      "source": "The Nation (Reuters)",
+      "url": "https://www.nationthailand.com/news/world/40072637",
+      "lang": "en",
+      "topics": [
+        "biofuel"
+      ]
+    },
+    {
+      "id": "2026-10-22-mpoc-november-above-4600",
+      "publishedAt": "2026-10-22",
+      "addedAt": "2026-10-23T04:52:00Z",
+      "title": "MPOC ждёт, что пальмовое масло в ноябре удержится выше RM4 600/т",
+      "titleEn": "MPOC sees palm oil holding above RM4,600/t in November",
+      "summary": "Малайзийский совет по пальмовому маслу считает, что пик производства пришёлся на сентябрь, когда запасы выросли почти на 25% до рекорда; с ноября по февраль 2027 г. запасы начнут снижаться. Спад экспорта в сентябре (−12%) совет называет временным и ждёт значительного роста отгрузок в октябре–декабре.",
+      "summaryEn": "The Malaysian Palm Oil Council expects prices to stay above RM4,600/t in November, saying output peaked in September, when stocks rose nearly 25% to a record, and inventories should decline from November to February 2027. It called September's 12% export drop temporary and expects shipments to rise significantly in October–December.",
+      "originalTitle": "Palm oil to stay above RM4,600 in November on stronger export, output decline — MPOC",
+      "source": "The Edge Malaysia",
+      "url": "https://theedgemalaysia.com/node/822783",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "trade"
+      ],
+      "region": "Малайзия"
+    },
+    {
+      "id": "2026-10-22-kazakhstan-halts-russian-sunseed",
+      "publishedAt": "2026-10-22",
+      "addedAt": "2026-10-23T04:52:00Z",
+      "title": "Казахстан попросил Россию с 23 октября приостановить поставки подсолнечника из-за фомопсиса",
+      "titleEn": "Kazakhstan asks Russia to halt sunflower seed shipments from Oct 23 over quarantine pest",
+      "summary": "Минсельхоз Казахстана попросил Россельхознадзор с 23 октября приостановить выдачу фитосанитарных сертификатов на семенной и продовольственный подсолнечник. Причина — 23 случая выявления фомопсиса в партиях семян в 2025–2026 гг.; по данным «АПК Новости», импорт из России в прошлом сезоне не превышал 10% переработки.",
+      "summaryEn": "Kazakhstan's agriculture ministry asked Rosselkhoznadzor to stop issuing phytosanitary certificates for Russian seed and food sunflower from October 23, citing 23 detections of phomopsis in seed batches in 2025–2026. Per APK Novosti, Russian imports did not exceed 10% of Kazakh crushing last season.",
+      "source": "Mail.ru (TASS)",
+      "url": "https://finance.mail.ru/article/kazahstan-poprosil-rf-priostanovit-eksport-podsolnechnika-v-respubliku-69233768/",
+      "lang": "ru",
+      "topics": [
+        "sunflower",
+        "policy",
+        "trade"
+      ],
+      "region": "Казахстан"
+    },
+    {
+      "id": "2026-10-21-ukraine-priority-oil-transport",
+      "publishedAt": "2026-10-21",
+      "addedAt": "2026-10-23T04:52:00Z",
+      "title": "Украина ввела приоритет для растительных масел на железной дороге, в портах и Сулинском канале",
+      "titleEn": "Ukraine gives edible oils priority on rail, at ports and through Sulina Canal",
+      "summary": "Кабмин ввёл пилотный режим (не более 2 лет, на время военного положения): Укрзализныця даёт маршрутным поездам с маслами приоритет, суда под налив масел получают приоритет у причалов и в Сулинском канале. Тарифы не меняются; экспорт тонны масла приносит в среднем около $1 300 валютной выручки против ~$220 у кукурузы или пшеницы.",
+      "summaryEn": "Ukraine's cabinet set a pilot regime (up to two years, during martial law) giving edible oil block trains rail priority and oil tankers priority berthing and Sulina Canal passage; tariffs are unchanged. A tonne of oil exports earns about $1,300 in FX on average, versus about $220 for corn or wheat.",
+      "originalTitle": "Ukraine introduces priority rail and port transportation for edible oils",
+      "source": "UkrAgroConsult (Latifundist)",
+      "url": "https://ukragroconsult.com/en/news/ukraine-introduces-priority-rail-and-port-transportation-for-edible-oils/",
+      "lang": "en",
+      "topics": [
+        "sunflower",
+        "rapeseed",
+        "soy",
+        "trade",
+        "policy"
+      ],
+      "region": "Украина"
+    },
     {
       "id": "2026-10-21-palm-falls-exports-oct-1-20",
       "publishedAt": "2026-10-21",
@@ -167,6 +240,22 @@
       "region": "Китай"
     },
     {
+      "id": "2026-10-19-singapore-haze-palm-shares",
+      "publishedAt": "2026-10-19",
+      "addedAt": "2026-10-19T04:53:50Z",
+      "title": "Акции пальмовых компаний Сингапура упали на фоне расследования источников дымки",
+      "summary": "Сингапур выясняет, какие компании причастны к пожарам в Индонезии; акции Golden Agri-Resources упали на 3,5%, Wilmar — на 1,2% (16 октября). Индекс PSI в отдельных районах превышал 200, биржевой регулятор SGX направил компаниям запросы.",
+      "originalTitle": "Palm oil stocks tumble as S'pore probes haze links",
+      "source": "The Star (The Straits Times/ANN)",
+      "url": "https://www.thestar.com.my/business/business-news/2026/10/19/palm-oil-stocks-tumble-as-spore-probes-haze-links",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "policy"
+      ],
+      "region": "Сингапур, Индонезия"
+    },
+    {
       "id": "2026-10-18-sarawak-smallholders-eudr",
       "publishedAt": "2026-10-18",
       "addedAt": "2026-10-18T04:52:11Z",
@@ -233,6 +322,22 @@
         "soy"
       ],
       "region": "США"
+    },
+    {
+      "id": "2026-10-16-russia-oilseeds-record-35mt",
+      "publishedAt": "2026-10-16",
+      "addedAt": "2026-10-19T04:53:50Z",
+      "title": "Минсельхоз России ожидает рекордный сбор масличных — около 35 млн т",
+      "summary": "По данным Минсельхоза, приведённым в отчёте Банка России, сбор масличных в 2026 году будет на 1,9% выше рекорда 2025 года. По подсчётам OleoScope, к середине октября собрано 22,8 млн т, в т.ч. 11,4 млн т подсолнечника и 6,2 млн т рапса.",
+      "source": "OleoScope",
+      "url": "https://oleoscope.com/news/v-rossii-valovyj-sbor-maslichnyh-mozhet/",
+      "lang": "ru",
+      "topics": [
+        "sunflower",
+        "rapeseed",
+        "soy"
+      ],
+      "region": "Россия"
     },
     {
       "id": "2026-10-15-malaysia-exports-oct-1-15",
@@ -458,38 +563,6 @@
       ],
       "region": "Россия",
       "addedAt": "2026-10-16T08:37:46Z"
-    },
-    {
-      "id": "2026-10-19-singapore-haze-palm-shares",
-      "publishedAt": "2026-10-19",
-      "addedAt": "2026-10-19T04:53:50Z",
-      "title": "Акции пальмовых компаний Сингапура упали на фоне расследования источников дымки",
-      "summary": "Сингапур выясняет, какие компании причастны к пожарам в Индонезии; акции Golden Agri-Resources упали на 3,5%, Wilmar — на 1,2% (16 октября). Индекс PSI в отдельных районах превышал 200, биржевой регулятор SGX направил компаниям запросы.",
-      "originalTitle": "Palm oil stocks tumble as S'pore probes haze links",
-      "source": "The Star (The Straits Times/ANN)",
-      "url": "https://www.thestar.com.my/business/business-news/2026/10/19/palm-oil-stocks-tumble-as-spore-probes-haze-links",
-      "lang": "en",
-      "topics": [
-        "palm",
-        "policy"
-      ],
-      "region": "Сингапур, Индонезия"
-    },
-    {
-      "id": "2026-10-16-russia-oilseeds-record-35mt",
-      "publishedAt": "2026-10-16",
-      "addedAt": "2026-10-19T04:53:50Z",
-      "title": "Минсельхоз России ожидает рекордный сбор масличных — около 35 млн т",
-      "summary": "По данным Минсельхоза, приведённым в отчёте Банка России, сбор масличных в 2026 году будет на 1,9% выше рекорда 2025 года. По подсчётам OleoScope, к середине октября собрано 22,8 млн т, в т.ч. 11,4 млн т подсолнечника и 6,2 млн т рапса.",
-      "source": "OleoScope",
-      "url": "https://oleoscope.com/news/v-rossii-valovyj-sbor-maslichnyh-mozhet/",
-      "lang": "ru",
-      "topics": [
-        "sunflower",
-        "rapeseed",
-        "soy"
-      ],
-      "region": "Россия"
     }
   ]
 }
