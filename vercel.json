@@ -5,6 +5,14 @@
       "schedule": "0 8 * * *"
     },
     {
+      "path": "/api/cron/daily-snapshot",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/daily-snapshot?retry=1",
+      "schedule": "0 6 * * *"
+    },
+    {
       "path": "/api/cron/market-report",
       "schedule": "0 1 * * 1"
     },
