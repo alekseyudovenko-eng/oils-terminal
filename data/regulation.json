@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23",
+  "updatedAt": "2026-10-26",
   "period": {
     "ru": "октябрь 2025 – октябрь 2026 (и действующие нормы прошлых лет)",
     "en": "October 2025 – October 2026 (plus earlier rules still in force)"
@@ -511,21 +511,21 @@
       "id": "eu-eudr-deriv",
       "scope": "EU",
       "type": "sustainability",
-      "status": "proposal",
-      "date": "2026-05-04",
+      "status": "upcoming",
+      "date": "2027-12-30",
       "act": {
-        "ru": "Проект делегированного акта к EUDR",
-        "en": "Draft delegated act under EUDR"
+        "ru": "Делегированный регламент (ЕС) 2026/2102 от 13.07.2026 (ОЖ 17.09.2026), изм. прил. I к EUDR",
+        "en": "Delegated Regulation (EU) 2026/2102 of 13 Jul 2026 (OJ 17 Sep 2026), amending Annex I to EUDR"
       },
       "title": {
         "ru": "Расширение EUDR на производные пальмового масла",
         "en": "EUDR extended to palm oil derivatives"
       },
       "text": {
-        "ru": "Еврокомиссия предложила включить олеохимию (жирные кислоты, их эфиры, мыло на пальмовом масле).",
-        "en": "The Commission proposed adding oleochemicals (fatty acids, their esters, palm-based soap)."
+        "ru": "Принят и вступил в силу 18.09.2026. В перечень EUDR добавлены производные масличной пальмы: гидрогенизированные и химически модифицированные пальмовые масла (ex 1516 20, ex 1518), сырой глицерин, жирные спирты и кислоты и их эфиры, амины, мыло (ex 3401), химические препараты (ex 3824 99), полиэфиры. Новые позиции применяются с 30.12.2027.",
+        "en": "Adopted; in force since 18 Sep 2026. Adds oil-palm derivatives to the EUDR list: hydrogenated and chemically modified palm oils (ex 1516 20, ex 1518), crude glycerol, fatty alcohols, acids and esters, amines, soap (ex 3401), chemical preparations (ex 3824 99), polyethers. New entries apply from 30 Dec 2027."
       },
-      "url": "https://blog.foodsconnected.com/7-key-takeaways-from-the-april-2026-eudr-review"
+      "url": "https://eur-lex.europa.eu/eli/reg_del/2026/2102/oj/eng"
     },
     {
       "id": "eaeu-022",
@@ -586,6 +586,26 @@
         "en": "New definitions of spreads, blended fats, interesterified fats; concept of re-refining."
       },
       "url": "https://foodsmi.com/zakonodatelstvo/izmeneniya-v-tekhreglamente-na-maslozhirovuyu-produktsiyu/"
+    },
+    {
+      "id": "eaeu-024-std",
+      "scope": "EAEU",
+      "type": "standard",
+      "status": "upcoming",
+      "date": "2026-12-28",
+      "act": {
+        "ru": "Решение Коллегии ЕЭК от 29.06.2026 № 80",
+        "en": "EEC Board Decision No. 80 of 29 Jun 2026"
+      },
+      "title": {
+        "ru": "Новые перечни стандартов к ТР ТС 024/2011",
+        "en": "New lists of standards for TR CU 024/2011"
+      },
+      "text": {
+        "ru": "Утверждены перечень стандартов, добровольное применение которых обеспечивает соблюдение ТР ТС 024/2011 на масложировую продукцию (50 позиций), и перечень методов испытаний и отбора проб (183 позиции). Заменяет решение Коллегии ЕЭК № 53 от 29.03.2022. Вступает в силу через 180 дней после опубликования — 28.12.2026.",
+        "en": "Approves the list of standards whose voluntary use ensures compliance with TR CU 024/2011 on oil and fat products (50 items) and the list of test and sampling methods (183 items). Replaces EEC Board Decision No. 53 of 29 Mar 2022. Enters into force 180 days after publication — 28 Dec 2026."
+      },
+      "url": "https://base.spinform.ru/show_doc.fwx?rgn=177646"
     },
     {
       "id": "eaeu-033",
@@ -688,6 +708,26 @@
       "url": "https://www.retail.ru/news/v-rossii-poyavilsya-edinyy-katalog-produktov-bez-palmy-23-dekabrya-2025-272975/"
     },
     {
+      "id": "ru-vat",
+      "scope": "RU",
+      "type": "tax",
+      "status": "in_force",
+      "date": "2019-10-01",
+      "act": {
+        "ru": "Федеральный закон от 02.08.2019 № 268-ФЗ (ст. 164 НК РФ); Постановление Правительства РФ от 11.05.2022 № 849",
+        "en": "Federal Law No. 268-FZ of 2 Aug 2019 (Art. 164 Tax Code); Government Decree No. 849 of 11 May 2022"
+      },
+      "title": {
+        "ru": "НДС 20% на пальмовое масло вместо льготных 10%",
+        "en": "20% VAT on palm oil instead of reduced 10%"
+      },
+      "text": {
+        "ru": "Пальмовое масло исключено из перечня продовольствия с льготной ставкой НДС 10% с 01.10.2019; с 01.07.2022 ставка 20% распространена и на фракции пальмового масла (при ввозе и реализации).",
+        "en": "Palm oil removed from the list of foods with the reduced 10% VAT rate from 1 Oct 2019; from 1 Jul 2022 the 20% rate also applies to palm oil fractions (on import and sale)."
+      },
+      "url": "https://www.v2b.ru/documents/federalnyy-zakon-ot-02-08-2019-268-fz/"
+    },
+    {
       "id": "ru-cz",
       "scope": "RU",
       "type": "traceability",
@@ -766,6 +806,26 @@
         "en": "Proposal to show sugar, salt, fat and calories against reference intakes on products with palm oil."
       },
       "url": "https://ria.ru/20260722/markirovka-2106133235.html"
+    },
+    {
+      "id": "ru-child-ban",
+      "scope": "RU",
+      "type": "ban",
+      "status": "proposal",
+      "date": "2026-10-22",
+      "act": {
+        "ru": "Выступление В. Володина на пленарном заседании Госдумы 22.10.2026; предложение С. Миронова 24.10.2026",
+        "en": "V. Volodin at the State Duma plenary, 22 Oct 2026; S. Mironov proposal, 24 Oct 2026"
+      },
+      "title": {
+        "ru": "Запрет пальмового масла в детском питании и в закупках школ и больниц",
+        "en": "Palm oil ban in baby food and in school/hospital procurement"
+      },
+      "text": {
+        "ru": "Председатель Госдумы предложил обсудить запрет пальмового масла в детских продуктах и повышение его налогообложения. Лидер фракции «Справедливая Россия» предложил отдельным федеральным законом запретить медицинским и образовательным учреждениям закупать продукты с пальмовым маслом. Законопроект не внесён.",
+        "en": "The State Duma speaker proposed discussing a ban on palm oil in children’s food and higher taxation of palm oil. The A Just Russia faction leader proposed a federal law banning medical and educational institutions from buying food containing palm oil. No bill has been introduced."
+      },
+      "url": "https://ria.ru/20261024/maslo-2126771171.html"
     },
     {
       "id": "kz-mark",
