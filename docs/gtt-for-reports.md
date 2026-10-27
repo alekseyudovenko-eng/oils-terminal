@@ -72,3 +72,19 @@ Add or update one slide **"Import demand: customs data (GTT)"**: a bar chart of 
 For the GTT slide: 1 paragraph — what the data is (importers' customs data, different from MPOB), the 2–3 main movements with numbers and periods, and what it means for Malaysian palm oil (share gains/losses, competitor Indonesia). Mention data limits for Russia.
 
 Numbers must come from the queries above in the same run; never estimate or round beyond what the table shows.
+
+## UN Comtrade: the exporters' side (Malaysia and Indonesia)
+
+- Table `comtrade_trade` (same Supabase project): monthly **exports** of Malaysia (`MYS`) and Indonesia (`IDN`) by destination, HS 1511/1513/1516/1517, tonnes (`qty_t`) and USD, last 24 months. Updated on the 12th of each month. Partners are ISO3 codes (RUS, UZB, KAZ, AZE, UKR, POL …). Comtrade data is public (cite "Source: UN Comtrade").
+- Malaysia's data usually ends 1–2 months earlier than GTT importers' data; Indonesia's 2–3 months earlier. Check `max(period)` first.
+
+Exports of palm oil to the region, calendar year (change years):
+```sql
+select reporter, partner_name, round(sum(qty_t)) t
+from comtrade_trade where hs='1511' and period between 202501 and 202512
+  and partner in ('RUS','UKR','KAZ','UZB','AZE','GEO','POL','CZE','HUN','ROU','BGR','EST','LVA','LTU','HRV','SRB')
+group by 1,2 order by 2,1;
+```
+
+Use it to: (a) estimate Russia's palm oil supply after March 2025, when its own customs data stops (Indonesia + Malaysia exports to RUS); (b) compare Malaysia's share as seen by exporters vs by importers (GTT); (c) cross-check MPOB.
+Caveat: exporter and importer figures can differ a lot. Example: for 2025 Kazakhstan's customs (GTT) report about 36.6 thousand t of palm oil of Malaysian origin, while Malaysia reports only about 1.4 thousand t shipped directly to Kazakhstan — goods of Malaysian origin often arrive via third countries or traders. Always say which side a number comes from.
