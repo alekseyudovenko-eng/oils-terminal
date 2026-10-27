@@ -67,7 +67,7 @@ async function loadCountry(reporter: string): Promise<CountryTrade> {
   return { rows: g.rows, status: s, comtrade, updatedAt: g.updatedAt };
 }
 
-const cachedCountry = unstable_cache(loadCountry, ['gtt-country-v2'], { revalidate: 3600, tags: ['gtt'] });
+const cachedCountry = unstable_cache(loadCountry, ['gtt-country-v3'], { revalidate: 3600, tags: ['gtt'] });
 
 export async function getCountryTrade(reporter: string): Promise<CountryTrade> {
   try { return await cachedCountry(reporter); }

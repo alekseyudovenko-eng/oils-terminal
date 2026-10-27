@@ -34,6 +34,8 @@ function Bars({ pts, lang, L }: { pts: MonthPt[]; lang: Locale; L: TrL }) {
   const max = Math.max(1, ...pts.map(total));
   const bw = (W - PL - 4) / Math.max(pts.length, 1);
   const y = (v: number) => PT + (1 - v / max) * (H - PT - PB);
+  // Длинный ряд — подписываем только январи (годы), короткий — каждый 1–3-й месяц.
+  const yearly = pts.length > 40;
   const every = pts.length > 24 ? 3 : pts.length > 12 ? 2 : 1;
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={L.barsAria}>
@@ -49,7 +51,7 @@ function Bars({ pts, lang, L }: { pts: MonthPt[]; lang: Locale; L: TrL }) {
         </g>
       ))}
       {pts.map((p, i) => {
-        const x = PL + i * bw + 1, w = Math.max(bw - 2, 1);
+        const x = PL + i * bw + (bw > 4 ? 1 : 0), w = Math.max(bw > 4 ? bw - 2 : bw - 0.3, 0.5);
         const segs: [number, number, string][] = [[0, p.my, 'var(--gold)'], [p.my, p.id, 'var(--ink-3)'], [p.my + p.id, p.oth, 'var(--rule)']];
         return (
           <g key={p.ym} opacity={p.src === 'p' ? 0.35 : 1}>
@@ -58,8 +60,10 @@ function Bars({ pts, lang, L }: { pts: MonthPt[]; lang: Locale; L: TrL }) {
               <rect key={k} x={x} y={y(base + h)} width={w} height={y(base) - y(base + h)} fill={color} />
             ))}
             {p.src === 'x' && total(p) > 0 && <rect x={x} y={y(total(p))} width={w} height={y(0) - y(total(p))} fill="url(#hatch)" />}
-            {(i % every === 0 || i === pts.length - 1) && (
-              <text x={x + w / 2} y={H - 8} textAnchor="middle" fontSize="10" fill="var(--ink-3)">{ymLabel(p.ym)}</text>
+            {(yearly ? p.ym.endsWith('-01') : (i % every === 0 || i === pts.length - 1)) && (
+              <text x={yearly ? x : x + w / 2} y={H - 8} textAnchor={yearly ? 'start' : 'middle'} fontSize="10" fill="var(--ink-3)">
+                {yearly ? p.ym.slice(0, 4) : ymLabel(p.ym)}
+              </text>
             )}
           </g>
         );
