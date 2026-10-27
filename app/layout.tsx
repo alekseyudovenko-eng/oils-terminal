@@ -18,11 +18,19 @@ const cond = Fira_Sans_Condensed({
   display: 'swap',
 });
 
+/** Код подтверждения: принимает и сам код, и целый meta-тег, скопированный из Search Console / Bing. */
+function verificationCode(raw: string | undefined): string | undefined {
+  const v = raw?.trim();
+  if (!v) return undefined;
+  const m = v.match(/content\s*=\s*["']([^"']+)["']/i);
+  return m ? m[1] : v;
+}
+
 export function generateMetadata(): Metadata {
   const { lang, t } = getDict();
   // Коды подтверждения для Google Search Console и Bing Webmaster задаются в Vercel (необязательно).
-  const google = process.env.GOOGLE_SITE_VERIFICATION;
-  const bing = process.env.BING_SITE_VERIFICATION;
+  const google = verificationCode(process.env.GOOGLE_SITE_VERIFICATION);
+  const bing = verificationCode(process.env.BING_SITE_VERIFICATION);
   return {
     metadataBase: new URL(SITE_URL),
     title: { default: 'Oils Terminal', template: '%s — Oils Terminal' },
