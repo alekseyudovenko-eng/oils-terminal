@@ -1,6 +1,7 @@
 // /api/cron/comtrade-sync — экспорт пальмовых продуктов Малайзии и Индонезии по странам назначения
 // (UN Comtrade, помесячно, последние 24 месяца) в Supabase (comtrade_trade).
 // Vercel Cron раз в месяц; вручную: ?key=<CRON_SECRET>[&reporter=458][&months=24][&check=1]
+// Загрузка истории: &year=2019 (12 месяцев одного года).
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
 import { getDb } from '@/lib/db';
@@ -41,7 +42,10 @@ export async function GET(request: Request) {
   if (!db) return NextResponse.json({ error: 'Supabase не настроен' }, { status: 500 });
   const months = Math.min(Math.max(Number(p.get('months') || 24), 1), 36);
   const reporters = p.get('reporter') ? COMTRADE_EXPORTERS.filter(r => String(r.code) === p.get('reporter')) : COMTRADE_EXPORTERS;
-  const periods = lastMonths(months);
+  const year = Number(p.get('year'));
+  const periods = year >= 2000 && year <= 2100
+    ? Array.from({ length: 12 }, (_, i) => `${year}${String(i + 1).padStart(2, '0')}`)
+    : lastMonths(months);
   const stamp = new Date().toISOString();
   const report: Record<string, string> = {};
 

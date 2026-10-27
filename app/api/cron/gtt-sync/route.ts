@@ -1,6 +1,7 @@
 // /api/cron/gtt-sync — загрузка месячного импорта масел из Global Trade Tracker в Supabase (gtt_trade).
 // Vercel Cron 1–11 числа: за запуск обновляет 2 страны, давно не обновлявшиеся (GTT не даёт
 // запускать отчёты параллельно, а функция живёт до 60 с). Вручную: ?key=<CRON_SECRET>[&reporters=RU,UZ][&years=3]
+// Загрузка истории: &from=2016&to=2019 (годы; до 6 лет за раз).
 // Пропущенные страной периоды дополняются зеркальными данными (по отчётам партнёров).
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
@@ -32,8 +33,10 @@ export async function GET(request: Request) {
   }
   const years = Math.min(Math.max(Number(p.get('years') || 3), 1), 6);
   const now = new Date();
-  const from = `${now.getUTCFullYear() - years + 1}-01`;
-  const to = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
+  let from = `${now.getUTCFullYear() - years + 1}-01`;
+  let to = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
+  const fy = Number(p.get('from')), ty = Number(p.get('to') || p.get('from'));
+  if (fy >= 2000 && ty >= fy && ty - fy < 6) { from = `${fy}-01`; to = `${ty}-12`; }
   const stamp = now.toISOString();
   const report: Record<string, string> = {};
 
