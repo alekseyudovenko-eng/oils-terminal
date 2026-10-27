@@ -53,7 +53,7 @@ export async function GET(request: Request) {
     message += `<i>${escapeHtml(item.titleEn ? sourceEn(item.source) : item.source)}</i>\n\n`;
   }
   if (fresh.length > news.length) message += `…and ${fresh.length - news.length} more on the website.\n\n`;
-  message += `🔗 <a href="${escapeHtml(SITE_URL + '/market#news')}">All news and market indicators</a>`;
+  message += `🔗 <a href="${escapeHtml(SITE_URL + '/en/market#news')}">All news and market indicators</a>`;
 
   const sent = await sendTelegramMessage(message);
   if (sent) await markSentToday('news-digest', via);

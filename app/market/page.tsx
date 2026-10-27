@@ -20,10 +20,12 @@ import { fmtTimeUtc } from '@/lib/format';
 import { getDict } from '@/lib/i18n-server';
 import { fill } from '@/lib/dict';
 import { METRICS } from '@/lib/psd-meta';
+import { pageAlternates } from '@/lib/site';
 
 export const revalidate = 600;
 export function generateMetadata(): Metadata {
-  return { title: getDict().t.meta.market };
+  const { lang, t } = getDict();
+  return { title: t.meta.market, alternates: pageAlternates('/market', lang) };
 }
 
 const ANCHORS = ['prices', 'spreads', 'usda', 'regions', 'news'] as const;

@@ -1,16 +1,25 @@
 'use client';
-// Переключатель языка: запоминает выбор в cookie на год и перерисовывает страницу на сервере.
-import { useRouter } from 'next/navigation';
+// Переключатель языка: запоминает выбор в cookie на год.
+// На публичных страницах переходит на адрес выбранного языка (/en/market),
+// в лаборатории — перерисовывает ту же страницу на сервере.
+import { usePathname, useRouter } from 'next/navigation';
 import { useTransition } from 'react';
-import { LANG_COOKIE, LOCALES, LOCALE_NAMES, LOCALE_SHORT, type Locale } from '@/lib/i18n';
+import { LANG_COOKIE, LOCALES, LOCALE_NAMES, LOCALE_SHORT, PUBLIC_PATHS, localePath, splitLocalePath, type Locale } from '@/lib/i18n';
 
 export default function LanguageSwitcher({ lang, label }: { lang: Locale; label: string }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [pending, start] = useTransition();
 
-  function change(next: string) {
+  function change(next: Locale) {
     document.cookie = `${LANG_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
-    start(() => router.refresh());
+    const { path } = splitLocalePath(pathname || '/');
+    if ((PUBLIC_PATHS as readonly string[]).includes(path)) {
+      // Полная загрузка: так обновится и <html lang>, и метаданные страницы.
+      window.location.assign(localePath(next, path) + window.location.hash);
+    } else {
+      start(() => router.refresh());
+    }
   }
 
   return (
@@ -22,7 +31,7 @@ export default function LanguageSwitcher({ lang, label }: { lang: Locale; label:
       </svg>
       <select
         value={lang}
-        onChange={e => change(e.target.value)}
+        onChange={e => change(e.target.value as Locale)}
         disabled={pending}
         title={label}
         className="appearance-none rounded-sm border border-white/15 bg-transparent py-1 pl-7 pr-6 text-band-text hover:border-white/30 focus:border-gold disabled:opacity-60 cursor-pointer"

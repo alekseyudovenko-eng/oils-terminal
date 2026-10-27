@@ -13,8 +13,14 @@ import { getNewsFeed } from '@/lib/news';
 import { fmtTimeUtc } from '@/lib/format';
 import { getDict } from '@/lib/i18n-server';
 import { fill } from '@/lib/dict';
+import { localePath } from '@/lib/i18n';
+import { pageAlternates } from '@/lib/site';
+import type { Metadata } from 'next';
 
 export const revalidate = 600;
+export function generateMetadata(): Metadata {
+  return { alternates: pageAlternates('/', getDict().lang) };
+}
 
 export default async function OverviewPage() {
   const [quotes, feed] = await Promise.all([getQuotes(), getNewsFeed()]);
@@ -29,7 +35,7 @@ export default async function OverviewPage() {
       <main className="mx-auto max-w-page w-full px-4 sm:px-6 grid gap-x-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
         <Section id="indices" title={t.overview.indices}>
           {quotes.error && <Notice>{t.quotes.unavailable}</Notice>}
-          <QuotesTable quotes={quotes.quotes} compact />
+          <QuotesTable quotes={quotes.quotes} />
         </Section>
 
         <Section
@@ -38,7 +44,7 @@ export default async function OverviewPage() {
           note={feed.curated
             ? <>{t.overview.newsCurated}{feed.updatedAt && fill(t.overview.newsUpdated, { time: fmtTimeUtc(feed.updatedAt, lang) })}.</>
             : t.overview.newsAuto}
-          action={<Link href="/market#news" className="text-sm text-ink-2 hover:text-gold underline underline-offset-2">{t.overview.allNews}</Link>}
+          action={<Link href={localePath(lang, '/market#news')} className="text-sm text-ink-2 hover:text-gold underline underline-offset-2">{t.overview.allNews}</Link>}
         >
           <NewsList news={feed.items} limit={12} />
         </Section>

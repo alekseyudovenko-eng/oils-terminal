@@ -43,6 +43,10 @@ export default function PsdExplorer({ views, lang, t }: { views: OilView[]; lang
   const oil = views.find(v => v.id === oilId)!;
   const [yearPick, setYearPick] = useState<number | null>(null);
   const year = yearPick && oil.years.includes(yearPick) ? yearPick : oil.years[oil.years.length - 1];
+  // В таблице по Евразии не показываем столбцы, где у всех стран пусто или ноль
+  // (например, производство пальмового масла в ЕС, Турции, России и Украине).
+  const focusRows = oil.focus[year] ?? [];
+  const focusMetrics = METRICS.filter(m => focusRows.some(c => (c.values[m.id] ?? 0) !== 0));
 
   return (
     <div className="grid gap-6">
@@ -109,21 +113,21 @@ export default function PsdExplorer({ views, lang, t }: { views: OilView[]; lang
             })}
           </div>
 
-          {(oil.focus[year]?.length ?? 0) > 0 && (
+          {focusRows.length > 0 && focusMetrics.length > 0 && (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <caption className="text-left text-sm text-ink-2 pb-2">{t.focus.replace('{year}', myLabel(year))}</caption>
                 <thead>
                   <tr className="text-xs text-ink-3 border-b border-rule">
                     <th scope="col" className="py-2 pr-4 text-left font-normal">{t.country}</th>
-                    {METRICS.map(m => <th key={m.id} scope="col" className="py-2 px-3 text-right font-normal">{m.label}</th>)}
+                    {focusMetrics.map(m => <th key={m.id} scope="col" className="py-2 px-3 text-right font-normal">{m.label}</th>)}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-rule">
-                  {oil.focus[year].map(c => (
+                  {focusRows.map(c => (
                     <tr key={c.name}>
                       <th scope="row" className="py-2 pr-4 text-left font-normal">{c.name}</th>
-                      {METRICS.map(m => <td key={m.id} className="py-2 px-3 text-right num">{fmtInt(c.values[m.id], lang)}</td>)}
+                      {focusMetrics.map(m => <td key={m.id} className="py-2 px-3 text-right num">{fmtInt(c.values[m.id], lang)}</td>)}
                     </tr>
                   ))}
                 </tbody>

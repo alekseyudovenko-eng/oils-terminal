@@ -1,19 +1,20 @@
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
 import { getDict } from '@/lib/i18n-server';
+import { localePath } from '@/lib/i18n';
 
 type Props = { active: 'overview' | 'market' };
 
 export default function SiteHeader({ active }: Props) {
   const { lang, t } = getDict();
   const links = [
-    { id: 'overview', href: '/', label: t.nav.overview },
-    { id: 'market', href: '/market', label: t.nav.market },
+    { id: 'overview', href: localePath(lang, '/'), label: t.nav.overview },
+    { id: 'market', href: localePath(lang, '/market'), label: t.nav.market },
   ] as const;
   return (
     <header className="bg-band text-band-text">
       <div className="mx-auto max-w-page px-4 sm:px-6 min-h-14 py-2 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-        <Link href="/" className="font-cond text-xl font-semibold tracking-tight">
+        <Link href={localePath(lang, '/')} className="font-cond text-xl font-semibold tracking-tight">
           Oils Terminal
         </Link>
         <div className="flex items-center gap-3">

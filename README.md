@@ -33,7 +33,8 @@
 | `CRON_SECRET` | защита cron-задач |
 | `USDA_API_KEY` | балансы USDA, бесплатный ключ: https://api.data.gov/signup/ |
 | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | рассылка в Telegram |
-| `SITE_URL` | адрес сайта для ссылок в Telegram (по умолчанию imaoils.vercel.app) |
+| `SITE_URL` | адрес сайта для ссылок в Telegram, sitemap и canonical (по умолчанию imaoils.vercel.app) |
+| `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION` | необязательно: код подтверждения из Google Search Console / Bing Webmaster (только значение `content` из meta-тега) |
 
 3. Первая загрузка балансов: открыть `/api/cron/usda-sync?key=<CRON_SECRET>`.
 
@@ -49,7 +50,12 @@
 ## Языки
 
 Интерфейс сайта переведён на русский, английский, узбекский, казахский и малайский (`lib/dict.ts`).
-Выбор хранится в cookie `lang`, переключатель — в шапке.
+У публичных страниц свой адрес для каждого языка: русский без префикса (`/`, `/market`),
+остальные с префиксом (`/en`, `/en/market`, `/uz`, `/kk`, `/ms`). Префикс разбирает `middleware.ts`
+и передаёт язык заголовком `x-locale`. Выбор в переключателе запоминается в cookie `lang`:
+посетителя, выбравшего другой язык, с русского адреса перенаправляем на его версию.
+Лаборатория берёт язык из cookie. Для поисковиков: `/sitemap.xml` (все языки с hreflang),
+`/robots.txt` (лаборатория и `/api/` закрыты, кроме картинки `/api/snapshot`), canonical и hreflang в `<head>`.
 
 - Новости: переводы лежат в `data/news.json` (поля `titleEn…summaryMs`); ежедневная задача пишет все пять языков.
 - Лаборатория: тексты страниц — `lib/dict-lab.ts`; прогноз — `data/forecast.i18n.json` (накладывается на

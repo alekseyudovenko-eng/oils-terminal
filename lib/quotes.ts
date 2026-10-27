@@ -2,7 +2,7 @@
 import { unstable_cache } from 'next/cache';
 import { rethrowIfNextInternal } from './next-errors';
 import {
-  CENTS_LB_TO_USD_T, GAL_PER_TONNE_DIESEL, INSTRUMENTS, Instrument, Group,
+  CENTS_LB_TO_USD_T, GAL_PER_TONNE_DIESEL, INSTRUMENTS, Instrument, Group, tickersFor,
 } from './instruments';
 
 export type Quote = {
@@ -102,8 +102,9 @@ function spread(
 }
 
 async function loadQuotes(): Promise<QuotesResult> {
-  const fetchedAt = new Date().toISOString();
-  const allTickers = Array.from(new Set(INSTRUMENTS.flatMap(i => i.tickers)));
+  const now = new Date();
+  const fetchedAt = now.toISOString();
+  const allTickers = Array.from(new Set(INSTRUMENTS.flatMap(i => tickersFor(i, now))));
 
   let rows = new Map<string, Row>();
   let error: string | null = null;
@@ -116,7 +117,7 @@ async function loadQuotes(): Promise<QuotesResult> {
   }
 
   const pick = (inst: Instrument) => {
-    for (const t of inst.tickers) {
+    for (const t of tickersFor(inst, now)) {
       const r = rows.get(t);
       if (r && (!inst.expect || inst.expect.test(r.description))) return { ticker: t, row: r };
     }

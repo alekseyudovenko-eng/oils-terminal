@@ -8,10 +8,13 @@ import { instText } from '@/lib/quote-i18n';
 
 const ORDER: Group[] = ['palm', 'softoils', 'energy', 'fx'];
 
-export default function QuotesTable({ quotes, compact = false }: { quotes: Quote[]; compact?: boolean }) {
+export default function QuotesTable({ quotes }: { quotes: Quote[] }) {
   const { lang, t } = getDict();
   const c = t.quotes.cols;
-  const groups = ORDER.map(g => ({ g, rows: quotes.filter(q => q.group === g && (q.price != null || !compact)) }))
+  // Инструменты, по которым источник не вернул цену, не показываем (пустые строки с прочерками
+  // только мешают). Если цен нет совсем — показываем все строки: над таблицей будет сообщение об ошибке.
+  const anyPrice = quotes.some(q => q.price != null);
+  const groups = ORDER.map(g => ({ g, rows: quotes.filter(q => q.group === g && (q.price != null || !anyPrice)) }))
     .filter(x => x.rows.length > 0);
 
   const hide = 'hidden md:table-cell';

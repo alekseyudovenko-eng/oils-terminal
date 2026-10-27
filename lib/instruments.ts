@@ -27,7 +27,45 @@ export type Instrument = {
   toUsdT: ToUsdPerTonne;
   /** Проверка, что найден именно нужный контракт (по описанию TradingView). */
   expect?: RegExp;
+  /**
+   * Конкретный ближайший контракт на дату (например, ICEEUR:BRNZ2026). Пробуется раньше,
+   * чем непрерывный BRN1!: TradingView переключает BRN1! на следующий месяц заранее,
+   * и в день переключения изменение за день считается от закрытия другого контракта.
+   */
+  frontContract?: (now: Date) => string;
 };
+
+const MONTH_CODES = 'FGHJKMNQUVXZ';
+
+/** Последний рабочий день (пн–пт) месяца; month — 0..11, может выходить за пределы года. */
+function lastBusinessDay(year: number, month: number): Date {
+  const d = new Date(Date.UTC(year, month + 1, 0));
+  while (d.getUTCDay() === 0 || d.getUTCDay() === 6) d.setUTCDate(d.getUTCDate() - 1);
+  return d;
+}
+
+/**
+ * Ближайший фьючерс Brent ICE. Контракт месяца M торгуется до последнего рабочего дня
+ * месяца M−2 (декабрьский — до конца октября). Праздники биржи не учитываются:
+ * в редкий праздничный последний день просто раньше перейдём на непрерывный тикер.
+ */
+export function brentFrontTicker(now: Date): string {
+  const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  for (let k = 1; k <= 3; k++) {
+    const y = now.getUTCFullYear(), m = now.getUTCMonth() + k; // месяц поставки (может быть > 11)
+    const expiry = lastBusinessDay(y, m - 2).getTime();
+    if (today <= expiry) {
+      const cy = y + Math.floor(m / 12), cm = m % 12;
+      return `ICEEUR:BRN${MONTH_CODES[cm]}${cy}`;
+    }
+  }
+  return 'ICEEUR:BRN1!';
+}
+
+/** Тикеры-кандидаты на сейчас: сначала конкретный контракт (если задан), потом запасные. */
+export function tickersFor(inst: Instrument, now = new Date()): string[] {
+  return inst.frontContract ? [inst.frontContract(now), ...inst.tickers] : inst.tickers;
+}
 
 export const INSTRUMENTS: Instrument[] = [
   {
@@ -63,7 +101,7 @@ export const INSTRUMENTS: Instrument[] = [
   {
     id: 'brent', name: 'Нефть Brent', short: 'Brent', venue: 'ICE, ближайший',
     group: 'energy', unit: 'USD/барр.', tickers: ['ICEEUR:BRN1!'], toUsdT: { kind: 'none' },
-    expect: /brent/i,
+    expect: /brent/i, frontContract: brentFrontTicker,
   },
   {
     id: 'wti', name: 'Нефть WTI', short: 'WTI', venue: 'NYMEX, ближайший',
