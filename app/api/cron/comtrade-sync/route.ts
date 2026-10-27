@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     try {
       const rows = await comtradeGet('M', {
         reporterCode: 458, flowCode: 'X', cmdCode: '1511', partnerCode: 643,
-        period: lastMonths(14).join(','), partner2Code: 0, motCode: 0, customsCode: 'C00', includeDesc: true,
+        period: lastMonths(12).join(','), partner2Code: 0, motCode: 0, customsCode: 'C00', includeDesc: true,
       });
       return NextResponse.json({ ok: true, rows: rows.length, sample: rows.slice(0, 3).map(r => ({ period: r.period, partner: r.partnerDesc, netWgt: r.netWgt, value: r.primaryValue })) });
     } catch (e) {
