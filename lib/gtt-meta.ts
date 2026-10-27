@@ -9,29 +9,29 @@ export const GTT_HS: { code: string; label: string }[] = [
 ];
 
 /** Страны-импортёры (Geonom alpha-2). */
-export const GTT_REPORTERS: { code: string; name: string }[] = [
-  { code: 'RU', name: 'Россия' },
-  { code: 'UZ', name: 'Узбекистан' },
-  { code: 'AZ', name: 'Азербайджан' },
-  { code: 'KZ', name: 'Казахстан' },
-  { code: 'KG', name: 'Киргизия' },
-  { code: 'TJ', name: 'Таджикистан' },
-  { code: 'TM', name: 'Туркменистан' },
-  { code: 'GE', name: 'Грузия' },
-  { code: 'AM', name: 'Армения' },
-  { code: 'BY', name: 'Беларусь' },
-  { code: 'UA', name: 'Украина' },
+export const GTT_REPORTERS: { code: string; name: string; iso3: string }[] = [
+  { code: 'RU', name: 'Россия', iso3: 'RUS' },
+  { code: 'UZ', name: 'Узбекистан', iso3: 'UZB' },
+  { code: 'AZ', name: 'Азербайджан', iso3: 'AZE' },
+  { code: 'KZ', name: 'Казахстан', iso3: 'KAZ' },
+  { code: 'KG', name: 'Киргизия', iso3: 'KGZ' },
+  { code: 'TJ', name: 'Таджикистан', iso3: 'TJK' },
+  { code: 'TM', name: 'Туркменистан', iso3: 'TKM' },
+  { code: 'GE', name: 'Грузия', iso3: 'GEO' },
+  { code: 'AM', name: 'Армения', iso3: 'ARM' },
+  { code: 'BY', name: 'Беларусь', iso3: 'BLR' },
+  { code: 'UA', name: 'Украина', iso3: 'UKR' },
   // Остальные страны таблицы MPOB из ежемесячного отчёта (Europe & Central Asia)
-  { code: 'PL', name: 'Польша' },
-  { code: 'CZ', name: 'Чехия' },
-  { code: 'HU', name: 'Венгрия' },
-  { code: 'RO', name: 'Румыния' },
-  { code: 'BG', name: 'Болгария' },
-  { code: 'EE', name: 'Эстония' },
-  { code: 'LV', name: 'Латвия' },
-  { code: 'LT', name: 'Литва' },
-  { code: 'HR', name: 'Хорватия' },
-  { code: 'XS', name: 'Сербия' }  // в GTT (Geonom) Сербия — XS,
+  { code: 'PL', name: 'Польша', iso3: 'POL' },
+  { code: 'CZ', name: 'Чехия', iso3: 'CZE' },
+  { code: 'HU', name: 'Венгрия', iso3: 'HUN' },
+  { code: 'RO', name: 'Румыния', iso3: 'ROU' },
+  { code: 'BG', name: 'Болгария', iso3: 'BGR' },
+  { code: 'EE', name: 'Эстония', iso3: 'EST' },
+  { code: 'LV', name: 'Латвия', iso3: 'LVA' },
+  { code: 'LT', name: 'Литва', iso3: 'LTU' },
+  { code: 'HR', name: 'Хорватия', iso3: 'HRV' },
+  { code: 'XS', name: 'Сербия', iso3: 'SRB' }  // в GTT (Geonom) Сербия — XS,
 ];
 
 export type TradeRow = {
