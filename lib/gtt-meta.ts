@@ -22,8 +22,10 @@ export const GTT_REPORTERS: { code: string; name: string; iso3: string }[] = [
   { code: 'BY', name: 'Беларусь', iso3: 'BLR' },
   { code: 'UA', name: 'Украина', iso3: 'UKR' },
   // Остальные страны таблицы MPOB из ежемесячного отчёта (Europe & Central Asia)
+  { code: 'MD', name: 'Молдова', iso3: 'MDA' },
   { code: 'PL', name: 'Польша', iso3: 'POL' },
   { code: 'CZ', name: 'Чехия', iso3: 'CZE' },
+  { code: 'SK', name: 'Словакия', iso3: 'SVK' },
   { code: 'HU', name: 'Венгрия', iso3: 'HUN' },
   { code: 'RO', name: 'Румыния', iso3: 'ROU' },
   { code: 'BG', name: 'Болгария', iso3: 'BGR' },
