@@ -1,13 +1,14 @@
-// /api/cron/daily-snapshot — публикует картинку «IMA Daily Snapshot» в Telegram-канал и на страницу Facebook.
+// /api/cron/daily-snapshot — публикует картинку «IMA Daily Snapshot» в Telegram-канал, на страницу Facebook и в X.
 // Запускается Vercel Cron (см. vercel.json: основной запуск около 8:00 МСК и повтор через час на случай сбоя котировок).
 // Ручной запуск: ?key=<CRON_SECRET>. Каждый канал публикуется один раз в день (своя отметка);
 // ?force=1 — повторно (даст дубль!).
 // Telegram: TELEGRAM_SNAPSHOT_CHAT_ID или '@oilpalm'. Facebook: см. lib/facebook.ts (Graph API или Metricool API).
+// X: через Metricool, если METRICOOL_X=1 (аккаунт X должен быть подключён к бренду в Metricool).
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
 import { alreadySentToday, caller, markSentToday } from '@/lib/once-a-day';
 import { escapeHtml, sendTelegramPhotoFile } from '@/lib/telegram';
-import { facebookConfigured, postFacebookPhoto } from '@/lib/facebook';
+import { facebookConfigured, postFacebookPhoto, postXPhoto, xConfigured } from '@/lib/facebook';
 import { renderSnapshot } from '@/lib/snapshot';
 
 export const dynamic = 'force-dynamic';
@@ -25,8 +26,13 @@ export async function GET(request: Request) {
   const fbOn = facebookConfigured();
   const tgDone = !force && (await alreadySentToday('daily-snapshot'));
   const fbDone = !fbOn || (!force && (await alreadySentToday('daily-snapshot-fb')));
-  if (tgDone && fbDone) {
-    return NextResponse.json({ success: true, skipped: 'already sent today', facebook: fbOn ? 'already sent today' : 'not configured' });
+  const xOn = xConfigured();
+  const xDone = !xOn || (!force && (await alreadySentToday('daily-snapshot-x')));
+  if (tgDone && fbDone && xDone) {
+    return NextResponse.json({
+      success: true, skipped: 'already sent today',
+      facebook: fbOn ? 'already sent today' : 'not configured', x: xOn ? 'already sent today' : 'not configured',
+    });
   }
 
   const now = new Date();
@@ -63,9 +69,28 @@ export async function GET(request: Request) {
     console.log('daily-snapshot facebook:', facebook, 'caller', via);
   }
 
-  const success = tg.ok && fbOk;
+  // X (Twitter) через Metricool — тоже независимо от остальных каналов
+  let x: string = xOn ? 'already sent today' : 'not configured';
+  let xOk = true;
+  if (!xDone) {
+    const [y, m, d] = date.split('-');
+    const text =
+      `IMA Daily Snapshot · ${d}.${m}.${y}\n${title}\n\n` +
+      `Palm oil (FCPO), Brent/WTI, USD/MYR and top vegetable oil market news.\n\n` +
+      `#palmoil #vegoils\n${SITE_URL}`;
+    const r = await postXPhoto(`${SITE_URL}/api/snapshot?d=${date}`, text);
+    xOk = r.ok;
+    x = r.ok ? `posted via ${r.via}` : `error (${r.via}): ${r.error}`;
+    if (r.ok) await markSentToday('daily-snapshot-x', via);
+    console.log('daily-snapshot x:', x, 'caller', via);
+  }
+
+  const success = tg.ok && fbOk && xOk;
   return NextResponse.json(
-    { success, chat, title, telegram: tg.skipped ? 'already sent today' : tg.ok ? 'sent' : tg.error, facebook, error: tg.ok ? (fbOk ? undefined : facebook) : tg.error },
+    {
+      success, chat, title, telegram: tg.skipped ? 'already sent today' : tg.ok ? 'sent' : tg.error, facebook, x,
+      error: !tg.ok ? tg.error : !fbOk ? facebook : !xOk ? x : undefined,
+    },
     { status: success ? 200 : 502 }
   );
 }

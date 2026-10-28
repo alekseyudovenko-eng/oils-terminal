@@ -1,4 +1,4 @@
-// lib/facebook.ts — публикация картинки на страницу Facebook без участия Claude.
+// lib/facebook.ts — публикация картинки на страницу Facebook (и в X через Metricool) без участия Claude.
 // Два способа (используется первый настроенный):
 //  1) Напрямую через Facebook Graph API: FB_PAGE_ID + FB_PAGE_ACCESS_TOKEN (бессрочный токен страницы).
 //  2) Через Metricool API: METRICOOL_USER_TOKEN + METRICOOL_USER_ID (+ METRICOOL_BLOG_ID, по умолчанию 7560891).
@@ -24,8 +24,19 @@ export async function postFacebookPhoto(png: ArrayBuffer, imageUrl: string, text
   if (pageId && pageToken) return postViaGraph(pageId, pageToken, png, text);
   const mcToken = (process.env.METRICOOL_USER_TOKEN || '').trim();
   const mcUser = (process.env.METRICOOL_USER_ID || '').trim();
-  if (mcToken && mcUser) return postViaMetricool(mcToken, mcUser, imageUrl, text);
+  if (mcToken && mcUser) return postViaMetricool(mcToken, mcUser, imageUrl, text, 'facebook');
   return { ok: false, error: 'not configured' };
+}
+
+/** X (Twitter) через Metricool: включается переменной METRICOOL_X=1, когда аккаунт X подключён к бренду в Metricool. */
+export function xConfigured(): boolean {
+  return (process.env.METRICOOL_X || '').trim() === '1' && !!(process.env.METRICOOL_USER_TOKEN && process.env.METRICOOL_USER_ID);
+}
+
+/** Фото с текстом в X через Metricool (текст до 280 знаков для обычного аккаунта). */
+export async function postXPhoto(imageUrl: string, text: string): Promise<FacebookResult> {
+  if (!xConfigured()) return { ok: false, error: 'not configured' };
+  return postViaMetricool(process.env.METRICOOL_USER_TOKEN!.trim(), process.env.METRICOOL_USER_ID!.trim(), imageUrl, text, 'twitter');
 }
 
 async function postViaGraph(pageId: string, token: string, png: ArrayBuffer, text: string): Promise<FacebookResult> {
@@ -53,7 +64,7 @@ function localDateTime(d: Date, timeZone: string): string {
   return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}`;
 }
 
-async function postViaMetricool(token: string, userId: string, imageUrl: string, text: string): Promise<FacebookResult> {
+async function postViaMetricool(token: string, userId: string, imageUrl: string, text: string, network: 'facebook' | 'twitter'): Promise<FacebookResult> {
   const blogId = (process.env.METRICOOL_BLOG_ID || '7560891').trim();
   const qs = `blogId=${encodeURIComponent(blogId)}&userId=${encodeURIComponent(userId)}`;
   const headers = { 'X-Mc-Auth': token, 'Content-Type': 'application/json' };
@@ -69,9 +80,10 @@ async function postViaMetricool(token: string, userId: string, imageUrl: string,
     const when = localDateTime(new Date(Date.now() + 3 * 60_000), METRICOOL_TZ);
     const post = {
       autoPublish: true, draft: false, descendants: [], firstCommentText: '', hasNotReadNotes: false,
-      media: [media], mediaAltText: [], providers: [{ network: 'facebook' }],
+      media: [media], mediaAltText: [], providers: [{ network }],
       publicationDate: { dateTime: when, timezone: METRICOOL_TZ },
-      shortener: false, smartLinkData: { ids: [] }, text, facebookData: { type: 'POST' },
+      shortener: false, smartLinkData: { ids: [] }, text,
+      ...(network === 'facebook' ? { facebookData: { type: 'POST' } } : { twitterData: { tags: [] } }),
     };
     const res = await fetch(`${METRICOOL_API}/v2/scheduler/posts?${qs}`, { method: 'POST', headers, body: JSON.stringify(post), cache: 'no-store' });
     const data: any = await res.json().catch(() => ({}));
