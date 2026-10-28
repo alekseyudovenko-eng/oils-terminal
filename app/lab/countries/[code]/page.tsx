@@ -20,6 +20,7 @@ import { OILS, METRICS, myLabel } from '@/lib/psd-meta';
 import { REG, measuresFor, contentLang } from '@/lib/regulation';
 import { IMPORTERS } from '@/lib/importers';
 import { nf, pct, signed, usdBn, usd, people, tonnes, longDate, ymLabel, share, yoy } from '@/lib/country-format';
+import { getCountrySources, owVal, type CountrySources } from '@/lib/country-sources';
 
 export const revalidate = 3600;
 export function generateStaticParams() { return ACTIVE.map(c => ({ code: c.code.toLowerCase() })); }
@@ -114,6 +115,170 @@ function TradeTable({ list, D, lang, hsName }: { list: HsSummary[]; D: Countries
   );
 }
 
+
+const th = 'py-2 px-3 text-right font-normal';
+const td = 'py-2 px-3 text-right num';
+
+function OilWorldBlock({ src, D, lang }: { src: CountrySources; D: CountriesDict; lang: Locale }) {
+  const ow = src.ow;
+  if (!ow.rows.length) return <p className="mt-3 text-ink-3">{D.ow.none}</p>;
+  const eu = ow.rows.some(r => r.scope === 'extra_eu');
+  const seasons = ow.seasons;                       // по возрастанию
+  const fc = new Set(ow.rows.filter(r => r.forecast).map(r => r.season));
+  const actual = [...seasons].reverse().find(s => !fc.has(s)) ?? seasons[seasons.length - 1];
+  const next = seasons.find(s => fc.has(s));
+  const hasCons = ow.rows.some(r => r.section === 'consumption');
+  const sortSec = hasCons ? 'consumption' : 'production';
+  const items = Array.from(new Set(ow.rows.filter(r => r.item !== 'Total' && ['production', 'imports', 'exports', 'consumption'].includes(r.section)).map(r => r.item)))
+    .map(it => ({ it, v: Math.max(owVal(ow, sortSec, it, actual) ?? 0, owVal(ow, 'imports', it, actual) ?? 0) }))
+    .filter(x => x.v >= 0.5).sort((a, z) => z.v - a.v).map(x => x.it);
+  const cols: [string, string][] = [['production', D.ow.production], ['imports', eu ? D.ow.importsEu : D.ow.imports], ['exports', eu ? D.ow.exportsEu : D.ow.exports]];
+  if (hasCons) cols.push(['consumption', D.ow.consumption]);
+  const cell = (sec: string, it: string, se: string) => { const v = owVal(ow, sec, it, se); return v == null ? '—' : nf(v, lang, 0); };
+  const lbl = (s: string) => `${s}${fc.has(s) ? ` ${D.ow.f}` : ''}`;
+  const palmShare = (se: string) => { const p = owVal(ow, 'consumption', 'Palm oil', se), t = owVal(ow, 'consumption', 'Total', se); return p != null && t ? pct((100 * p) / t, lang, 1) : '—'; };
+  return (
+    <>
+      <p className="mt-2 text-sm text-ink-2 max-w-[80ch]">{D.ow.lead}{eu ? ` ${D.ow.leadEu}` : ''}</p>
+      <div className="mt-4 overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px] max-w-4xl">
+          <thead>
+            <tr className="text-xs text-ink-3 border-b border-rule align-bottom">
+              <th scope="col" className="py-2 pr-4 text-left font-normal">{D.ow.product}</th>
+              {cols.map(([k, t]) => <th key={k} scope="col" className={th}>{t}<span className="block">{lbl(actual)}</span></th>)}
+              {hasCons && next && <th scope="col" className={th}>{D.ow.consumption}<span className="block">{lbl(next)}</span></th>}
+            </tr>
+          </thead>
+          <tbody>
+            {[...items, 'Total'].map(it => (
+              <tr key={it} className={`border-b border-rule/60 ${it === 'Total' ? 'font-medium' : ''} ${it === 'Palm oil' ? 'bg-gold-soft/40' : ''}`}>
+                <th scope="row" className="py-2 pr-4 text-left font-normal">{D.ow.items[it] ?? it}</th>
+                {cols.map(([k]) => <td key={k} className={td}>{cell(k, it, actual)}</td>)}
+                {hasCons && next && <td className={`${td} text-ink-2 italic`}>{cell('consumption', it, next)}</td>}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="mt-6 overflow-x-auto">
+        <table className="w-full text-sm min-w-[560px] max-w-3xl">
+          <caption className="text-left font-cond text-lg font-semibold mb-2">{D.ow.totals}</caption>
+          <thead>
+            <tr className="text-xs text-ink-3 border-b border-rule">
+              <th scope="col" className="py-2 pr-4 text-left font-normal">{D.ow.season}</th>
+              {seasons.map(se => <th key={se} scope="col" className={`${th} ${fc.has(se) ? 'italic' : ''}`}>{lbl(se)}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {cols.map(([k, t]) => (
+              <tr key={k} className="border-b border-rule/60">
+                <th scope="row" className="py-2 pr-4 text-left font-normal">{t}</th>
+                {seasons.map(se => <td key={se} className={td}>{cell(k, 'Total', se)}</td>)}
+              </tr>
+            ))}
+            {hasCons && (
+              <>
+                <tr className="border-b border-rule/60">
+                  <th scope="row" className="py-2 pr-4 text-left font-normal">{D.ow.palmShare}</th>
+                  {seasons.map(se => <td key={se} className={td}>{palmShare(se)}</td>)}
+                </tr>
+                <tr className="border-b border-rule/60">
+                  <th scope="row" className="py-2 pr-4 text-left font-normal">{D.ow.perCapita}</th>
+                  {seasons.map(se => { const v = owVal(ow, 'other', 'per_capita', se); return <td key={se} className={td}>{v == null ? '—' : nf(v, lang, 1)}</td>; })}
+                </tr>
+              </>
+            )}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-2 text-xs text-ink-3">{D.ow.note} {ow.edition ? fill(D.ow.edition, { e: ow.edition }) : ''}</p>
+    </>
+  );
+}
+
+function MpobBlock({ src, D, lang }: { src: CountrySources; D: CountriesDict; lang: Locale }) {
+  const rows = src.mpob;
+  const tot = (y: number) => rows.find(r => r.product_group === 'TOTAL' && r.year === y)?.volume_t ?? null;
+  const t26 = tot(2026), t25 = tot(2025);
+  if (t26 == null && t25 == null) return <p className="mt-3 text-ink-3">{D.mpob.none}</p>;
+  const detail = rows.filter(r => r.product_group !== 'TOTAL');
+  const groups = Array.from(new Set(detail.map(r => r.product_group)));
+  const g = (grp: string, y: number) => detail.filter(r => r.product_group === grp && r.year === y).reduce((a, r) => a + (r.volume_t ?? 0), 0);
+  const top = detail.filter(r => r.year === 2026 && (r.volume_t ?? 0) > 0).sort((a, z) => (z.volume_t ?? 0) - (a.volume_t ?? 0)).slice(0, 6);
+  const prev = (r: { product_group: string; product: string }) => detail.find(x => x.year === 2025 && x.product === r.product && x.product_group === r.product_group)?.volume_t ?? null;
+  const period = rows[0]?.period ?? '';
+  return (
+    <>
+      <p className="mt-2 text-sm text-ink-2 max-w-[80ch]">{D.mpob.lead}</p>
+      <Tiles items={[
+        [`${D.mpob.total}, ${period} 2026`, tonnes(t26, lang)],
+        [`${D.mpob.total}, ${period} 2025`, tonnes(t25, lang)],
+        [D.mpob.change, t26 != null && t25 ? yoy(t26, t25, lang) : '—'],
+      ]} />
+      {groups.length ? (
+        <div className="mt-6 grid gap-8 lg:grid-cols-2">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm min-w-[420px]">
+              <thead>
+                <tr className="text-xs text-ink-3 border-b border-rule">
+                  <th scope="col" className="py-2 pr-4 text-left font-normal">{D.mpob.group}</th>
+                  <th scope="col" className={th}>2026</th><th scope="col" className={th}>2025</th><th scope="col" className={th}>{D.mpob.change}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {groups.map(grp => (
+                  <tr key={grp} className="border-b border-rule/60">
+                    <th scope="row" className="py-2 pr-4 text-left font-normal">{D.mpob.groups[grp] ?? grp}</th>
+                    <td className={td}>{tonnes(g(grp, 2026), lang)}</td><td className={td}>{tonnes(g(grp, 2025), lang)}</td><td className={td}>{yoy(g(grp, 2026), g(grp, 2025), lang)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm min-w-[420px]">
+              <caption className="text-left font-cond text-lg font-semibold mb-2">{D.mpob.top}</caption>
+              <thead>
+                <tr className="text-xs text-ink-3 border-b border-rule">
+                  <th scope="col" className="py-2 pr-4 text-left font-normal">{D.mpob.product}</th>
+                  <th scope="col" className={th}>2026</th><th scope="col" className={th}>2025</th>
+                </tr>
+              </thead>
+              <tbody>
+                {top.map(r => (
+                  <tr key={r.product_group + r.product} className="border-b border-rule/60">
+                    <th scope="row" className="py-2 pr-4 text-left font-normal text-xs">{r.product.toLowerCase().replace(/(^|[\s/(])\p{L}/gu, m => m.toUpperCase())}</th>
+                    <td className={td}>{tonnes(r.volume_t, lang)}</td><td className={td}>{tonnes(prev(r), lang)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : <p className="mt-3 text-xs text-ink-3">{D.mpob.detailNone}</p>}
+      <p className="mt-2 text-xs text-ink-3">{D.mpob.note}</p>
+    </>
+  );
+}
+
+function NotesBlock({ src, D, lang }: { src: CountrySources; D: CountriesDict; lang: Locale }) {
+  if (!src.notes.length) return <p className="mt-3 text-ink-3">{D.notes.none}</p>;
+  return (
+    <>
+      <p className="mt-2 text-sm text-ink-2 max-w-[80ch]">{D.notes.lead}</p>
+      <ul className="mt-4 space-y-4 max-w-[90ch]">
+        {src.notes.map((n, i) => (
+          <li key={i} className="border-l-2 border-gold pl-4">
+            <p className="text-xs text-ink-3 uppercase tracking-wide">{D.notes.topics[n.topic] ?? n.topic}</p>
+            <p className="mt-1">{lang === 'ru' ? n.text_ru : n.text_en}</p>
+            <p className="mt-1 text-xs text-ink-3">{D.notes.kinds[n.source_kind] ?? n.source_kind} · {n.source}{n.source_date ? ` · ${longDate(n.source_date, lang)}` : ''}</p>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
 export default async function CountryPage({ params }: { params: { code: string } }) {
   const code = params.code.toUpperCase();
   const meta = MONITORED.find(m => m.code === code);
@@ -127,11 +292,12 @@ export default async function CountryPage({ params }: { params: { code: string }
   const namer = partnerNamer(lang, L.trade.unspecified, L.trade.otherEurope);
   const hsName = (hs: string) => L.trade.hs[hs as keyof typeof L.trade.hs] ?? hs;
 
-  const [macro, fx, trade, psd] = await Promise.all([
+  const [macro, fx, trade, psd, src] = await Promise.all([
     getMacro([meta.iso3]),
     meta.fx ? getFx([meta.fx]) : Promise.resolve({}),
     getCountryTrade(meta.gtt),
     getPsd(),
+    getCountrySources(code),
   ]);
   const w = macro.wdi[meta.iso3] ?? {};
   const g = macro.wgi[meta.iso3] ?? {};
@@ -168,7 +334,7 @@ export default async function CountryPage({ params }: { params: { code: string }
 
   const toc: [string, string][] = [
     ['basic', D.sec.basic], ['political', D.sec.political], ['economic', D.sec.economic], ['financial', D.sec.financial],
-    ['oils', D.sec.oils], ['fats', D.sec.fats], ['regulation', D.sec.regulation], ['companies', D.sec.companies], ['sources', D.sec.sources],
+    ['notes', D.sec.notes], ['oils', D.sec.oils], ['balance', D.sec.balance], ['mpob', D.sec.mpob], ['fats', D.sec.fats], ['regulation', D.sec.regulation], ['companies', D.sec.companies], ['sources', D.sec.sources],
   ];
 
   return (
@@ -301,6 +467,11 @@ export default async function CountryPage({ params }: { params: { code: string }
           </div>
         </section>
 
+        <section aria-labelledby="notes" className="pt-10">
+          <H2 id="notes">{D.notes.title}</H2>
+          <NotesBlock src={src} D={D} lang={lang} />
+        </section>
+
         <section aria-labelledby="oils" className="pt-10">
           <H2 id="oils">{D.sec.oils}</H2>
           <p className="mt-2 text-sm text-ink-2 max-w-[80ch]">{D.oil.lead}</p>
@@ -357,6 +528,16 @@ export default async function CountryPage({ params }: { params: { code: string }
             </div>
           ) : null}
           {!psdOils.some(o => o.id === 'palm') && <p className="mt-2 text-xs text-ink-3">{D.oil.usdaNone}</p>}
+        </section>
+
+        <section aria-labelledby="balance" className="pt-10">
+          <H2 id="balance">{D.ow.title}</H2>
+          <OilWorldBlock src={src} D={D} lang={lang} />
+        </section>
+
+        <section aria-labelledby="mpob" className="pt-10">
+          <H2 id="mpob">{D.mpob.title}</H2>
+          <MpobBlock src={src} D={D} lang={lang} />
         </section>
 
         <section aria-labelledby="fats" className="pt-10">

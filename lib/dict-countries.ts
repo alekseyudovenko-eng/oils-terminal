@@ -14,11 +14,11 @@ const ru = {
   },
   col: {
     country: 'Страна', pop: 'Население', gdp: 'ВВП', gdppc: 'ВВП на душу', growth: 'Рост ВВП', cpi: 'Инфляция',
-    rate: 'Ставка ЦБ', fx: 'Курс к $', palm: 'Импорт пальмового, 12 мес.', palmYoy: 'г/г', my: 'Доля Малайзии', rating: 'Рейтинг',
+    rate: 'Ставка ЦБ', fx: 'Курс к $', palm: 'Импорт пальмового, 12 мес.', palmYoy: 'г/г', my: 'Доля Малайзии', rating: 'Рейтинг', perCap: 'Масла и жиры на душу, кг', mpob: 'MPOB, янв–сен 2026, т',
   },
   sec: {
     basic: 'Основное', political: 'Политика', economic: 'Экономика', financial: 'Финансы',
-    oils: 'Импорт растительных масел', fats: 'Маргарины и спецжиры', regulation: 'Регулирование', companies: 'Импортёры', sources: 'Источники',
+    oils: 'Импорт растительных масел', balance: 'Баланс масел и жиров', mpob: 'Экспорт Малайзии', notes: 'Аналитика IMA/MPOC', fats: 'Маргарины и спецжиры', regulation: 'Регулирование', companies: 'Импортёры', sources: 'Источники',
   },
   basic: { capital: 'Столица', languages: 'Языки', currency: 'Валюта', population: 'Население', area: 'Площадь', urban: 'Городское население', memberships: 'Членство' },
   pol: {
@@ -73,7 +73,7 @@ const ru = {
     more: 'Карточки компаний — на странице «Импортёры».',
   },
   src: {
-    auto: 'Автоматически: Всемирный банк (WDI, WGI), МВФ (WEO), TradingView, Global Trade Tracker, UN Comtrade, USDA PSD.',
+    auto: 'Автоматически: Всемирный банк (WDI, WGI), МВФ (WEO), TradingView, Global Trade Tracker, UN Comtrade, USDA PSD. По подписке MPOC: Oil World, MPOB. Внутренние документы IMA и MPOC.',
     checked: 'проверено {d}',
     curated: 'Сводка подготовлена {d}.',
   },
@@ -82,6 +82,36 @@ const ru = {
     EAEU: 'ЕАЭС', CIS: 'СНГ', WTO: 'ВТО', SCO: 'ШОС', BRICS: 'БРИКС', OTS: 'Организация тюркских государств',
     'EAEU-observer': 'наблюдатель в ЕАЭС', 'WTO-accession': 'вступает в ВТО', EU: 'ЕС', NATO: 'НАТО',
   } as Record<string, string>,
+  ow: {
+    title: 'Баланс масел и жиров (Oil World)',
+    lead: 'Производство, импорт, экспорт и потребление 17 масел и жиров, тыс. т, сезон октябрь–сентябрь. Прогноз Oil World отмечен буквой «П».',
+    leadEu: 'Для стран ЕС Oil World публикует производство по стране, а торговлю — только с третьими странами (без торговли внутри ЕС). Поставки пальмового масла через Нидерланды и Германию здесь не видны — смотрите таможенные данные выше.',
+    edition: 'Выпуск базы: {e}.',
+    product: 'Масло / жир', production: 'Производство', imports: 'Импорт', exports: 'Экспорт', consumption: 'Потребление', stocks: 'Запасы на конец',
+    importsEu: 'Импорт из 3-х стран', exportsEu: 'Экспорт в 3-и страны',
+    season: 'Сезон', f: 'П', totals: 'Итого по всем маслам и жирам, тыс. т',
+    perCapita: 'Потребление на душу, кг', palmShare: 'Доля пальмового в потреблении',
+    none: 'Oil World не публикует отдельного баланса по этой стране.',
+    items: { 'Soybean oil': 'Соевое', 'Sunfloweroil': 'Подсолнечное', 'Rapeseed oil': 'Рапсовое', 'Palm oil': 'Пальмовое', 'Palmkern oil': 'Пальмоядровое', 'Coconut oil': 'Кокосовое', 'Cotton oil': 'Хлопковое', 'Corn oil': 'Кукурузное', 'Olive oil': 'Оливковое', 'Butter,as fat': 'Сливочное (жир)', 'Lard': 'Свиной жир', 'Tallow&Grease': 'Животные жиры', 'Fish oil': 'Рыбий жир', 'Linseed oil': 'Льняное', 'Castor oil': 'Касторовое', 'Total': 'Итого' } as Record<string, string>,
+    note: 'Источник: Oil World (ISTA Mielke), подписка MPOC. Только для внутреннего использования.',
+  },
+  mpob: {
+    title: 'Экспорт Малайзии в страну (MPOB)',
+    lead: 'Отгрузки малайзийской продукции масличной пальмы по данным MPOB (страна назначения), т.',
+    total: 'Вся продукция (OPP)', change: 'Изменение', group: 'Группа продуктов', product: 'Продукт', share: 'Доля',
+    groups: { 'Palm Oil': 'Пальмовое масло и фракции', 'Palm Kernel Oil': 'Пальмоядровое масло', 'Finished Products': 'Готовые продукты (шортенинги, CBS, жиры)', 'Oleochemical': 'Олеохимия' } as Record<string, string>,
+    top: 'Крупнейшие позиции',
+    none: 'В файле MPOB нет данных по этой стране.',
+    detailNone: 'Разбивка по продуктам пока есть только для стран Центральной Азии.',
+    note: 'Источник: MPOB, Exports of Oil Palm Products (через MPOC). Внутреннее использование.',
+  },
+  notes: {
+    title: 'Аналитика IMA и MPOC',
+    lead: 'Выводы из наших отчётов, записок и профилей MPOC. Каждый пункт — со ссылкой на документ.',
+    topics: { market: 'Рынок', trade: 'Торговля', logistics: 'Логистика', policy: 'Регулирование и GR', buyers: 'Покупатели' } as Record<string, string>,
+    kinds: { ima: 'IMA', mpoc: 'MPOC', mpob: 'MPOB', oilworld: 'Oil World', gtt: 'GTT', media: 'СМИ' } as Record<string, string>,
+    none: 'Заметок по этой стране пока нет.',
+  },
   back: 'Все страны',
   na: '—',
 };
@@ -97,11 +127,11 @@ const en: CountriesDict = {
   },
   col: {
     country: 'Country', pop: 'Population', gdp: 'GDP', gdppc: 'GDP per capita', growth: 'GDP growth', cpi: 'Inflation',
-    rate: 'Policy rate', fx: 'Rate vs $', palm: 'Palm oil imports, 12 m', palmYoy: 'y/y', my: 'Malaysia share', rating: 'Rating',
+    rate: 'Policy rate', fx: 'Rate vs $', palm: 'Palm oil imports, 12 m', palmYoy: 'y/y', my: 'Malaysia share', rating: 'Rating', perCap: 'Oils & fats per capita, kg', mpob: 'MPOB, Jan–Sep 2026, t',
   },
   sec: {
     basic: 'Overview', political: 'Politics', economic: 'Economy', financial: 'Finance',
-    oils: 'Vegetable oil imports', fats: 'Margarine and specialty fats', regulation: 'Regulation', companies: 'Importers', sources: 'Sources',
+    oils: 'Vegetable oil imports', balance: 'Oils and fats balance', mpob: 'Malaysian exports', notes: 'IMA/MPOC insights', fats: 'Margarine and specialty fats', regulation: 'Regulation', companies: 'Importers', sources: 'Sources',
   },
   basic: { capital: 'Capital', languages: 'Languages', currency: 'Currency', population: 'Population', area: 'Area', urban: 'Urban population', memberships: 'Memberships' },
   pol: {
@@ -156,7 +186,7 @@ const en: CountriesDict = {
     more: 'Company cards: see the “Importers” page.',
   },
   src: {
-    auto: 'Automatic: World Bank (WDI, WGI), IMF (WEO), TradingView, Global Trade Tracker, UN Comtrade, USDA PSD.',
+    auto: 'Automatic: World Bank (WDI, WGI), IMF (WEO), TradingView, Global Trade Tracker, UN Comtrade, USDA PSD. Via MPOC: Oil World, MPOB. Internal IMA and MPOC documents.',
     checked: 'checked {d}',
     curated: 'Profile prepared {d}.',
   },
@@ -164,6 +194,36 @@ const en: CountriesDict = {
   mem: {
     EAEU: 'EAEU', CIS: 'CIS', WTO: 'WTO', SCO: 'SCO', BRICS: 'BRICS', OTS: 'Organization of Turkic States',
     'EAEU-observer': 'EAEU observer', 'WTO-accession': 'acceding to the WTO', EU: 'EU', NATO: 'NATO',
+  },
+  ow: {
+    title: 'Oils and fats balance (Oil World)',
+    lead: 'Production, imports, exports and consumption of 17 oils and fats, thousand t, October–September season. Oil World forecasts are marked “F”.',
+    leadEu: 'For EU members Oil World publishes production by country but trade only with non-EU countries (intra-EU trade excluded). Palm oil arriving via the Netherlands or Germany is not visible here; see the customs data above.',
+    edition: 'Database edition: {e}.',
+    product: 'Oil / fat', production: 'Production', imports: 'Imports', exports: 'Exports', consumption: 'Consumption', stocks: 'Ending stocks',
+    importsEu: 'Imports from non-EU', exportsEu: 'Exports to non-EU',
+    season: 'Season', f: 'F', totals: 'All oils and fats, thousand t',
+    perCapita: 'Consumption per capita, kg', palmShare: 'Palm oil share of consumption',
+    none: 'Oil World does not publish a separate balance for this country.',
+    items: { 'Soybean oil': 'Soybean', 'Sunfloweroil': 'Sunflower', 'Rapeseed oil': 'Rapeseed', 'Palm oil': 'Palm', 'Palmkern oil': 'Palm kernel', 'Coconut oil': 'Coconut', 'Cotton oil': 'Cottonseed', 'Corn oil': 'Corn', 'Olive oil': 'Olive', 'Butter,as fat': 'Butter (fat)', 'Lard': 'Lard', 'Tallow&Grease': 'Tallow and grease', 'Fish oil': 'Fish oil', 'Linseed oil': 'Linseed', 'Castor oil': 'Castor', 'Total': 'Total' },
+    note: 'Source: Oil World (ISTA Mielke), MPOC subscription. Internal use only.',
+  },
+  mpob: {
+    title: 'Malaysian exports to the country (MPOB)',
+    lead: 'Shipments of Malaysian oil palm products by destination, MPOB data, tonnes.',
+    total: 'All products (OPP)', change: 'Change', group: 'Product group', product: 'Product', share: 'Share',
+    groups: { 'Palm Oil': 'Palm oil and fractions', 'Palm Kernel Oil': 'Palm kernel oil', 'Finished Products': 'Finished products (shortenings, CBS, fats)', 'Oleochemical': 'Oleochemicals' },
+    top: 'Largest items',
+    none: 'The MPOB file has no data for this country.',
+    detailNone: 'A product breakdown is so far available only for Central Asian countries.',
+    note: 'Source: MPOB, Exports of Oil Palm Products (via MPOC). Internal use.',
+  },
+  notes: {
+    title: 'IMA and MPOC insights',
+    lead: 'Findings from our reports, memos and MPOC profiles. Each point links to its document.',
+    topics: { market: 'Market', trade: 'Trade', logistics: 'Logistics', policy: 'Regulation and GR', buyers: 'Buyers' },
+    kinds: { ima: 'IMA', mpoc: 'MPOC', mpob: 'MPOB', oilworld: 'Oil World', gtt: 'GTT', media: 'Media' },
+    none: 'No notes for this country yet.',
   },
   back: 'All countries', na: '—',
 };
@@ -178,11 +238,11 @@ const uz: CountriesDict = {
   },
   col: {
     country: 'Mamlakat', pop: 'Aholi', gdp: 'YaIM', gdppc: 'Aholi jon boshiga YaIM', growth: 'YaIM oʻsishi', cpi: 'Inflyatsiya',
-    rate: 'MB stavkasi', fx: '$ kursi', palm: 'Palma moyi importi, 12 oy', palmYoy: 'y/y', my: 'Malayziya ulushi', rating: 'Reyting',
+    rate: 'MB stavkasi', fx: '$ kursi', palm: 'Palma moyi importi, 12 oy', palmYoy: 'y/y', my: 'Malayziya ulushi', rating: 'Reyting', perCap: 'Jon boshiga moy va yogʻ, kg', mpob: 'MPOB, yan–sen 2026, t',
   },
   sec: {
     basic: 'Asosiy', political: 'Siyosat', economic: 'Iqtisodiyot', financial: 'Moliya',
-    oils: 'Oʻsimlik moylari importi', fats: 'Margarin va maxsus yogʻlar', regulation: 'Tartibga solish', companies: 'Importyorlar', sources: 'Manbalar',
+    oils: 'Oʻsimlik moylari importi', balance: 'Moy va yogʻlar balansi', mpob: 'Malayziya eksporti', notes: 'IMA/MPOC tahlili', fats: 'Margarin va maxsus yogʻlar', regulation: 'Tartibga solish', companies: 'Importyorlar', sources: 'Manbalar',
   },
   basic: { capital: 'Poytaxt', languages: 'Tillar', currency: 'Valyuta', population: 'Aholi', area: 'Maydon', urban: 'Shahar aholisi', memberships: 'Aʼzolik' },
   pol: {
@@ -246,6 +306,9 @@ const uz: CountriesDict = {
     EAEU: 'YeOII', CIS: 'MDH', WTO: 'JST', SCO: 'ShHT', BRICS: 'BRIKS', OTS: 'Turkiy davlatlar tashkiloti',
     'EAEU-observer': 'YeOIIda kuzatuvchi', 'WTO-accession': 'JSTga aʼzo boʻlmoqda', EU: 'YeI', NATO: 'NATO',
   },
+  ow: { ...en.ow, title: 'Moy va yogʻlar balansi (Oil World)', lead: '17 turdagi moy va yogʻ ishlab chiqarish, import, eksport va isteʼmoli, ming t, oktyabr–sentyabr mavsumi. Oil World prognozi «F» bilan belgilangan.', product: 'Moy / yogʻ', production: 'Ishlab chiqarish', imports: 'Import', exports: 'Eksport', consumption: 'Isteʼmol', stocks: 'Yakuniy zaxiralar', season: 'Mavsum', totals: 'Barcha moy va yogʻlar, ming t', perCapita: 'Jon boshiga isteʼmol, kg', palmShare: 'Isteʼmolda palma moyi ulushi', none: 'Oil World bu mamlakat uchun alohida balans eʼlon qilmaydi.' },
+  mpob: { ...en.mpob, title: 'Malayziyaning mamlakatga eksporti (MPOB)', total: 'Barcha mahsulotlar (OPP)', change: 'Oʻzgarish', group: 'Mahsulot guruhi', product: 'Mahsulot', share: 'Ulush', top: 'Eng yirik pozitsiyalar', none: 'MPOB faylida bu mamlakat boʻyicha maʼlumot yoʻq.' },
+  notes: { ...en.notes, title: 'IMA va MPOC tahlili', lead: 'Hisobotlarimiz, xatlarimiz va MPOC profillaridan xulosalar. Har bir band hujjatga havola bilan.', topics: { market: 'Bozor', trade: 'Savdo', logistics: 'Logistika', policy: 'Tartibga solish va GR', buyers: 'Xaridorlar' }, none: 'Bu mamlakat boʻyicha hali yozuvlar yoʻq.' },
   back: 'Barcha mamlakatlar',
 };
 
@@ -259,11 +322,11 @@ const kk: CountriesDict = {
   },
   col: {
     country: 'Ел', pop: 'Халық', gdp: 'ЖІӨ', gdppc: 'Жан басына ЖІӨ', growth: 'ЖІӨ өсімі', cpi: 'Инфляция',
-    rate: 'ОБ мөлшерлемесі', fx: '$ бағамы', palm: 'Пальма майы импорты, 12 ай', palmYoy: 'ж/ж', my: 'Малайзия үлесі', rating: 'Рейтинг',
+    rate: 'ОБ мөлшерлемесі', fx: '$ бағамы', palm: 'Пальма майы импорты, 12 ай', palmYoy: 'ж/ж', my: 'Малайзия үлесі', rating: 'Рейтинг', perCap: 'Жан басына май, кг', mpob: 'MPOB, қаң–қыр 2026, т',
   },
   sec: {
     basic: 'Негізгі', political: 'Саясат', economic: 'Экономика', financial: 'Қаржы',
-    oils: 'Өсімдік майлары импорты', fats: 'Маргарин және арнайы майлар', regulation: 'Реттеу', companies: 'Импорттаушылар', sources: 'Дереккөздер',
+    oils: 'Өсімдік майлары импорты', balance: 'Май мен тоң май балансы', mpob: 'Малайзия экспорты', notes: 'IMA/MPOC талдауы', fats: 'Маргарин және арнайы майлар', regulation: 'Реттеу', companies: 'Импорттаушылар', sources: 'Дереккөздер',
   },
   basic: { capital: 'Астана', languages: 'Тілдер', currency: 'Валюта', population: 'Халық', area: 'Аумақ', urban: 'Қала халқы', memberships: 'Мүшелік' },
   pol: {
@@ -327,6 +390,9 @@ const kk: CountriesDict = {
     EAEU: 'ЕАЭО', CIS: 'ТМД', WTO: 'ДСҰ', SCO: 'ШЫҰ', BRICS: 'БРИКС', OTS: 'Түркі мемлекеттері ұйымы',
     'EAEU-observer': 'ЕАЭО-дағы бақылаушы', 'WTO-accession': 'ДСҰ-ға кіруде', EU: 'ЕО', NATO: 'НАТО',
   },
+  ow: { ...en.ow, title: 'Май мен тоң май балансы (Oil World)', lead: '17 май мен тоң майдың өндірісі, импорты, экспорты және тұтынуы, мың т, қазан–қыркүйек маусымы. Oil World болжамы «F» деп белгіленген.', product: 'Май / тоң май', production: 'Өндіріс', imports: 'Импорт', exports: 'Экспорт', consumption: 'Тұтыну', stocks: 'Соңғы қорлар', season: 'Маусым', totals: 'Барлық майлар, мың т', perCapita: 'Жан басына тұтыну, кг', palmShare: 'Тұтынудағы пальма майының үлесі', none: 'Oil World бұл ел бойынша жеке баланс жарияламайды.' },
+  mpob: { ...en.mpob, title: 'Малайзияның елге экспорты (MPOB)', total: 'Барлық өнім (OPP)', change: 'Өзгеріс', group: 'Өнім тобы', product: 'Өнім', share: 'Үлес', top: 'Ең ірі позициялар', none: 'MPOB файлында бұл ел бойынша дерек жоқ.' },
+  notes: { ...en.notes, title: 'IMA және MPOC талдауы', lead: 'Есептеріміз, хаттарымыз және MPOC профильдерінен қорытындылар. Әр тармақ құжатқа сілтемемен.', topics: { market: 'Нарық', trade: 'Сауда', logistics: 'Логистика', policy: 'Реттеу және GR', buyers: 'Сатып алушылар' }, none: 'Бұл ел бойынша әзірге жазба жоқ.' },
   back: 'Барлық елдер',
 };
 kk.basic.capital = 'Елорда';
@@ -341,11 +407,11 @@ const ms: CountriesDict = {
   },
   col: {
     country: 'Negara', pop: 'Penduduk', gdp: 'KDNK', gdppc: 'KDNK per kapita', growth: 'Pertumbuhan KDNK', cpi: 'Inflasi',
-    rate: 'Kadar dasar', fx: 'Kadar vs $', palm: 'Import minyak sawit, 12 bln', palmYoy: 't/t', my: 'Bahagian Malaysia', rating: 'Penarafan',
+    rate: 'Kadar dasar', fx: 'Kadar vs $', palm: 'Import minyak sawit, 12 bln', palmYoy: 't/t', my: 'Bahagian Malaysia', rating: 'Penarafan', perCap: 'Minyak & lemak per kapita, kg', mpob: 'MPOB, Jan–Sep 2026, t',
   },
   sec: {
     basic: 'Gambaran umum', political: 'Politik', economic: 'Ekonomi', financial: 'Kewangan',
-    oils: 'Import minyak sayuran', fats: 'Marjerin dan lemak khusus', regulation: 'Kawal selia', companies: 'Pengimport', sources: 'Sumber',
+    oils: 'Import minyak sayuran', balance: 'Imbangan minyak dan lemak', mpob: 'Eksport Malaysia', notes: 'Analisis IMA/MPOC', fats: 'Marjerin dan lemak khusus', regulation: 'Kawal selia', companies: 'Pengimport', sources: 'Sumber',
   },
   basic: { capital: 'Ibu negara', languages: 'Bahasa', currency: 'Mata wang', population: 'Penduduk', area: 'Keluasan', urban: 'Penduduk bandar', memberships: 'Keahlian' },
   pol: {
@@ -409,6 +475,9 @@ const ms: CountriesDict = {
     EAEU: 'EAEU', CIS: 'CIS', WTO: 'WTO', SCO: 'SCO', BRICS: 'BRICS', OTS: 'Pertubuhan Negara-negara Turkik',
     'EAEU-observer': 'pemerhati EAEU', 'WTO-accession': 'sedang menyertai WTO', EU: 'EU', NATO: 'NATO',
   },
+  ow: { ...en.ow, title: 'Imbangan minyak dan lemak (Oil World)', lead: 'Pengeluaran, import, eksport dan penggunaan 17 minyak dan lemak, ribu t, musim Oktober–September. Unjuran Oil World ditanda “F”.', product: 'Minyak / lemak', production: 'Pengeluaran', imports: 'Import', exports: 'Eksport', consumption: 'Penggunaan', stocks: 'Stok akhir', season: 'Musim', totals: 'Semua minyak dan lemak, ribu t', perCapita: 'Penggunaan per kapita, kg', palmShare: 'Bahagian minyak sawit dalam penggunaan', none: 'Oil World tidak menerbitkan imbangan berasingan bagi negara ini.' },
+  mpob: { ...en.mpob, title: 'Eksport Malaysia ke negara ini (MPOB)', total: 'Semua produk (OPP)', change: 'Perubahan', group: 'Kumpulan produk', product: 'Produk', share: 'Bahagian', top: 'Item terbesar', none: 'Fail MPOB tiada data bagi negara ini.' },
+  notes: { ...en.notes, title: 'Analisis IMA dan MPOC', lead: 'Penemuan daripada laporan, memo dan profil MPOC kami. Setiap perkara dipautkan kepada dokumennya.', topics: { market: 'Pasaran', trade: 'Perdagangan', logistics: 'Logistik', policy: 'Kawal selia dan GR', buyers: 'Pembeli' }, none: 'Belum ada nota bagi negara ini.' },
   back: 'Semua negara',
 };
 
