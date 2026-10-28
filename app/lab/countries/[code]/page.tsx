@@ -436,7 +436,7 @@ export default async function CountryPage({ params }: { params: { code: string }
         <section aria-labelledby="financial" className="pt-10">
           <H2 id="financial">{D.sec.financial}</H2>
           <Tiles items={[
-            [D.fin.rate, `${nf(fin.policyRate.value, lang, 2)}%`, fill(D.fin.decided, { d: longDate(fin.policyRate.decided, lang) })],
+            [D.fin.rate, fin.policyRate.value == null ? '—' : `${nf(fin.policyRate.value, lang, 2)}%`, fin.policyRate.decided ? fill(D.fin.decided, { d: longDate(fin.policyRate.decided, lang) }) : undefined],
             [`${D.fin.fx} (${p.currency.code})`, rate ? nf(rate.rate, lang, rate.rate < 10 ? 4 : 2) : '—',
               rate ? `${D.fin.fx1m} ${signed(rate.chg1m, lang)} · ${D.fin.fxYtd} ${signed(rate.chgYtd, lang)}` : undefined],
           ]} />

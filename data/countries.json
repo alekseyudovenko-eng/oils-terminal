@@ -5,104 +5,2417 @@
     {
       "code": "RU",
       "flag": "🇷🇺",
-      "capital": { "ru": "Москва", "en": "Moscow" },
-      "languages": { "ru": "русский (государственный)", "en": "Russian (official)" },
-      "currency": { "code": "RUB", "ru": "российский рубль", "en": "Russian rouble" },
-      "memberships": ["EAEU", "CIS", "WTO", "SCO", "BRICS"],
+      "capital": {
+        "ru": "Москва",
+        "en": "Moscow"
+      },
+      "languages": {
+        "ru": "русский (государственный)",
+        "en": "Russian (official)"
+      },
+      "currency": {
+        "code": "RUB",
+        "ru": "российский рубль",
+        "en": "Russian rouble"
+      },
+      "memberships": [
+        "EAEU",
+        "CIS",
+        "WTO",
+        "SCO",
+        "BRICS"
+      ],
       "political": {
-        "system": { "ru": "Федеративная президентская республика", "en": "Federal presidential republic" },
-        "headOfState": { "ru": "Президент Владимир Путин (избран в марте 2024 г., срок до 2030 г.)", "en": "President Vladimir Putin (elected March 2024, term to 2030)" },
-        "headOfGov": { "ru": "Председатель правительства Михаил Мишустин (с 2020 г., повторно назначен в мае 2024 г.)", "en": "Prime Minister Mikhail Mishustin (since 2020, reappointed May 2024)" },
-        "elections": { "ru": "Выборы в Госдуму 18–20 сентября 2026 г.: «Единая Россия» — 349 из 450 мест, КПРФ — 37, ЛДПР — 23, «Новые люди» — 19, «Справедливая Россия» — 17. Следующие президентские выборы — 2030 г.", "en": "State Duma election, 18–20 September 2026: United Russia 349 of 450 seats, CPRF 37, LDPR 23, New People 19, A Just Russia 17. Next presidential election: 2030." },
-        "notes": { "ru": "Действуют широкие санкции США, ЕС и Великобритании; часть платежей и логистики идёт через третьи страны.", "en": "Broad US, EU and UK sanctions are in force; part of payments and logistics runs through third countries." },
+        "system": {
+          "ru": "Федеративная президентская республика",
+          "en": "Federal presidential republic"
+        },
+        "headOfState": {
+          "ru": "Президент Владимир Путин (избран в марте 2024 г., срок до 2030 г.)",
+          "en": "President Vladimir Putin (elected March 2024, term to 2030)"
+        },
+        "headOfGov": {
+          "ru": "Председатель правительства Михаил Мишустин (с 2020 г., повторно назначен в мае 2024 г.)",
+          "en": "Prime Minister Mikhail Mishustin (since 2020, reappointed May 2024)"
+        },
+        "elections": {
+          "ru": "Выборы в Госдуму 18–20 сентября 2026 г.: «Единая Россия» — 349 из 450 мест, КПРФ — 37, ЛДПР — 23, «Новые люди» — 19, «Справедливая Россия» — 17. Следующие президентские выборы — 2030 г.",
+          "en": "State Duma election, 18–20 September 2026: United Russia 349 of 450 seats, CPRF 37, LDPR 23, New People 19, A Just Russia 17. Next presidential election: 2030."
+        },
+        "notes": {
+          "ru": "Действуют широкие санкции США, ЕС и Великобритании; часть платежей и логистики идёт через третьи страны.",
+          "en": "Broad US, EU and UK sanctions are in force; part of payments and logistics runs through third countries."
+        },
         "sources": [
-          { "title": "2026 Russian legislative election — results of the Central Election Commission (Wikipedia)", "url": "https://en.wikipedia.org/wiki/2026_Russian_legislative_election", "date": "2026-10-28" },
-          { "title": "Vladimir Putin reappoints Mikhail Mishustin as Russia's Prime Minister (Tribune India)", "url": "https://www.tribuneindia.com/news/world/vladimir-putin-reappoints-mikhail-mishustin-as-russias-prime-minister-619892/amp", "date": "2026-10-28" }
+          {
+            "title": "2026 Russian legislative election — results of the Central Election Commission (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/2026_Russian_legislative_election",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Vladimir Putin reappoints Mikhail Mishustin as Russia's Prime Minister (Tribune India)",
+            "url": "https://www.tribuneindia.com/news/world/vladimir-putin-reappoints-mikhail-mishustin-as-russias-prime-minister-619892/amp",
+            "date": "2026-10-28"
+          }
         ]
       },
       "financial": {
-        "centralBank": { "ru": "Банк России", "en": "Bank of Russia" },
-        "policyRate": { "value": 14, "decided": "2026-10-23", "ru": "ключевая ставка сохранена на 14%", "en": "key rate held at 14%" },
-        "ratings": {
-          "sp": null, "moodys": null, "fitch": null,
-          "note": { "ru": "S&P, Moody's и Fitch отозвали рейтинги России в 2022 г. из-за санкций.", "en": "S&P, Moody's and Fitch withdrew Russia's ratings in 2022 because of sanctions." }
+        "centralBank": {
+          "ru": "Банк России",
+          "en": "Bank of Russia"
         },
-        "fxRegime": { "ru": "Плавающий курс; действуют ограничения на движение капитала.", "en": "Floating exchange rate; capital controls in place." },
+        "policyRate": {
+          "value": 14,
+          "decided": "2026-10-23",
+          "ru": "ключевая ставка сохранена на 14%",
+          "en": "key rate held at 14%"
+        },
+        "ratings": {
+          "sp": null,
+          "moodys": null,
+          "fitch": null,
+          "note": {
+            "ru": "S&P, Moody's и Fitch отозвали рейтинги России в 2022 г. из-за санкций.",
+            "en": "S&P, Moody's and Fitch withdrew Russia's ratings in 2022 because of sanctions."
+          }
+        },
+        "fxRegime": {
+          "ru": "Плавающий курс; действуют ограничения на движение капитала.",
+          "en": "Floating exchange rate; capital controls in place."
+        },
         "sources": [
-          { "title": "FACTBOX: Bank of Russia holds key rate at 14% (TASS, 23 Oct 2026)", "url": "https://tass.com/economy/2206951/amp", "date": "2026-10-28" }
+          {
+            "title": "FACTBOX: Bank of Russia holds key rate at 14% (TASS, 23 Oct 2026)",
+            "url": "https://tass.com/economy/2206951/amp",
+            "date": "2026-10-28"
+          }
         ]
       }
     },
     {
       "code": "UZ",
       "flag": "🇺🇿",
-      "capital": { "ru": "Ташкент", "en": "Tashkent" },
-      "languages": { "ru": "узбекский (государственный), русский широко используется", "en": "Uzbek (official); Russian widely used" },
-      "currency": { "code": "UZS", "ru": "узбекский сум", "en": "Uzbek som" },
-      "memberships": ["CIS", "SCO", "OTS", "EAEU-observer", "WTO-accession"],
+      "capital": {
+        "ru": "Ташкент",
+        "en": "Tashkent"
+      },
+      "languages": {
+        "ru": "узбекский (государственный), русский широко используется",
+        "en": "Uzbek (official); Russian widely used"
+      },
+      "currency": {
+        "code": "UZS",
+        "ru": "узбекский сум",
+        "en": "Uzbek som"
+      },
+      "memberships": [
+        "CIS",
+        "SCO",
+        "OTS",
+        "EAEU-observer",
+        "WTO-accession"
+      ],
       "political": {
-        "system": { "ru": "Президентская республика", "en": "Presidential republic" },
-        "headOfState": { "ru": "Президент Шавкат Мирзиёев (переизбран в июле 2023 г., срок до 2030 г.)", "en": "President Shavkat Mirziyoyev (re-elected July 2023, term to 2030)" },
-        "headOfGov": { "ru": "Премьер-министр Абдулла Арипов (с 2016 г., повторно утверждён в ноябре 2024 г.)", "en": "Prime Minister Abdulla Aripov (since 2016, re-approved November 2024)" },
-        "elections": { "ru": "Парламентские выборы прошли в октябре 2024 г. Следующие президентские выборы — 2030 г.", "en": "Parliamentary elections were held in October 2024. Next presidential election: 2030." },
-        "notes": { "ru": "Курс на вступление в ВТО: правительство ставит цель завершить его до декабря 2026 г. Наблюдатель в ЕАЭС с 2020 г.", "en": "WTO accession under way: the government targets completion by December 2026. EAEU observer since 2020." },
+        "system": {
+          "ru": "Президентская республика",
+          "en": "Presidential republic"
+        },
+        "headOfState": {
+          "ru": "Президент Шавкат Мирзиёев (переизбран в июле 2023 г., срок до 2030 г.)",
+          "en": "President Shavkat Mirziyoyev (re-elected July 2023, term to 2030)"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Абдулла Арипов (с 2016 г., повторно утверждён в ноябре 2024 г.)",
+          "en": "Prime Minister Abdulla Aripov (since 2016, re-approved November 2024)"
+        },
+        "elections": {
+          "ru": "Парламентские выборы прошли в октябре 2024 г. Следующие президентские выборы — 2030 г.",
+          "en": "Parliamentary elections were held in October 2024. Next presidential election: 2030."
+        },
+        "notes": {
+          "ru": "Курс на вступление в ВТО: правительство ставит цель завершить его до декабря 2026 г. Наблюдатель в ЕАЭС с 2020 г.",
+          "en": "WTO accession under way: the government targets completion by December 2026. EAEU observer since 2020."
+        },
         "sources": [
-          { "title": "Абдулла Арипов вновь утверждён на посту премьер-министра (Kun.uz, 20.11.2024)", "url": "https://kun.uz/ru/news/2024/11/20/abdulla-aripov-vnov-utverjden-na-postu-premer-ministra", "date": "2026-10-28" },
-          { "title": "Uzbekistan targets WTO membership by December 2026 (Daryo, 19.02.2026)", "url": "https://daryo.uz/en/2026/02/19/uzbekistan-targets-wto-membership-by-december-2026/", "date": "2026-10-28" }
+          {
+            "title": "Абдулла Арипов вновь утверждён на посту премьер-министра (Kun.uz, 20.11.2024)",
+            "url": "https://kun.uz/ru/news/2024/11/20/abdulla-aripov-vnov-utverjden-na-postu-premer-ministra",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Uzbekistan targets WTO membership by December 2026 (Daryo, 19.02.2026)",
+            "url": "https://daryo.uz/en/2026/02/19/uzbekistan-targets-wto-membership-by-december-2026/",
+            "date": "2026-10-28"
+          }
         ]
       },
       "financial": {
-        "centralBank": { "ru": "Центральный банк Республики Узбекистан", "en": "Central Bank of Uzbekistan" },
-        "policyRate": { "value": 14, "decided": "2026-07-29", "ru": "основная ставка 14% (последнее подтверждённое решение — 29.07.2026; следующие заседания 16.09 и 28.10.2026 — результаты уточняются)", "en": "policy rate 14% (last confirmed decision 29 Jul 2026; meetings on 16 Sep and 28 Oct 2026 — results to be confirmed)" },
-        "ratings": {
-          "sp": { "rating": "BB", "outlook": "stable", "date": "2025-11-21" },
-          "moodys": { "rating": "Ba2", "outlook": "stable", "date": "2026-06-25" },
-          "fitch": { "rating": "BB", "outlook": "positive", "date": "2026-06-03" }
+        "centralBank": {
+          "ru": "Центральный банк Республики Узбекистан",
+          "en": "Central Bank of Uzbekistan"
         },
-        "fxRegime": { "ru": "Плавающий курс, ЦБ проводит интервенции для сглаживания колебаний.", "en": "Floating rate; the central bank intervenes to smooth volatility." },
+        "policyRate": {
+          "value": 14,
+          "decided": "2026-07-29",
+          "ru": "основная ставка 14% (последнее подтверждённое решение — 29.07.2026; следующие заседания 16.09 и 28.10.2026 — результаты уточняются)",
+          "en": "policy rate 14% (last confirmed decision 29 Jul 2026; meetings on 16 Sep and 28 Oct 2026 — results to be confirmed)"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "BB",
+            "outlook": "stable",
+            "date": "2025-11-21"
+          },
+          "moodys": {
+            "rating": "Ba2",
+            "outlook": "stable",
+            "date": "2026-06-25"
+          },
+          "fitch": {
+            "rating": "BB",
+            "outlook": "positive",
+            "date": "2026-06-03"
+          }
+        },
+        "fxRegime": {
+          "ru": "Плавающий курс, ЦБ проводит интервенции для сглаживания колебаний.",
+          "en": "Floating rate; the central bank intervenes to smooth volatility."
+        },
         "sources": [
-          { "title": "Central Bank of Uzbekistan keeps main policy rate at 14% (UzDaily, 29.07.2026)", "url": "https://www.uzdaily.uz/en/central-bank-of-uzbekistan-keeps-main-policy-rate-at-14/", "date": "2026-10-28" },
-          { "title": "CBU — schedule of Board meetings on the policy rate, 2026", "url": "https://cbu.uz/en/monetary-policy/refinancing-rate/schedule-of-meetings/", "date": "2026-10-28" },
-          { "title": "Moody's upgrades Uzbekistan from Ba3 to Ba2 (gov.uz, 25.06.2026)", "url": "https://gov.uz/en/imv/news/view/184041", "date": "2026-10-28" },
-          { "title": "Fitch revises Uzbekistan outlook to positive, affirms BB (Fergana, 03.06.2026)", "url": "https://en.fergana.agency/news/147028/", "date": "2026-10-28" },
-          { "title": "Uzbekistan credit ratings (FXEmpire: S&P BB stable since 21.11.2025)", "url": "https://www.fxempire.com/macro/credit-ratings/uzbekistan", "date": "2026-10-28" }
+          {
+            "title": "Central Bank of Uzbekistan keeps main policy rate at 14% (UzDaily, 29.07.2026)",
+            "url": "https://www.uzdaily.uz/en/central-bank-of-uzbekistan-keeps-main-policy-rate-at-14/",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "CBU — schedule of Board meetings on the policy rate, 2026",
+            "url": "https://cbu.uz/en/monetary-policy/refinancing-rate/schedule-of-meetings/",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Moody's upgrades Uzbekistan from Ba3 to Ba2 (gov.uz, 25.06.2026)",
+            "url": "https://gov.uz/en/imv/news/view/184041",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Fitch revises Uzbekistan outlook to positive, affirms BB (Fergana, 03.06.2026)",
+            "url": "https://en.fergana.agency/news/147028/",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Uzbekistan credit ratings (FXEmpire: S&P BB stable since 21.11.2025)",
+            "url": "https://www.fxempire.com/macro/credit-ratings/uzbekistan",
+            "date": "2026-10-28"
+          }
         ]
       }
     },
     {
       "code": "AZ",
       "flag": "🇦🇿",
-      "capital": { "ru": "Баку", "en": "Baku" },
-      "languages": { "ru": "азербайджанский (государственный)", "en": "Azerbaijani (official)" },
-      "currency": { "code": "AZN", "ru": "азербайджанский манат", "en": "Azerbaijani manat" },
-      "memberships": ["CIS", "OTS", "WTO-accession"],
+      "capital": {
+        "ru": "Баку",
+        "en": "Baku"
+      },
+      "languages": {
+        "ru": "азербайджанский (государственный)",
+        "en": "Azerbaijani (official)"
+      },
+      "currency": {
+        "code": "AZN",
+        "ru": "азербайджанский манат",
+        "en": "Azerbaijani manat"
+      },
+      "memberships": [
+        "CIS",
+        "OTS",
+        "WTO-accession"
+      ],
       "political": {
-        "system": { "ru": "Президентская республика", "en": "Presidential republic" },
-        "headOfState": { "ru": "Президент Ильхам Алиев (переизбран в феврале 2024 г.)", "en": "President Ilham Aliyev (re-elected February 2024)" },
-        "headOfGov": { "ru": "Премьер-министр Али Асадов (с октября 2019 г.)", "en": "Prime Minister Ali Asadov (since October 2019)" },
-        "elections": { "ru": "Досрочные парламентские выборы — сентябрь 2024 г. Президентские выборы — следующие в 2031 г.", "en": "Snap parliamentary elections in September 2024. Next presidential election: 2031." },
-        "notes": { "ru": "Переговоры о вступлении в ВТО продолжаются. Не входит в ЕАЭС.", "en": "WTO accession talks continue. Not an EAEU member." },
+        "system": {
+          "ru": "Президентская республика",
+          "en": "Presidential republic"
+        },
+        "headOfState": {
+          "ru": "Президент Ильхам Алиев (переизбран в феврале 2024 г.)",
+          "en": "President Ilham Aliyev (re-elected February 2024)"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Али Асадов (с октября 2019 г.)",
+          "en": "Prime Minister Ali Asadov (since October 2019)"
+        },
+        "elections": {
+          "ru": "Досрочные парламентские выборы — сентябрь 2024 г. Президентские выборы — следующие в 2031 г.",
+          "en": "Snap parliamentary elections in September 2024. Next presidential election: 2031."
+        },
+        "notes": {
+          "ru": "Переговоры о вступлении в ВТО продолжаются. Не входит в ЕАЭС.",
+          "en": "WTO accession talks continue. Not an EAEU member."
+        },
         "sources": [
-          { "title": "Prime Minister of the Republic of Azerbaijan – Ali Asadov (nk.gov.az)", "url": "https://nk.gov.az/en/nazirler-kabineti/azerbaycan-respublikasi-nazirler-kabineti", "date": "2026-10-28" },
-          { "title": "World Trade Organization and Azerbaijan (Ministry of Economy)", "url": "https://economy.gov.az/en/page/beynelxalq-elaqeler/umumdunya-ticaret-teskilati-wto-ve-azerbaycan", "date": "2026-10-28" }
+          {
+            "title": "Prime Minister of the Republic of Azerbaijan – Ali Asadov (nk.gov.az)",
+            "url": "https://nk.gov.az/en/nazirler-kabineti/azerbaycan-respublikasi-nazirler-kabineti",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "World Trade Organization and Azerbaijan (Ministry of Economy)",
+            "url": "https://economy.gov.az/en/page/beynelxalq-elaqeler/umumdunya-ticaret-teskilati-wto-ve-azerbaycan",
+            "date": "2026-10-28"
+          }
         ]
       },
       "financial": {
-        "centralBank": { "ru": "Центральный банк Азербайджана", "en": "Central Bank of Azerbaijan" },
-        "policyRate": { "value": 6.5, "decided": "2026-09-23", "ru": "учётная ставка сохранена на 6,5%; нижняя граница коридора снижена до 5%, верхняя — 7,5%", "en": "refinancing rate held at 6.5%; corridor floor cut to 5%, ceiling 7.5%" },
+        "centralBank": {
+          "ru": "Центральный банк Азербайджана",
+          "en": "Central Bank of Azerbaijan"
+        },
+        "policyRate": {
+          "value": 6.5,
+          "decided": "2026-09-23",
+          "ru": "учётная ставка сохранена на 6,5%; нижняя граница коридора снижена до 5%, верхняя — 7,5%",
+          "en": "refinancing rate held at 6.5%; corridor floor cut to 5%, ceiling 7.5%"
+        },
         "ratings": {
           "sp": null,
-          "moodys": { "rating": "Baa3", "outlook": "positive", "date": "2025-07-04" },
-          "fitch": { "rating": "BBB-", "outlook": "stable", "date": "2024-07-27" },
-          "note": { "ru": "S&P отозвало рейтинги по просьбе эмитента (последний — BB+, прогноз «позитивный»; дату отзыва проверить не удалось). Moody's провело плановый пересмотр 17.07.2026 без изменения рейтинга.", "en": "S&P withdrew its ratings at the issuer's request (last BB+, positive outlook; withdrawal date not verified). Moody's completed a scheduled review on 17 Jul 2026 with no rating action." }
+          "moodys": {
+            "rating": "Baa3",
+            "outlook": "positive",
+            "date": "2025-07-04"
+          },
+          "fitch": {
+            "rating": "BBB-",
+            "outlook": "stable",
+            "date": "2024-07-27"
+          },
+          "note": {
+            "ru": "S&P отозвало рейтинги по просьбе эмитента (последний — BB+, прогноз «позитивный»; дату отзыва проверить не удалось). Moody's провело плановый пересмотр 17.07.2026 без изменения рейтинга.",
+            "en": "S&P withdrew its ratings at the issuer's request (last BB+, positive outlook; withdrawal date not verified). Moody's completed a scheduled review on 17 Jul 2026 with no rating action."
+          }
         },
-        "fxRegime": { "ru": "Курс маната фактически привязан к доллару (около 1,70).", "en": "The manat is de facto pegged to the US dollar (about 1.70)." },
+        "fxRegime": {
+          "ru": "Курс маната фактически привязан к доллару (около 1,70).",
+          "en": "The manat is de facto pegged to the US dollar (about 1.70)."
+        },
         "sources": [
-          { "title": "Azerbaijan holds key rate at 6.5%, widens rate corridor (Trading Economics, 23.09.2026)", "url": "https://tradingeconomics.com/azerbaijan/interest-rate/news/585946", "date": "2026-10-28" },
-          { "title": "Moody's completes scheduled review of Azerbaijan's ratings (Report.az, 17.07.2026)", "url": "https://report.az/en/finance/moody-s-completes-scheduled-review-of-azerbaijan-s-ratings", "date": "2026-10-28" },
-          { "title": "Fitch upgrades Azerbaijan to BBB- (APA, 27.07.2024)", "url": "https://en.apa.az/finance/fitch-ratings-upgrades-azerbaijans-credit-rating-to-bbb-level-443669", "date": "2026-10-28" },
-          { "title": "S&P affirms Azerbaijan's ratings, withdraws them (Report.az)", "url": "https://report.az/en/amp/finance/s-p-affirms-azerbaijan-s-ratings-withdraws-them", "date": "2026-10-28" },
-          { "title": "Azerbaijan credit ratings (FXEmpire)", "url": "https://fxempire.com/macro/credit-ratings/azerbaijan", "date": "2026-10-28" }
+          {
+            "title": "Azerbaijan holds key rate at 6.5%, widens rate corridor (Trading Economics, 23.09.2026)",
+            "url": "https://tradingeconomics.com/azerbaijan/interest-rate/news/585946",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Moody's completes scheduled review of Azerbaijan's ratings (Report.az, 17.07.2026)",
+            "url": "https://report.az/en/finance/moody-s-completes-scheduled-review-of-azerbaijan-s-ratings",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Fitch upgrades Azerbaijan to BBB- (APA, 27.07.2024)",
+            "url": "https://en.apa.az/finance/fitch-ratings-upgrades-azerbaijans-credit-rating-to-bbb-level-443669",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "S&P affirms Azerbaijan's ratings, withdraws them (Report.az)",
+            "url": "https://report.az/en/amp/finance/s-p-affirms-azerbaijan-s-ratings-withdraws-them",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Azerbaijan credit ratings (FXEmpire)",
+            "url": "https://fxempire.com/macro/credit-ratings/azerbaijan",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "KZ",
+      "flag": "🇰🇿",
+      "capital": {
+        "ru": "Астана",
+        "en": "Astana"
+      },
+      "languages": {
+        "ru": "казахский (государственный), русский (официальный)",
+        "en": "Kazakh (state), Russian (official)"
+      },
+      "currency": {
+        "code": "KZT",
+        "ru": "казахстанский тенге",
+        "en": "Kazakhstani tenge"
+      },
+      "memberships": [
+        "EAEU",
+        "CIS",
+        "WTO",
+        "SCO",
+        "OTS",
+        "CSTO"
+      ],
+      "political": {
+        "system": {
+          "ru": "Президентская республика; с 1 июля 2026 г. — однопалатный парламент (Курултай)",
+          "en": "Presidential republic; unicameral parliament (Kurultai) since 1 July 2026"
+        },
+        "headOfState": {
+          "ru": "Президент Касым-Жомарт Токаев; вице-президент Ерлан Карин (утверждён 31 августа 2026 г.)",
+          "en": "President Kassym-Jomart Tokayev; Vice President Yerlan Karin (approved 31 August 2026)"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Олжас Бектенов (вновь утверждён Курултаем 31 августа 2026 г.)",
+          "en": "Prime Minister Olzhas Bektenov (re-approved by the Kurultai on 31 August 2026)"
+        },
+        "elections": {
+          "ru": "Референдум в марте 2026 г. одобрил новую конституцию (87% «за»). Выборы в Курултай 23 августа 2026 г.: «Әділет» — 110 из 145 мест, «Ауыл» — 10, Respublica — 9, «Ак жол» и ОСДП — по 8.",
+          "en": "A March 2026 referendum approved a new constitution (87% yes). Kurultai election, 23 August 2026: Ädilet 110 of 145 seats, Auyl 10, Respublica 9, Aq Jol and JSDP 8 each."
+        },
+        "notes": {
+          "ru": "Крупнейший экспортёр подсолнечного масла в Центральной Азии; главный поставщик масел в Узбекистан.",
+          "en": "Central Asia's largest sunflower oil exporter and the main oil supplier to Uzbekistan."
+        },
+        "sources": [
+          {
+            "title": "2026 Kazakh legislative election (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/2026_Kazakh_legislative_election",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Kurultai approves Karin as Vice President, Bektenov as PM (Fergana, 31.08.2026)",
+            "url": "https://en.fergana.news/news/149016/?country=kz",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Казахстана",
+          "en": "National Bank of Kazakhstan"
+        },
+        "policyRate": {
+          "value": 15.75,
+          "decided": "2026-10-23",
+          "ru": "базовая ставка снижена до 15,75%",
+          "en": "base rate cut to 15.75%"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "BBB",
+            "outlook": "stable",
+            "date": "2026-08-21"
+          },
+          "moodys": {
+            "rating": "Baa1",
+            "outlook": "stable",
+            "date": "2024-09-09"
+          },
+          "fitch": {
+            "rating": "BBB",
+            "outlook": "stable",
+            "date": "2026-06-22"
+          },
+          "note": {
+            "ru": "S&P повысило рейтинг с BBB− до BBB 21 августа 2026 г.",
+            "en": "S&P upgraded the rating from BBB− to BBB on 21 August 2026."
+          }
+        },
+        "fxRegime": {
+          "ru": "Плавающий курс тенге; Нацбанк проводит интервенции и продаёт валюту из Нацфонда.",
+          "en": "Floating tenge; the central bank intervenes and sells National Fund FX."
+        },
+        "sources": [
+          {
+            "title": "Base rate lowered to 15.75% (National Bank of Kazakhstan, 23.10.2026)",
+            "url": "https://nationalbank.kz/en?docid=310&switch=rus",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Kazakhstan credit ratings (FXEmpire)",
+            "url": "https://www.fxempire.com/credit-ratings/kazakhstan",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "KG",
+      "flag": "🇰🇬",
+      "capital": {
+        "ru": "Бишкек",
+        "en": "Bishkek"
+      },
+      "languages": {
+        "ru": "киргизский (государственный), русский (официальный)",
+        "en": "Kyrgyz (state), Russian (official)"
+      },
+      "currency": {
+        "code": "KGS",
+        "ru": "киргизский сом",
+        "en": "Kyrgyz som"
+      },
+      "memberships": [
+        "EAEU",
+        "CIS",
+        "WTO",
+        "SCO",
+        "OTS",
+        "CSTO"
+      ],
+      "political": {
+        "system": {
+          "ru": "Президентская республика",
+          "en": "Presidential republic"
+        },
+        "headOfState": {
+          "ru": "Президент Садыр Жапаров",
+          "en": "President Sadyr Japarov"
+        },
+        "headOfGov": {
+          "ru": "Председатель Кабинета министров Адылбек Касымалиев (с 18 декабря 2024 г.)",
+          "en": "Chairman of the Cabinet of Ministers Adylbek Kasymaliev (since 18 December 2024)"
+        },
+        "elections": {
+          "ru": "Президентские выборы назначены на 27 января 2027 г.; Жапаров 13 августа 2026 г. объявил, что будет баллотироваться на второй срок.",
+          "en": "Presidential election set for 27 January 2027; Japarov announced on 13 August 2026 that he will seek a second term."
+        },
+        "notes": {
+          "ru": "Член ЕАЭС: общий внешний тариф и техрегламенты союза (в т. ч. ТР ТС 024/2011 на масложировую продукцию).",
+          "en": "EAEU member: common external tariff and union technical regulations (incl. TR CU 024/2011 on oil and fat products)."
+        },
+        "sources": [
+          {
+            "title": "2027 Kyrgyz presidential election (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/2027_Kyrgyz_presidential_election",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Adylbek Kasymaliev (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/Adylbek_Kasymaliev",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Кыргызской Республики",
+          "en": "National Bank of the Kyrgyz Republic"
+        },
+        "policyRate": {
+          "value": 12,
+          "decided": "2026-08-24",
+          "ru": "учётная ставка 12% (сохранена 24 августа 2026 г.; итоги заседания 26 октября уточняются)",
+          "en": "policy rate 12% (held on 24 August 2026; the 26 October decision is to be confirmed)"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "B+",
+            "outlook": "stable",
+            "date": "2025-03-28"
+          },
+          "moodys": {
+            "rating": "B3",
+            "outlook": "negative",
+            "date": "2022-10-17"
+          },
+          "fitch": {
+            "rating": "B",
+            "outlook": "stable",
+            "date": "2025-04-24"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Управляемый плавающий курс сома.",
+          "en": "Managed float of the som."
+        },
+        "sources": [
+          {
+            "title": "Нацбанк КР определил учётную ставку на уровне 12% (Kaktus, 25.08.2026)",
+            "url": "https://kaktus.media/doc/552051_nacbank_kr_opredelil_ychetnyu_stavky_na_dva_mesiaca_na_yrovne_12.html",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "TJ",
+      "flag": "🇹🇯",
+      "capital": {
+        "ru": "Душанбе",
+        "en": "Dushanbe"
+      },
+      "languages": {
+        "ru": "таджикский (государственный), русский (язык межнационального общения)",
+        "en": "Tajik (state), Russian (inter-ethnic communication)"
+      },
+      "currency": {
+        "code": "TJS",
+        "ru": "таджикский сомони",
+        "en": "Tajik somoni"
+      },
+      "memberships": [
+        "CIS",
+        "WTO",
+        "SCO",
+        "CSTO"
+      ],
+      "political": {
+        "system": {
+          "ru": "Президентская республика",
+          "en": "Presidential republic"
+        },
+        "headOfState": {
+          "ru": "Президент Эмомали Рахмон",
+          "en": "President Emomali Rahmon"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Кохир Расулзода",
+          "en": "Prime Minister Qohir Rasulzoda"
+        },
+        "elections": {
+          "ru": "Очередные президентские выборы — в 2027 г. (семилетний срок).",
+          "en": "Next presidential election due in 2027 (seven-year term)."
+        },
+        "notes": {
+          "ru": "Постановление правительства № 260 от 1 мая 2020 г. ограничивает ввоз пальмового масла (подробно — в записке IMA о регулировании и перекисном числе).",
+          "en": "Government Resolution No. 260 of 1 May 2020 restricts palm oil imports (details in the IMA paper on regulation and peroxide value)."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Таджикистана",
+          "en": "National Bank of Tajikistan"
+        },
+        "policyRate": {
+          "value": 7,
+          "decided": "2026-07-21",
+          "ru": "ставка рефинансирования снижена до 7,00% (с 7,50%)",
+          "en": "refinancing rate cut to 7.00% (from 7.50%)"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "B",
+            "outlook": "stable",
+            "date": "2024-08-16"
+          },
+          "moodys": {
+            "rating": "B3",
+            "outlook": "stable",
+            "date": "2023-10-12"
+          },
+          "fitch": null,
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Управляемый курс сомони.",
+          "en": "Managed somoni exchange rate."
+        },
+        "sources": [
+          {
+            "title": "ЦБ Таджикистана снизил ключевую ставку до 7,00% (The Moscow Times, 21.07.2026)",
+            "url": "https://ru.themoscowtimes.com/2026/07/21/tsb-tadzhikistana-snizil-klyuchevuyu-stavku-do-700-s-750-a201328",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "TM",
+      "flag": "🇹🇲",
+      "capital": {
+        "ru": "Ашхабад",
+        "en": "Ashgabat"
+      },
+      "languages": {
+        "ru": "туркменский (государственный)",
+        "en": "Turkmen (state)"
+      },
+      "currency": {
+        "code": "TMT",
+        "ru": "туркменский манат",
+        "en": "Turkmen manat"
+      },
+      "memberships": [
+        "CIS-associate",
+        "OTS-observer",
+        "WTO-observer"
+      ],
+      "political": {
+        "system": {
+          "ru": "Президентская республика; постоянный нейтралитет",
+          "en": "Presidential republic; permanent neutrality"
+        },
+        "headOfState": {
+          "ru": "Президент Сердар Бердымухамедов (одновременно глава правительства); председатель Халк Маслахаты — Гурбангулы Бердымухамедов",
+          "en": "President Serdar Berdimuhamedow (also head of government); Chairman of the People's Council — Gurbanguly Berdimuhamedow"
+        },
+        "headOfGov": {
+          "ru": "Президент возглавляет Кабинет министров",
+          "en": "The President chairs the Cabinet of Ministers"
+        },
+        "elections": {
+          "ru": "Президент избран в марте 2022 г.",
+          "en": "President elected in March 2022."
+        },
+        "notes": {
+          "ru": "Закрытый рынок: импорт через государственные структуры и биржу; статистика публикуется ограниченно — используйте зеркальные данные GTT/Comtrade.",
+          "en": "Closed market: imports via state bodies and the commodity exchange; little published statistics — use GTT/Comtrade mirror data."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Центральный банк Туркменистана",
+          "en": "Central Bank of Turkmenistan"
+        },
+        "policyRate": {
+          "value": null,
+          "decided": "",
+          "ru": "рыночная процентная политика фактически не применяется",
+          "en": "no market-based policy rate in practice"
+        },
+        "ratings": {
+          "sp": null,
+          "moodys": null,
+          "fitch": {
+            "rating": "BB−",
+            "outlook": "stable",
+            "date": "2024-08-02"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Фиксированный официальный курс маната к доллару; существует неофициальный рынок.",
+          "en": "Fixed official manat rate to the dollar; an unofficial market exists."
+        },
+        "sources": [
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "AM",
+      "flag": "🇦🇲",
+      "capital": {
+        "ru": "Ереван",
+        "en": "Yerevan"
+      },
+      "languages": {
+        "ru": "армянский (государственный)",
+        "en": "Armenian (state)"
+      },
+      "currency": {
+        "code": "AMD",
+        "ru": "армянский драм",
+        "en": "Armenian dram"
+      },
+      "memberships": [
+        "EAEU",
+        "CIS",
+        "WTO",
+        "CSTO"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Ваагн Хачатурян",
+          "en": "President Vahagn Khachaturyan"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Никол Пашинян",
+          "en": "Prime Minister Nikol Pashinyan"
+        },
+        "elections": {
+          "ru": "Парламентские выборы 7 июня 2026 г.: «Гражданский договор» — 64 места, «Сильная Армения» — 29, блок «Армения» — 12.",
+          "en": "Parliamentary election, 7 June 2026: Civil Contract 64 seats, Strong Armenia 29, Armenia Alliance 12."
+        },
+        "notes": {
+          "ru": "Член ЕАЭС; участие в ОДКБ заморожено. В 2025 г. принят закон о начале процесса вступления в ЕС.",
+          "en": "EAEU member; CSTO participation frozen. A 2025 law launched the EU accession process."
+        },
+        "sources": [
+          {
+            "title": "2026 Armenian parliamentary election (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/2026_Armenian_parliamentary_election",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Центральный банк Армении",
+          "en": "Central Bank of Armenia"
+        },
+        "policyRate": {
+          "value": 6.75,
+          "decided": "2026-09-15",
+          "ru": "ставка рефинансирования повышена до 6,75%",
+          "en": "refinancing rate raised to 6.75%"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "BB−",
+            "outlook": "stable",
+            "date": "2023-08-25"
+          },
+          "moodys": {
+            "rating": "Ba3",
+            "outlook": "stable",
+            "date": "2023-06-22"
+          },
+          "fitch": {
+            "rating": "BB−",
+            "outlook": "positive",
+            "date": "2026-07-10"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Плавающий курс драма.",
+          "en": "Floating dram."
+        },
+        "sources": [
+          {
+            "title": "Armenia raises policy rate to 6.75% (Trading Economics, 15.09.2026)",
+            "url": "https://tradingeconomics.com/armenia/interest-rate/news/583806",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "GE",
+      "flag": "🇬🇪",
+      "capital": {
+        "ru": "Тбилиси",
+        "en": "Tbilisi"
+      },
+      "languages": {
+        "ru": "грузинский (государственный)",
+        "en": "Georgian (state)"
+      },
+      "currency": {
+        "code": "GEL",
+        "ru": "грузинский лари",
+        "en": "Georgian lari"
+      },
+      "memberships": [
+        "WTO",
+        "EU-candidate",
+        "DCFTA"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Михаил Кавелашвили",
+          "en": "President Mikheil Kavelashvili"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Ираклий Кобахидзе («Грузинская мечта»)",
+          "en": "Prime Minister Irakli Kobakhidze (Georgian Dream)"
+        },
+        "elections": {
+          "ru": "Парламентские выборы — октябрь 2024 г. (победа «Грузинской мечты»); процесс вступления в ЕС фактически приостановлен.",
+          "en": "Parliamentary election in October 2024 (Georgian Dream won); EU accession effectively on hold."
+        },
+        "notes": {
+          "ru": "Транзитный коридор: порты Поти и Батуми используются для поставок в Азербайджан и Центральную Азию; соглашение с Узбекистаном о хабах в Поти (21.09.2026).",
+          "en": "Transit corridor: Poti and Batumi serve Azerbaijan and Central Asia; agreement with Uzbekistan on hubs at Poti (21.09.2026)."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Грузии",
+          "en": "National Bank of Georgia"
+        },
+        "policyRate": {
+          "value": 8.25,
+          "decided": "2026-10-21",
+          "ru": "ставка денежно-кредитной политики сохранена на 8,25%",
+          "en": "monetary policy rate held at 8.25%"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "BB",
+            "outlook": "stable",
+            "date": "2019-10-11"
+          },
+          "moodys": {
+            "rating": "Ba2",
+            "outlook": "negative",
+            "date": "2022-04-28"
+          },
+          "fitch": {
+            "rating": "BB",
+            "outlook": "stable",
+            "date": "2025-11-21"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Плавающий курс лари.",
+          "en": "Floating lari."
+        },
+        "sources": [
+          {
+            "title": "National Bank of Georgia holds key rate (Trading Economics, 21.10.2026)",
+            "url": "https://tradingeconomics.com/georgia/interest-rate/news/593770",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "UA",
+      "flag": "🇺🇦",
+      "capital": {
+        "ru": "Киев",
+        "en": "Kyiv"
+      },
+      "languages": {
+        "ru": "украинский (государственный)",
+        "en": "Ukrainian (state)"
+      },
+      "currency": {
+        "code": "UAH",
+        "ru": "украинская гривна",
+        "en": "Ukrainian hryvnia"
+      },
+      "memberships": [
+        "WTO",
+        "EU-candidate",
+        "DCFTA"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентско-президентская республика; военное положение",
+          "en": "Parliamentary-presidential republic; martial law"
+        },
+        "headOfState": {
+          "ru": "Президент Владимир Зеленский",
+          "en": "President Volodymyr Zelenskyy"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Сергей Корецкий (назначен Верховной радой в июле 2026 г., 289 голосов; ранее — глава «Нафтогаза»)",
+          "en": "Prime Minister Serhii Koretskyi (appointed by the Verkhovna Rada in July 2026, 289 votes; previously head of Naftogaz)"
+        },
+        "elections": {
+          "ru": "Выборы не проводятся, пока действует военное положение.",
+          "en": "No elections while martial law is in force."
+        },
+        "notes": {
+          "ru": "Война и атаки на порты ограничивают экспорт подсолнечного масла; минимальная экспортная цена на подсолнечное масло $1 350/т CPT (сентябрь 2026 г.).",
+          "en": "War and attacks on ports limit sunflower oil exports; minimum export price for sunflower oil $1,350/t CPT (September 2026)."
+        },
+        "sources": [
+          {
+            "title": "Ukraine's parliament appoints Serhiy Koretskyy as prime minister (Report.az, 16.07.2026)",
+            "url": "https://report.az/en/other-countries/ukraine-s-parliament-appoints-serhiy-koretskyy-as-prime-minister",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Украины",
+          "en": "National Bank of Ukraine"
+        },
+        "policyRate": {
+          "value": 16,
+          "decided": "2026-09-16",
+          "ru": "учётная ставка повышена до 16% (с 18 сентября); следующее решение — 29 октября 2026 г.",
+          "en": "key policy rate raised to 16% (effective 18 September); next decision 29 October 2026"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "CCC+",
+            "outlook": "stable",
+            "date": "2026-01-22"
+          },
+          "moodys": {
+            "rating": "Ca",
+            "outlook": "stable",
+            "date": "2023-02-10"
+          },
+          "fitch": {
+            "rating": "CCC",
+            "outlook": "",
+            "date": "2025-12-22"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Режим управляемой гибкости курса (с октября 2023 г.).",
+          "en": "Managed exchange rate flexibility (since October 2023)."
+        },
+        "sources": [
+          {
+            "title": "NBU raises key policy rate to 16% (Interfax-Ukraine, 16.09.2026)",
+            "url": "https://en.interfax.com.ua/news/economic/1211812-amp.html",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "BY",
+      "flag": "🇧🇾",
+      "capital": {
+        "ru": "Минск",
+        "en": "Minsk"
+      },
+      "languages": {
+        "ru": "белорусский и русский (государственные)",
+        "en": "Belarusian and Russian (state)"
+      },
+      "currency": {
+        "code": "BYN",
+        "ru": "белорусский рубль",
+        "en": "Belarusian ruble"
+      },
+      "memberships": [
+        "EAEU",
+        "CIS",
+        "Union-State",
+        "CSTO",
+        "SCO",
+        "BRICS-partner"
+      ],
+      "political": {
+        "system": {
+          "ru": "Президентская республика",
+          "en": "Presidential republic"
+        },
+        "headOfState": {
+          "ru": "Президент Александр Лукашенко (переизбран в январе 2025 г.); он же председатель ВНС",
+          "en": "President Alexander Lukashenko (re-elected January 2025); also Chairman of the All-Belarusian People's Assembly"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Александр Турчин",
+          "en": "Prime Minister Alexander Turchin"
+        },
+        "elections": {
+          "ru": "Президентские выборы — январь 2025 г.; парламентские — февраль 2024 г.",
+          "en": "Presidential election in January 2025; parliamentary in February 2024."
+        },
+        "notes": {
+          "ru": "Санкции ЕС и США; торговля ориентирована на Россию и ЕАЭС. Собственные данные о торговле публикуются ограниченно.",
+          "en": "EU and US sanctions; trade oriented to Russia and the EAEU. Limited published trade data."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Республики Беларусь",
+          "en": "National Bank of the Republic of Belarus"
+        },
+        "policyRate": {
+          "value": 9.25,
+          "decided": "2026-05-20",
+          "ru": "ставка рефинансирования 9,25% с 1 июня 2026 г.",
+          "en": "refinancing rate 9.25% from 1 June 2026"
+        },
+        "ratings": {
+          "sp": null,
+          "moodys": {
+            "rating": "C",
+            "outlook": "stable",
+            "date": "2023-06-02"
+          },
+          "fitch": null,
+          "note": {
+            "ru": "S&P и Fitch отозвали рейтинги (Fitch — 6 октября 2023 г.).",
+            "en": "S&P and Fitch have withdrawn their ratings (Fitch on 6 October 2023)."
+          }
+        },
+        "fxRegime": {
+          "ru": "Управляемое плавание к корзине валют (российский рубль, доллар, юань).",
+          "en": "Managed float against a currency basket (Russian ruble, US dollar, yuan)."
+        },
+        "sources": [
+          {
+            "title": "Ставка рефинансирования в Беларуси 2026 (Buyhold.by)",
+            "url": "https://buyhold.by/stavka-refinansirovaniya/",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "MD",
+      "flag": "🇲🇩",
+      "capital": {
+        "ru": "Кишинёв",
+        "en": "Chișinău"
+      },
+      "languages": {
+        "ru": "румынский (государственный)",
+        "en": "Romanian (state)"
+      },
+      "currency": {
+        "code": "MDL",
+        "ru": "молдавский лей",
+        "en": "Moldovan leu"
+      },
+      "memberships": [
+        "WTO",
+        "EU-candidate",
+        "DCFTA",
+        "CIS"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Майя Санду (переизбрана в ноябре 2024 г.)",
+          "en": "President Maia Sandu (re-elected November 2024)"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Василе Тофан",
+          "en": "Prime Minister Vasile Tofan"
+        },
+        "elections": {
+          "ru": "Парламентские выборы — сентябрь 2025 г. (большинство у PAS).",
+          "en": "Parliamentary election in September 2025 (PAS majority)."
+        },
+        "notes": {
+          "ru": "Кандидат в члены ЕС с 2022 г.; выходит из соглашений СНГ.",
+          "en": "EU candidate since 2022; withdrawing from CIS agreements."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Молдовы",
+          "en": "National Bank of Moldova"
+        },
+        "policyRate": {
+          "value": 9,
+          "decided": "2026-09-17",
+          "ru": "базовая ставка 9,00%; следующее заседание — 5 ноября 2026 г.",
+          "en": "base rate 9.00%; next meeting 5 November 2026"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "BB−",
+            "outlook": "stable",
+            "date": "2025-10-10"
+          },
+          "moodys": {
+            "rating": "B2",
+            "outlook": "stable",
+            "date": "2026-04-03"
+          },
+          "fitch": {
+            "rating": "B+",
+            "outlook": "stable",
+            "date": "2026-02-27"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Управляемый плавающий курс лея.",
+          "en": "Managed float of the leu."
+        },
+        "sources": [
+          {
+            "title": "BNM monetary policy decision, 17.09.2026",
+            "url": "https://www.bnm.md/ro/print/node/70257",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "PL",
+      "flag": "🇵🇱",
+      "capital": {
+        "ru": "Варшава",
+        "en": "Warsaw"
+      },
+      "languages": {
+        "ru": "польский",
+        "en": "Polish"
+      },
+      "currency": {
+        "code": "PLN",
+        "ru": "польский злотый",
+        "en": "Polish zloty"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Кароль Навроцкий (с августа 2025 г.)",
+          "en": "President Karol Nawrocki (since August 2025)"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Дональд Туск",
+          "en": "Prime Minister Donald Tusk"
+        },
+        "elections": {
+          "ru": "Парламентские выборы — октябрь 2023 г.; следующие — в 2027 г.",
+          "en": "Parliamentary election in October 2023; next due in 2027."
+        },
+        "notes": {
+          "ru": "Член ЕС: регламенты ЕС о маркировке (1169/2011), контаминантах (2023/915) и EUDR применяются напрямую.",
+          "en": "EU member: EU rules on labelling (1169/2011), contaminants (2023/915) and the EUDR apply directly."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Польши",
+          "en": "National Bank of Poland"
+        },
+        "policyRate": {
+          "value": 3.75,
+          "decided": "2026-10-07",
+          "ru": "референсная ставка сохранена на 3,75% (седьмой месяц подряд); следующее решение — 4 ноября 2026 г.",
+          "en": "reference rate held at 3.75% (seventh month in a row); next decision 4 November 2026"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "A−",
+            "outlook": "stable",
+            "date": "2018-10-12"
+          },
+          "moodys": {
+            "rating": "A2",
+            "outlook": "stable",
+            "date": "2022-04-29"
+          },
+          "fitch": {
+            "rating": "A−",
+            "outlook": "negative",
+            "date": "2025-09-05"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Плавающий курс злотого, инфляционное таргетирование.",
+          "en": "Floating zloty, inflation targeting."
+        },
+        "sources": [
+          {
+            "title": "Poland rate decision (Octagon AI)",
+            "url": "https://www.octagonai.co/markets/economics/global-central-banks/poland-rate-decision-in-november/",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "CZ",
+      "flag": "🇨🇿",
+      "capital": {
+        "ru": "Прага",
+        "en": "Prague"
+      },
+      "languages": {
+        "ru": "чешский",
+        "en": "Czech"
+      },
+      "currency": {
+        "code": "CZK",
+        "ru": "чешская крона",
+        "en": "Czech koruna"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Петр Павел",
+          "en": "President Petr Pavel"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Андрей Бабиш (ANO; по итогам выборов октября 2025 г.)",
+          "en": "Prime Minister Andrej Babiš (ANO; after the October 2025 election)"
+        },
+        "elections": {
+          "ru": "Парламентские выборы — октябрь 2025 г.; президентские — в 2028 г.",
+          "en": "Parliamentary election in October 2025; presidential due in 2028."
+        },
+        "notes": {
+          "ru": "Член ЕС: регламенты ЕС о маркировке (1169/2011), контаминантах (2023/915) и EUDR применяются напрямую.",
+          "en": "EU member: EU rules on labelling (1169/2011), contaminants (2023/915) and the EUDR apply directly."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Чешский национальный банк",
+          "en": "Czech National Bank"
+        },
+        "policyRate": {
+          "value": 3.75,
+          "decided": "2026-09-17",
+          "ru": "двухнедельная ставка репо сохранена на 3,75% (повышена 18 июня 2026 г.); следующее заседание — 5 ноября 2026 г.",
+          "en": "two-week repo rate held at 3.75% (raised on 18 June 2026); next meeting 5 November 2026"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "AA−",
+            "outlook": "stable",
+            "date": "2025-03-28"
+          },
+          "moodys": {
+            "rating": "Aa3",
+            "outlook": "stable",
+            "date": "2023-11-24"
+          },
+          "fitch": {
+            "rating": "AA−",
+            "outlook": "stable",
+            "date": "2026-02-06"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Плавающий курс кроны, инфляционное таргетирование.",
+          "en": "Floating koruna, inflation targeting."
+        },
+        "sources": [
+          {
+            "title": "CNB holds rate at 3.75% (FX.co, 17.09.2026)",
+            "url": "https://www.fx.co/en/forex-news/3171813",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "CNB Bank Board decisions",
+            "url": "https://www.cnb.cz/en/monetary-policy/bank-board-decisions/",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "SK",
+      "flag": "🇸🇰",
+      "capital": {
+        "ru": "Братислава",
+        "en": "Bratislava"
+      },
+      "languages": {
+        "ru": "словацкий",
+        "en": "Slovak"
+      },
+      "currency": {
+        "code": "EUR",
+        "ru": "евро",
+        "en": "euro"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen",
+        "Eurozone"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Петер Пеллегрини",
+          "en": "President Peter Pellegrini"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Роберт Фицо",
+          "en": "Prime Minister Robert Fico"
+        },
+        "elections": {
+          "ru": "Парламентские выборы — сентябрь 2023 г.; следующие — в 2027 г.",
+          "en": "Parliamentary election in September 2023; next due in 2027."
+        },
+        "notes": {
+          "ru": "Член ЕС: регламенты ЕС о маркировке (1169/2011), контаминантах (2023/915) и EUDR применяются напрямую.",
+          "en": "EU member: EU rules on labelling (1169/2011), contaminants (2023/915) and the EUDR apply directly."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Словакии (Евросистема)",
+          "en": "National Bank of Slovakia (Eurosystem)"
+        },
+        "policyRate": {
+          "value": 2.5,
+          "decided": "2026-09-10",
+          "ru": "ставка ЕЦБ по депозитам 2,50% с 16 сентября 2026 г. (основная ставка рефинансирования 2,65%); следующее решение ЕЦБ — 29 октября 2026 г.",
+          "en": "ECB deposit facility rate 2.50% from 16 Sep 2026 (main refinancing rate 2.65%); next ECB decision 29 Oct 2026"
+        },
+        "fxRegime": {
+          "ru": "Евро — с 2009 г.",
+          "en": "Euro — since 2009"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "A",
+            "outlook": "negative",
+            "date": "2026-04-24"
+          },
+          "moodys": {
+            "rating": "A3",
+            "outlook": "stable",
+            "date": "2024-12-13"
+          },
+          "fitch": {
+            "rating": "A−",
+            "outlook": "stable",
+            "date": "2024-12-06"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "sources": [
+          {
+            "title": "ECB raises rates by 25 bp, 10 Sep 2026 (Banco de España)",
+            "url": "https://www.bde.es/wbe/es/noticias-eventos/actualidad-bce/decisiones-politica-monetaria/el-bce-sube-los-tipos-25-puntos-basicos-en-septiembre-2026.html",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "ECB meeting 28–29 October 2026 (Admiral Markets)",
+            "url": "https://admiralmarkets.com/analytics/traders-blog/ecb-meeting-october-2026",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "HU",
+      "flag": "🇭🇺",
+      "capital": {
+        "ru": "Будапешт",
+        "en": "Budapest"
+      },
+      "languages": {
+        "ru": "венгерский",
+        "en": "Hungarian"
+      },
+      "currency": {
+        "code": "HUF",
+        "ru": "венгерский форинт",
+        "en": "Hungarian forint"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Андраш Бака",
+          "en": "President András Baka"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Петер Мадьяр («Тиса», с 9 мая 2026 г.)",
+          "en": "Prime Minister Péter Magyar (Tisza, since 9 May 2026)"
+        },
+        "elections": {
+          "ru": "Парламентские выборы 12 апреля 2026 г.: «Тиса» — 141 из 199 мест (конституционное большинство), «Фидес» — 52; завершилось 16-летнее правление Орбана.",
+          "en": "Parliamentary election, 12 April 2026: Tisza 141 of 199 seats (two-thirds majority), Fidesz 52; ending Orbán's 16 years in power."
+        },
+        "notes": {
+          "ru": "Член ЕС: регламенты ЕС о маркировке (1169/2011), контаминантах (2023/915) и EUDR применяются напрямую.",
+          "en": "EU member: EU rules on labelling (1169/2011), contaminants (2023/915) and the EUDR apply directly."
+        },
+        "sources": [
+          {
+            "title": "2026 Hungarian parliamentary election (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/2026_Hungarian_parliamentary_election",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Венгрии",
+          "en": "Magyar Nemzeti Bank"
+        },
+        "policyRate": {
+          "value": 5.5,
+          "decided": "2026-10-20",
+          "ru": "базовая ставка сохранена на 5,50% (снижена до этого уровня 25 августа 2026 г.)",
+          "en": "base rate held at 5.50% (cut to this level on 25 August 2026)"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "BBB−",
+            "outlook": "negative",
+            "date": "2025-04-11"
+          },
+          "moodys": {
+            "rating": "Ba1",
+            "outlook": "negative",
+            "date": "2025-12-30"
+          },
+          "fitch": {
+            "rating": "BBB",
+            "outlook": "negative",
+            "date": "2025-12-05"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Плавающий курс форинта, инфляционное таргетирование.",
+          "en": "Floating forint, inflation targeting."
+        },
+        "sources": [
+          {
+            "title": "Hungary holds rate (Trading Economics)",
+            "url": "https://tradingeconomics.com/hungary/interest-rate/news/585695",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "RO",
+      "flag": "🇷🇴",
+      "capital": {
+        "ru": "Бухарест",
+        "en": "Bucharest"
+      },
+      "languages": {
+        "ru": "румынский",
+        "en": "Romanian"
+      },
+      "currency": {
+        "code": "RON",
+        "ru": "румынский лей",
+        "en": "Romanian leu"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen"
+      ],
+      "political": {
+        "system": {
+          "ru": "Полупрезидентская республика",
+          "en": "Semi-presidential republic"
+        },
+        "headOfState": {
+          "ru": "Президент Никушор Дан (с 26 мая 2025 г.)",
+          "en": "President Nicușor Dan (since 26 May 2025)"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Лука Никулеску (беспартийный; утверждён парламентом 20 октября 2026 г., 279 голосов; коалиция PSD, PNL, UDMR и меньшинств)",
+          "en": "Prime Minister Luca Niculescu (independent; confirmed by parliament on 20 October 2026 with 279 votes; PSD, PNL, UDMR and minorities)"
+        },
+        "elections": {
+          "ru": "Правительство Болояна получило вотум недоверия 5 мая 2026 г.; пять месяцев политического кризиса завершились утверждением кабинета Никулеску.",
+          "en": "The Bolojan government lost a no-confidence vote on 5 May 2026; five months of crisis ended with the Niculescu cabinet."
+        },
+        "notes": {
+          "ru": "Член ЕС: регламенты ЕС о маркировке (1169/2011), контаминантах (2023/915) и EUDR применяются напрямую.",
+          "en": "EU member: EU rules on labelling (1169/2011), contaminants (2023/915) and the EUDR apply directly."
+        },
+        "sources": [
+          {
+            "title": "Luca Niculescu confirmed as Romania's new PM (Romania Insider, 20.10.2026)",
+            "url": "https://www.romania-insider.com/society/luca-niculescu-confirmed-romanias-new-prime-minister-ending",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Ilie Bolojan (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/Ilie_Bolojan",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Румынии",
+          "en": "National Bank of Romania"
+        },
+        "policyRate": {
+          "value": 6.5,
+          "decided": "2026-10-08",
+          "ru": "ключевая ставка сохранена на 6,50% (ломбард 7,50%, депозит 5,50%)",
+          "en": "key rate held at 6.50% (lending 7.50%, deposit 5.50%)"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "BBB−",
+            "outlook": "negative",
+            "date": "2014-05-16"
+          },
+          "moodys": {
+            "rating": "Baa3",
+            "outlook": "stable",
+            "date": "2023-11-03"
+          },
+          "fitch": {
+            "rating": "BBB−",
+            "outlook": "negative",
+            "date": "2024-12-17"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Управляемое плавание лея.",
+          "en": "Managed float of the leu."
+        },
+        "sources": [
+          {
+            "title": "BNR menține dobânda-cheie (Wall-Street.ro, 08.10.2026)",
+            "url": "https://www.wall-street.ro/articol/finante-banci/bnr-mentine-dobanda-cheie-inflatia-ar-putea-creste-din-nou.html",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "BG",
+      "flag": "🇧🇬",
+      "capital": {
+        "ru": "София",
+        "en": "Sofia"
+      },
+      "languages": {
+        "ru": "болгарский",
+        "en": "Bulgarian"
+      },
+      "currency": {
+        "code": "EUR",
+        "ru": "евро",
+        "en": "euro"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen",
+        "Eurozone"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Илияна Йотова",
+          "en": "President Iliana Iotova"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Румен Радев («Прогрессивная Болгария», с мая 2026 г.)",
+          "en": "Prime Minister Rumen Radev (Progressive Bulgaria, since May 2026)"
+        },
+        "elections": {
+          "ru": "Досрочные парламентские выборы весной 2026 г. принесли победу «Прогрессивной Болгарии» бывшего президента Радева.",
+          "en": "Snap parliamentary elections in spring 2026 were won by former president Radev's Progressive Bulgaria."
+        },
+        "notes": {
+          "ru": "Член ЕС: регламенты ЕС о маркировке (1169/2011), контаминантах (2023/915) и EUDR применяются напрямую.",
+          "en": "EU member: EU rules on labelling (1169/2011), contaminants (2023/915) and the EUDR apply directly."
+        },
+        "sources": [
+          {
+            "title": "Parliament elects Rumen Radev as Prime Minister (BTA)",
+            "url": "https://www.bta.bg/en/news/1121595-parliament-elects-rumen-radev-as-prime-minister",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Болгарский народный банк (Евросистема)",
+          "en": "Bulgarian National Bank (Eurosystem)"
+        },
+        "policyRate": {
+          "value": 2.5,
+          "decided": "2026-09-10",
+          "ru": "ставка ЕЦБ по депозитам 2,50% с 16 сентября 2026 г. (основная ставка рефинансирования 2,65%); следующее решение ЕЦБ — 29 октября 2026 г.",
+          "en": "ECB deposit facility rate 2.50% from 16 Sep 2026 (main refinancing rate 2.65%); next ECB decision 29 Oct 2026"
+        },
+        "fxRegime": {
+          "ru": "Евро — с 1 января 2026 г.",
+          "en": "Euro — since 1 January 2026"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "BBB+",
+            "outlook": "stable",
+            "date": "2025-07-10"
+          },
+          "moodys": {
+            "rating": "Baa1",
+            "outlook": "stable",
+            "date": "2023-02-03"
+          },
+          "fitch": {
+            "rating": "BBB+",
+            "outlook": "stable",
+            "date": "2025-07-10"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "sources": [
+          {
+            "title": "ECB raises rates by 25 bp, 10 Sep 2026 (Banco de España)",
+            "url": "https://www.bde.es/wbe/es/noticias-eventos/actualidad-bce/decisiones-politica-monetaria/el-bce-sube-los-tipos-25-puntos-basicos-en-septiembre-2026.html",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "ECB meeting 28–29 October 2026 (Admiral Markets)",
+            "url": "https://admiralmarkets.com/analytics/traders-blog/ecb-meeting-october-2026",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "HR",
+      "flag": "🇭🇷",
+      "capital": {
+        "ru": "Загреб",
+        "en": "Zagreb"
+      },
+      "languages": {
+        "ru": "хорватский",
+        "en": "Croatian"
+      },
+      "currency": {
+        "code": "EUR",
+        "ru": "евро",
+        "en": "euro"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen",
+        "Eurozone"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Зоран Миланович",
+          "en": "President Zoran Milanović"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Андрей Пленкович",
+          "en": "Prime Minister Andrej Plenković"
+        },
+        "elections": {
+          "ru": "Парламентские выборы — апрель 2024 г.; президентские — январь 2025 г.",
+          "en": "Parliamentary election in April 2024; presidential in January 2025."
+        },
+        "notes": {
+          "ru": "Член ЕС: регламенты ЕС о маркировке (1169/2011), контаминантах (2023/915) и EUDR применяются напрямую.",
+          "en": "EU member: EU rules on labelling (1169/2011), contaminants (2023/915) and the EUDR apply directly."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Хорватский народный банк (Евросистема)",
+          "en": "Croatian National Bank (Eurosystem)"
+        },
+        "policyRate": {
+          "value": 2.5,
+          "decided": "2026-09-10",
+          "ru": "ставка ЕЦБ по депозитам 2,50% с 16 сентября 2026 г. (основная ставка рефинансирования 2,65%); следующее решение ЕЦБ — 29 октября 2026 г.",
+          "en": "ECB deposit facility rate 2.50% from 16 Sep 2026 (main refinancing rate 2.65%); next ECB decision 29 Oct 2026"
+        },
+        "fxRegime": {
+          "ru": "Евро — с 2023 г.",
+          "en": "Euro — since 2023"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "A",
+            "outlook": "stable",
+            "date": "2026-03-14"
+          },
+          "moodys": {
+            "rating": "A3",
+            "outlook": "stable",
+            "date": "2024-11-07"
+          },
+          "fitch": {
+            "rating": "A−",
+            "outlook": "stable",
+            "date": "2026-03-06"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "sources": [
+          {
+            "title": "ECB raises rates by 25 bp, 10 Sep 2026 (Banco de España)",
+            "url": "https://www.bde.es/wbe/es/noticias-eventos/actualidad-bce/decisiones-politica-monetaria/el-bce-sube-los-tipos-25-puntos-basicos-en-septiembre-2026.html",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "ECB meeting 28–29 October 2026 (Admiral Markets)",
+            "url": "https://admiralmarkets.com/analytics/traders-blog/ecb-meeting-october-2026",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "RS",
+      "flag": "🇷🇸",
+      "capital": {
+        "ru": "Белград",
+        "en": "Belgrade"
+      },
+      "languages": {
+        "ru": "сербский",
+        "en": "Serbian"
+      },
+      "currency": {
+        "code": "RSD",
+        "ru": "сербский динар",
+        "en": "Serbian dinar"
+      },
+      "memberships": [
+        "EU-candidate",
+        "CEFTA",
+        "WTO-observer"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "И. о. президента Ана Брнабич (с 28 сентября 2026 г., после отставки Александра Вучича)",
+          "en": "Acting President Ana Brnabić (since 28 September 2026, after Aleksandar Vučić resigned)"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Джуро Мацут (до формирования нового правительства)",
+          "en": "Prime Minister Đuro Macut (until a new government is formed)"
+        },
+        "elections": {
+          "ru": "Досрочные парламентские выборы 25 октября 2026 г.: «Студенческий список» — 51,5%, список «Александр Вучич — Единая Сербия» — 40,4% (данные CRTA); Вучич признал поражение. Формирование правительства впереди.",
+          "en": "Snap parliamentary election, 25 October 2026: Student List 51.5%, \"Aleksandar Vučić – United Serbia\" 40.4% (CRTA); Vučić conceded. Government formation pending."
+        },
+        "notes": {
+          "ru": "С 1 августа 2025 г. — маркировка продуктов с пальмовым маслом («не 100% молочный продукт»), отдельная выкладка и запрет «молочных» названий; соглашение о свободной торговле с ЕАЭС.",
+          "en": "Since 1 August 2025: labelling of products with palm oil (\"not 100% dairy\"), separate shelving and a ban on dairy-style names; free trade agreement with the EAEU."
+        },
+        "sources": [
+          {
+            "title": "The Student List won snap parliamentary elections in Serbia (EWB, 25.10.2026)",
+            "url": "https://europeanwesternbalkans.com/2026/10/25/the-student-list-won-snap-parliamentary-elections-in-serbia/",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "Ana Brnabić becomes acting president (EWB, 28.09.2026)",
+            "url": "https://europeanwesternbalkans.com/2026/09/28/ana-brnabic-becomes-acting-president-of-serbia/",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Национальный банк Сербии",
+          "en": "National Bank of Serbia"
+        },
+        "policyRate": {
+          "value": 5.75,
+          "decided": "2026-10-08",
+          "ru": "ключевая ставка сохранена на 5,75% (на этом уровне с сентября 2024 г.)",
+          "en": "key policy rate held at 5.75% (unchanged since September 2024)"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "BBB−",
+            "outlook": "stable",
+            "date": "2024-10-04"
+          },
+          "moodys": {
+            "rating": "Ba2",
+            "outlook": "stable",
+            "date": "2023-09-08"
+          },
+          "fitch": {
+            "rating": "BB+",
+            "outlook": "positive",
+            "date": "2024-08-09"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "fxRegime": {
+          "ru": "Управляемое плавание динара к евро.",
+          "en": "Managed float of the dinar against the euro."
+        },
+        "sources": [
+          {
+            "title": "Serbia holds interest rate unchanged (Trading Economics, 08.10.2026)",
+            "url": "https://tradingeconomics.com/serbia/interest-rate/news/590535",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "EE",
+      "flag": "🇪🇪",
+      "capital": {
+        "ru": "Таллин",
+        "en": "Tallinn"
+      },
+      "languages": {
+        "ru": "эстонский",
+        "en": "Estonian"
+      },
+      "currency": {
+        "code": "EUR",
+        "ru": "евро",
+        "en": "euro"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen",
+        "Eurozone"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Юлле Мадисе (избрана 2 сентября 2026 г.)",
+          "en": "President Ülle Madise (elected 2 September 2026)"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Кристен Михал",
+          "en": "Prime Minister Kristen Michal"
+        },
+        "elections": {
+          "ru": "Парламентские выборы — март 2023 г.; следующие — в марте 2027 г.",
+          "en": "Parliamentary election in March 2023; next in March 2027."
+        },
+        "notes": {
+          "ru": "Рост поставок малайзийской продукции (+132% по MPOB) связывается с реэкспортом в Россию.",
+          "en": "Higher Malaysian shipments (+132%, MPOB) are linked to re-export to Russia."
+        },
+        "sources": [
+          {
+            "title": "Estonia elects new president (ERR)",
+            "url": "https://news.err.ee/1610126071/estonia-elects-new-president",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Банк Эстонии (Евросистема)",
+          "en": "Bank of Estonia (Eurosystem)"
+        },
+        "policyRate": {
+          "value": 2.5,
+          "decided": "2026-09-10",
+          "ru": "ставка ЕЦБ по депозитам 2,50% с 16 сентября 2026 г. (основная ставка рефинансирования 2,65%); следующее решение ЕЦБ — 29 октября 2026 г.",
+          "en": "ECB deposit facility rate 2.50% from 16 Sep 2026 (main refinancing rate 2.65%); next ECB decision 29 Oct 2026"
+        },
+        "fxRegime": {
+          "ru": "Евро — с 2011 г.",
+          "en": "Euro — since 2011"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "A+",
+            "outlook": "stable",
+            "date": "2024-05-31"
+          },
+          "moodys": {
+            "rating": "A1",
+            "outlook": "stable",
+            "date": "2022-04-29"
+          },
+          "fitch": {
+            "rating": "A+",
+            "outlook": "stable",
+            "date": "2025-06-06"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "sources": [
+          {
+            "title": "ECB raises rates by 25 bp, 10 Sep 2026 (Banco de España)",
+            "url": "https://www.bde.es/wbe/es/noticias-eventos/actualidad-bce/decisiones-politica-monetaria/el-bce-sube-los-tipos-25-puntos-basicos-en-septiembre-2026.html",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "ECB meeting 28–29 October 2026 (Admiral Markets)",
+            "url": "https://admiralmarkets.com/analytics/traders-blog/ecb-meeting-october-2026",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "LV",
+      "flag": "🇱🇻",
+      "capital": {
+        "ru": "Рига",
+        "en": "Riga"
+      },
+      "languages": {
+        "ru": "латышский",
+        "en": "Latvian"
+      },
+      "currency": {
+        "code": "EUR",
+        "ru": "евро",
+        "en": "euro"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen",
+        "Eurozone"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика",
+          "en": "Parliamentary republic"
+        },
+        "headOfState": {
+          "ru": "Президент Эдгар Ринкевич",
+          "en": "President Edgars Rinkēvičs"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Андрис Кулбергс («Объединённый список», с мая 2026 г.)",
+          "en": "Prime Minister Andris Kulbergs (United List, since May 2026)"
+        },
+        "elections": {
+          "ru": "Выборы в Сейм 3 октября 2026 г.: «Объединённый список» — 41 из 100 мест, «Латвия прежде всего» — 17, «Суверенная власть» — 15, Нацобъединение и Прогрессивные — по 10.",
+          "en": "Saeima election, 3 October 2026: United List 41 of 100 seats, Latvia First 17, Sovereign Power 15, National Alliance and Progressives 10 each."
+        },
+        "notes": {
+          "ru": "Член ЕС: регламенты ЕС о маркировке (1169/2011), контаминантах (2023/915) и EUDR применяются напрямую.",
+          "en": "EU member: EU rules on labelling (1169/2011), contaminants (2023/915) and the EUDR apply directly."
+        },
+        "sources": [
+          {
+            "title": "Latvia's pro-Ukraine party wins parliamentary election (Kyiv Independent)",
+            "url": "https://kyivindependent.com/latvias-pro-ukraine-party-wins-parliamentary-election-by-wide-margin/",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Банк Латвии (Евросистема)",
+          "en": "Bank of Latvia (Eurosystem)"
+        },
+        "policyRate": {
+          "value": 2.5,
+          "decided": "2026-09-10",
+          "ru": "ставка ЕЦБ по депозитам 2,50% с 16 сентября 2026 г. (основная ставка рефинансирования 2,65%); следующее решение ЕЦБ — 29 октября 2026 г.",
+          "en": "ECB deposit facility rate 2.50% from 16 Sep 2026 (main refinancing rate 2.65%); next ECB decision 29 Oct 2026"
+        },
+        "fxRegime": {
+          "ru": "Евро — с 2014 г.",
+          "en": "Euro — since 2014"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "A",
+            "outlook": "stable",
+            "date": "2024-05-31"
+          },
+          "moodys": {
+            "rating": "A3",
+            "outlook": "stable",
+            "date": "2022-04-29"
+          },
+          "fitch": {
+            "rating": "A−",
+            "outlook": "stable",
+            "date": "2025-11-07"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "sources": [
+          {
+            "title": "ECB raises rates by 25 bp, 10 Sep 2026 (Banco de España)",
+            "url": "https://www.bde.es/wbe/es/noticias-eventos/actualidad-bce/decisiones-politica-monetaria/el-bce-sube-los-tipos-25-puntos-basicos-en-septiembre-2026.html",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "ECB meeting 28–29 October 2026 (Admiral Markets)",
+            "url": "https://admiralmarkets.com/analytics/traders-blog/ecb-meeting-october-2026",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
+        ]
+      }
+    },
+    {
+      "code": "LT",
+      "flag": "🇱🇹",
+      "capital": {
+        "ru": "Вильнюс",
+        "en": "Vilnius"
+      },
+      "languages": {
+        "ru": "литовский",
+        "en": "Lithuanian"
+      },
+      "currency": {
+        "code": "EUR",
+        "ru": "евро",
+        "en": "euro"
+      },
+      "memberships": [
+        "EU",
+        "NATO",
+        "WTO",
+        "Schengen",
+        "Eurozone"
+      ],
+      "political": {
+        "system": {
+          "ru": "Парламентская республика с сильным президентом",
+          "en": "Parliamentary republic with a strong president"
+        },
+        "headOfState": {
+          "ru": "Президент Гитанас Науседа",
+          "en": "President Gitanas Nausėda"
+        },
+        "headOfGov": {
+          "ru": "Премьер-министр Миндаугас Синкявичюс",
+          "en": "Prime Minister Mindaugas Sinkevičius"
+        },
+        "elections": {
+          "ru": "Парламентские выборы — октябрь 2024 г.; следующие — в 2028 г.",
+          "en": "Parliamentary election in October 2024; next due in 2028."
+        },
+        "notes": {
+          "ru": "Член ЕС: регламенты ЕС о маркировке (1169/2011), контаминантах (2023/915) и EUDR применяются напрямую.",
+          "en": "EU member: EU rules on labelling (1169/2011), contaminants (2023/915) and the EUDR apply directly."
+        },
+        "sources": [
+          {
+            "title": "List of current heads of state and government (Wikipedia)",
+            "url": "https://en.wikipedia.org/wiki/List_of_current_heads_of_state_and_government",
+            "date": "2026-10-28"
+          }
+        ]
+      },
+      "financial": {
+        "centralBank": {
+          "ru": "Банк Литвы (Евросистема)",
+          "en": "Bank of Lithuania (Eurosystem)"
+        },
+        "policyRate": {
+          "value": 2.5,
+          "decided": "2026-09-10",
+          "ru": "ставка ЕЦБ по депозитам 2,50% с 16 сентября 2026 г. (основная ставка рефинансирования 2,65%); следующее решение ЕЦБ — 29 октября 2026 г.",
+          "en": "ECB deposit facility rate 2.50% from 16 Sep 2026 (main refinancing rate 2.65%); next ECB decision 29 Oct 2026"
+        },
+        "fxRegime": {
+          "ru": "Евро — с 2015 г.",
+          "en": "Euro — since 2015"
+        },
+        "ratings": {
+          "sp": {
+            "rating": "A",
+            "outlook": "stable",
+            "date": "2024-05-31"
+          },
+          "moodys": {
+            "rating": "A2",
+            "outlook": "stable",
+            "date": "2022-04-29"
+          },
+          "fitch": {
+            "rating": "A",
+            "outlook": "stable",
+            "date": "2025-10-24"
+          },
+          "note": {
+            "ru": "Рейтинги — по сводной таблице Wikipedia; дата — последнее изменение рейтинга или прогноза. Перед использованием во внешних документах сверяйте с сайтами агентств.",
+            "en": "Ratings from the Wikipedia summary table; the date is the last change of rating or outlook. Check against the agencies' sites before external use."
+          }
+        },
+        "sources": [
+          {
+            "title": "ECB raises rates by 25 bp, 10 Sep 2026 (Banco de España)",
+            "url": "https://www.bde.es/wbe/es/noticias-eventos/actualidad-bce/decisiones-politica-monetaria/el-bce-sube-los-tipos-25-puntos-basicos-en-septiembre-2026.html",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "ECB meeting 28–29 October 2026 (Admiral Markets)",
+            "url": "https://admiralmarkets.com/analytics/traders-blog/ecb-meeting-october-2026",
+            "date": "2026-10-28"
+          },
+          {
+            "title": "List of countries by credit rating (Wikipedia; date = last rating/outlook change)",
+            "url": "https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating",
+            "date": "2026-10-28"
+          }
         ]
       }
     }

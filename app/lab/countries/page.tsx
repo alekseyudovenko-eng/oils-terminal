@@ -95,7 +95,7 @@ export default async function CountriesHub() {
                     <td className="py-2.5 px-3 text-right num">{signed(w.growth?.value, lang)}</td>
                     <td className="py-2.5 px-3 text-right num">{pct(w.cpi?.value, lang)}</td>
                     <td className="py-2.5 px-3 text-right num">
-                      {nf(p.financial.policyRate.value, lang, 2)}%
+                      {p.financial.policyRate.value == null ? '—' : `${nf(p.financial.policyRate.value, lang, 2)}%`}
                       {r ? <span className="block text-xs text-ink-3">{p.currency.code} {nf(r.rate, lang, r.rate < 10 ? 3 : 1)}</span> : null}
                     </td>
                     <td className="py-2.5 px-3 text-right num">{s ? tonnes(s.t12, lang) : '—'}</td>
@@ -112,7 +112,7 @@ export default async function CountriesHub() {
           <p className="mt-2 text-xs text-ink-3 max-w-[90ch]">{D.eco.note} {D.oil.lead}</p>
         </div>
 
-        <section className="mt-10">
+        {others.length > 0 && <section className="mt-10">
           <h2 className="font-cond text-xl font-semibold">{D.hub.others}</h2>
           <ul className="mt-3 flex flex-wrap gap-2 text-sm">
             {others.map(c => (
@@ -121,7 +121,7 @@ export default async function CountriesHub() {
               </li>
             ))}
           </ul>
-        </section>
+        </section>}
       </main>
     </>
   );

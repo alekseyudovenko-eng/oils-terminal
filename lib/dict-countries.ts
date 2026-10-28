@@ -80,7 +80,7 @@ const ru = {
   units: { mln: 'млн', bln: 'млрд $', km2: 'тыс. км²', t: 'т', kt: 'тыс. т' },
   mem: {
     EAEU: 'ЕАЭС', CIS: 'СНГ', WTO: 'ВТО', SCO: 'ШОС', BRICS: 'БРИКС', OTS: 'Организация тюркских государств',
-    'EAEU-observer': 'наблюдатель в ЕАЭС', 'WTO-accession': 'вступает в ВТО', EU: 'ЕС', NATO: 'НАТО',
+    'EAEU-observer': 'наблюдатель в ЕАЭС', 'WTO-accession': 'вступает в ВТО', EU: 'ЕС', NATO: 'НАТО', CSTO: 'ОДКБ', 'EU-candidate': 'кандидат в ЕС', DCFTA: 'зона свободной торговли с ЕС (DCFTA)', Schengen: 'Шенген', Eurozone: 'зона евро', CEFTA: 'ЦЕФТА', 'Union-State': 'Союзное государство с Россией', 'CIS-associate': 'ассоциированный член СНГ', 'OTS-observer': 'наблюдатель в ОТГ', 'WTO-observer': 'наблюдатель в ВТО', 'BRICS-partner': 'страна-партнёр БРИКС',
   } as Record<string, string>,
   ow: {
     title: 'Баланс масел и жиров (Oil World)',
@@ -193,7 +193,7 @@ const en: CountriesDict = {
   units: { mln: 'm', bln: '$ bn', km2: 'thousand km²', t: 't', kt: 'thousand t' },
   mem: {
     EAEU: 'EAEU', CIS: 'CIS', WTO: 'WTO', SCO: 'SCO', BRICS: 'BRICS', OTS: 'Organization of Turkic States',
-    'EAEU-observer': 'EAEU observer', 'WTO-accession': 'acceding to the WTO', EU: 'EU', NATO: 'NATO',
+    'EAEU-observer': 'EAEU observer', 'WTO-accession': 'acceding to the WTO', EU: 'EU', NATO: 'NATO', CSTO: 'CSTO', 'EU-candidate': 'EU candidate', DCFTA: 'free trade area with the EU (DCFTA)', Schengen: 'Schengen', Eurozone: 'euro area', CEFTA: 'CEFTA', 'Union-State': 'Union State with Russia', 'CIS-associate': 'CIS associate member', 'OTS-observer': 'OTS observer', 'WTO-observer': 'WTO observer', 'BRICS-partner': 'BRICS partner country',
   },
   ow: {
     title: 'Oils and fats balance (Oil World)',
@@ -304,7 +304,7 @@ const uz: CountriesDict = {
   units: { mln: 'mln', bln: 'mlrd $', km2: 'ming km²', t: 't', kt: 'ming t' },
   mem: {
     EAEU: 'YeOII', CIS: 'MDH', WTO: 'JST', SCO: 'ShHT', BRICS: 'BRIKS', OTS: 'Turkiy davlatlar tashkiloti',
-    'EAEU-observer': 'YeOIIda kuzatuvchi', 'WTO-accession': 'JSTga aʼzo boʻlmoqda', EU: 'YeI', NATO: 'NATO',
+    'EAEU-observer': 'YeOIIda kuzatuvchi', 'WTO-accession': 'JSTga aʼzo boʻlmoqda', EU: 'YeI', NATO: 'NATO', CSTO: 'KXShT', 'EU-candidate': 'YeIga nomzod', DCFTA: 'YeI bilan erkin savdo zonasi (DCFTA)', Schengen: 'Shengen', Eurozone: 'yevro hududi', CEFTA: 'CEFTA', 'Union-State': 'Rossiya bilan Ittifoq davlati', 'CIS-associate': 'MDH assotsiatsiyalangan aʼzosi', 'OTS-observer': 'TDT kuzatuvchisi', 'WTO-observer': 'JST kuzatuvchisi', 'BRICS-partner': 'BRIKS hamkor davlati',
   },
   ow: { ...en.ow, title: 'Moy va yogʻlar balansi (Oil World)', lead: '17 turdagi moy va yogʻ ishlab chiqarish, import, eksport va isteʼmoli, ming t, oktyabr–sentyabr mavsumi. Oil World prognozi «F» bilan belgilangan.', product: 'Moy / yogʻ', production: 'Ishlab chiqarish', imports: 'Import', exports: 'Eksport', consumption: 'Isteʼmol', stocks: 'Yakuniy zaxiralar', season: 'Mavsum', totals: 'Barcha moy va yogʻlar, ming t', perCapita: 'Jon boshiga isteʼmol, kg', palmShare: 'Isteʼmolda palma moyi ulushi', none: 'Oil World bu mamlakat uchun alohida balans eʼlon qilmaydi.' },
   mpob: { ...en.mpob, title: 'Malayziyaning mamlakatga eksporti (MPOB)', total: 'Barcha mahsulotlar (OPP)', change: 'Oʻzgarish', group: 'Mahsulot guruhi', product: 'Mahsulot', share: 'Ulush', top: 'Eng yirik pozitsiyalar', none: 'MPOB faylida bu mamlakat boʻyicha maʼlumot yoʻq.' },
@@ -388,7 +388,7 @@ const kk: CountriesDict = {
   units: { mln: 'млн', bln: 'млрд $', km2: 'мың км²', t: 'т', kt: 'мың т' },
   mem: {
     EAEU: 'ЕАЭО', CIS: 'ТМД', WTO: 'ДСҰ', SCO: 'ШЫҰ', BRICS: 'БРИКС', OTS: 'Түркі мемлекеттері ұйымы',
-    'EAEU-observer': 'ЕАЭО-дағы бақылаушы', 'WTO-accession': 'ДСҰ-ға кіруде', EU: 'ЕО', NATO: 'НАТО',
+    'EAEU-observer': 'ЕАЭО-дағы бақылаушы', 'WTO-accession': 'ДСҰ-ға кіруде', EU: 'ЕО', NATO: 'НАТО', CSTO: 'ҰҚШҰ', 'EU-candidate': 'ЕО-ға үміткер', DCFTA: 'ЕО-мен еркін сауда аймағы (DCFTA)', Schengen: 'Шенген', Eurozone: 'еуроаймақ', CEFTA: 'CEFTA', 'Union-State': 'Ресеймен Одақтас мемлекет', 'CIS-associate': 'ТМД қауымдастырылған мүшесі', 'OTS-observer': 'ТМҰ бақылаушысы', 'WTO-observer': 'ДСҰ бақылаушысы', 'BRICS-partner': 'БРИКС серіктес елі',
   },
   ow: { ...en.ow, title: 'Май мен тоң май балансы (Oil World)', lead: '17 май мен тоң майдың өндірісі, импорты, экспорты және тұтынуы, мың т, қазан–қыркүйек маусымы. Oil World болжамы «F» деп белгіленген.', product: 'Май / тоң май', production: 'Өндіріс', imports: 'Импорт', exports: 'Экспорт', consumption: 'Тұтыну', stocks: 'Соңғы қорлар', season: 'Маусым', totals: 'Барлық майлар, мың т', perCapita: 'Жан басына тұтыну, кг', palmShare: 'Тұтынудағы пальма майының үлесі', none: 'Oil World бұл ел бойынша жеке баланс жарияламайды.' },
   mpob: { ...en.mpob, title: 'Малайзияның елге экспорты (MPOB)', total: 'Барлық өнім (OPP)', change: 'Өзгеріс', group: 'Өнім тобы', product: 'Өнім', share: 'Үлес', top: 'Ең ірі позициялар', none: 'MPOB файлында бұл ел бойынша дерек жоқ.' },
@@ -473,7 +473,7 @@ const ms: CountriesDict = {
   units: { mln: 'juta', bln: '$ bilion', km2: 'ribu km²', t: 't', kt: 'ribu t' },
   mem: {
     EAEU: 'EAEU', CIS: 'CIS', WTO: 'WTO', SCO: 'SCO', BRICS: 'BRICS', OTS: 'Pertubuhan Negara-negara Turkik',
-    'EAEU-observer': 'pemerhati EAEU', 'WTO-accession': 'sedang menyertai WTO', EU: 'EU', NATO: 'NATO',
+    'EAEU-observer': 'pemerhati EAEU', 'WTO-accession': 'sedang menyertai WTO', EU: 'EU', NATO: 'NATO', CSTO: 'CSTO', 'EU-candidate': 'calon EU', DCFTA: 'zon perdagangan bebas dengan EU (DCFTA)', Schengen: 'Schengen', Eurozone: 'kawasan euro', CEFTA: 'CEFTA', 'Union-State': 'Negara Kesatuan dengan Rusia', 'CIS-associate': 'ahli bersekutu CIS', 'OTS-observer': 'pemerhati OTS', 'WTO-observer': 'pemerhati WTO', 'BRICS-partner': 'negara rakan BRICS',
   },
   ow: { ...en.ow, title: 'Imbangan minyak dan lemak (Oil World)', lead: 'Pengeluaran, import, eksport dan penggunaan 17 minyak dan lemak, ribu t, musim Oktober–September. Unjuran Oil World ditanda “F”.', product: 'Minyak / lemak', production: 'Pengeluaran', imports: 'Import', exports: 'Eksport', consumption: 'Penggunaan', stocks: 'Stok akhir', season: 'Musim', totals: 'Semua minyak dan lemak, ribu t', perCapita: 'Penggunaan per kapita, kg', palmShare: 'Bahagian minyak sawit dalam penggunaan', none: 'Oil World tidak menerbitkan imbangan berasingan bagi negara ini.' },
   mpob: { ...en.mpob, title: 'Eksport Malaysia ke negara ini (MPOB)', total: 'Semua produk (OPP)', change: 'Perubahan', group: 'Kumpulan produk', product: 'Produk', share: 'Bahagian', top: 'Item terbesar', none: 'Fail MPOB tiada data bagi negara ini.' },
