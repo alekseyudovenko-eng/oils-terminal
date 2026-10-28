@@ -15,6 +15,7 @@ export default function LabHeader({ current, note, translated = false }: {
     { href: '/lab/importers', title: t.lab.pages.importers },
     { href: '/lab/trade', title: t.lab.pages.trade },
     { href: '/lab/regulation', title: t.lab.pages.regulation },
+    { href: '/lab/countries', title: t.lab.pages.countries },
   ];
   return (
     <>

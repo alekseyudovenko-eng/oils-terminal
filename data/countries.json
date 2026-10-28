@@ -1,0 +1,110 @@
+{
+  "updatedAt": "2026-10-28",
+  "note": "Сводки по странам для «Лаборатории IMA». Каждый факт — с источником и датой проверки. Цифры экономики, курсы и торговля подтягиваются автоматически (Всемирный банк, МВФ, TradingView, GTT, UN Comtrade).",
+  "countries": [
+    {
+      "code": "RU",
+      "flag": "🇷🇺",
+      "capital": { "ru": "Москва", "en": "Moscow" },
+      "languages": { "ru": "русский (государственный)", "en": "Russian (official)" },
+      "currency": { "code": "RUB", "ru": "российский рубль", "en": "Russian rouble" },
+      "memberships": ["EAEU", "CIS", "WTO", "SCO", "BRICS"],
+      "political": {
+        "system": { "ru": "Федеративная президентская республика", "en": "Federal presidential republic" },
+        "headOfState": { "ru": "Президент Владимир Путин (избран в марте 2024 г., срок до 2030 г.)", "en": "President Vladimir Putin (elected March 2024, term to 2030)" },
+        "headOfGov": { "ru": "Председатель правительства Михаил Мишустин (с 2020 г., повторно назначен в мае 2024 г.)", "en": "Prime Minister Mikhail Mishustin (since 2020, reappointed May 2024)" },
+        "elections": { "ru": "Выборы в Госдуму 18–20 сентября 2026 г.: «Единая Россия» — 349 из 450 мест, КПРФ — 37, ЛДПР — 23, «Новые люди» — 19, «Справедливая Россия» — 17. Следующие президентские выборы — 2030 г.", "en": "State Duma election, 18–20 September 2026: United Russia 349 of 450 seats, CPRF 37, LDPR 23, New People 19, A Just Russia 17. Next presidential election: 2030." },
+        "notes": { "ru": "Действуют широкие санкции США, ЕС и Великобритании; часть платежей и логистики идёт через третьи страны.", "en": "Broad US, EU and UK sanctions are in force; part of payments and logistics runs through third countries." },
+        "sources": [
+          { "title": "2026 Russian legislative election — results of the Central Election Commission (Wikipedia)", "url": "https://en.wikipedia.org/wiki/2026_Russian_legislative_election", "date": "2026-10-28" },
+          { "title": "Vladimir Putin reappoints Mikhail Mishustin as Russia's Prime Minister (Tribune India)", "url": "https://www.tribuneindia.com/news/world/vladimir-putin-reappoints-mikhail-mishustin-as-russias-prime-minister-619892/amp", "date": "2026-10-28" }
+        ]
+      },
+      "financial": {
+        "centralBank": { "ru": "Банк России", "en": "Bank of Russia" },
+        "policyRate": { "value": 14, "decided": "2026-10-23", "ru": "ключевая ставка сохранена на 14%", "en": "key rate held at 14%" },
+        "ratings": {
+          "sp": null, "moodys": null, "fitch": null,
+          "note": { "ru": "S&P, Moody's и Fitch отозвали рейтинги России в 2022 г. из-за санкций.", "en": "S&P, Moody's and Fitch withdrew Russia's ratings in 2022 because of sanctions." }
+        },
+        "fxRegime": { "ru": "Плавающий курс; действуют ограничения на движение капитала.", "en": "Floating exchange rate; capital controls in place." },
+        "sources": [
+          { "title": "FACTBOX: Bank of Russia holds key rate at 14% (TASS, 23 Oct 2026)", "url": "https://tass.com/economy/2206951/amp", "date": "2026-10-28" }
+        ]
+      }
+    },
+    {
+      "code": "UZ",
+      "flag": "🇺🇿",
+      "capital": { "ru": "Ташкент", "en": "Tashkent" },
+      "languages": { "ru": "узбекский (государственный), русский широко используется", "en": "Uzbek (official); Russian widely used" },
+      "currency": { "code": "UZS", "ru": "узбекский сум", "en": "Uzbek som" },
+      "memberships": ["CIS", "SCO", "OTS", "EAEU-observer", "WTO-accession"],
+      "political": {
+        "system": { "ru": "Президентская республика", "en": "Presidential republic" },
+        "headOfState": { "ru": "Президент Шавкат Мирзиёев (переизбран в июле 2023 г., срок до 2030 г.)", "en": "President Shavkat Mirziyoyev (re-elected July 2023, term to 2030)" },
+        "headOfGov": { "ru": "Премьер-министр Абдулла Арипов (с 2016 г., повторно утверждён в ноябре 2024 г.)", "en": "Prime Minister Abdulla Aripov (since 2016, re-approved November 2024)" },
+        "elections": { "ru": "Парламентские выборы прошли в октябре 2024 г. Следующие президентские выборы — 2030 г.", "en": "Parliamentary elections were held in October 2024. Next presidential election: 2030." },
+        "notes": { "ru": "Курс на вступление в ВТО: правительство ставит цель завершить его до декабря 2026 г. Наблюдатель в ЕАЭС с 2020 г.", "en": "WTO accession under way: the government targets completion by December 2026. EAEU observer since 2020." },
+        "sources": [
+          { "title": "Абдулла Арипов вновь утверждён на посту премьер-министра (Kun.uz, 20.11.2024)", "url": "https://kun.uz/ru/news/2024/11/20/abdulla-aripov-vnov-utverjden-na-postu-premer-ministra", "date": "2026-10-28" },
+          { "title": "Uzbekistan targets WTO membership by December 2026 (Daryo, 19.02.2026)", "url": "https://daryo.uz/en/2026/02/19/uzbekistan-targets-wto-membership-by-december-2026/", "date": "2026-10-28" }
+        ]
+      },
+      "financial": {
+        "centralBank": { "ru": "Центральный банк Республики Узбекистан", "en": "Central Bank of Uzbekistan" },
+        "policyRate": { "value": 14, "decided": "2026-07-29", "ru": "основная ставка 14% (последнее подтверждённое решение — 29.07.2026; следующие заседания 16.09 и 28.10.2026 — результаты уточняются)", "en": "policy rate 14% (last confirmed decision 29 Jul 2026; meetings on 16 Sep and 28 Oct 2026 — results to be confirmed)" },
+        "ratings": {
+          "sp": { "rating": "BB", "outlook": "stable", "date": "2025-11-21" },
+          "moodys": { "rating": "Ba2", "outlook": "stable", "date": "2026-06-25" },
+          "fitch": { "rating": "BB", "outlook": "positive", "date": "2026-06-03" }
+        },
+        "fxRegime": { "ru": "Плавающий курс, ЦБ проводит интервенции для сглаживания колебаний.", "en": "Floating rate; the central bank intervenes to smooth volatility." },
+        "sources": [
+          { "title": "Central Bank of Uzbekistan keeps main policy rate at 14% (UzDaily, 29.07.2026)", "url": "https://www.uzdaily.uz/en/central-bank-of-uzbekistan-keeps-main-policy-rate-at-14/", "date": "2026-10-28" },
+          { "title": "CBU — schedule of Board meetings on the policy rate, 2026", "url": "https://cbu.uz/en/monetary-policy/refinancing-rate/schedule-of-meetings/", "date": "2026-10-28" },
+          { "title": "Moody's upgrades Uzbekistan from Ba3 to Ba2 (gov.uz, 25.06.2026)", "url": "https://gov.uz/en/imv/news/view/184041", "date": "2026-10-28" },
+          { "title": "Fitch revises Uzbekistan outlook to positive, affirms BB (Fergana, 03.06.2026)", "url": "https://en.fergana.agency/news/147028/", "date": "2026-10-28" },
+          { "title": "Uzbekistan credit ratings (FXEmpire: S&P BB stable since 21.11.2025)", "url": "https://www.fxempire.com/macro/credit-ratings/uzbekistan", "date": "2026-10-28" }
+        ]
+      }
+    },
+    {
+      "code": "AZ",
+      "flag": "🇦🇿",
+      "capital": { "ru": "Баку", "en": "Baku" },
+      "languages": { "ru": "азербайджанский (государственный)", "en": "Azerbaijani (official)" },
+      "currency": { "code": "AZN", "ru": "азербайджанский манат", "en": "Azerbaijani manat" },
+      "memberships": ["CIS", "OTS", "WTO-accession"],
+      "political": {
+        "system": { "ru": "Президентская республика", "en": "Presidential republic" },
+        "headOfState": { "ru": "Президент Ильхам Алиев (переизбран в феврале 2024 г.)", "en": "President Ilham Aliyev (re-elected February 2024)" },
+        "headOfGov": { "ru": "Премьер-министр Али Асадов (с октября 2019 г.)", "en": "Prime Minister Ali Asadov (since October 2019)" },
+        "elections": { "ru": "Досрочные парламентские выборы — сентябрь 2024 г. Президентские выборы — следующие в 2031 г.", "en": "Snap parliamentary elections in September 2024. Next presidential election: 2031." },
+        "notes": { "ru": "Переговоры о вступлении в ВТО продолжаются. Не входит в ЕАЭС.", "en": "WTO accession talks continue. Not an EAEU member." },
+        "sources": [
+          { "title": "Prime Minister of the Republic of Azerbaijan – Ali Asadov (nk.gov.az)", "url": "https://nk.gov.az/en/nazirler-kabineti/azerbaycan-respublikasi-nazirler-kabineti", "date": "2026-10-28" },
+          { "title": "World Trade Organization and Azerbaijan (Ministry of Economy)", "url": "https://economy.gov.az/en/page/beynelxalq-elaqeler/umumdunya-ticaret-teskilati-wto-ve-azerbaycan", "date": "2026-10-28" }
+        ]
+      },
+      "financial": {
+        "centralBank": { "ru": "Центральный банк Азербайджана", "en": "Central Bank of Azerbaijan" },
+        "policyRate": { "value": 6.5, "decided": "2026-09-23", "ru": "учётная ставка сохранена на 6,5%; нижняя граница коридора снижена до 5%, верхняя — 7,5%", "en": "refinancing rate held at 6.5%; corridor floor cut to 5%, ceiling 7.5%" },
+        "ratings": {
+          "sp": null,
+          "moodys": { "rating": "Baa3", "outlook": "positive", "date": "2025-07-04" },
+          "fitch": { "rating": "BBB-", "outlook": "stable", "date": "2024-07-27" },
+          "note": { "ru": "S&P отозвало рейтинги по просьбе эмитента (последний — BB+, прогноз «позитивный»; дату отзыва проверить не удалось). Moody's провело плановый пересмотр 17.07.2026 без изменения рейтинга.", "en": "S&P withdrew its ratings at the issuer's request (last BB+, positive outlook; withdrawal date not verified). Moody's completed a scheduled review on 17 Jul 2026 with no rating action." }
+        },
+        "fxRegime": { "ru": "Курс маната фактически привязан к доллару (около 1,70).", "en": "The manat is de facto pegged to the US dollar (about 1.70)." },
+        "sources": [
+          { "title": "Azerbaijan holds key rate at 6.5%, widens rate corridor (Trading Economics, 23.09.2026)", "url": "https://tradingeconomics.com/azerbaijan/interest-rate/news/585946", "date": "2026-10-28" },
+          { "title": "Moody's completes scheduled review of Azerbaijan's ratings (Report.az, 17.07.2026)", "url": "https://report.az/en/finance/moody-s-completes-scheduled-review-of-azerbaijan-s-ratings", "date": "2026-10-28" },
+          { "title": "Fitch upgrades Azerbaijan to BBB- (APA, 27.07.2024)", "url": "https://en.apa.az/finance/fitch-ratings-upgrades-azerbaijans-credit-rating-to-bbb-level-443669", "date": "2026-10-28" },
+          { "title": "S&P affirms Azerbaijan's ratings, withdraws them (Report.az)", "url": "https://report.az/en/amp/finance/s-p-affirms-azerbaijan-s-ratings-withdraws-them", "date": "2026-10-28" },
+          { "title": "Azerbaijan credit ratings (FXEmpire)", "url": "https://fxempire.com/macro/credit-ratings/azerbaijan", "date": "2026-10-28" }
+        ]
+      }
+    }
+  ]
+}

@@ -122,11 +122,11 @@ const ru = {
   lab: {
     title: 'Лаборатория IMA',
     nav: 'Страницы лаборатории',
-    pages: { forecast: 'Прогноз', importers: 'Импортёры', trade: 'Импорт (GTT)', regulation: 'Регуляторная политика' },
+    pages: { forecast: 'Прогноз', importers: 'Импортёры', trade: 'Импорт (GTT)', regulation: 'Регуляторная политика', countries: 'Страны' },
     toSite: 'На сайт',
     closed: 'Закрытая страница: её видят только те, у кого есть пароль.',
     ruOnly: '',
-    notes: { importers: 'Рабочая база, не для публикации.', trade: 'Данные Global Trade Tracker по подписке IMA — не для публикации.', regulation: 'Справочный материал, не юридическая консультация.' },
+    notes: { importers: 'Рабочая база, не для публикации.', trade: 'Данные Global Trade Tracker по подписке IMA — не для публикации.', regulation: 'Справочный материал, не юридическая консультация.', countries: 'Рабочие сводки IMA; торговые данные GTT — по подписке, не для публикации.' },
   },
   reg: {
     title: 'Регуляторная политика',
@@ -277,11 +277,11 @@ const en: Dict = {
   lab: {
     title: 'IMA Lab',
     nav: 'Lab pages',
-    pages: { forecast: 'Forecast', importers: 'Importers', trade: 'Imports (GTT)', regulation: 'Regulatory policy' },
+    pages: { forecast: 'Forecast', importers: 'Importers', trade: 'Imports (GTT)', regulation: 'Regulatory policy', countries: 'Countries' },
     toSite: 'To the site',
     closed: 'Restricted page: only people with the password can see it.',
     ruOnly: 'The content of this page is in Russian for now.',
-    notes: { importers: 'Working database, not for publication.', trade: 'Global Trade Tracker data under IMA subscription — not for publication.', regulation: 'Reference material, not legal advice.' },
+    notes: { importers: 'Working database, not for publication.', trade: 'Global Trade Tracker data under IMA subscription — not for publication.', regulation: 'Reference material, not legal advice.', countries: 'IMA working profiles; GTT trade data under subscription, not for publication.' },
   },
   reg: {
     title: 'Regulatory policy',
@@ -430,11 +430,11 @@ const uz: Dict = {
   lab: {
     title: 'IMA laboratoriyasi',
     nav: 'Laboratoriya sahifalari',
-    pages: { forecast: 'Prognoz', importers: 'Importyorlar', trade: 'Import (GTT)', regulation: 'Tartibga solish siyosati' },
+    pages: { forecast: 'Prognoz', importers: 'Importyorlar', trade: 'Import (GTT)', regulation: 'Tartibga solish siyosati', countries: 'Mamlakatlar' },
     toSite: 'Saytga',
     closed: 'Yopiq sahifa: uni faqat parolga ega boʻlganlar koʻradi.',
     ruOnly: 'Bu sahifaning mazmuni hozircha faqat rus tilida.',
-    notes: { importers: 'Ishchi baza, eʼlon qilish uchun emas.', trade: 'IMA obunasi boʻyicha Global Trade Tracker maʼlumotlari — eʼlon qilish uchun emas.', regulation: 'Maʼlumotnoma material, yuridik maslahat emas.' },
+    notes: { importers: 'Ishchi baza, eʼlon qilish uchun emas.', trade: 'IMA obunasi boʻyicha Global Trade Tracker maʼlumotlari — eʼlon qilish uchun emas.', regulation: 'Maʼlumotnoma material, yuridik maslahat emas.', countries: 'IMA ishchi profillari; GTT savdo maʼlumotlari obuna boʻyicha, eʼlon qilish uchun emas.' },
   },
   reg: {
     title: 'Tartibga solish siyosati',
@@ -583,11 +583,11 @@ const kk: Dict = {
   lab: {
     title: 'IMA зертханасы',
     nav: 'Зертхана беттері',
-    pages: { forecast: 'Болжам', importers: 'Импорттаушылар', trade: 'Импорт (GTT)', regulation: 'Реттеу саясаты' },
+    pages: { forecast: 'Болжам', importers: 'Импорттаушылар', trade: 'Импорт (GTT)', regulation: 'Реттеу саясаты', countries: 'Елдер' },
     toSite: 'Сайтқа',
     closed: 'Жабық бет: оны тек құпиясөзі барлар көреді.',
     ruOnly: 'Бұл беттің мазмұны әзірге тек орыс тілінде.',
-    notes: { importers: 'Жұмыс базасы, жариялауға арналмаған.', trade: 'IMA жазылымы бойынша Global Trade Tracker деректері — жариялауға арналмаған.', regulation: 'Анықтамалық материал, заң кеңесі емес.' },
+    notes: { importers: 'Жұмыс базасы, жариялауға арналмаған.', trade: 'IMA жазылымы бойынша Global Trade Tracker деректері — жариялауға арналмаған.', regulation: 'Анықтамалық материал, заң кеңесі емес.', countries: 'IMA жұмыс профильдері; GTT сауда деректері жазылым бойынша, жариялауға арналмаған.' },
   },
   reg: {
     title: 'Реттеу саясаты',
@@ -736,11 +736,11 @@ const ms: Dict = {
   lab: {
     title: 'Makmal IMA',
     nav: 'Halaman makmal',
-    pages: { forecast: 'Unjuran', importers: 'Pengimport', trade: 'Import (GTT)', regulation: 'Dasar kawal selia' },
+    pages: { forecast: 'Unjuran', importers: 'Pengimport', trade: 'Import (GTT)', regulation: 'Dasar kawal selia', countries: 'Negara' },
     toSite: 'Ke laman',
     closed: 'Halaman terhad: hanya mereka yang mempunyai kata laluan boleh melihatnya.',
     ruOnly: 'Kandungan halaman ini buat masa ini dalam bahasa Rusia sahaja.',
-    notes: { importers: 'Pangkalan data kerja, bukan untuk diterbitkan.', trade: 'Data Global Trade Tracker di bawah langganan IMA — bukan untuk diterbitkan.', regulation: 'Bahan rujukan, bukan nasihat undang-undang.' },
+    notes: { importers: 'Pangkalan data kerja, bukan untuk diterbitkan.', trade: 'Data Global Trade Tracker di bawah langganan IMA — bukan untuk diterbitkan.', regulation: 'Bahan rujukan, bukan nasihat undang-undang.', countries: 'Profil kerja IMA; data perdagangan GTT di bawah langganan, bukan untuk diterbitkan.' },
   },
   reg: {
     title: 'Dasar kawal selia',
