@@ -1,7 +1,7 @@
 // lib/once-a-day.ts — отметка «уже отправлено сегодня», чтобы рассылка не пришла дважды,
 // если её запустят и Vercel по расписанию, и резервный запуск.
 // Отметка хранится в таблице price_snapshots строкой с series = '_sent:<имя>' (отдельная таблица не нужна).
-import { getDb } from './db';
+import { getFreshDb as getDb } from './db';
 
 const today = () => new Date().toISOString().slice(0, 10);
 

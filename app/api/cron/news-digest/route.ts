@@ -8,6 +8,7 @@ import { escapeHtml, sendTelegramMessage } from '@/lib/telegram';
 import { getAddedSince } from '@/lib/news';
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 const SITE_URL = process.env.SITE_URL || 'https://imaoils.vercel.app';
 const MAX_ITEMS = 10;
