@@ -31,6 +31,10 @@
     {
       "path": "/api/cron/comtrade-sync",
       "schedule": "30 6 12 * *"
+    },
+    {
+      "path": "/api/cron/physical-prices",
+      "schedule": "10 16 * * 1-5"
     }
   ]
 }
