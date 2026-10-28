@@ -88,3 +88,19 @@ group by 1,2 order by 2,1;
 
 Use it to: (a) estimate Russia's palm oil supply after March 2025, when its own customs data stops (Indonesia + Malaysia exports to RUS); (b) compare Malaysia's share as seen by exporters vs by importers (GTT); (c) cross-check MPOB.
 Caveat: exporter and importer figures can differ a lot. Example: for 2025 Kazakhstan's customs (GTT) report about 36.6 thousand t of palm oil of Malaysian origin, while Malaysia reports only about 1.4 thousand t shipped directly to Kazakhstan — goods of Malaysian origin often arrive via third countries or traders. Always say which side a number comes from.
+
+## Physical palm product prices (Zyot W Dhon)
+
+- Table `physical_prices` (same Supabase project): daily closing **physical** prices, FOB, USD/t, bulk, collected every business day (~16:10 UTC) from the portal Zyot W Dhon (zyotwdhon.com): Malaysian CPO, Indonesian CPO (inclusive of duties), RBD Palm Oil, RBD Palm Olein, RBD Palm Stearin, PFAD, CPKO, RBD Palm Kernel Oil / Olein / Stearin. History starts 27 Oct 2026.
+- Use only in internal IMA/MPOC reports and presentations, with the source line "Source: Zyot W Dhon (zyotwdhon.com), daily closing physical prices, FOB, bulk." Never publish these prices on the public website, in Telegram or on social media (the source reserves all rights).
+
+Monthly averages, last and change for the report month (change the dates):
+```sql
+with m as (select product, avg(price_usd) avg_m, min(price_usd) lo, max(price_usd) hi, count(*) days
+           from physical_prices where day between '2026-11-01' and '2026-11-30' group by product),
+     p as (select product, avg(price_usd) avg_p from physical_prices where day between '2026-10-01' and '2026-10-31' group by product),
+     l as (select distinct on (product) product, day, price_usd last from physical_prices where day <= '2026-11-30' order by product, day desc)
+select m.product, round(m.avg_m,1) avg_month, round(p.avg_p,1) avg_prev, round(100*(m.avg_m/p.avg_p-1),1) chg_pct, m.lo, m.hi, l.last, l.day, m.days
+from m left join p using (product) left join l using (product) order by m.product;
+```
+In the monthly report put them in 3.1 (a small table "Physical palm product prices, FOB USD/t: monthly average, change m/m, month low–high") and comment on the olein–CPO and stearin spreads; in the Regional Managers Meeting presentation — one line or a small table on the prices slide. If the previous month has fewer than 10 price days, say the comparison is partial.
