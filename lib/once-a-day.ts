@@ -49,3 +49,8 @@ export async function lastSentAt(job: string): Promise<Date | null> {
   const t = iso ? new Date(iso) : new Date(`${data.day}T23:59:59Z`);
   return isNaN(t.getTime()) ? null : t;
 }
+
+/** Было ли событие с таким ключом когда-либо (для постов «раз в неделю / раз в месяц»: ключ вида 'post:weekly-2026-W44'). */
+export async function alreadySentEver(job: string): Promise<boolean> {
+  return (await lastSentAt(job)) != null;
+}

@@ -75,3 +75,24 @@ export async function sendTelegramPhotoFile(png: ArrayBuffer, filename: string, 
     return { ok: false, error: String(e?.message || e) };
   }
 }
+
+type ChannelResult = { ok: boolean; error?: string; result?: any };
+
+/** Вызов Bot API для конкретного чата/канала (например '@oilpalm'). Возвращает result из ответа Telegram. */
+export async function callTelegramChat(method: string, chatId: string, payload: Record<string, unknown> = {}): Promise<ChannelResult> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  if (!token) return { ok: false, error: 'Missing TELEGRAM_BOT_TOKEN' };
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, ...payload }),
+      cache: 'no-store',
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) return { ok: false, error: data.description || `HTTP ${res.status}` };
+    return { ok: true, result: data.result };
+  } catch (e: any) {
+    return { ok: false, error: String(e?.message || e) };
+  }
+}

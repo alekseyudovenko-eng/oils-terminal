@@ -119,7 +119,40 @@ function headline(palm: number | null, crude: number | null): string {
   return cv ? `Palm Oil ${pv} as ${cv}` : `Palm Oil ${pv}; Crude Little Changed`;
 }
 
-type Headline = { title: string; source: string; date: string };
+/** Тот же заголовок по-русски (для подписи в Telegram и Facebook). Пороги те же, что в headline(). */
+export function headlineRu(palm: number | null, crude: number | null): string {
+  const p = palm ?? 0, c = crude ?? 0;
+  const pv = p >= 1.5 ? 'резко дорожает' : p >= 0.3 ? 'дорожает' : p > -0.3 ? 'стабильно' : p > -1.5 ? 'немного дешевеет' : 'заметно дешевеет';
+  const cv = c >= 1 ? 'на фоне роста нефти' : c > 0.3 ? 'на фоне небольшого роста нефти' : c > -0.3 ? null
+    : c > -1 ? 'на фоне небольшого снижения нефти' : 'на фоне падения нефти';
+  return cv ? `Пальмовое масло ${pv} ${cv}` : `Пальмовое масло ${pv}, нефть почти без изменений`;
+}
+
+const fmtRu = (v: number, d = 0) => v.toLocaleString('ru-RU', { minimumFractionDigits: d, maximumFractionDigits: d });
+const pctRu = (v: number | null) => (v == null ? '' : `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(2).replace('.', ',')}%`);
+
+/** Две строки вывода по-русски: только цифры и направление, без оценок и прогнозов. */
+export function leadRu(fcpo: Quote | undefined, brent: Quote | undefined, wti: Quote | undefined, myr: Quote | undefined): string[] {
+  const lines: string[] = [];
+  if (fcpo?.price != null) {
+    const ch = fcpo.changePct != null ? ` (${pctRu(fcpo.changePct)} за день)` : '';
+    const usd = fcpo.usdT != null ? `, это около $${fmtRu(fcpo.usdT)}/т` : '';
+    lines.push(`Пальмовое масло (FCPO, Bursa Malaysia, 3-й месяц): ${fmtRu(fcpo.price)} MYR/т${ch}${usd}.`);
+  }
+  const oil: string[] = [];
+  if (brent?.price != null) oil.push(`Brent $${fmtRu(brent.price, 2)}/барр.${brent.changePct != null ? ` (${pctRu(brent.changePct)})` : ''}`);
+  if (wti?.price != null) oil.push(`WTI $${fmtRu(wti.price, 2)}${wti.changePct != null ? ` (${pctRu(wti.changePct)})` : ''}`);
+  let line2 = oil.length ? `Нефть: ${oil.join(', ')}.` : '';
+  if (myr?.price != null) {
+    const m = myr.changePct;
+    const how = m == null || Math.abs(m) < 0.05 ? 'почти не изменился' : m < 0 ? 'укрепился' : 'ослаб';
+    line2 += `${line2 ? ' ' : ''}Ринггит к доллару ${how}: ${fmtRu(myr.price, 4)}.`;
+  }
+  if (line2) lines.push(line2);
+  return lines;
+}
+
+type Headline = { title: string; titleRu: string; source: string; date: string };
 
 /** Свежие новости с английским заголовком: за 2 дня (в понедельник — с пятницы), до 6 штук. */
 function pickNews(now: Date): Headline[] {
@@ -129,6 +162,7 @@ function pickNews(now: Date): Headline[] {
   if (items.length < 3) items = getCuratedNews(now.getTime()).filter(n => n.titleEn).slice(0, 6); // тихие дни — последние
   return items.slice(0, 6).map(n => ({
     title: n.titleEn!,
+    titleRu: n.title,
     source: n.source.replace(/УкрАгроКонсалт/g, 'UkrAgroConsult').replace(/\s*\([^)]*[А-Яа-яЁё][^)]*\)/g, '').trim(),
     date: new Date(n.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }),
   }));
@@ -151,7 +185,15 @@ function PriceCell({ label, inst, value, unit, q, sub, last }: {
   );
 }
 
-export async function renderSnapshot(now = new Date()): Promise<{ image: ImageResponse; ok: boolean; title: string }> {
+export type SnapshotResult = {
+  image: ImageResponse; ok: boolean;
+  /** Английский заголовок (на картинке и в X). */
+  title: string;
+  /** Русский заголовок, две строки вывода и заголовки новостей — для подписи в Telegram и Facebook. */
+  titleRu: string; leadRu: string[]; newsRu: string[];
+};
+
+export async function renderSnapshot(now = new Date()): Promise<SnapshotResult> {
   const [{ quotes, fetchedAt, storedDay }, fonts] = await Promise.all([snapshotQuotes(), loadFonts()]);
   const q = (id: string) => quotes.find(x => x.id === id);
   const fcpo = q('fcpo'), brent = q('brent'), wti = q('wti'), myr = q('usdmyr');
@@ -216,5 +258,6 @@ export async function renderSnapshot(now = new Date()): Promise<{ image: ImageRe
     ),
     { width: W, height: H, fonts },
   );
-  return { image, ok, title };
+  const titleRu = headlineRu(fcpo?.changePct ?? null, brent?.changePct ?? null);
+  return { image, ok, title, titleRu, leadRu: leadRu(fcpo, brent, wti, myr), newsRu: news.map(n => n.titleRu).filter(Boolean) };
 }

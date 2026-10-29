@@ -10,6 +10,7 @@ import { alreadySentToday, caller, markSentToday } from '@/lib/once-a-day';
 import { escapeHtml, sendTelegramPhotoFile } from '@/lib/telegram';
 import { facebookConfigured, postFacebookPhoto, postXPhoto, xConfigured } from '@/lib/facebook';
 import { renderSnapshot } from '@/lib/snapshot';
+import { channelChat } from '@/lib/channel';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -36,18 +37,27 @@ export async function GET(request: Request) {
   }
 
   const now = new Date();
-  const { image, ok, title } = await renderSnapshot(now);
+  const { image, ok, title, titleRu, leadRu, newsRu } = await renderSnapshot(now);
   if (!ok) {
     return NextResponse.json({ success: false, error: 'quotes unavailable (FCPO, Brent or USD/MYR)' }, { status: 502 });
   }
   const png = await image.arrayBuffer();
   const date = now.toISOString().slice(0, 10);
-  const chat = (process.env.TELEGRAM_SNAPSHOT_CHAT_ID || '@oilpalm').trim();
+  const chat = channelChat();
+  const [yy, mm, dd] = date.split('-');
+  const dateRu = `${dd}.${mm}.${yy}`;
 
   // Telegram
   let tg: { ok: boolean; error?: string; skipped?: boolean } = { ok: true, skipped: true };
   if (!tgDone) {
-    const caption = `<b>IMA Daily Snapshot · ${date}</b>\n${escapeHtml(title)}\n\n<a href="${SITE_URL}">imaoils.vercel.app</a>`;
+    // Подпись по-русски: заголовок, две строки вывода, главные новости (картинка остаётся английской).
+    const top = newsRu.slice(0, 3).map(t => `• ${escapeHtml(t)}`);
+    let caption =
+      `<b>IMA Daily Snapshot · ${dateRu}</b>\n<b>${escapeHtml(titleRu)}</b>\n\n` +
+      leadRu.map(escapeHtml).join('\n') +
+      (top.length ? `\n\n📰 <b>Главное</b>\n${top.join('\n')}` : '') +
+      `\n\n<a href="${SITE_URL}">imaoils.vercel.app</a> — цены и новости рынка растительных масел`;
+    if (caption.length > 1024) caption = caption.replace(/\n\n📰[\s\S]*?(?=\n\n<a )/, ''); // лимит подписи Telegram
     tg = await sendTelegramPhotoFile(png, `IMA_Daily_Snapshot_${date}.png`, caption, chat);
     if (tg.ok) await markSentToday('daily-snapshot', via);
     console.log('daily-snapshot telegram:', tg.ok ? 'sent' : tg.error, 'chat', chat, 'caller', via);
@@ -57,9 +67,8 @@ export async function GET(request: Request) {
   let facebook: string = fbOn ? 'already sent today' : 'not configured';
   let fbOk = true;
   if (!fbDone) {
-    const [y, m, d] = date.split('-');
     const text =
-      `IMA Daily Snapshot · ${d}.${m}.${y}\n${title}\n\n` +
+      `IMA Daily Snapshot · ${dateRu}\n${titleRu}\n\n${leadRu.join('\n')}\n\n` +
       `Цены на пальмовое масло (FCPO), нефть Brent/WTI, курс USD/MYR и главные новости рынка растительных масел.\n\n` +
       `🔗 ${SITE_URL}`;
     const fb = await postFacebookPhoto(png, `${SITE_URL}/api/snapshot?d=${date}`, text);
@@ -88,7 +97,7 @@ export async function GET(request: Request) {
   const success = tg.ok && fbOk && xOk;
   return NextResponse.json(
     {
-      success, chat, title, telegram: tg.skipped ? 'already sent today' : tg.ok ? 'sent' : tg.error, facebook, x,
+      success, chat, title, titleRu, leadRu, telegram: tg.skipped ? 'already sent today' : tg.ok ? 'sent' : tg.error, facebook, x,
       error: !tg.ok ? tg.error : !fbOk ? facebook : !xOk ? x : undefined,
     },
     { status: success ? 200 : 502 }
