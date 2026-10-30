@@ -19,7 +19,7 @@ const ru = {
   },
   nav: { sections: 'Разделы', overview: 'Обзор', market: 'Рынок', language: 'Язык сайта' },
   footer: {
-    updated: 'Страница обновлена {time}. Котировки фьючерсов идут с задержкой 10–15 минут; данные TradingView.',
+    updated: 'Страница обновлена {time}. Котировки фьючерсов идут с задержкой 10–15 минут; данные TradingView, Далянь — Sina Finance.',
     conv: 'Пересчёт в доллары за тонну — по текущему курсу. Балансы — USDA FAS PSD; региональные оценки — USDA GAIN, Eurostat и национальная статистика.',
     disclaimer: 'Информация справочная и не является инвестиционной рекомендацией.',
   },
@@ -178,7 +178,7 @@ const en: Dict = {
   },
   nav: { sections: 'Sections', overview: 'Overview', market: 'Market', language: 'Site language' },
   footer: {
-    updated: 'Page updated {time}. Futures quotes are delayed 10–15 minutes; data from TradingView.',
+    updated: 'Page updated {time}. Futures quotes are delayed 10–15 minutes; data from TradingView; Dalian from Sina Finance.',
     conv: 'Conversion to US dollars per tonne at current exchange rates. Balances: USDA FAS PSD; regional estimates: USDA GAIN, Eurostat and national statistics.',
     disclaimer: 'For information only; not investment advice.',
   },
@@ -335,7 +335,7 @@ const uz: Dict = {
   },
   nav: { sections: 'Boʻlimlar', overview: 'Sharh', market: 'Bozor', language: 'Sayt tili' },
   footer: {
-    updated: 'Sahifa yangilangan vaqt: {time}. Fyuchers kotirovkalari 10–15 daqiqa kechikish bilan beriladi; maʼlumotlar TradingView’dan.',
+    updated: 'Sahifa yangilangan vaqt: {time}. Fyuchers kotirovkalari 10–15 daqiqa kechikish bilan beriladi; maʼlumotlar TradingView’dan, Dalyan — Sina Finance’dan.',
     conv: 'Tonna uchun dollarga qayta hisoblash joriy kurs boʻyicha. Balanslar — USDA FAS PSD; mintaqaviy baholar — USDA GAIN, Eurostat va milliy statistika.',
     disclaimer: 'Maʼlumot maʼlumotnoma uchun berilgan va investitsiya tavsiyasi emas.',
   },
@@ -492,7 +492,7 @@ const kk: Dict = {
   },
   nav: { sections: 'Бөлімдер', overview: 'Шолу', market: 'Нарық', language: 'Сайт тілі' },
   footer: {
-    updated: 'Бет жаңартылды: {time}. Фьючерс котировкалары 10–15 минут кешігумен беріледі; деректер TradingView-тен.',
+    updated: 'Бет жаңартылды: {time}. Фьючерс котировкалары 10–15 минут кешігумен беріледі; деректер TradingView-тен, Далянь — Sina Finance-тен.',
     conv: 'Тоннасына долларға қайта есептеу — ағымдағы бағам бойынша. Баланстар — USDA FAS PSD; өңірлік бағалаулар — USDA GAIN, Eurostat және ұлттық статистика.',
     disclaimer: 'Ақпарат анықтамалық сипатта және инвестициялық ұсыным болып табылмайды.',
   },
@@ -649,7 +649,7 @@ const ms: Dict = {
   },
   nav: { sections: 'Bahagian', overview: 'Ikhtisar', market: 'Pasaran', language: 'Bahasa laman' },
   footer: {
-    updated: 'Halaman dikemas kini {time}. Sebut harga niaga hadapan ditangguhkan 10–15 minit; data daripada TradingView.',
+    updated: 'Halaman dikemas kini {time}. Sebut harga niaga hadapan ditangguhkan 10–15 minit; data daripada TradingView; Dalian daripada Sina Finance.',
     conv: 'Penukaran kepada dolar AS setan mengikut kadar pertukaran semasa. Imbangan: USDA FAS PSD; anggaran serantau: USDA GAIN, Eurostat dan statistik kebangsaan.',
     disclaimer: 'Maklumat ini untuk rujukan sahaja dan bukan nasihat pelaburan.',
   },
