@@ -73,6 +73,42 @@ async function fetchScanner(tickers: string[]): Promise<Map<string, Row>> {
   return map;
 }
 
+const SINA_URL = 'https://hq.sinajs.cn/list=';
+
+type SinaRow = { close: number; changeAbs: number; changePct: number };
+
+/**
+ * Котировки Даляньской биржи из Sina Finance (TradingView их не отдаёт).
+ * Формат строки nf_*: 0 название, 2 открытие, 3 макс., 4 мин., 8 последняя цена, 10 расчётная цена вчера.
+ * Ошибки не роняют страницу: инструмент просто остаётся пустым.
+ */
+async function fetchSina(codes: string[]): Promise<Map<string, SinaRow>> {
+  const map = new Map<string, SinaRow>();
+  if (!codes.length) return map;
+  try {
+    const res = await fetch(SINA_URL + codes.map(c => `nf_${c}`).join(','), {
+      headers: { Referer: 'https://finance.sina.com.cn/', 'User-Agent': 'Mozilla/5.0 (compatible; OilsTerminal/2.0)' },
+      next: { revalidate: 600 },
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) throw new Error(`Sina HTTP ${res.status}`);
+    const text = await res.text();
+    for (const m of Array.from(text.matchAll(/hq_str_nf_(\w+)="([^"]*)"/g))) {
+      const f = m[2].split(',');
+      const last = Number(f[8]);
+      const prevSettle = Number(f[10]);
+      // Защита от мусора: цены масел на DCE — тысячи юаней за тонну.
+      if (!(last > 1000 && last < 50000) || !(prevSettle > 1000 && prevSettle < 50000)) continue;
+      const changeAbs = last - prevSettle;
+      map.set(m[1], { close: last, changeAbs, changePct: (changeAbs / prevSettle) * 100 });
+    }
+  } catch (e: any) {
+    rethrowIfNextInternal(e);
+    console.error(`Котировки Sina недоступны: ${e?.message || e}`);
+  }
+  return map;
+}
+
 const num = (v: unknown): number | null => (typeof v === 'number' && Number.isFinite(v) ? v : null);
 
 function toUsdT(inst: Instrument, price: number | null, fx: Record<string, number | null>): number | null {
@@ -116,6 +152,10 @@ async function loadQuotes(): Promise<QuotesResult> {
     console.error(error);
   }
 
+  // Инструменты, которых нет на TradingView, добираем из Sina (параллельно сканеру не нужно: запрос короткий).
+  const sinaCodes = INSTRUMENTS.filter(i => i.sina).map(i => i.sina as string);
+  const sina = await fetchSina(sinaCodes);
+
   const pick = (inst: Instrument) => {
     for (const t of tickersFor(inst, now)) {
       const r = rows.get(t);
@@ -132,6 +172,20 @@ async function loadQuotes(): Promise<QuotesResult> {
 
   const quotes: Quote[] = INSTRUMENTS.map(inst => {
     const hit = pick(inst);
+    const sr = !hit && inst.sina ? sina.get(inst.sina) : undefined;
+    if (sr) {
+      const prevSr = sr.close - sr.changeAbs;
+      return {
+        id: inst.id, name: inst.name, short: inst.short, venue: inst.venue, group: inst.group, unit: inst.unit,
+        ticker: `SINA:nf_${inst.sina}`,
+        price: sr.close,
+        changeAbs: sr.changeAbs,
+        changePct: sr.changePct,
+        perfW: null, perf1M: null, perfYTD: null,
+        usdT: toUsdT(inst, sr.close, fx),
+        prevUsdT: toUsdT(inst, prevSr, fx),
+      };
+    }
     const price = num(hit?.row.close);
     const changeAbs = num(hit?.row.changeAbs);
     const prev = price != null && changeAbs != null ? price - changeAbs : null;

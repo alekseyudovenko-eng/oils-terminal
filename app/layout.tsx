@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Fira_Sans, Fira_Sans_Condensed } from 'next/font/google';
 import { getDict, getLocale } from '@/lib/i18n-server';
-import { OG_LOCALE, SITE_URL } from '@/lib/site';
+import { SITE_NAME, SITE_URL, openGraphFor } from '@/lib/site';
 
 const sans = Fira_Sans({
   subsets: ['latin', 'cyrillic'],
@@ -31,19 +31,12 @@ export function generateMetadata(): Metadata {
   // Коды подтверждения для Google Search Console и Bing Webmaster задаются в Vercel (необязательно).
   const google = verificationCode(process.env.GOOGLE_SITE_VERIFICATION);
   const bing = verificationCode(process.env.BING_SITE_VERIFICATION);
+  const homeTitle = `${t.meta.title} — ${SITE_NAME}`;
   return {
     metadataBase: new URL(SITE_URL),
-    title: { default: 'Oils Terminal', template: '%s — Oils Terminal' },
+    title: { default: homeTitle, template: `%s — ${SITE_NAME}` },
     description: t.meta.description,
-    openGraph: {
-      type: 'website',
-      siteName: 'Oils Terminal · IMA',
-      title: 'Oils Terminal',
-      description: t.meta.description,
-      locale: OG_LOCALE[lang],
-      // Картинка Daily Snapshot (1080×1350) с котировками и главными новостями дня.
-      images: [{ url: '/api/snapshot', width: 1080, height: 1350, alt: 'IMA Daily Snapshot' }],
-    },
+    openGraph: openGraphFor(lang, homeTitle, t.meta.description),
     twitter: { card: 'summary_large_image' },
     verification: {
       ...(google ? { google } : {}),

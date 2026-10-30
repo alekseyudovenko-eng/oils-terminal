@@ -14,3 +14,21 @@ export function pageAlternates(path: string, lang: Locale): Metadata['alternates
   languages['x-default'] = localePath(DEFAULT_LOCALE, path);
   return { canonical: localePath(lang, path), languages };
 }
+
+export const SITE_NAME = 'Oils Terminal';
+
+/**
+ * OpenGraph страницы. В Next дочерний сегмент заменяет openGraph целиком,
+ * поэтому страницы с собственным заголовком собирают его через эту функцию.
+ */
+export function openGraphFor(lang: Locale, title: string, description: string): Metadata['openGraph'] {
+  return {
+    type: 'website',
+    siteName: 'Oils Terminal · IMA',
+    title,
+    description,
+    locale: OG_LOCALE[lang],
+    // Картинка Daily Snapshot (1080×1350) с котировками и главными новостями дня.
+    images: [{ url: '/api/snapshot', width: 1080, height: 1350, alt: 'IMA Daily Snapshot' }],
+  };
+}

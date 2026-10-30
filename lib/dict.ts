@@ -12,6 +12,10 @@ const ru = {
   meta: {
     description: 'Котировки пальмового, соевого, подсолнечного и рапсового масла, спред POGO, балансы USDA и новости рынка.',
     market: 'Рынок',
+    /** <title> главной: ключевые слова для поиска. */
+    title: 'Цены на пальмовое масло сегодня: FCPO, соя, рапс, POGO',
+    marketTitle: 'Рынок растительных масел: цены, спреды, балансы USDA',
+    marketDescription: 'Котировки пальмового (FCPO), соевого и рапсового масла в USD/т, спреды POGO и BOGO, балансы USDA PSD по маслам и регионам, новости рынка.',
   },
   nav: { sections: 'Разделы', overview: 'Обзор', market: 'Рынок', language: 'Язык сайта' },
   footer: {
@@ -29,9 +33,9 @@ const ru = {
     groups: { palm: 'Пальмовое масло', softoils: 'Мягкие масла и рапс', energy: 'Энергоносители', fx: 'Валюты' },
     inst: {
       fcpo: { name: 'Пальмовое масло CPO', short: 'FCPO', venue: 'Bursa Malaysia, 3-й месяц', unit: 'MYR/т' },
-      dce_olein: { name: 'Пальмовый олеин', short: 'DCE олеин', venue: 'Dalian, ближайший', unit: 'CNY/т' },
+      dce_olein: { name: 'Пальмовый олеин', short: 'DCE олеин', venue: 'Dalian, основной контракт', unit: 'CNY/т' },
       zl: { name: 'Соевое масло', short: 'Соя CBOT', venue: 'CBOT, ближайший', unit: '¢/фунт' },
-      dce_soyoil: { name: 'Соевое масло', short: 'Соя DCE', venue: 'Dalian, ближайший', unit: 'CNY/т' },
+      dce_soyoil: { name: 'Соевое масло', short: 'Соя DCE', venue: 'Dalian, основной контракт', unit: 'CNY/т' },
       zce_rapeoil: { name: 'Рапсовое масло', short: 'Рапс. масло ZCE', venue: 'Zhengzhou, ближайший', unit: 'CNY/т' },
       eco: { name: 'Рапс (семена)', short: 'Рапс Euronext', venue: 'Euronext, ближайший', unit: 'EUR/т' },
       brent: { name: 'Нефть Brent', short: 'Brent', venue: 'ICE, ближайший', unit: 'USD/барр.' },
@@ -167,6 +171,10 @@ const en: Dict = {
   meta: {
     description: 'Palm, soybean, sunflower and rapeseed oil prices, the POGO spread, USDA balances and market news.',
     market: 'Market',
+    /** <title> главной: ключевые слова для поиска. */
+    title: 'Palm Oil Price Today: FCPO, Soybean Oil, Rapeseed, POGO',
+    marketTitle: 'Vegetable Oil Market: Prices, Spreads, USDA Balances',
+    marketDescription: 'Palm oil (FCPO), soybean and rapeseed oil prices in USD/t, POGO and BOGO spreads, USDA PSD balances by oil and region, and market news.',
   },
   nav: { sections: 'Sections', overview: 'Overview', market: 'Market', language: 'Site language' },
   footer: {
@@ -184,9 +192,9 @@ const en: Dict = {
     groups: { palm: 'Palm oil', softoils: 'Soft oils and rapeseed', energy: 'Energy', fx: 'Currencies' },
     inst: {
       fcpo: { name: 'Crude palm oil', short: 'FCPO', venue: 'Bursa Malaysia, 3rd month', unit: 'MYR/t' },
-      dce_olein: { name: 'Palm olein', short: 'DCE olein', venue: 'Dalian, front month', unit: 'CNY/t' },
+      dce_olein: { name: 'Palm olein', short: 'DCE olein', venue: 'Dalian, main contract', unit: 'CNY/t' },
       zl: { name: 'Soybean oil', short: 'Soy CBOT', venue: 'CBOT, front month', unit: '¢/lb' },
-      dce_soyoil: { name: 'Soybean oil', short: 'Soy DCE', venue: 'Dalian, front month', unit: 'CNY/t' },
+      dce_soyoil: { name: 'Soybean oil', short: 'Soy DCE', venue: 'Dalian, main contract', unit: 'CNY/t' },
       zce_rapeoil: { name: 'Rapeseed oil', short: 'Rapeseed oil ZCE', venue: 'Zhengzhou, front month', unit: 'CNY/t' },
       eco: { name: 'Rapeseed', short: 'Rapeseed Euronext', venue: 'Euronext, front month', unit: 'EUR/t' },
       brent: { name: 'Brent crude', short: 'Brent', venue: 'ICE, front month', unit: 'USD/bbl' },
@@ -320,6 +328,10 @@ const uz: Dict = {
   meta: {
     description: 'Palma, soya, kungaboqar va raps yogʻi narxlari, POGO spredi, USDA balanslari va bozor yangiliklari.',
     market: 'Bozor',
+    /** <title> главной: ключевые слова для поиска. */
+    title: 'Palma yogʻi narxi bugun: FCPO, soya, raps, POGO',
+    marketTitle: 'Oʻsimlik yogʻlari bozori: narxlar, spredlar, USDA balanslari',
+    marketDescription: 'Palma (FCPO), soya va raps yogʻi narxlari USD/t da, POGO va BOGO spredlari, yogʻlar va mintaqalar boʻyicha USDA PSD balanslari, bozor yangiliklari.',
   },
   nav: { sections: 'Boʻlimlar', overview: 'Sharh', market: 'Bozor', language: 'Sayt tili' },
   footer: {
@@ -337,9 +349,9 @@ const uz: Dict = {
     groups: { palm: 'Palma yogʻi', softoils: 'Yumshoq yogʻlar va raps', energy: 'Energiya resurslari', fx: 'Valyutalar' },
     inst: {
       fcpo: { name: 'Xom palma yogʻi', short: 'FCPO', venue: 'Bursa Malaysia, 3-oy', unit: 'MYR/t' },
-      dce_olein: { name: 'Palma oleini', short: 'DCE olein', venue: 'Dalian, eng yaqin', unit: 'CNY/t' },
+      dce_olein: { name: 'Palma oleini', short: 'DCE olein', venue: 'Dalian, asosiy kontrakt', unit: 'CNY/t' },
       zl: { name: 'Soya yogʻi', short: 'Soya CBOT', venue: 'CBOT, eng yaqin', unit: '¢/funt' },
-      dce_soyoil: { name: 'Soya yogʻi', short: 'Soya DCE', venue: 'Dalian, eng yaqin', unit: 'CNY/t' },
+      dce_soyoil: { name: 'Soya yogʻi', short: 'Soya DCE', venue: 'Dalian, asosiy kontrakt', unit: 'CNY/t' },
       zce_rapeoil: { name: 'Raps yogʻi', short: 'Raps yogʻi ZCE', venue: 'Zhengzhou, eng yaqin', unit: 'CNY/t' },
       eco: { name: 'Raps (urugʻ)', short: 'Raps Euronext', venue: 'Euronext, eng yaqin', unit: 'EUR/t' },
       brent: { name: 'Brent neft', short: 'Brent', venue: 'ICE, eng yaqin', unit: 'USD/barr.' },
@@ -473,6 +485,10 @@ const kk: Dict = {
   meta: {
     description: 'Пальма, соя, күнбағыс және рапс майының бағасы, POGO спреді, USDA баланстары және нарық жаңалықтары.',
     market: 'Нарық',
+    /** <title> главной: ключевые слова для поиска. */
+    title: 'Пальма майының бүгінгі бағасы: FCPO, соя, рапс, POGO',
+    marketTitle: 'Өсімдік майлары нарығы: бағалар, спредтер, USDA баланстары',
+    marketDescription: 'Пальма (FCPO), соя және рапс майының USD/т бағасы, POGO және BOGO спредтері, майлар мен өңірлер бойынша USDA PSD баланстары, нарық жаңалықтары.',
   },
   nav: { sections: 'Бөлімдер', overview: 'Шолу', market: 'Нарық', language: 'Сайт тілі' },
   footer: {
@@ -490,9 +506,9 @@ const kk: Dict = {
     groups: { palm: 'Пальма майы', softoils: 'Жұмсақ майлар және рапс', energy: 'Энергия ресурстары', fx: 'Валюталар' },
     inst: {
       fcpo: { name: 'Шикі пальма майы', short: 'FCPO', venue: 'Bursa Malaysia, 3-ай', unit: 'MYR/т' },
-      dce_olein: { name: 'Пальма олеині', short: 'DCE олеин', venue: 'Dalian, ең жақын', unit: 'CNY/т' },
+      dce_olein: { name: 'Пальма олеині', short: 'DCE олеин', venue: 'Dalian, негізгі келісімшарт', unit: 'CNY/т' },
       zl: { name: 'Соя майы', short: 'Соя CBOT', venue: 'CBOT, ең жақын', unit: '¢/фунт' },
-      dce_soyoil: { name: 'Соя майы', short: 'Соя DCE', venue: 'Dalian, ең жақын', unit: 'CNY/т' },
+      dce_soyoil: { name: 'Соя майы', short: 'Соя DCE', venue: 'Dalian, негізгі келісімшарт', unit: 'CNY/т' },
       zce_rapeoil: { name: 'Рапс майы', short: 'Рапс майы ZCE', venue: 'Zhengzhou, ең жақын', unit: 'CNY/т' },
       eco: { name: 'Рапс (тұқым)', short: 'Рапс Euronext', venue: 'Euronext, ең жақын', unit: 'EUR/т' },
       brent: { name: 'Brent мұнайы', short: 'Brent', venue: 'ICE, ең жақын', unit: 'USD/барр.' },
@@ -626,6 +642,10 @@ const ms: Dict = {
   meta: {
     description: 'Harga minyak sawit, soya, bunga matahari dan rapeseed, spread POGO, imbangan USDA dan berita pasaran.',
     market: 'Pasaran',
+    /** <title> главной: ключевые слова для поиска. */
+    title: 'Harga Minyak Sawit Hari Ini: FCPO, Soya, Rapeseed, POGO',
+    marketTitle: 'Pasaran Minyak Sayuran: Harga, Spread, Imbangan USDA',
+    marketDescription: 'Harga minyak sawit (FCPO), soya dan rapeseed dalam USD/t, spread POGO dan BOGO, imbangan USDA PSD mengikut minyak dan wilayah, serta berita pasaran.',
   },
   nav: { sections: 'Bahagian', overview: 'Ikhtisar', market: 'Pasaran', language: 'Bahasa laman' },
   footer: {
@@ -643,9 +663,9 @@ const ms: Dict = {
     groups: { palm: 'Minyak sawit', softoils: 'Minyak lembut dan rapeseed', energy: 'Tenaga', fx: 'Mata wang' },
     inst: {
       fcpo: { name: 'Minyak sawit mentah', short: 'FCPO', venue: 'Bursa Malaysia, bulan ke-3', unit: 'MYR/t' },
-      dce_olein: { name: 'Olein sawit', short: 'Olein DCE', venue: 'Dalian, bulan terdekat', unit: 'CNY/t' },
+      dce_olein: { name: 'Olein sawit', short: 'Olein DCE', venue: 'Dalian, kontrak utama', unit: 'CNY/t' },
       zl: { name: 'Minyak soya', short: 'Soya CBOT', venue: 'CBOT, bulan terdekat', unit: '¢/lb' },
-      dce_soyoil: { name: 'Minyak soya', short: 'Soya DCE', venue: 'Dalian, bulan terdekat', unit: 'CNY/t' },
+      dce_soyoil: { name: 'Minyak soya', short: 'Soya DCE', venue: 'Dalian, kontrak utama', unit: 'CNY/t' },
       zce_rapeoil: { name: 'Minyak rapeseed', short: 'Minyak rapeseed ZCE', venue: 'Zhengzhou, bulan terdekat', unit: 'CNY/t' },
       eco: { name: 'Rapeseed (biji)', short: 'Rapeseed Euronext', venue: 'Euronext, bulan terdekat', unit: 'EUR/t' },
       brent: { name: 'Minyak mentah Brent', short: 'Brent', venue: 'ICE, bulan terdekat', unit: 'USD/tong' },

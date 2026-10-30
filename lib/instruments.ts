@@ -33,6 +33,11 @@ export type Instrument = {
    * и в день переключения изменение за день считается от закрытия другого контракта.
    */
   frontContract?: (now: Date) => string;
+  /**
+   * Запасной источник для бирж, которых нет на сканере TradingView (Далянь):
+   * код непрерывного основного контракта в котировках Sina Finance, например 'P0'.
+   */
+  sina?: string;
 };
 
 const MONTH_CODES = 'FGHJKMNQUVXZ';
@@ -74,8 +79,8 @@ export const INSTRUMENTS: Instrument[] = [
     expect: /palm/i,
   },
   {
-    id: 'dce_olein', name: 'Пальмовый олеин', short: 'DCE олеин', venue: 'Dalian, ближайший',
-    group: 'palm', unit: 'CNY/т', tickers: ['DCE:P1!', 'DALIAN:P1!'], toUsdT: { kind: 'fx_t', fx: 'USDCNY' },
+    id: 'dce_olein', name: 'Пальмовый олеин', short: 'DCE олеин', venue: 'Dalian, основной контракт',
+    group: 'palm', unit: 'CNY/т', tickers: ['DCE:P1!', 'DALIAN:P1!'], toUsdT: { kind: 'fx_t', fx: 'USDCNY' }, sina: 'P0',
     expect: /palm/i,
   },
   {
@@ -84,8 +89,8 @@ export const INSTRUMENTS: Instrument[] = [
     expect: /soybean oil/i,
   },
   {
-    id: 'dce_soyoil', name: 'Соевое масло', short: 'Соя DCE', venue: 'Dalian, ближайший',
-    group: 'softoils', unit: 'CNY/т', tickers: ['DCE:Y1!', 'DALIAN:Y1!'], toUsdT: { kind: 'fx_t', fx: 'USDCNY' },
+    id: 'dce_soyoil', name: 'Соевое масло', short: 'Соя DCE', venue: 'Dalian, основной контракт',
+    group: 'softoils', unit: 'CNY/т', tickers: ['DCE:Y1!', 'DALIAN:Y1!'], toUsdT: { kind: 'fx_t', fx: 'USDCNY' }, sina: 'Y0',
     expect: /soy/i,
   },
   {
@@ -111,7 +116,7 @@ export const INSTRUMENTS: Instrument[] = [
   {
     id: 'gasoil', name: 'Газойль', short: 'Газойль ICE', venue: 'ICE Low Sulphur Gasoil',
     group: 'energy', unit: 'USD/т',
-    tickers: ['ICEEUR:LGO1!', 'ICEEUR:GO1!', 'ICEEUR:GAS1!', 'ICEENDEX:G1!', 'ICE:G1!'],
+    tickers: ['ICEEUR:G1!', 'ICEEUR:LGO1!', 'ICEEUR:GO1!', 'ICEEUR:GAS1!', 'ICEENDEX:G1!', 'ICE:G1!'],
     toUsdT: { kind: 'usd_t' },
     expect: /gas ?oil/i,
   },
