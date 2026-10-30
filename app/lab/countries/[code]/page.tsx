@@ -116,6 +116,81 @@ function TradeTable({ list, D, lang, hsName }: { list: HsSummary[]; D: Countries
 }
 
 
+/** Экспортёры готовых жиров (1516, 1517) в страну: тонны и доли за 12 мес., по убыванию суммы. */
+function FatsSuppliers({ list, D, lang, hsName }: { list: HsSummary[]; D: CountriesDict; lang: Locale; hsName: (hs: string) => string }) {
+  const MAX = 12;
+  const rows = new Map<string, { name: string; t: Record<string, number> }>();
+  for (const s of list) for (const p of s.top) {
+    const r = rows.get(p.code) ?? { name: p.name, t: {} };
+    r.t[s.hs] = p.t;
+    rows.set(p.code, r);
+  }
+  const total = (r: { t: Record<string, number> }) => list.reduce((a, s) => a + (r.t[s.hs] ?? 0), 0);
+  const shown = Array.from(rows.entries()).map(([code, r]) => ({ code, ...r, sum: total(r) }))
+    .sort((a, z) => z.sum - a.sum).slice(0, MAX);
+  if (!shown.length) return null;
+  const other: Record<string, number> = {};
+  for (const s of list) other[s.hs] = Math.max(s.t12 - shown.reduce((a, r) => a + (r.t[s.hs] ?? 0), 0), 0);
+  const otherSum = list.reduce((a, s) => a + other[s.hs], 0);
+  const grand = list.reduce((a, s) => a + s.t12, 0);
+  const cell = (v: number | undefined) => (v ? tonnes(v, lang) : '—');
+  return (
+    <div className="mt-6 overflow-x-auto">
+      <table className="w-full text-sm min-w-[620px] max-w-4xl">
+        <caption className="text-left font-cond text-lg font-semibold mb-2">{D.fats.suppliers}</caption>
+        <thead>
+          <tr className="text-xs text-ink-3 border-b border-rule">
+            <th scope="col" rowSpan={2} className="py-2 pr-4 text-left font-normal align-bottom">{D.fats.exporter}</th>
+            {list.map(s => <th key={s.hs} scope="colgroup" colSpan={2} className="pt-2 px-3 text-right font-normal">{hsName(s.hs)} <span className="text-ink-3">{s.hs}</span></th>)}
+            <th scope="col" rowSpan={2} className="py-2 pl-3 text-right font-normal align-bottom">{D.fats.total}, {D.units.t}</th>
+          </tr>
+          <tr className="text-xs text-ink-3 border-b border-rule">
+            {list.map(s => [
+              <th key={`${s.hs}t`} scope="col" className="pb-2 px-3 text-right font-normal">{D.units.t}</th>,
+              <th key={`${s.hs}s`} scope="col" className="pb-2 px-3 text-right font-normal">{D.oil.share}</th>,
+            ])}
+          </tr>
+        </thead>
+        <tbody>
+          {shown.map(r => (
+            <tr key={r.code} className="border-b border-rule/60">
+              <th scope="row" className="py-2 pr-4 text-left font-normal">{r.name}</th>
+              {list.map(s => [
+                <td key={`${s.hs}t`} className="py-2 px-3 text-right num">{cell(r.t[s.hs])}</td>,
+                <td key={`${s.hs}s`} className="py-2 px-3 text-right num text-ink-2">{r.t[s.hs] ? share(r.t[s.hs], s.t12, lang) : ''}</td>,
+              ])}
+              <td className="py-2 pl-3 text-right num">{tonnes(r.sum, lang)}</td>
+            </tr>
+          ))}
+          {otherSum > 0 && (
+            <tr className="border-b border-rule/60 text-ink-2">
+              <th scope="row" className="py-2 pr-4 text-left font-normal">{D.fats.other}</th>
+              {list.map(s => [
+                <td key={`${s.hs}t`} className="py-2 px-3 text-right num">{cell(other[s.hs])}</td>,
+                <td key={`${s.hs}s`} className="py-2 px-3 text-right num">{other[s.hs] ? share(other[s.hs], s.t12, lang) : ''}</td>,
+              ])}
+              <td className="py-2 pl-3 text-right num">{tonnes(otherSum, lang)}</td>
+            </tr>
+          )}
+          <tr className="font-medium">
+            <th scope="row" className="py-2 pr-4 text-left">{D.fats.sum}</th>
+            {list.map(s => [
+              <td key={`${s.hs}t`} className="py-2 px-3 text-right num">{tonnes(s.t12, lang)}</td>,
+              <td key={`${s.hs}s`} className="py-2 px-3" />,
+            ])}
+            <td className="py-2 pl-3 text-right num">{tonnes(grand, lang)}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p className="mt-1 text-xs text-ink-3">
+        {D.fats.suppliersNote}{' '}
+        {list.map(s => `${s.hs}: ${ymLabel(s.from, lang)} – ${ymLabel(s.to, lang)}`).join('; ')}.
+        {list.some(s => s.mixed) ? ` ${D.oil.mixed}` : ''}
+      </p>
+    </div>
+  );
+}
+
 const th = 'py-2 px-3 text-right font-normal';
 const td = 'py-2 px-3 text-right num';
 
@@ -491,7 +566,7 @@ export default async function CountryPage({ params }: { params: { code: string }
                       </tr>
                     </thead>
                     <tbody>
-                      {palm.top.map(t => (
+                      {palm.top.slice(0, 6).map(t => (
                         <tr key={t.code} className="border-b border-rule/60">
                           <th scope="row" className="py-2 pr-4 text-left font-normal">{t.name}</th>
                           <td className="py-2 px-3 text-right num">{tonnes(t.t, lang)}</td>
@@ -543,7 +618,12 @@ export default async function CountryPage({ params }: { params: { code: string }
         <section aria-labelledby="fats" className="pt-10">
           <H2 id="fats">{D.sec.fats}</H2>
           <p className="mt-2 text-sm text-ink-2 max-w-[80ch]">{D.fats.lead}</p>
-          {fats.length ? <TradeTable list={fats} D={D} lang={lang} hsName={hsName} /> : <p className="mt-3 text-ink-3">{D.oil.none}</p>}
+          {fats.length ? (
+            <>
+              <TradeTable list={fats} D={D} lang={lang} hsName={hsName} />
+              <FatsSuppliers list={fats} D={D} lang={lang} hsName={hsName} />
+            </>
+          ) : <p className="mt-3 text-ink-3">{D.oil.none}</p>}
         </section>
 
         <section aria-labelledby="regulation" className="pt-10">

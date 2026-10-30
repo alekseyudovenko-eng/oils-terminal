@@ -60,6 +60,7 @@ const ru = {
   },
   fats: {
     lead: 'Готовые жиры: гидрогенизированные и переэтерифицированные жиры (ТН ВЭД 1516) и маргарины, спреды и смеси (1517) — индикатор спроса пищевой промышленности и конкуренции с местной переработкой.',
+    suppliers: 'Экспортёры готовых жиров в страну, 12 мес.', exporter: 'Страна-экспортёр', total: 'Всего', other: 'Прочие', sum: 'Итого', suppliersNote: 'Тонны по данным таможни страны; где своей статистики нет — по данным экспортёров. Окно 12 месяцев своё для каждой группы.',
   },
   reg: {
     none: 'По этой стране норм в базе пока нет.',
@@ -173,6 +174,7 @@ const en: CountriesDict = {
   },
   fats: {
     lead: 'Finished fats: hydrogenated and interesterified fats (HS 1516) and margarine, spreads and blends (1517): an indicator of food-industry demand and of competition with local refining.',
+    suppliers: 'Exporters of finished fats to the country, 12 months', exporter: 'Exporting country', total: 'Total', other: 'Others', sum: 'Total', suppliersNote: 'Tonnes from the country’s customs data; where it is unavailable, from exporters’ data. Each group has its own 12-month window.',
   },
   reg: {
     none: 'No measures for this country in the database yet.',
@@ -285,7 +287,7 @@ const uz: CountriesDict = {
     oilNames: { palm: 'Palma', soy: 'Soya', sunflower: 'Kungaboqar', rapeseed: 'Raps' },
     my_: '{y} marketing yili',
   },
-  fats: { lead: 'Tayyor yogʻlar: gidrogenlangan va qayta eterifikatsiyalangan yogʻlar (TN VED 1516) hamda margarin, spredlar va aralashmalar (1517) — oziq-ovqat sanoati talabi va mahalliy qayta ishlash bilan raqobat koʻrsatkichi.' },
+  fats: { lead: 'Tayyor yogʻlar: gidrogenlangan va qayta eterifikatsiyalangan yogʻlar (TN VED 1516) hamda margarin, spredlar va aralashmalar (1517) — oziq-ovqat sanoati talabi va mahalliy qayta ishlash bilan raqobat koʻrsatkichi.', suppliers: 'Mamlakatga tayyor yogʻlar eksportyorlari, 12 oy', exporter: 'Eksportyor mamlakat', total: 'Jami', other: 'Boshqalar', sum: 'Jami', suppliersNote: 'Tonna, mamlakat bojxona maʼlumotlari boʻyicha; ular boʻlmasa — eksportyorlar maʼlumotlari boʻyicha. Har bir guruhning 12 oylik davri alohida.' },
   reg: {
     none: 'Bu mamlakat boʻyicha bazada hali normalar yoʻq.',
     more: 'Barcha normalar va mamlakatlarni taqqoslash — «Tartibga solish siyosati» sahifasida.',
@@ -369,7 +371,7 @@ const kk: CountriesDict = {
     oilNames: { palm: 'Пальма', soy: 'Соя', sunflower: 'Күнбағыс', rapeseed: 'Рапс' },
     my_: '{y} маркетингтік жылы',
   },
-  fats: { lead: 'Дайын майлар: гидрогенделген және қайта этерификацияланған майлар (СЭҚ ТН 1516) және маргарин, спредтер мен қоспалар (1517) — тамақ өнеркәсібі сұранысы мен жергілікті өңдеумен бәсекенің көрсеткіші.' },
+  fats: { lead: 'Дайын майлар: гидрогенделген және қайта этерификацияланған майлар (СЭҚ ТН 1516) және маргарин, спредтер мен қоспалар (1517) — тамақ өнеркәсібі сұранысы мен жергілікті өңдеумен бәсекенің көрсеткіші.', suppliers: 'Елге дайын майлар экспорттаушылары, 12 ай', exporter: 'Экспорттаушы ел', total: 'Барлығы', other: 'Басқалар', sum: 'Жиыны', suppliersNote: 'Тонна, елдің кеден деректері бойынша; олар жоқ болса — экспорттаушылар деректері бойынша. Әр топтың 12 айлық кезеңі бөлек.' },
   reg: {
     none: 'Бұл ел бойынша базада әзірге нормалар жоқ.',
     more: 'Барлық нормалар мен елдерді салыстыру — «Реттеу саясаты» бетінде.',
@@ -454,7 +456,7 @@ const ms: CountriesDict = {
     oilNames: { palm: 'Sawit', soy: 'Soya', sunflower: 'Bunga matahari', rapeseed: 'Biji sesawi' },
     my_: 'tahun pemasaran {y}',
   },
-  fats: { lead: 'Lemak siap: lemak terhidrogen dan terinteresterifikasi (HS 1516) serta marjerin, sapuan dan campuran (1517): penunjuk permintaan industri makanan dan persaingan dengan penapisan tempatan.' },
+  fats: { lead: 'Lemak siap: lemak terhidrogen dan terinteresterifikasi (HS 1516) serta marjerin, sapuan dan campuran (1517): penunjuk permintaan industri makanan dan persaingan dengan penapisan tempatan.', suppliers: 'Pengeksport lemak siap ke negara ini, 12 bulan', exporter: 'Negara pengeksport', total: 'Jumlah', other: 'Lain-lain', sum: 'Jumlah', suppliersNote: 'Tan menurut data kastam negara; jika tiada, menurut data pengeksport. Setiap kumpulan mempunyai tempoh 12 bulan sendiri.' },
   reg: {
     none: 'Belum ada langkah bagi negara ini dalam pangkalan data.',
     more: 'Semua langkah dan perbandingan negara: lihat halaman “Dasar kawal selia”.',

@@ -8,7 +8,7 @@ export type HsSummary = {
   my: number; id: number;              // тонны из Малайзии / Индонезии за 12 мес.
   usdPerT: number | null;
   years: { y: string; t: number; my: number; full: boolean }[]; // по календарным годам
-  top: { code: string; name: string; t: number }[];             // крупнейшие поставщики за 12 мес.
+  top: { code: string; name: string; t: number }[];             // крупнейшие поставщики за 12 мес. (до 20)
   mixed: boolean;                      // в окне есть месяцы по данным экспортёров
 };
 
@@ -39,7 +39,7 @@ function summarize(hs: string, b: MergedBlock): HsSummary | null {
   }
   const top = b.partners
     .map(s => ({ code: s.code, name: s.name, t: Object.entries(s.t).reduce((a, [m, v]) => a + (inW(m, from, to) ? v : 0), 0) }))
-    .filter(s => s.t > 0).sort((a, z) => z.t - a.t).slice(0, 6);
+    .filter(s => s.t > 0).sort((a, z) => z.t - a.t).slice(0, 20);
 
   return {
     hs, from, to, t12,
