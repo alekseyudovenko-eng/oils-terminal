@@ -1,6 +1,53 @@
 {
-  "updatedAt": "2026-10-31T05:56:00Z",
+  "updatedAt": "2026-11-01T05:51:40Z",
   "items": [
+    {
+      "id": "2026-10-31-palm-weekly-loss-outlook-4100-4250",
+      "publishedAt": "2026-10-31",
+      "addedAt": "2026-11-01T05:51:40Z",
+      "title": "Пальмовое масло за неделю подешевело: январский контракт BMD −137 ринггитов, до 4681 ринггита/т",
+      "summary": "По данным Bernama, на следующей неделе фьючерсы CPO ожидаются в диапазоне 4100–4250 ринггитов/т. Аналитик Interband Джим Тех указал, что запасы в Малайзии в сентябре выросли до 3,51 млн т — максимума за год.",
+      "titleEn": "Palm oil posts weekly loss; January contract down RM137 to RM4,681",
+      "summaryEn": "CPO futures are expected to trade between RM4,100 and RM4,250 per tonne next week, Bernama reports. Interband's Jim Teh noted Malaysian palm oil stocks rose to 3.51 Mt in September, the highest this year.",
+      "titleUz": "Palma yogʻi haftada arzonladi: BMD yanvar kontrakti 137 ringgitga tushib, 4681 ringgit/t ga yetdi",
+      "summaryUz": "Bernama maʼlumotiga koʻra, kelgusi haftada CPO fyucherslari 4100–4250 ringgit/t oraligʻida savdolanishi kutilmoqda. Interband tahlilchisi Jim Te Malayziyada sentabrdagi zaxiralar 3,51 mln t gacha — yil maksimumigacha oshganini qayd etdi.",
+      "titleKk": "Пальма майы аптада арзандады: BMD қаңтар келісімшарты 137 ринггитке төмендеп, 4681 ринггит/т болды",
+      "summaryKk": "Bernama хабарлауынша, келесі аптада CPO фьючерстері 4100–4250 ринггит/т аралығында саудалануы күтіледі. Interband талдаушысы Джим Тех Малайзиядағы қыркүйектегі қорлар 3,51 млн т-ға дейін — жылдағы ең жоғары деңгейге өскенін атап өтті.",
+      "titleMs": "Minyak sawit catat kerugian mingguan; kontrak Januari turun RM137 kepada RM4,681",
+      "summaryMs": "Niaga hadapan MSM dijangka didagangkan antara RM4,100 dan RM4,250 setan minggu depan, lapor Bernama. Jim Teh dari Interband menyatakan stok minyak sawit Malaysia naik kepada 3.51 juta tan pada September, tertinggi tahun ini.",
+      "originalTitle": "CPO Futures Expected To Trade Between RM4,100 And RM4,250 Per Tonne Next Week",
+      "source": "Bernama",
+      "url": "https://www.bernama.com/en/market/news.php?id=2628072",
+      "lang": "en",
+      "topics": [
+        "palm"
+      ],
+      "region": "Малайзия"
+    },
+    {
+      "id": "2026-10-31-ukraine-no-sunoil-to-india-3-months",
+      "publishedAt": "2026-10-31",
+      "addedAt": "2026-11-01T05:51:40Z",
+      "title": "Украина три месяца не отгружала подсолнечное масло в Индию",
+      "summary": "По словам гендиректора «Укролияпрома» Степана Капшука, за три месяца в Индию не отгружено ни одной тонны; украинские экспортёры теряют позиции и в Китае. Около половины экспорта масла приходится на Европу, а Аргентина с урожаем подсолнечника около 8 млн т наращивает поставки в Азию.",
+      "titleEn": "Ukraine ships no sunflower oil to India for three months",
+      "summaryEn": "Ukraine has not shipped a single tonne of sunflower oil to India in three months and is losing ground in China, Ukroliyaprom head Stepan Kapshuk said. Europe takes about half of Ukraine's sunoil exports, while Argentina, with a sunseed crop of about 8 Mt, is expanding sales to Asia.",
+      "titleUz": "Ukraina uch oy davomida Hindistonga kungaboqar yogʻi joʻnatmadi",
+      "summaryUz": "«Ukroliyaprom» bosh direktori Stepan Kapshukning soʻzlariga koʻra, uch oyda Hindistonga bir tonna ham yuborilmagan; ukrainalik eksportchilar Xitoyda ham mavqeini yoʻqotmoqda. Yogʻ eksportining qariyb yarmi Yevropaga toʻgʻri keladi, kungaboqar hosili taxminan 8 mln t boʻlgan Argentina esa Osiyoga yetkazib berishni oshirmoqda.",
+      "titleKk": "Украина үш ай бойы Үндістанға күнбағыс майын жөнелтпеді",
+      "summaryKk": "«Укролияпром» бас директоры Степан Капшуктың айтуынша, үш айда Үндістанға бір тонна да жөнелтілмеген; украиналық экспорттаушылар Қытайда да позицияларын жоғалтуда. Май экспортының жартысына жуығы Еуропаға тиесілі, ал күнбағыс өнімі шамамен 8 млн т болған Аргентина Азияға жеткізілімді арттыруда.",
+      "titleMs": "Ukraine tidak menghantar minyak bunga matahari ke India selama tiga bulan",
+      "summaryMs": "Ukraine tidak menghantar walau satu tan minyak bunga matahari ke India dalam tempoh tiga bulan dan kehilangan kedudukan di China, kata ketua Ukroliyaprom Stepan Kapshuk. Eropah mengambil kira-kira separuh eksport minyak Ukraine, manakala Argentina, dengan tuaian biji bunga matahari kira-kira 8 juta tan, meluaskan jualan ke Asia.",
+      "originalTitle": "Ukraine has not exported sunflower oil to India for three months",
+      "source": "UkrAgroConsult (Latifundist)",
+      "url": "https://ukragroconsult.com/en/news/ukraine-has-not-exported-sunflower-oil-to-india-for-three-months/",
+      "lang": "en",
+      "topics": [
+        "sunflower",
+        "trade"
+      ],
+      "region": "Украина"
+    },
     {
       "id": "2026-10-30-palm-closes-higher-4681",
       "publishedAt": "2026-10-30",
