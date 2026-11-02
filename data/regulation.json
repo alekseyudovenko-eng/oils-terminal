@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26",
+  "updatedAt": "2026-11-02",
   "period": {
     "ru": "октябрь 2025 – октябрь 2026 (и действующие нормы прошлых лет)",
     "en": "October 2025 – October 2026 (plus earlier rules still in force)"
@@ -731,21 +731,21 @@
       "id": "ru-cz",
       "scope": "RU",
       "type": "traceability",
-      "status": "upcoming",
+      "status": "in_force",
       "date": "2026-11-01",
       "act": {
-        "ru": "Маркировка «Честный знак» (растительные масла, ТН ВЭД 1511 и др.)",
-        "en": "“Chestny Znak” marking (vegetable oils, HS 1511 etc.)"
+        "ru": "Постановление Правительства РФ от 27.05.2024 № 676; маркировка «Честный знак» (растительные масла, ТН ВЭД 1511 и др.)",
+        "en": "RF Government Decree No. 676 of 27 May 2024; “Chestny Znak” marking (vegetable oils, HS 1511 etc.)"
       },
       "title": {
         "ru": "Поэкземплярный учёт растительных масел",
         "en": "Unit-level tracking of vegetable oils"
       },
       "text": {
-        "ru": "Маркировка производителей и импортёров — с 1.10.2024 и 1.02.2025, вывод из оборота на кассе — с 1.11.2025, УПД с кодом каждой упаковки — с 1.11.2026.",
-        "en": "Producer and importer marking since 1 Oct 2024 and 1 Feb 2025, checkout reporting since 1 Nov 2025, invoices with each pack’s code from 1 Nov 2026."
+        "ru": "Маркировка производителей и импортёров — с 1.10.2024 и 1.02.2025, вывод из оборота на кассе — с 1.11.2025. С 1.11.2026 действует поэкземплярный учёт: в УПД при отгрузке и при выводе из оборота не через розницу (бой, пробы, порча) указываются коды каждой единицы. Сообщений о переносе срока не выявлено.",
+        "en": "Producer and importer marking since 1 Oct 2024 and 1 Feb 2025, checkout reporting since 1 Nov 2025. Since 1 Nov 2026 unit-level tracking applies: invoices (UPD) on shipment and non-retail write-offs (breakage, samples, spoilage) must list each unit’s code. No postponement reported."
       },
-      "url": "https://www.klerk.ru/buh/articles/713288/"
+      "url": "https://retail.ru/news/s-1-noyabrya-2026-goda-v-rf-zarabotaet-poekzemplyarnyy-uchet-markirovki-rastitel-15-oktyabrya-2026-283356"
     },
     {
       "id": "ru-retail",
@@ -822,10 +822,30 @@
         "en": "Palm oil ban in baby food and in school/hospital procurement"
       },
       "text": {
-        "ru": "Председатель Госдумы предложил обсудить запрет пальмового масла в детских продуктах и повышение его налогообложения. Лидер фракции «Справедливая Россия» предложил отдельным федеральным законом запретить медицинским и образовательным учреждениям закупать продукты с пальмовым маслом. Законопроект не внесён.",
-        "en": "The State Duma speaker proposed discussing a ban on palm oil in children’s food and higher taxation of palm oil. The A Just Russia faction leader proposed a federal law banning medical and educational institutions from buying food containing palm oil. No bill has been introduced."
+        "ru": "Председатель Госдумы предложил обсудить запрет пальмового масла в детских продуктах и повышение его налогообложения. Лидер фракции «Справедливая Россия» предложил отдельным федеральным законом запретить медицинским и образовательным учреждениям закупать продукты с пальмовым маслом. Отдельный законопроект по этим предложениям не внесён (ранее внесённый проект № 1107747-8 — см. отдельную запись).",
+        "en": "The State Duma speaker proposed discussing a ban on palm oil in children’s food and higher taxation of palm oil. The A Just Russia faction leader proposed a federal law banning medical and educational institutions from buying food containing palm oil. No separate bill on these proposals has been introduced (for the earlier bill No. 1107747-8, see the separate entry)."
       },
       "url": "https://ria.ru/20261024/maslo-2126771171.html"
+    },
+    {
+      "id": "ru-1107747",
+      "scope": "RU",
+      "type": "ban",
+      "status": "proposal",
+      "date": "2025-12-26",
+      "act": {
+        "ru": "Законопроект № 1107747-8 «О внесении изменения в статью 25.1 Федерального закона „О качестве и безопасности пищевых продуктов“» (Н. Останина, Н. Харитонов)",
+        "en": "Bill No. 1107747-8 amending Article 25.1 of the Federal Law “On Quality and Safety of Food Products” (N. Ostanina, N. Kharitonov)"
+      },
+      "title": {
+        "ru": "Запрет пальмового масла в питании детей в школах и детских садах",
+        "en": "Palm oil ban in food for children in schools and kindergartens"
+      },
+      "text": {
+        "ru": "Внесён в Госдуму в декабре 2025 г. Предлагается запретить пальмовое и пальмоядровое масла и их стеариновые фракции при производстве питания для детей в организованных коллективах (школы, детские сады, социальные учреждения, лагеря) и требовать отсутствия пальмового масла в госзакупках; вступление в силу — через 6 месяцев после опубликования. Правительство в отзыве указало на необходимость существенной доработки; в марте 2026 г. комитет по охране здоровья (проект заключения) рекомендовал отклонить в первом чтении. Сведений о рассмотрении в первом чтении не найдено.",
+        "en": "Introduced in the State Duma in December 2025. It would ban palm and palm kernel oils and their stearin fractions in food produced for children in organised groups (schools, kindergartens, social institutions, camps) and require palm-oil-free products in public procurement; entry into force 6 months after publication. The Government’s opinion said it needs substantial revision; in March 2026 the Health Committee (draft conclusion) recommended rejection at first reading. No record of a first-reading vote was found."
+      },
+      "url": "https://sozd.duma.gov.ru/bill/1107747-8"
     },
     {
       "id": "kz-mark",
