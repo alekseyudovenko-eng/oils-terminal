@@ -1,6 +1,100 @@
 {
-  "updatedAt": "2026-11-01T05:51:40Z",
+  "updatedAt": "2026-11-02T05:56:58Z",
   "items": [
+    {
+      "id": "2026-11-02-indonesia-nov-cpo-reference-price",
+      "publishedAt": "2026-11-02",
+      "title": "Индонезия снизила референсную цену CPO на ноябрь на 6,07%, до $978,90/т; пошлина — $124/т",
+      "summary": "Референсная цена на 1–30 ноября снижена на $63,25 с $1042,15/т в октябре. Экспортная пошлина составит $124/т, экспортный сбор — 12,5% референсной цены, или $122,36/т.",
+      "titleEn": "Indonesia cuts November CPO reference price 6.07% to $978.90/t",
+      "summaryEn": "The Nov 1–30 reference price is down $63.25 from $1,042.15/t in October. The export duty is set at $124/t and the export levy at 12.5% of the reference price, or $122.36/t.",
+      "titleUz": "Indoneziya noyabr uchun CPO referens narxini 6,07% ga, 978,90 $/t gacha pasaytirdi; boj — 124 $/t",
+      "summaryUz": "1–30 noyabr uchun referens narx oktabrdagi 1042,15 $/t dan 63,25 $ ga pasaytirildi. Eksport boji 124 $/t, eksport yigʻimi esa referens narxning 12,5% i, yaʼni 122,36 $/t ni tashkil etadi.",
+      "titleKk": "Индонезия қарашаға арналған CPO референттік бағасын 6,07%-ға, $978,90/т-ға дейін төмендетті; баж — $124/т",
+      "summaryKk": "1–30 қарашаға арналған референттік баға қазандағы $1042,15/т-дан $63,25-ке төмендетілді. Экспорттық баж $124/т, экспорттық алым референттік бағаның 12,5%-ы, яғни $122,36/т болады.",
+      "titleMs": "Indonesia turunkan harga rujukan MSM November 6.07% kepada US$978.90/tan; duti US$124/tan",
+      "summaryMs": "Harga rujukan bagi 1–30 November turun US$63.25 daripada US$1,042.15/tan pada Oktober. Duti eksport ditetapkan US$124/tan dan levi eksport 12.5% daripada harga rujukan, iaitu US$122.36/tan.",
+      "originalTitle": "Indonesia Cuts November 2026 CPO Reference Price 6.07% to US$978.90/MT, Sets Export Duty at US$124",
+      "source": "Palm Oil Magazine",
+      "url": "https://www.palmoilmagazine.com/cpo-price/2026/11/02/indonesia-cuts-november-2026-cpo-reference-price-6-07-to-us978-90-mt-sets-export-duty-at-us124/",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "policy"
+      ],
+      "region": "Индонезия",
+      "addedAt": "2026-11-02T05:56:58Z"
+    },
+    {
+      "id": "2026-11-02-kazakhstan-sunseed-exports-china-sept",
+      "publishedAt": "2026-11-02",
+      "title": "Казахстан в сентябре втрое нарастил экспорт семян подсолнечника в Китай — до 9,1 тыс. т",
+      "summary": "Всего в сентябре экспортировано 9,2 тыс. т семян подсолнечника, доля Китая — 99% против 79% годом ранее. Производство подсолнечного масла всех видов выросло на 46,6%, до 55,7 тыс. т.",
+      "titleEn": "Kazakhstan triples September sunflower seed exports to China to 9,100 t",
+      "summaryEn": "Total sunflower seed exports reached 9,200 t in September, with China taking 99% versus 79% a year earlier. Output of all types of sunflower oil rose 46.6% to 55,700 t.",
+      "titleUz": "Qozogʻiston sentabrda Xitoyga kungaboqar urugʻi eksportini uch baravar, 9,1 ming t gacha oshirdi",
+      "summaryUz": "Sentabrda jami 9,2 ming t kungaboqar urugʻi eksport qilindi, Xitoy ulushi bir yil oldingi 79% ga nisbatan 99% ni tashkil etdi. Barcha turdagi kungaboqar yogʻi ishlab chiqarish 46,6% ga oshib, 55,7 ming t ga yetdi.",
+      "titleKk": "Қазақстан қыркүйекте Қытайға күнбағыс тұқымы экспортын үш есе, 9,1 мың т-ға дейін арттырды",
+      "summaryKk": "Қыркүйекте барлығы 9,2 мың т күнбағыс тұқымы экспортталды, Қытайдың үлесі бір жыл бұрынғы 79%-ға қарсы 99% болды. Күнбағыс майының барлық түрлерін өндіру 46,6%-ға өсіп, 55,7 мың т-ға жетті.",
+      "titleMs": "Kazakhstan tingkatkan eksport biji bunga matahari ke China tiga kali ganda kepada 9,100 tan pada September",
+      "summaryMs": "Jumlah eksport biji bunga matahari mencecah 9,200 tan pada September, dengan China mengambil 99% berbanding 79% setahun sebelumnya. Pengeluaran semua jenis minyak bunga matahari naik 46.6% kepada 55,700 tan.",
+      "originalTitle": "Kazakhstan triples sunflower seed exports to China in September",
+      "source": "UkrAgroConsult (APK News Kazakhstan)",
+      "url": "https://ukragroconsult.com/en/news/kazakhstan-triples-sunflower-seed-exports-to-china-in-september/",
+      "lang": "en",
+      "topics": [
+        "sunflower",
+        "trade"
+      ],
+      "region": "Казахстан",
+      "addedAt": "2026-11-02T05:56:58Z"
+    },
+    {
+      "id": "2026-10-31-canada-canola-ending-stocks-1-98mt",
+      "publishedAt": "2026-10-31",
+      "title": "Канада повысила прогноз конечных запасов канолы в 2026/27 почти на 32%, до 1,979 млн т",
+      "summary": "По данным Минсельхоза Канады (AAFC), прогноз повышен на 475 тыс. т с августовских 1,504 млн т. Конечные запасы прошлого сезона увеличены на 175 тыс. т, до 1,9 млн т.",
+      "titleEn": "Canada raises 2026/27 canola ending stocks forecast nearly 32% to 1.979 Mt",
+      "summaryEn": "Agriculture and Agri-Food Canada lifted the estimate by 475,000 t from 1.504 Mt in August. Ending stocks for the previous season were raised by 175,000 t to 1.9 Mt.",
+      "titleUz": "Kanada 2026/27 yilgi kanola yakuniy zaxiralari prognozini qariyb 32% ga, 1,979 mln t gacha oshirdi",
+      "summaryUz": "Kanada Qishloq xoʻjaligi vazirligi (AAFC) maʼlumotiga koʻra, prognoz avgustdagi 1,504 mln t dan 475 ming t ga oshirildi. Oʻtgan mavsum yakuniy zaxiralari 175 ming t ga oshirilib, 1,9 mln t ga yetkazildi.",
+      "titleKk": "Канада 2026/27 жылғы канола соңғы қорларының болжамын шамамен 32%-ға, 1,979 млн т-ға дейін көтерді",
+      "summaryKk": "Канада Ауыл шаруашылығы министрлігінің (AAFC) деректері бойынша болжам тамыздағы 1,504 млн т-дан 475 мың т-ға көтерілді. Өткен маусымның соңғы қорлары 175 мың т-ға ұлғайтылып, 1,9 млн т болды.",
+      "titleMs": "Kanada naikkan unjuran stok akhir kanola 2026/27 hampir 32% kepada 1.979 juta tan",
+      "summaryMs": "Agriculture and Agri-Food Canada menaikkan anggaran sebanyak 475,000 tan daripada 1.504 juta tan pada Ogos. Stok akhir musim sebelumnya dinaikkan 175,000 tan kepada 1.9 juta tan.",
+      "originalTitle": "Canada raises canola ending stocks forecast by nearly 500 thsd tons",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/canada-raises-canola-ending-stocks-forecast-by-nearly-500-thsd-tons/",
+      "lang": "en",
+      "topics": [
+        "rapeseed"
+      ],
+      "region": "Канада",
+      "addedAt": "2026-11-02T05:56:58Z"
+    },
+    {
+      "id": "2026-10-31-ukraine-turkey-black-sea-corridor",
+      "publishedAt": "2026-10-31",
+      "title": "Зеленский и Эрдоган договорились совместно работать над восстановлением черноморского зернового коридора",
+      "summary": "Договорённость достигнута на встрече в Стамбуле 31 октября; механизмы безопасности и условия работы коридора пока не объявлены. Трёхсторонние переговоры Украины, США и России могут пройти в первой половине ноября.",
+      "titleEn": "Ukraine and Turkey agree to work on restoring Black Sea grain corridor",
+      "summaryEn": "Zelenskyy and Erdoğan reached the agreement at a meeting in Istanbul on October 31; safety mechanisms and operating terms have not yet been announced. Trilateral Ukraine–US–Russia talks could take place in the first half of November.",
+      "titleUz": "Zelenskiy va Erdoğan Qora dengiz don yo‘lagini tiklash ustida birgalikda ishlashga kelishib oldi",
+      "summaryUz": "Kelishuvga 31 oktabr kuni Istanbuldagi uchrashuvda erishildi; yoʻlakning xavfsizlik mexanizmlari va ishlash shartlari hali eʼlon qilinmagan. Ukraina, AQSh va Rossiyaning uch tomonlama muzokaralari noyabrning birinchi yarmida boʻlib oʻtishi mumkin.",
+      "titleKk": "Зеленский мен Ердоған Қара теңіз астық дәлізін қалпына келтіру бойынша бірлесіп жұмыс істеуге келісті",
+      "summaryKk": "Келісімге 31 қазанда Стамбулдағы кездесуде қол жеткізілді; дәліздің қауіпсіздік тетіктері мен жұмыс шарттары әлі жарияланған жоқ. Украина, АҚШ және Ресейдің үшжақты келіссөздері қарашаның бірінші жартысында өтуі мүмкін.",
+      "titleMs": "Ukraine dan Turkiye setuju bekerjasama memulihkan koridor bijirin Laut Hitam",
+      "summaryMs": "Zelenskyy dan Erdoğan mencapai persetujuan itu dalam pertemuan di Istanbul pada 31 Oktober; mekanisme keselamatan dan syarat operasi belum diumumkan. Rundingan tiga hala Ukraine–AS–Rusia mungkin diadakan pada separuh pertama November.",
+      "originalTitle": "Ukraine and Turkey agree to work on restoring the Black Sea grain corridor",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/ukraine-and-turkey-agree-to-work-on-restoring-the-black-sea-grain-corridor/",
+      "lang": "en",
+      "topics": [
+        "trade"
+      ],
+      "region": "Украина, Турция",
+      "addedAt": "2026-11-02T05:56:58Z"
+    },
     {
       "id": "2026-10-31-palm-weekly-loss-outlook-4100-4250",
       "publishedAt": "2026-10-31",
