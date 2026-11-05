@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
 import { caller, lastSentAt, markSentToday } from '@/lib/once-a-day';
 import { escapeHtml, sendTelegramMessage } from '@/lib/telegram';
+import { htmlToVkText, postToVk, vkConfigured } from '@/lib/vk';
 import { getAddedSince } from '@/lib/news';
 import { MAX_POSTS_PER_DAY, channelPostsToday, isWeekendMsk } from '@/lib/channel-schedule';
 
@@ -69,5 +70,12 @@ export async function GET(request: Request) {
   const sent = await sendTelegramMessage(message);
   if (sent) await markSentToday('news-digest', via);
   console.log('news-digest: sent =', sent, 'items', news.length, 'caller', via);
-  return NextResponse.json({ success: sent, items: news.length }, { status: sent ? 200 : 502 });
+  // ВКонтакте: копия дайджеста, только если он ушёл в Telegram (тот же лимит и та же сетка)
+  let vk = vkConfigured() ? 'skipped' : 'not configured';
+  if (sent && vkConfigured()) {
+    const v = await postToVk(htmlToVkText(message) + '\n📣 Telegram: https://t.me/oilpalm', { fallbackLink: SITE_URL + '/en/market#news' });
+    vk = v.ok ? `posted ${v.url}` : `error: ${v.error}`;
+    console.log('news-digest vk:', vk);
+  }
+  return NextResponse.json({ success: sent, items: news.length, vk }, { status: sent ? 200 : 502 });
 }

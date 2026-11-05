@@ -6,6 +6,8 @@
 // once — уникальный ключ поста: второй пост с тем же ключом не уйдёт (защита от дублей при повторах).
 // dryRun — только проверка (разметка, длина, не было ли уже поста, лимит дня), без публикации.
 // Сетка канала (lib/channel-schedule.ts): не больше 2 постов в день, в выходные — ничего.
+// После успешной публикации в Telegram текстовый пост (не опрос) копируется в сообщество ВКонтакте
+// (https://vk.ru/public156172373), если задан VK_GROUP_TOKEN; в ответе поле "vk". Лимит 2 поста в день — только для Telegram.
 // Ответ {"skipped":"weekend"} или {"skipped":"daily limit"} — сегодня не публиковать, задача попробует в другой день.
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
@@ -13,6 +15,7 @@ import { alreadySentEver, caller, markSentWithId } from '@/lib/once-a-day';
 import { MAX_POSTS_PER_DAY, channelPostsToday, isWeekendMsk } from '@/lib/channel-schedule';
 import { callTelegramChat } from '@/lib/telegram';
 import { channelChat, checkTelegramHtml, visibleLength } from '@/lib/channel';
+import { htmlToVkText, postToVk, vkConfigured } from '@/lib/vk';
 
 export const dynamic = 'force-dynamic';
 
@@ -77,5 +80,18 @@ export async function POST(request: Request) {
   await markSentWithId(job, via, messageId);
   const url = chat.startsWith('@') && messageId ? `https://t.me/${chat.slice(1)}/${messageId}` : null;
   console.log('channel/post sent:', once, url, 'caller', via);
-  return NextResponse.json({ success: true, once, chat, messageId, url });
+
+  // ВКонтакте: копия текстового поста (опросы Telegram в VK не переносятся)
+  let vk: string = vkConfigured() ? 'skipped (poll)' : 'not configured';
+  if (!poll && vkConfigured()) {
+    let png: ArrayBuffer | undefined;
+    if (photoUrl) {
+      try { const res = await fetch(photoUrl, { cache: 'no-store' }); if (res.ok) png = await res.arrayBuffer(); } catch { /* без картинки */ }
+    }
+    const message = htmlToVkText(text) + (url ? `\n\n📣 Обсуждение в Telegram: ${url}` : '');
+    const v = await postToVk(message, { png, filename: `${once}.png`, fallbackLink: url || undefined });
+    vk = v.ok ? `posted ${v.url}${v.error ? ' (' + v.error + ')' : ''}` : `error: ${v.error}`;
+    console.log('channel/post vk:', vk, once);
+  }
+  return NextResponse.json({ success: true, once, chat, messageId, url, vk });
 }
