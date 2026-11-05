@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T05:56:26Z",
+  "updatedAt": "2026-11-05T05:52:22Z",
   "items": [
     {
       "id": "2026-11-04-palm-falls-4551-record-oct-stocks",
@@ -1896,28 +1896,78 @@
       "summaryMs": "Menteri Noraini Ahmad berkata pengeluaran mendahului sasaran, dengan 10.8 juta tan dihasilkan dalam tujuh bulan."
     },
     {
-      "id": "2026-10-05-eudr-deadline",
-      "publishedAt": "2026-10-05",
-      "title": "EUDR вступает в силу для крупных компаний 30 декабря 2026 года; эксперты сомневаются в новых послаблениях",
-      "summary": "Для малых компаний срок — 30 июня 2027 года. Опрошенные юрист и представитель НКО Fern считают дальнейшее упрощение регламента маловероятным, хотя третью отсрочку полностью не исключают.",
-      "originalTitle": "The EUDR is on the horizon",
-      "source": "FoodNavigator",
-      "url": "https://www.foodnavigator.com/Article/2026/10/05/eudr-will-it-be-simplified-further/",
+      "id": "2026-11-04-india-oct-vegoil-imports-1-74mt",
+      "publishedAt": "2026-11-04",
+      "title": "Импорт растительных масел в Индию в октябре вырос на 13% до 1,74 млн т — максимум более чем за два года",
+      "summary": "По предварительным оценкам участников рынка, импорт пальмового масла вырос на 6% до 866 тыс. т, соевого — на 6% до рекордных 653 тыс. т, подсолнечного — вдвое до 223 тыс. т. Официальные данные SEA ожидаются в середине ноября.",
+      "titleEn": "India October vegoil imports jump 13% to 1.74 Mt, highest in over two years",
+      "summaryEn": "Preliminary trade estimates show palm oil imports up 6% at 866,000 t, soyoil up 6% to a record 653,000 t and sunflower oil doubling to 223,000 t. Official SEA data is due in mid-November.",
+      "titleUz": "Hindistonning oktabrdagi oʻsimlik yogʻi importi 13% oshib, 1,74 mln t ga yetdi — ikki yildan ortiq davrdagi eng yuqori koʻrsatkich",
+      "summaryUz": "Bozor ishtirokchilarining dastlabki baholariga koʻra, palma yogʻi importi 6% oshib 866 ming t, soya yogʻi 6% oshib rekord 653 ming t, kungaboqar yogʻi ikki baravar oshib 223 ming t ni tashkil etdi. SEA rasmiy maʼlumotlari noyabr oʻrtalarida kutilmoqda.",
+      "titleKk": "Үндістанның қазандағы өсімдік майы импорты 13%-ға өсіп, 1,74 млн т-ға жетті — екі жылдан астам уақыттағы ең жоғары деңгей",
+      "summaryKk": "Нарық қатысушыларының алдын ала бағалауы бойынша пальма майы импорты 6%-ға өсіп 866 мың т, соя майы 6%-ға өсіп рекордтық 653 мың т, күнбағыс майы екі есе өсіп 223 мың т болды. SEA ресми деректері қараша ортасында күтіледі.",
+      "titleMs": "Import minyak sayuran India Oktober melonjak 13% kepada 1.74 juta tan, tertinggi dalam lebih dua tahun",
+      "summaryMs": "Anggaran awal pedagang menunjukkan import minyak sawit naik 6% kepada 866,000 tan, minyak soya naik 6% ke rekod 653,000 tan dan minyak bunga matahari meningkat dua kali ganda kepada 223,000 tan. Data rasmi SEA dijangka pada pertengahan November.",
+      "originalTitle": "India's vegetable oil imports reach highest level in over two years",
+      "source": "UkrAgroConsult (The Edge Malaysia)",
+      "url": "https://ukragroconsult.com/en/news/indias-vegetable-oil-imports-reach-highest-level-in-over-two-years/",
       "lang": "en",
       "topics": [
-        "policy",
-        "palm"
+        "palm",
+        "soy",
+        "sunflower",
+        "trade"
       ],
-      "region": "ЕС",
-      "addedAt": "2026-10-16T08:37:46Z",
-      "titleEn": "EUDR applies to large companies from December 30, 2026; experts doubt further relief",
-      "summaryEn": "For small companies the deadline is June 30, 2027. A lawyer and a representative of the NGO Fern consider further simplification unlikely, though they do not fully rule out a third delay.",
-      "titleUz": "EUDR yirik kompaniyalar uchun 2026-yil 30-dekabrdan kuchga kiradi; mutaxassislar yangi yengilliklarga shubha qilmoqda",
-      "summaryUz": "Kichik kompaniyalar uchun muddat — 2027-yil 30-iyun. Soʻrovda qatnashgan yurist va Fern NNT vakili reglamentni yanada soddalashtirish ehtimoldan yiroq deb hisoblaydi, ammo uchinchi kechiktirishni butunlay istisno qilmaydi.",
-      "titleKk": "EUDR ірі компаниялар үшін 2026 жылғы 30 желтоқсаннан күшіне енеді; сарапшылар жаңа жеңілдіктерге күмәнмен қарайды",
-      "summaryKk": "Шағын компаниялар үшін мерзім — 2027 жылғы 30 маусым. Сұхбат берген заңгер мен Fern ҮЕҰ өкілі регламентті одан әрі жеңілдету екіталай деп санайды, бірақ үшінші кейінге қалдыруды толық жоққа шығармайды.",
-      "titleMs": "EUDR terpakai kepada syarikat besar mulai 30 Disember 2026; pakar ragui kelonggaran lanjut",
-      "summaryMs": "Bagi syarikat kecil, tarikh akhirnya ialah 30 Jun 2027. Seorang peguam dan wakil NGO Fern menganggap pemudahan lanjut tidak mungkin, walaupun mereka tidak menolak sepenuhnya penangguhan ketiga."
+      "region": "Индия",
+      "addedAt": "2026-11-05T05:52:22Z"
+    },
+    {
+      "id": "2026-11-04-india-mustard-sowing-lags-46pct",
+      "publishedAt": "2026-11-04",
+      "title": "Посевы горчицы и рапса в Индии на 30 октября отстают от прошлого года на 46%",
+      "summary": "На 30 октября засеяно 2,05 млн га против 3,807 млн га годом ранее (−46,16%); в Раджастане площадь упала на 59,61% до 891 тыс. га. Минимальная закупочная цена на горчицу в этом сезоне — 6 613 рупий за центнер против 6 200 рупий.",
+      "titleEn": "India mustard, rapeseed sowing lags last year by 46%",
+      "summaryEn": "As of Oct 30, 2.05 mln ha were sown versus 3.807 mln ha a year earlier (−46.16%); Rajasthan area fell 59.61% to 891,000 ha. The mustard MSP this season is Rs 6,613 per quintal, up from Rs 6,200.",
+      "titleUz": "Hindistonda xantal va raps ekish 30-oktabr holatiga koʻra oʻtgan yildan 46% orqada",
+      "summaryUz": "30-oktabr holatiga koʻra 2,05 mln ga ekilgan, bir yil oldin 3,807 mln ga edi (−46,16%); Rajastxonda maydon 59,61% kamayib, 891 ming ga ni tashkil etdi. Bu mavsumda xantal uchun minimal xarid narxi sentner uchun 6 613 rupiy, avval 6 200 rupiy edi.",
+      "titleKk": "Үндістанда қыша мен рапс егісі 30 қазандағы жағдай бойынша өткен жылдан 46%-ға артта",
+      "summaryKk": "30 қазандағы жағдай бойынша 2,05 млн га егілді, бір жыл бұрын 3,807 млн га болған (−46,16%); Раджастханда алқап 59,61%-ға қысқарып, 891 мың га болды. Осы маусымда қышаның ең төменгі сатып алу бағасы центнеріне 6 613 рупий, бұрын 6 200 рупий еді.",
+      "titleMs": "Penanaman sawi dan biji sesawi India ketinggalan 46% berbanding tahun lalu",
+      "summaryMs": "Setakat 30 Oktober, 2.05 juta hektar ditanam berbanding 3.807 juta hektar setahun sebelumnya (−46.16%); keluasan di Rajasthan susut 59.61% kepada 891,000 hektar. Harga sokongan minimum sawi musim ini ialah Rs 6,613 sekuintal, naik daripada Rs 6,200.",
+      "originalTitle": "Mustard and rapeseed sowing in India lags last year's pace by 46%",
+      "source": "UkrAgroConsult (Rural Voice)",
+      "url": "https://ukragroconsult.com/en/news/mustard-and-rapeseed-sowing-in-india-lags-last-years-pace-by-46/",
+      "lang": "en",
+      "topics": [
+        "rapeseed"
+      ],
+      "region": "Индия",
+      "addedAt": "2026-11-05T05:52:22Z"
+    },
+    {
+      "id": "2026-11-04-sunoil-prices-hold-high",
+      "publishedAt": "2026-11-04",
+      "title": "Подсолнечное масло держится в цене, несмотря на недельное падение пальмы на 3,3% и соевого масла на 2,2%",
+      "summary": "По данным Graintrade, российское подсолнечное масло FOB Санкт-Петербург стабильно на уровне $1275–1300/т, с поставкой в Индию подешевело до $1450–1470/т; в Украине на условиях FCA завод — $900–950/т. Пальма на Bursa Malaysia за неделю упала до $1118/т, соевое масло CBOT — до $1438/т.",
+      "titleEn": "Sunflower oil holds firm as palm falls 3.3%, soyoil 2.2% on week",
+      "summaryEn": "Per Graintrade, Russian sunflower oil FOB St. Petersburg was stable at $1,275–1,300/t, while deliveries to India eased to $1,450–1,470/t; Ukrainian FCA plant prices were $900–950/t. Bursa Malaysia palm fell to $1,118/t and CBOT soyoil to $1,438/t over the week.",
+      "titleUz": "Palma 3,3% va soya yogʻi 2,2% arzonlashganiga qaramay, kungaboqar yogʻi narxi yuqoriligicha qolmoqda",
+      "summaryUz": "Graintrade maʼlumotiga koʻra, Rossiya kungaboqar yogʻi FOB Sankt-Peterburg $1275–1300/t darajasida barqaror, Hindistonga yetkazib berish bilan $1450–1470/t gacha arzonlashdi; Ukrainada FCA zavod sharti bilan — $900–950/t. Bir hafta ichida Bursa Malaysia’da palma $1118/t gacha, CBOT soya yogʻi $1438/t gacha tushdi.",
+      "titleKk": "Пальма 3,3%-ға, соя майы 2,2%-ға арзандағанына қарамастан күнбағыс майы бағасы жоғары күйінде қалуда",
+      "summaryKk": "Graintrade деректері бойынша ресейлік күнбағыс майы FOB Санкт-Петербург $1275–1300/т деңгейінде тұрақты, Үндістанға жеткізумен $1450–1470/т-ға дейін арзандады; Украинада FCA зауыт шартымен — $900–950/т. Бір аптада Bursa Malaysia-дағы пальма $1118/т-ға, CBOT соя майы $1438/т-ға дейін төмендеді.",
+      "titleMs": "Minyak bunga matahari kekal tinggi walaupun sawit jatuh 3.3%, minyak soya 2.2% seminggu",
+      "summaryMs": "Menurut Graintrade, minyak bunga matahari Rusia FOB St. Petersburg stabil pada $1,275–1,300/tan, manakala penghantaran ke India susut kepada $1,450–1,470/tan; harga FCA kilang Ukraine $900–950/tan. Sawit Bursa Malaysia jatuh kepada $1,118/tan dan minyak soya CBOT kepada $1,438/tan dalam seminggu.",
+      "originalTitle": "Sunflower oil prices remain high despite declining palm and soybean oil quotations",
+      "source": "UkrAgroConsult (Graintrade)",
+      "url": "https://ukragroconsult.com/en/news/sunflower-oil-prices-remain-high-despite-declining-palm-and-soybean-oil-quotations/",
+      "lang": "en",
+      "topics": [
+        "sunflower",
+        "palm",
+        "soy"
+      ],
+      "region": "Черноморский регион",
+      "addedAt": "2026-11-05T05:52:22Z"
     }
   ]
 }
