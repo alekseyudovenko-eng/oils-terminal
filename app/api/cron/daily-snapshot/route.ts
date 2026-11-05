@@ -7,6 +7,7 @@
 import { NextResponse } from 'next/server';
 import { isCronAuthorized } from '@/lib/auth';
 import { alreadySentToday, caller, markSentToday } from '@/lib/once-a-day';
+import { isWeekendMsk } from '@/lib/channel-schedule';
 import { escapeHtml, sendTelegramPhotoFile } from '@/lib/telegram';
 import { facebookConfigured, postFacebookPhoto, postXPhoto, xConfigured } from '@/lib/facebook';
 import { renderSnapshot } from '@/lib/snapshot';
@@ -24,6 +25,8 @@ export async function GET(request: Request) {
   }
   const params = new URL(request.url).searchParams;
   const force = params.get('force') === '1';
+  // Сетка канала: в выходные биржи закрыты, снимок не публикуется (ни в Telegram, ни в Facebook).
+  if (!force && isWeekendMsk()) return NextResponse.json({ success: true, skipped: 'weekend' });
   const fbOn = facebookConfigured();
   const tgDone = !force && (await alreadySentToday('daily-snapshot'));
   const fbDone = !fbOn || (!force && (await alreadySentToday('daily-snapshot-fb')));

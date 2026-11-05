@@ -47,6 +47,11 @@ export default async function OverviewPage() {
           action={<Link href={localePath(lang, '/market#news')} className="text-sm text-ink-2 hover:text-gold underline underline-offset-2">{t.overview.allNews}</Link>}
         >
           <NewsList news={feed.items} limit={12} />
+          <p className="mt-4 text-sm text-ink-2">
+            {t.footer.telegram.split('{link}')[0]}
+            <a href="https://t.me/oilpalm" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-gold">@oilpalm</a>
+            {t.footer.telegram.split('{link}')[1]}
+          </p>
         </Section>
       </main>
 

@@ -32,6 +32,10 @@ export default function SiteHeader({ active }: Props) {
               </Link>
             ))}
           </nav>
+          <a href="https://t.me/oilpalm" target="_blank" rel="noopener" aria-label={t.nav.telegramAria}
+            className="px-3 py-1.5 rounded-sm text-sm text-band-muted hover:text-band-text border border-band-muted/40">
+            {t.nav.telegram}
+          </a>
           <LanguageSwitcher lang={lang} label={t.nav.language} />
         </div>
       </div>

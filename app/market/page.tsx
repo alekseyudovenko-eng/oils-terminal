@@ -96,6 +96,11 @@ export default async function MarketPage() {
             ? <>{fill(m.newsCurated, { n: news.length })}{feed.updatedAt && fill(m.newsUpdated, { time: fmtTimeUtc(feed.updatedAt, lang) })}{m.newsOrder}</>
             : fill(m.newsAuto, { n: news.length })}>
           <NewsList news={news} />
+          <p className="mt-4 text-sm text-ink-2">
+            {t.footer.telegram.split('{link}')[0]}
+            <a href="https://t.me/oilpalm" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-gold">@oilpalm</a>
+            {t.footer.telegram.split('{link}')[1]}
+          </p>
         </Section>
       </main>
 

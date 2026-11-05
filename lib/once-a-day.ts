@@ -54,3 +54,23 @@ export async function lastSentAt(job: string): Promise<Date | null> {
 export async function alreadySentEver(job: string): Promise<boolean> {
   return (await lastSentAt(job)) != null;
 }
+
+/** Отметка с номером сообщения Telegram (хранится в поле price): нужна, чтобы потом закрыть опрос и получить итоги. */
+export async function markSentWithId(job: string, via: string, messageId: number | null): Promise<void> {
+  const db = getDb();
+  if (!db) return;
+  await db.from('price_snapshots').upsert(
+    { day: today(), series: `_sent:${job}`, price: messageId, usd_t: null, ticker: `${via}|${new Date().toISOString()}` },
+    { onConflict: 'day,series' }
+  );
+}
+
+/** Номер сообщения, сохранённый markSentWithId (последняя отметка по ключу). */
+export async function sentMessageId(job: string): Promise<number | null> {
+  const db = getDb();
+  if (!db) return null;
+  const { data } = await db.from('price_snapshots').select('price').eq('series', `_sent:${job}`)
+    .order('day', { ascending: false }).limit(1).maybeSingle();
+  const n = data?.price == null ? null : Number(data.price);
+  return n && Number.isFinite(n) ? n : null;
+}

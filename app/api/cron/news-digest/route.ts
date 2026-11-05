@@ -6,6 +6,7 @@ import { isCronAuthorized } from '@/lib/auth';
 import { caller, lastSentAt, markSentToday } from '@/lib/once-a-day';
 import { escapeHtml, sendTelegramMessage } from '@/lib/telegram';
 import { getAddedSince } from '@/lib/news';
+import { MAX_POSTS_PER_DAY, channelPostsToday, isWeekendMsk } from '@/lib/channel-schedule';
 
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
@@ -24,6 +25,15 @@ export async function GET(request: Request) {
   if (!isCronAuthorized(request)) {
     console.warn('news-digest: unauthorized call from', via);
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Сетка канала: в выходные не публикуем; если сегодня уже 2 поста (Snapshot + рубрика/опрос),
+  // дайджест пропускается, а новости уходят в следующий (он берёт всё, что добавлено после прошлой рассылки).
+  if (isWeekendMsk()) return NextResponse.json({ success: true, skipped: 'weekend' });
+  const postsToday = await channelPostsToday();
+  if (postsToday >= MAX_POSTS_PER_DAY) {
+    console.log('news-digest: daily limit reached (', postsToday, '), news roll over; caller', via);
+    return NextResponse.json({ success: true, skipped: 'daily limit', postsToday });
   }
 
   const last = await lastSentAt('news-digest');
