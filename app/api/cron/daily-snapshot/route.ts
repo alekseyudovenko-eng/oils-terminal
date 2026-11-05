@@ -111,7 +111,7 @@ export async function GET(request: Request) {
       `IMA Daily Snapshot · ${dateRu}\n${titleRu}\n\n${leadRu.join('\n')}` +
       (top.length ? `\n\n📰 Главное\n${top.join('\n')}` : '') +
       `\n\n🔗 ${SITE_URL} — цены и новости рынка растительных масел\n📣 Telegram: https://t.me/oilpalm\n\n#пальмовоемасло #растительныемасла`;
-    const r = await postToVk(text, { png, filename: `IMA_Daily_Snapshot_${date}.png`, fallbackLink: SITE_URL });
+    const r = await postToVk(text, { png, filename: `IMA_Daily_Snapshot_${date}.png`, fallbackLink: `${SITE_URL}/snapshot/${date}` });
     vkOk = r.ok;
     vk = r.ok ? `posted ${r.url}${r.photo ? '' : ' (без картинки' + (r.error ? ': ' + r.error : '') + ')'}` : `error: ${r.error}`;
     if (r.ok) await markSentToday('daily-snapshot-vk', via);
