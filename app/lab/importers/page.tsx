@@ -5,6 +5,7 @@ import LabHeader from '@/components/LabHeader';
 import ImportersExplorer from '@/components/ImportersExplorer';
 import ImportersDashboard from '@/components/ImportersDashboard';
 import { IMPORTERS } from '@/lib/importers';
+import { getCompanyContacts } from '@/lib/company-contacts';
 import { getDict } from '@/lib/i18n-server';
 import { getLabDict } from '@/lib/lab-i18n';
 import { localizeImporters } from '@/lib/importers-i18n';
@@ -22,10 +23,14 @@ const plural = (n: number, [one, few, many]: string[], lang: Locale) =>
     ? n % 10 === 1 && n % 100 !== 11 ? one : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? few : many
     : n === 1 ? one : many;
 
-export default function ImportersPage() {
+export default async function ImportersPage() {
   const { lang, L } = getLabDict();
   const I = L.imp;
   const { countries, vocab } = localizeImporters(IMPORTERS.countries, lang, I.notes);
+  // Контакты из Supabase (не из репозитория), по исходным названиям компаний, в порядке списка страны.
+  const cmap = await getCompanyContacts();
+  const contacts = Object.fromEntries(IMPORTERS.countries.map(c => [c.id, c.companies.map(co => cmap[`${c.id}|${co.name}`] ?? null)]));
+  const liNames = Object.fromEntries(IMPORTERS.countries.map(c => [c.id, c.companies.map(co => co.name)]));
   const total = countries.reduce((s, c) => s + c.companies.length, 0);
   const updated = new Date(IMPORTERS.updatedAt).toLocaleDateString(INTL[lang], { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
   return (
@@ -48,7 +53,7 @@ export default function ImportersPage() {
         <ImportersDashboard countries={countries} lang={lang} L={I} vocab={vocab} />
         <section aria-labelledby="cards-title" className="mt-14 pt-8 border-t border-rule">
           <h2 id="cards-title" className="font-cond text-3xl font-semibold tracking-tight mb-4">{I.cards}</h2>
-          <ImportersExplorer countries={countries} lang={lang} L={I} />
+          <ImportersExplorer countries={countries} lang={lang} L={I} contacts={contacts} liNames={liNames} />
         </section>
       </main>
     </>

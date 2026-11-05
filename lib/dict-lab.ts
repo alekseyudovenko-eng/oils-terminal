@@ -48,6 +48,7 @@ const ru = {
     cols: { company: 'Компания', segment: 'Сегмент', products: 'Масла и жиры', volume: 'Объём', notes: 'Примечание', scale: 'Масштаб', reliability: 'Достов.' },
     source: 'источник',
     checked: 'проверено {d}',
+    contacts: { phone: 'Тел.', email: 'Почта', procurement: 'Закупки', liCompany: 'компания', liProcurement: 'закупки', liRnd: 'технологи и R&D', liManagement: 'руководство', checked: 'контакты проверены {d}' },
     nothing: 'Ничего не найдено.',
     // ImportersDashboard
     codes: {
@@ -196,6 +197,7 @@ const en: LabDict = {
     cols: { company: 'Company', segment: 'Segment', products: 'Oils and fats', volume: 'Volume', notes: 'Notes', scale: 'Scale', reliability: 'Reliab.' },
     source: 'source',
     checked: 'checked {d}',
+    contacts: { phone: 'Tel.', email: 'Email', procurement: 'Purchasing', liCompany: 'company', liProcurement: 'purchasing', liRnd: 'R&D and technologists', liManagement: 'management', checked: 'contacts checked {d}' },
     nothing: 'Nothing found.',
     codes: {
       '1511m': ['1511 · palm oil, mirror data', 'Imports per reports of supplier countries (TradeMap). Full series for all countries, 2016–2025.'],
@@ -341,6 +343,7 @@ const uz: LabDict = {
     cols: { company: 'Kompaniya', segment: 'Segment', products: 'Yogʻlar', volume: 'Hajm', notes: 'Izoh', scale: 'Miqyos', reliability: 'Ishonch.' },
     source: 'manba',
     checked: 'tekshirilgan: {d}',
+    contacts: { phone: 'Tel.', email: 'Pochta', procurement: 'Xaridlar', liCompany: 'kompaniya', liProcurement: 'xaridlar', liRnd: 'texnologlar va R&D', liManagement: 'rahbariyat', checked: 'kontaktlar tekshirilgan: {d}' },
     nothing: 'Hech narsa topilmadi.',
     codes: {
       '1511m': ['1511 · palma, koʻzgu maʼlumotlari', 'Yetkazib beruvchi mamlakatlar hisobotlari boʻyicha import (TradeMap). Barcha mamlakatlar uchun toʻliq qator, 2016–2025.'],
@@ -486,6 +489,7 @@ const kk: LabDict = {
     cols: { company: 'Компания', segment: 'Сегмент', products: 'Майлар', volume: 'Көлем', notes: 'Ескертпе', scale: 'Ауқым', reliability: 'Сенім.' },
     source: 'дереккөз',
     checked: 'тексерілді: {d}',
+    contacts: { phone: 'Тел.', email: 'Пошта', procurement: 'Сатып алу', liCompany: 'компания', liProcurement: 'сатып алу', liRnd: 'технологтар және R&D', liManagement: 'басшылық', checked: 'байланыстар тексерілді: {d}' },
     nothing: 'Ештеңе табылмады.',
     codes: {
       '1511m': ['1511 · пальма, айналық деректер', 'Жеткізуші елдердің есептері бойынша импорт (TradeMap). Барлық елдер үшін толық қатар, 2016–2025.'],
@@ -631,6 +635,7 @@ const ms: LabDict = {
     cols: { company: 'Syarikat', segment: 'Segmen', products: 'Minyak dan lemak', volume: 'Jumlah', notes: 'Nota', scale: 'Skala', reliability: 'Kebolehp.' },
     source: 'sumber',
     checked: 'disemak {d}',
+    contacts: { phone: 'Tel.', email: 'E-mel', procurement: 'Perolehan', liCompany: 'syarikat', liProcurement: 'perolehan', liRnd: 'R&D dan teknologis', liManagement: 'pengurusan', checked: 'kenalan disemak {d}' },
     nothing: 'Tiada hasil.',
     codes: {
       '1511m': ['1511 · minyak sawit, data cermin', 'Import menurut laporan negara pembekal (TradeMap). Siri lengkap bagi semua negara, 2016–2025.'],

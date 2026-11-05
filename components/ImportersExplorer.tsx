@@ -5,10 +5,17 @@ import type { Country } from '@/lib/importers';
 import type { LabDict } from '@/lib/dict-lab';
 import { INTL, type Locale } from '@/lib/i18n';
 import { fill } from '@/lib/dict';
+import { linkedinLinks, type CompanyContact } from '@/lib/company-contacts-shared';
 
 const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е');
 
-export default function ImportersExplorer({ countries, lang, L }: { countries: Country[]; lang: Locale; L: LabDict['imp'] }) {
+export default function ImportersExplorer({ countries, lang, L, contacts = {}, liNames = {} }: {
+  countries: Country[]; lang: Locale; L: LabDict['imp'];
+  /** id страны → контакты в порядке country.companies (null — контактов ещё нет). */
+  contacts?: Record<string, (CompanyContact | null)[]>;
+  /** id страны → исходные (нелокализованные) названия компаний, для поиска в LinkedIn. */
+  liNames?: Record<string, string[]>;
+}) {
   const [cid, setCid] = useState(countries[0]?.id ?? '');
   const [q, setQ] = useState('');
   const [seg, setSeg] = useState('');
@@ -31,6 +38,34 @@ export default function ImportersExplorer({ countries, lang, L }: { countries: C
   }, [country, q, seg]);
 
   if (!country) return null;
+
+  const ContactBlock = ({ co, idx }: { co: Country['companies'][number]; idx: number }) => {
+    const c = contacts[country.id]?.[idx] ?? null;
+    const li = linkedinLinks(liNames[country.id]?.[idx] ?? co.name, c);
+    const C = L.contacts;
+    const linkCls = 'underline decoration-rule hover:text-gold';
+    return (
+      <span className="block mt-1.5 text-xs text-ink-3 space-y-0.5">
+        {c?.phone && <span className="block">{C.phone}: <a href={`tel:${c.phone.replace(/[^+\d]/g, '')}`} className={linkCls}>{c.phone}</a></span>}
+        {c?.email && <span className="block">{C.email}: <a href={`mailto:${c.email}`} className={linkCls}>{c.email}</a></span>}
+        {c?.procurement && <span className="block">{C.procurement}: {c.procurement}</span>}
+        {c?.address && <span className="block">{c.address}</span>}
+        {c?.people?.map(p => (
+          <span key={p.name} className="block">
+            {p.name}, {p.role}{p.source && <> · <a href={p.source} target="_blank" rel="noopener noreferrer" className={linkCls}>{L.source}</a></>}
+          </span>
+        ))}
+        <span className="flex flex-wrap gap-x-2 gap-y-0.5 pt-0.5">
+          <span className="text-ink-2">LinkedIn:</span>
+          <a href={li.company} target="_blank" rel="noopener noreferrer" className={linkCls}>{C.liCompany}</a>
+          <a href={li.procurement} target="_blank" rel="noopener noreferrer" className={linkCls}>{C.liProcurement}</a>
+          <a href={li.rnd} target="_blank" rel="noopener noreferrer" className={linkCls}>{C.liRnd}</a>
+          <a href={li.management} target="_blank" rel="noopener noreferrer" className={linkCls}>{C.liManagement}</a>
+        </span>
+        {c?.checkedAt && <span className="block">{fill(C.checked, { d: new Date(c.checkedAt).toLocaleDateString(INTL[lang], { timeZone: 'UTC' }) })}</span>}
+      </span>
+    );
+  };
 
   return (
     <div>
@@ -101,6 +136,7 @@ export default function ImportersExplorer({ countries, lang, L }: { countries: C
                       </span>
                       <span className="block text-xs text-ink-3">{[co.group, co.city].filter(Boolean).join(' · ')}</span>
                       {co.contacts && <span className="block text-xs text-ink-3">{co.contacts}</span>}
+                      <ContactBlock co={co} idx={country.companies.indexOf(co)} />
                     </th>
                     <td className="py-3 px-4 text-ink-2">{co.segment.join(', ')}</td>
                     <td className="py-3 px-4 text-ink-2">{co.products.join(', ')}</td>
