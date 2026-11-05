@@ -66,3 +66,19 @@ export async function postToVk(message: string, opts: { png?: ArrayBuffer; filen
     return { ok: false, error: String(e?.message || e), photo };
   }
 }
+
+/** Проверка ключа без публикации: доступ к сообществу и к загрузке фото на стену. */
+export async function checkVk(): Promise<Record<string, unknown>> {
+  if (!vkConfigured()) return { ok: false, error: 'VK not configured' };
+  const gid = groupId();
+  const out: Record<string, unknown> = { groupId: gid };
+  try {
+    const g = await call('groups.getById', { group_id: gid });
+    const grp = g?.groups?.[0] ?? g?.[0];
+    out.group = grp?.name; out.screenName = grp?.screen_name;
+  } catch (e: any) { out.groupError = String(e?.message || e); }
+  try { const s = await call('photos.getWallUploadServer', { group_id: gid }); out.photoUpload = !!s?.upload_url; }
+  catch (e: any) { out.photoUpload = false; out.photoError = String(e?.message || e); }
+  out.ok = !out.groupError;
+  return out;
+}
