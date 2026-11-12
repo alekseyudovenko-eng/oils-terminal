@@ -29,13 +29,17 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
     const timer = setTimeout(() => finish(new Error(`TradingView ${symbol}: timeout; seen ${seen.join(',').slice(0, 300)}`)), timeoutMs);
 
     ws.on('unexpected-response', (_req: unknown, res: { statusCode?: number }) => finish(new Error(`TradingView ${symbol}: HTTP ${res.statusCode}`)));
-    ws.on('open', () => {
-      seen.push('open');
+    let started = false;
+    // Запросы отправляем после приветствия сервера (пакет с session_id), иначе сервер их не принимает.
+    const start = () => {
+      if (started) return; started = true;
       ws.send(frame('set_auth_token', ['unauthorized_user_token']));
       ws.send(frame('chart_create_session', [cs, '']));
-      ws.send(frame('resolve_symbol', [cs, 'sym_1', '=' + JSON.stringify({ symbol, adjustment: 'splits', session: 'regular' })]));
-      ws.send(frame('create_series', [cs, 's1', 's1', 'sym_1', '1D', count, '']));
-    });
+      ws.send(frame('switch_timezone', [cs, 'Etc/UTC']));
+      ws.send(frame('resolve_symbol', [cs, 'sym_1', '=' + JSON.stringify({ symbol, adjustment: 'splits' })]));
+      ws.send(frame('create_series', [cs, 's1', 's1', 'sym_1', 'D', count, '']));
+    };
+    ws.on('open', () => { seen.push('open'); });
     ws.on('message', (raw: WebSocket.RawData) => {
       const text = raw.toString();
       // В одном сообщении может быть несколько пакетов ~m~len~m~payload.
@@ -50,6 +54,7 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
         if (payload.startsWith('~h~')) { ws.send(`~m~${payload.length}~m~${payload}`); continue; }
         let msg: any;
         try { msg = JSON.parse(payload); } catch { seen.push('raw:' + payload.slice(0, 40)); continue; }
+        if (msg.session_id) { start(); continue; }
         if (seen.length < 12) seen.push(String(msg.m ?? Object.keys(msg).join('+')) + (msg.m === 'symbol_error' || msg.m === 'critical_error' ? ':' + JSON.stringify(msg.p).slice(0, 80) : ''));
         if (msg.m === 'timescale_update' || msg.m === 'du') {
           const s = msg.p?.[1]?.s1?.s;
