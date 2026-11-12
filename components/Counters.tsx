@@ -1,3 +1,4 @@
+'use client';
 // Счётчики посещений: Vercel Web Analytics (без cookie) и, если задан NEXT_PUBLIC_YM_ID, Яндекс Метрика.
 // Раздел /lab не считаем.
 import Script from 'next/script';
