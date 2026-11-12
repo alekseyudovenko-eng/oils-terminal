@@ -31,7 +31,7 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
     ws.on('unexpected-response', (_req: unknown, res: { statusCode?: number }) => finish(new Error(`TradingView ${symbol}: HTTP ${res.statusCode}`)));
     let started = false;
     // Запросы отправляем после приветствия сервера (пакет с session_id), иначе сервер их не принимает.
-    const start = () => {
+    const begin = () => {
       if (started) return; started = true;
       ws.send(frame('set_auth_token', ['unauthorized_user_token']));
       ws.send(frame('chart_create_session', [cs, '']));
@@ -54,7 +54,7 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
         if (payload.startsWith('~h~')) { ws.send(`~m~${payload.length}~m~${payload}`); continue; }
         let msg: any;
         try { msg = JSON.parse(payload); } catch { seen.push('raw:' + payload.slice(0, 40)); continue; }
-        if (msg.session_id) { start(); continue; }
+        if (msg.session_id) { begin(); continue; }
         if (seen.length < 12) seen.push(String(msg.m ?? Object.keys(msg).join('+')) + (msg.m === 'symbol_error' || msg.m === 'critical_error' ? ':' + JSON.stringify(msg.p).slice(0, 80) : ''));
         if (msg.m === 'timescale_update' || msg.m === 'du') {
           const s = msg.p?.[1]?.s1?.s;
