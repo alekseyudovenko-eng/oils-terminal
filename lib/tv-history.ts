@@ -18,6 +18,7 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
     const cs = rnd('cs_');
     const bars = new Map<string, number>();
     let done = false;
+    const seen: string[] = [];
     const finish = (err?: Error) => {
       if (done) return; done = true;
       clearTimeout(timer);
@@ -25,9 +26,11 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
       if (err && bars.size === 0) reject(err);
       else resolve(Array.from(bars.entries()).map(([day, close]) => ({ day, close })).sort((a, b) => a.day.localeCompare(b.day)));
     };
-    const timer = setTimeout(() => finish(new Error(`TradingView ${symbol}: timeout`)), timeoutMs);
+    const timer = setTimeout(() => finish(new Error(`TradingView ${symbol}: timeout; seen ${seen.join(',').slice(0, 300)}`)), timeoutMs);
 
+    ws.on('unexpected-response', (_req: unknown, res: { statusCode?: number }) => finish(new Error(`TradingView ${symbol}: HTTP ${res.statusCode}`)));
     ws.on('open', () => {
+      seen.push('open');
       ws.send(frame('set_auth_token', ['unauthorized_user_token']));
       ws.send(frame('chart_create_session', [cs, '']));
       ws.send(frame('resolve_symbol', [cs, 'sym_1', '=' + JSON.stringify({ symbol, adjustment: 'splits', session: 'regular' })]));
@@ -46,7 +49,8 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
         i = start + len;
         if (payload.startsWith('~h~')) { ws.send(`~m~${payload.length}~m~${payload}`); continue; }
         let msg: any;
-        try { msg = JSON.parse(payload); } catch { continue; }
+        try { msg = JSON.parse(payload); } catch { seen.push('raw:' + payload.slice(0, 40)); continue; }
+        if (seen.length < 12) seen.push(String(msg.m ?? Object.keys(msg).join('+')) + (msg.m === 'symbol_error' || msg.m === 'critical_error' ? ':' + JSON.stringify(msg.p).slice(0, 80) : ''));
         if (msg.m === 'timescale_update' || msg.m === 'du') {
           const s = msg.p?.[1]?.s1?.s;
           if (Array.isArray(s)) for (const b of s) {
