@@ -37,7 +37,9 @@ export async function GET(request: Request) {
     }
     if (!got.length) { report[id] = `error: ${errors.join(' | ').slice(0, 300)}`; return; }
     const now = new Date().toISOString();
-    const rows = got.map(b => ({ series: id, day: b.day, close: b.close, source, updated_at: now }));
+    // Одна строка на день (у Yahoo бывают два бара на одну дату).
+    const byDay = new Map(got.map(b => [b.day, b.close]));
+    const rows = Array.from(byDay.entries()).map(([day, close]) => ({ series: id, day, close, source, updated_at: now }));
     for (let i = 0; i < rows.length; i += 1000) {
       const { error } = await db.from('price_history').upsert(rows.slice(i, i + 1000), { onConflict: 'series,day' });
       if (error) { report[id] = `db error: ${error.message}`; return; }

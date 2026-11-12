@@ -78,6 +78,23 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
 
 /** Дневные свечи Sina Finance (китайские фьючерсы, например P0 — пальмовый олеин DCE). */
 export async function sinaDailyBars(code: string): Promise<Bar[]> {
+  // Новый сервис (актуальные данные); старый getInnerFuturesDailyKLine остался запасным — он перестал обновляться в 2024 г.
+  try {
+    const url = `https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_x=/InnerFuturesNewService.getDailyKLine?symbol=${encodeURIComponent(code)}`;
+    const res = await fetch(url, { headers: { Referer: 'https://finance.sina.com.cn/' }, cache: 'no-store', signal: AbortSignal.timeout(20000) });
+    const text = await res.text();
+    const m = text.match(/\((\[[\s\S]*\])\)/);
+    if (res.ok && m) {
+      const arr = JSON.parse(m[1]) as { d: string; c: string }[];
+      const out = arr.map(r => ({ day: String(r.d).slice(0, 10), close: Number(r.c) }))
+        .filter(b => /^\d{4}-\d{2}-\d{2}$/.test(b.day) && Number.isFinite(b.close) && b.close > 0);
+      if (out.length) return out;
+    }
+  } catch { /* пробуем старый сервис */ }
+  return sinaDailyBarsOld(code);
+}
+
+async function sinaDailyBarsOld(code: string): Promise<Bar[]> {
   const url = `https://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesDailyKLine?symbol=${encodeURIComponent(code)}`;
   const res = await fetch(url, { headers: { Referer: 'https://finance.sina.com.cn/' }, cache: 'no-store', signal: AbortSignal.timeout(20000) });
   if (!res.ok) throw new Error(`Sina ${code}: HTTP ${res.status}`);
@@ -132,7 +149,6 @@ export const HISTORY_SOURCES: Record<string, ({ kind: 'sina'; code: string } | {
   zl: [{ kind: 'sinaGlobal', code: 'BO' }, { kind: 'yahoo', code: 'ZL=F' }],
   dce_soyoil: [{ kind: 'sina', code: 'Y0' }],
   zce_rapeoil: [{ kind: 'sina', code: 'OI0' }],
-  eco: [{ kind: 'yahoo', code: 'ECO=F' }],
   brent: [{ kind: 'sinaGlobal', code: 'OIL' }, { kind: 'yahoo', code: 'BZ=F' }],
   wti: [{ kind: 'sinaGlobal', code: 'CL' }, { kind: 'yahoo', code: 'CL=F' }],
   ulsd: [{ kind: 'yahoo', code: 'HO=F' }, { kind: 'sinaGlobal', code: 'HO' }],
