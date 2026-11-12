@@ -88,3 +88,55 @@ export async function sinaDailyBars(code: string): Promise<Bar[]> {
     .map((r: any[]) => ({ day: String(r[0]).slice(0, 10), close: Number(r[4]) }))
     .filter((b: Bar) => /^\d{4}-\d{2}-\d{2}$/.test(b.day) && Number.isFinite(b.close) && b.close > 0);
 }
+
+/** Дневные свечи Sina Finance по мировым фьючерсам (FCPO, BO — соевое масло CBOT, OIL — Brent, CL — WTI, HO — дизель). */
+export async function sinaGlobalBars(code: string): Promise<Bar[]> {
+  const url = `https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_x=/GlobalFuturesService.getGlobalFuturesDailyKLine?symbol=${encodeURIComponent(code)}`;
+  const res = await fetch(url, { headers: { Referer: 'https://finance.sina.com.cn/' }, cache: 'no-store', signal: AbortSignal.timeout(20000) });
+  if (!res.ok) throw new Error(`Sina global ${code}: HTTP ${res.status}`);
+  const text = await res.text();
+  const m = text.match(/\((\[[\s\S]*\])\)/);
+  if (!m) throw new Error(`Sina global ${code}: unexpected response ${text.slice(0, 80)}`);
+  const arr = JSON.parse(m[1]) as { date: string; close: string }[];
+  return arr
+    .map(r => ({ day: String(r.date).slice(0, 10), close: Number(r.close) }))
+    .filter(b => /^\d{4}-\d{2}-\d{2}$/.test(b.day) && Number.isFinite(b.close) && b.close > 0);
+}
+
+/** Дневные цены закрытия Yahoo Finance (валюты: MYR=X, CNY=X, EURUSD=X). */
+export async function yahooBars(symbol: string): Promise<Bar[]> {
+  let last = '';
+  for (const host of ['query1', 'query2']) {
+    try {
+      const res = await fetch(`https://${host}.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=10y&interval=1d`, {
+        headers: { 'User-Agent': 'Mozilla/5.0' }, cache: 'no-store', signal: AbortSignal.timeout(20000),
+      });
+      if (!res.ok) { last = `HTTP ${res.status}`; continue; }
+      const j = await res.json();
+      const r = j?.chart?.result?.[0];
+      const ts: number[] = r?.timestamp || [];
+      const cl: (number | null)[] = r?.indicators?.quote?.[0]?.close || [];
+      const out: Bar[] = [];
+      ts.forEach((t, i) => { const c = cl[i]; if (c != null && Number.isFinite(c)) out.push({ day: new Date((t + 12 * 3600) * 1000).toISOString().slice(0, 10), close: c }); });
+      if (out.length) return out;
+      last = 'empty';
+    } catch (e: any) { last = String(e?.message || e); }
+  }
+  throw new Error(`Yahoo ${symbol}: ${last}`);
+}
+
+/** Откуда брать историю для графика: по порядку, первый источник с данными. */
+export const HISTORY_SOURCES: Record<string, ({ kind: 'sina'; code: string } | { kind: 'sinaGlobal'; code: string } | { kind: 'yahoo'; code: string })[]> = {
+  fcpo: [{ kind: 'sinaGlobal', code: 'FCPO' }],
+  dce_olein: [{ kind: 'sina', code: 'P0' }],
+  zl: [{ kind: 'sinaGlobal', code: 'BO' }, { kind: 'yahoo', code: 'ZL=F' }],
+  dce_soyoil: [{ kind: 'sina', code: 'Y0' }],
+  zce_rapeoil: [{ kind: 'sina', code: 'OI0' }],
+  eco: [{ kind: 'yahoo', code: 'ECO=F' }],
+  brent: [{ kind: 'sinaGlobal', code: 'OIL' }, { kind: 'yahoo', code: 'BZ=F' }],
+  wti: [{ kind: 'sinaGlobal', code: 'CL' }, { kind: 'yahoo', code: 'CL=F' }],
+  ulsd: [{ kind: 'yahoo', code: 'HO=F' }, { kind: 'sinaGlobal', code: 'HO' }],
+  usdmyr: [{ kind: 'yahoo', code: 'MYR=X' }],
+  usdcny: [{ kind: 'yahoo', code: 'CNY=X' }],
+  eurusd: [{ kind: 'yahoo', code: 'EURUSD=X' }],
+};

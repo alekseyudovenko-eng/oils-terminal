@@ -1,4 +1,5 @@
 // /api/cron/price-history — дневные цены закрытия для графиков (таблица price_history).
+// Источники: Sina Finance (FCPO, Далянь, Чжэнчжоу, CBOT, нефть) и Yahoo Finance (валюты, запасные).
 // Vercel Cron каждый будний вечер берёт последние 10 дней (?bars=10 по умолчанию).
 // Первичная загрузка истории: ?key=<CRON_SECRET>&bars=1500 (≈6 лет), можно частями: &ids=fcpo,zl.
 import { NextResponse } from 'next/server';
@@ -6,7 +7,7 @@ import { revalidateTag } from 'next/cache';
 import { isCronAuthorized } from '@/lib/auth';
 import { getFreshDb as getDb } from '@/lib/db';
 import { INSTRUMENTS } from '@/lib/instruments';
-import { CHART_IDS, sinaDailyBars, tvDailyBars, type Bar } from '@/lib/tv-history';
+import { CHART_IDS, HISTORY_SOURCES, sinaDailyBars, sinaGlobalBars, yahooBars, type Bar } from '@/lib/tv-history';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -27,13 +28,12 @@ export async function GET(request: Request) {
     let got: Bar[] = [];
     let source = '';
     const errors: string[] = [];
-    for (const t of inst.tickers) {
-      try { got = await tvDailyBars(t, bars); source = `tv:${t}`; if (got.length) break; }
-      catch (e: any) { errors.push(String(e?.message || e)); }
-    }
-    if (!got.length && inst.sina) {
-      try { got = (await sinaDailyBars(inst.sina)).slice(-bars); source = `sina:${inst.sina}`; }
-      catch (e: any) { errors.push(String(e?.message || e)); }
+    for (const src of HISTORY_SOURCES[id] || []) {
+      try {
+        const all = src.kind === 'sina' ? await sinaDailyBars(src.code) : src.kind === 'sinaGlobal' ? await sinaGlobalBars(src.code) : await yahooBars(src.code);
+        got = all.slice(-bars); source = `${src.kind}:${src.code}`;
+        if (got.length) break;
+      } catch (e: any) { errors.push(String(e?.message || e)); }
     }
     if (!got.length) { report[id] = `error: ${errors.join(' | ').slice(0, 300)}`; return; }
     const now = new Date().toISOString();
