@@ -11,7 +11,7 @@ export const WASDE_DATES: string[] = [
 ];
 
 export type CalKind = 'wasde' | 'mpob' | 'cargo' | 'refprice' | 'reg';
-export type CalEvent = { date: string; kind: CalKind; approx: boolean; key?: string };
+export type CalEvent = { date: string; kind: CalKind; approx: boolean; key?: string; day?: number };
 
 /** Разовые события (точные даты). key — ключ подписи в словаре. */
 const FIXED: CalEvent[] = [
@@ -69,7 +69,7 @@ export function upcomingEvents(from = new Date(), days = 45): CalEvent[] {
     const y = from.getUTCFullYear(), m = from.getUTCMonth() + k;
     out.push({ date: iso(nextBusinessDay(utc(y, m, 10))), kind: 'mpob', approx: true });
     out.push({ date: iso(nextBusinessDay(utc(y, m, 15))), kind: 'refprice', approx: true });
-    for (const dd of [10, 15, 20, 25]) out.push({ date: iso(nextBusinessDay(utc(y, m, dd))), kind: 'cargo', approx: true });
+    for (const dd of [10, 15, 20, 25]) out.push({ date: iso(nextBusinessDay(utc(y, m, dd))), kind: 'cargo', approx: true, day: dd });
     // Конец месяца: последний календарный день; если выходной — данные выходят в первый рабочий день.
     out.push({ date: iso(nextBusinessDay(utc(y, m + 1, 0))), kind: 'cargo', approx: true, key: 'monthEnd' });
   }

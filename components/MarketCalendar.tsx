@@ -10,7 +10,7 @@ export default function MarketCalendar({ lang, days = 30, max = 10 }: { lang: Lo
   const today = new Date().toISOString().slice(0, 10);
   const label = (e: CalEvent) => {
     if (e.kind === 'reg') return e.key === 'eudr' ? x.eudr : x.contaminants;
-    if (e.kind === 'cargo') return e.key === 'monthEnd' ? x.monthEnd : fill(x.cargo, { d: Number(e.date.slice(8, 10)) });
+    if (e.kind === 'cargo') return e.key === 'monthEnd' ? x.monthEnd : fill(x.cargo, { d: e.day ?? Number(e.date.slice(8, 10)) });
     return x[e.kind];
   };
   // Сюрвейеры выходят 5 раз в месяц: показываем только ближайший выпуск, чтобы не забивать список.

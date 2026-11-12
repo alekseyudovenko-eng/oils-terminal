@@ -63,6 +63,7 @@ export default async function OverviewPage() {
             <QuotesTable quotes={quotes.quotes} />
           </Section>
           <RegionBlock data={region} lang={lang} />
+          <div className="py-8"><SubscribeForm lang={lang} source="home" compact /></div>
         </div>
 
         <div className="min-w-0">
@@ -103,7 +104,6 @@ export default async function OverviewPage() {
             </ul>
           </section>
         )}
-        <SubscribeForm lang={lang} source="home" />
       </div>
 
       <SiteFooter updatedAt={quotes.fetchedAt} />

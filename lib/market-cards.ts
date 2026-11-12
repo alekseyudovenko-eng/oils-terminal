@@ -25,7 +25,7 @@ export async function getMpobLatest(): Promise<MpobMonth | null> {
 }
 
 /** Страны блока «Регион» (ISO3) в порядке показа. */
-export const REGION_COUNTRIES = ['RUS', 'UZB', 'KAZ', 'KGZ', 'TJK', 'TKM', 'AZE', 'GEO', 'ARM', 'UKR', 'BLR', 'TUR'] as const;
+export const REGION_COUNTRIES = ['RUS', 'UZB', 'KAZ', 'KGZ', 'TJK', 'TKM', 'AZE', 'GEO', 'ARM', 'UKR', 'BLR'] as const;
 
 export type RegionRow = { iso: string; full: number; fullMy: number; ytd: number; ytdPrev: number };
 export type RegionData = { year: number; fullYear: number; ytdMonth: number; rows: RegionRow[] };
@@ -61,7 +61,7 @@ async function loadRegion(): Promise<RegionData | null> {
   }).filter(r => r.full > 0.05 || r.ytd > 0.05);
   return { year, fullYear, ytdMonth, rows: out };
 }
-const cachedRegion = unstable_cache(loadRegion, ['region-trade-v1'], { revalidate: 6 * 3600, tags: ['comtrade'] });
+const cachedRegion = unstable_cache(loadRegion, ['region-trade-v2'], { revalidate: 6 * 3600, tags: ['comtrade'] });
 export async function getRegionTrade(): Promise<RegionData | null> {
   try { return await cachedRegion(); } catch (e) { rethrowIfNextInternal(e); console.error('getRegionTrade:', e); return null; }
 }
