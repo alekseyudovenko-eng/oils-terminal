@@ -7,14 +7,14 @@ export type Bar = { day: string; close: number };
 
 export { CHART_IDS } from './chart-ids';
 
-const TV_URL = 'wss://data.tradingview.com/socket.io/websocket?from=chart%2F&type=chart';
-const frame = (m: string, p: unknown[]) => { const s = JSON.stringify({ m, p }); return `~m~${s.length}~m~${s}`; };
+const TV_URL = 'wss://data.tradingview.com/socket.io/websocket';
+const frame = (m: string, p: unknown[]) => { const s = JSON.stringify({ m, p }); return `~m~${Buffer.byteLength(s, 'utf8')}~m~${s}`; };
 const rnd = (prefix: string) => prefix + Math.random().toString(36).slice(2, 14);
 
 /** Дневные бары TradingView по символу (например MYX:FCPO1!). count — сколько последних дней. */
 export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): Promise<Bar[]> {
   return new Promise((resolve, reject) => {
-    const ws = new WebSocket(TV_URL, { headers: { Origin: 'https://www.tradingview.com', 'User-Agent': 'Mozilla/5.0' } });
+    const ws = new WebSocket(TV_URL, { headers: { Origin: 'https://data.tradingview.com', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } });
     const cs = rnd('cs_');
     const bars = new Map<string, number>();
     let done = false;
@@ -35,11 +35,10 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
       if (started) return; started = true;
       ws.send(frame('set_auth_token', ['unauthorized_user_token']));
       ws.send(frame('chart_create_session', [cs, '']));
-      ws.send(frame('switch_timezone', [cs, 'Etc/UTC']));
-      ws.send(frame('resolve_symbol', [cs, 'sym_1', '=' + JSON.stringify({ symbol, adjustment: 'splits' })]));
-      ws.send(frame('create_series', [cs, 's1', 's1', 'sym_1', 'D', count, '']));
+      ws.send(frame('resolve_symbol', [cs, 'symbol_1', '=' + JSON.stringify({ symbol, adjustment: 'splits', session: 'regular' })]));
+      ws.send(frame('create_series', [cs, 's1', 's1', 'symbol_1', '1D', count]));
     };
-    ws.on('open', () => { seen.push('open'); });
+    ws.on('open', () => { seen.push('open'); begin(); });
     ws.on('message', (raw: WebSocket.RawData) => {
       const text = raw.toString();
       // В одном сообщении может быть несколько пакетов ~m~len~m~payload.
@@ -54,7 +53,7 @@ export function tvDailyBars(symbol: string, count: number, timeoutMs = 25000): P
         if (payload.startsWith('~h~')) { ws.send(`~m~${payload.length}~m~${payload}`); continue; }
         let msg: any;
         try { msg = JSON.parse(payload); } catch { seen.push('raw:' + payload.slice(0, 40)); continue; }
-        if (msg.session_id) { begin(); continue; }
+        if (msg.session_id) { seen.push('hello'); continue; }
         if (seen.length < 12) seen.push(String(msg.m ?? Object.keys(msg).join('+')) + (msg.m === 'symbol_error' || msg.m === 'critical_error' ? ':' + JSON.stringify(msg.p).slice(0, 80) : ''));
         if (msg.m === 'timescale_update' || msg.m === 'du') {
           const s = msg.p?.[1]?.s1?.s;
