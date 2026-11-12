@@ -165,7 +165,7 @@ async function loadPsd(): Promise<PsdData> {
   return { rows, updatedAt };
 }
 
-const cachedPsd = unstable_cache(loadPsd, ['psd-v3'], { revalidate: 3600 });
+const cachedPsd = unstable_cache(loadPsd, ['psd-v3'], { revalidate: 3600, tags: ['psd'] });
 
 export async function getPsd(): Promise<PsdData> {
   try {

@@ -16,7 +16,8 @@ import { getNewsFeed } from '@/lib/news';
 import { getPsd } from '@/lib/psd';
 import { buildPsdView } from '@/lib/psd-view';
 import { getHistory } from '@/lib/snapshots';
-import { fmtTimeUtc } from '@/lib/format';
+import { fmtTimeUtc, fmtLongDate as fmtDay } from '@/lib/format';
+import { lastWasdeBefore } from '@/lib/market-calendar';
 import { getDict } from '@/lib/i18n-server';
 import { fill } from '@/lib/dict';
 import { METRICS } from '@/lib/psd-meta';
@@ -77,7 +78,7 @@ export default async function MarketPage() {
         <Section
           id="usda"
           title={m.anchors.usda}
-          note={<>{m.usdaNote}{psd.updatedAt && fill(m.usdaLoaded, { time: fmtTimeUtc(psd.updatedAt, lang) })}</>}
+          note={<>{m.usdaNote}{psd.updatedAt && (() => { const w = lastWasdeBefore(psd.updatedAt!); return w ? fill(m.usdaWasde, { date: fmtDay(w, lang), time: fmtTimeUtc(psd.updatedAt!, lang) }) : fill(m.usdaLoaded, { time: fmtTimeUtc(psd.updatedAt!, lang) }); })()}</>}
         >
           {hasPsd ? (
             <PsdExplorer
