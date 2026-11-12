@@ -2,7 +2,7 @@
 // Счётчики посещений: Vercel Web Analytics (без cookie) и, если задан NEXT_PUBLIC_YM_ID, Яндекс Метрика.
 // Раздел /lab не считаем.
 import Script from 'next/script';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/next';
 
 export default function Counters() {
   const ym = (process.env.NEXT_PUBLIC_YM_ID || '').replace(/\D/g, '');
