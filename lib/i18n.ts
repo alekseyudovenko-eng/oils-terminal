@@ -40,7 +40,7 @@ export const PATH_LOCALES = LOCALES.filter(l => l !== DEFAULT_LOCALE);
 export const LOCALE_HEADER = 'x-locale';
 
 /** Публичные страницы, у которых есть языковые версии. */
-export const PUBLIC_PATHS = ['/', '/market'] as const;
+export const PUBLIC_PATHS = ['/', '/market', '/analytics'] as const;
 
 /** Адрес страницы на нужном языке: localePath('en', '/market#news') → '/en/market#news'. */
 export function localePath(lang: Locale, path: string): string {

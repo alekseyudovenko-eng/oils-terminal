@@ -14,7 +14,7 @@ export default function LanguageSwitcher({ lang, label }: { lang: Locale; label:
   function change(next: Locale) {
     document.cookie = `${LANG_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
     const { path } = splitLocalePath(pathname || '/');
-    if ((PUBLIC_PATHS as readonly string[]).includes(path)) {
+    if ((PUBLIC_PATHS as readonly string[]).includes(path) || /^\/(chart|analytics|news)(\/|$)/.test(path)) {
       // Полная загрузка: так обновится и <html lang>, и метаданные страницы.
       window.location.assign(localePath(next, path) + window.location.hash);
     } else {

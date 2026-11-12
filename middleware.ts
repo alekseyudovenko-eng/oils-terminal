@@ -10,8 +10,9 @@ import { DEFAULT_LOCALE, LANG_COOKIE, LOCALE_HEADER, isLocale, localePath, split
 
 export const config = {
   matcher: [
-    '/', '/market',
-    '/(en|uz|kk|ms)', '/(en|uz|kk|ms)/market',
+    '/', '/market', '/chart/:path*', '/analytics', '/analytics/:path*', '/news/:path*',
+    '/(en|uz|kk|ms)', '/(en|uz|kk|ms)/market', '/(en|uz|kk|ms)/chart/:path*',
+    '/(en|uz|kk|ms)/analytics', '/(en|uz|kk|ms)/analytics/:path*', '/(en|uz|kk|ms)/news/:path*',
     '/lab', '/lab/:path*',
   ],
 };

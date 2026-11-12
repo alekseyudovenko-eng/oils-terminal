@@ -5,6 +5,8 @@ import type { Group } from '@/lib/instruments';
 import type { Quote } from '@/lib/quotes';
 import { getDict } from '@/lib/i18n-server';
 import { instText } from '@/lib/quote-i18n';
+import { localePath } from '@/lib/i18n';
+import { CHART_IDS } from '@/lib/chart-ids';
 
 const ORDER: Group[] = ['palm', 'softoils', 'energy', 'fx'];
 
@@ -46,7 +48,9 @@ export default function QuotesTable({ quotes }: { quotes: Quote[] }) {
               return (
                 <tr key={q.id} className={q.id === 'fcpo' ? 'bg-gold-soft/60' : ''}>
                   <th scope="row" className="py-2 pr-4 text-left font-normal">
-                    <span className="text-ink">{it.name}</span>
+                    {CHART_IDS.includes(q.id)
+                      ? <a href={localePath(lang, `/chart/${q.id}`)} className="text-ink hover:text-gold underline decoration-rule underline-offset-2">{it.name}</a>
+                      : <span className="text-ink">{it.name}</span>}
                     <span className="block text-xs text-ink-3">{it.venue}</span>
                   </th>
                   <td className="py-2 px-3 text-right font-cond text-base font-medium num">{fmtPrice(q.price, lang)}</td>

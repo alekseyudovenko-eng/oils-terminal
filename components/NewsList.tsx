@@ -2,6 +2,8 @@ import { fmtDate, fmtAgo } from '@/lib/format';
 import type { NewsItem } from '@/lib/news';
 import { getDict } from '@/lib/i18n-server';
 import { newsText, regionText } from '@/lib/news-i18n';
+import { newsSlug } from '@/lib/news-slug';
+import { localePath } from '@/lib/i18n';
 
 export default function NewsList({ news, limit }: { news: NewsItem[]; limit?: number }) {
   const { lang, t } = getDict();
@@ -17,12 +19,12 @@ export default function NewsList({ news, limit }: { news: NewsItem[]; limit?: nu
             {n.publishedAt.length <= 10 ? fmtDate(n.publishedAt, lang) : fmtAgo(n.publishedAt, lang)}
           </time>
           <div className="min-w-0">
-            <a href={n.url} target="_blank" rel="noopener noreferrer" className="text-ink hover:text-gold hover:underline underline-offset-2 leading-snug">
+            <a href={localePath(lang, `/news/${newsSlug(n)}`)} className="text-ink hover:text-gold hover:underline underline-offset-2 leading-snug">
               {tx.title}
             </a>
             {tx.summary && <p className="mt-1 text-sm text-ink-2 max-w-[75ch]">{tx.summary}</p>}
             <p className="mt-1 text-xs text-ink-3">
-              {n.source}
+              <a href={n.url} target="_blank" rel="noopener noreferrer" className="hover:text-gold underline decoration-rule underline-offset-2">{n.source}</a>
               {region && <span className="ml-2">{region}</span>}
               {n.topics.length > 0 && <span className="ml-2">{n.topics.map(tp => t.news.topics[tp]).join(', ')}</span>}
             </p>

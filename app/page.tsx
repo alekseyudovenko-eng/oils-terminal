@@ -8,6 +8,17 @@ import QuotesTable from '@/components/QuotesTable';
 import NewsList from '@/components/NewsList';
 import Section from '@/components/Section';
 import Notice from '@/components/Notice';
+import PriceChart from '@/components/PriceChart';
+import MpobCard from '@/components/MpobCard';
+import MarketCalendar from '@/components/MarketCalendar';
+import RegionBlock from '@/components/RegionBlock';
+import SubscribeForm from '@/components/SubscribeForm';
+import { getPriceHistory } from '@/lib/price-history';
+import { getMpobLatest, getRegionTrade } from '@/lib/market-cards';
+import { upcomingEvents } from '@/lib/market-calendar';
+import { getArticles } from '@/lib/analytics';
+import { EXTRA } from '@/lib/dict-extra';
+import { INTL } from '@/lib/i18n';
 import { getQuotes } from '@/lib/quotes';
 import { getNewsFeed } from '@/lib/news';
 import { fmtTimeUtc } from '@/lib/format';
@@ -23,8 +34,15 @@ export function generateMetadata(): Metadata {
 }
 
 export default async function OverviewPage() {
-  const [quotes, feed] = await Promise.all([getQuotes(), getNewsFeed()]);
+  const [quotes, feed, fcpo, mpob, region] = await Promise.all([getQuotes(), getNewsFeed(), getPriceHistory('fcpo'), getMpobLatest(), getRegionTrade()]);
   const { lang, t } = getDict();
+  const x = EXTRA[lang];
+  const q = quotes.quotes.find(z => z.id === 'fcpo');
+  const today = quotes.fetchedAt.slice(0, 10);
+  const fcpoPoints = [...fcpo];
+  if (q?.price != null && (!fcpoPoints.length || fcpoPoints[fcpoPoints.length - 1].d < today)) fcpoPoints.push({ d: today, c: q.price });
+  const nextMpob = upcomingEvents(new Date(), 45).find(e => e.kind === 'mpob')?.date ?? null;
+  const articles = getArticles().slice(0, 3);
 
   return (
     <>
@@ -33,11 +51,23 @@ export default async function OverviewPage() {
       <Hero data={quotes} />
 
       <main className="mx-auto max-w-page w-full px-4 sm:px-6 grid gap-x-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-        <Section id="indices" title={t.overview.indices}>
-          {quotes.error && <Notice>{t.quotes.unavailable}</Notice>}
-          <QuotesTable quotes={quotes.quotes} />
-        </Section>
+        <div className="min-w-0">
+          {fcpoPoints.length > 1 && (
+            <Section id="chart" title={x.chart.homeTitle}
+              action={<Link href={localePath(lang, '/chart/fcpo')} className="text-sm text-ink-2 hover:text-gold underline underline-offset-2">{x.chart.open} →</Link>}>
+              <PriceChart points={fcpoPoints} unit="MYR/t" locale={INTL[lang]} labels={{ ...x.chart }} initial="1y" height={260} />
+            </Section>
+          )}
+          <Section id="indices" title={t.overview.indices}>
+            {quotes.error && <Notice>{t.quotes.unavailable}</Notice>}
+            <QuotesTable quotes={quotes.quotes} />
+          </Section>
+          <RegionBlock data={region} lang={lang} />
+        </div>
 
+        <div className="min-w-0">
+        <MpobCard data={mpob} lang={lang} nextDate={nextMpob} />
+        <MarketCalendar lang={lang} />
         <Section
           id="news"
           title={t.overview.news}
@@ -53,7 +83,28 @@ export default async function OverviewPage() {
             {t.footer.telegram.split('{link}')[1]}
           </p>
         </Section>
+        </div>
       </main>
+
+      <div className="mx-auto max-w-page w-full px-4 sm:px-6 pb-10 grid gap-8">
+        {articles.length > 0 && (
+          <section aria-labelledby="an-title">
+            <div className="flex items-baseline justify-between mb-3">
+              <h2 id="an-title" className="font-cond text-2xl font-semibold tracking-tight">{x.analytics.home}</h2>
+              <Link href={localePath(lang, '/analytics')} className="text-sm text-ink-2 hover:text-gold underline underline-offset-2">{x.analytics.all}</Link>
+            </div>
+            <ul className="grid gap-4 md:grid-cols-3">
+              {articles.map(a => (
+                <li key={a.slug} className="rounded-lg border border-rule bg-panel p-4">
+                  <a href={localePath(lang, `/analytics/${a.slug}`)} className="font-cond text-lg font-semibold hover:text-gold leading-snug">{a.title}</a>
+                  <p className="text-sm text-ink-2 mt-1">{a.summary}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        <SubscribeForm lang={lang} source="home" />
+      </div>
 
       <SiteFooter updatedAt={quotes.fetchedAt} />
     </>

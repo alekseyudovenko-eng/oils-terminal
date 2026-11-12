@@ -55,6 +55,12 @@ export function getCuratedNews(now = Date.now()): NewsItem[] {
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
 
+/** Все новости файла отбора без ограничения по возрасту (для страниц /news/…). */
+export function getAllCuratedNews(): NewsItem[] {
+  const file = curated as unknown as CuratedFile;
+  return (file.items || []).slice().sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+}
+
 /** Новости, добавленные в отбор за последние `hours` часов (для Telegram). */
 export function getRecentlyAdded(hours: number, now = Date.now()) {
   const file = curated as unknown as CuratedFile;

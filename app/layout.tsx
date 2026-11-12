@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Fira_Sans, Fira_Sans_Condensed } from 'next/font/google';
 import { getDict, getLocale } from '@/lib/i18n-server';
 import { SITE_NAME, SITE_URL, openGraphFor } from '@/lib/site';
+import Counters from '@/components/Counters';
 
 const sans = Fira_Sans({
   subsets: ['latin', 'cyrillic'],
@@ -31,6 +32,7 @@ export function generateMetadata(): Metadata {
   // Коды подтверждения для Google Search Console и Bing Webmaster задаются в Vercel (необязательно).
   const google = verificationCode(process.env.GOOGLE_SITE_VERIFICATION);
   const bing = verificationCode(process.env.BING_SITE_VERIFICATION);
+  const yandex = verificationCode(process.env.YANDEX_VERIFICATION);
   const homeTitle = `${t.meta.title} — ${SITE_NAME}`;
   return {
     metadataBase: new URL(SITE_URL),
@@ -40,6 +42,7 @@ export function generateMetadata(): Metadata {
     twitter: { card: 'summary_large_image' },
     verification: {
       ...(google ? { google } : {}),
+      ...(yandex ? { yandex } : {}),
       ...(bing ? { other: { 'msvalidate.01': bing } } : {}),
     },
   };
@@ -48,7 +51,7 @@ export function generateMetadata(): Metadata {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang={getLocale()} className={`${sans.variable} ${cond.variable}`}>
-      <body className="font-sans min-h-screen flex flex-col">{children}</body>
+      <body className="font-sans min-h-screen flex flex-col">{children}<Counters /></body>
     </html>
   );
 }

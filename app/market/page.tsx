@@ -11,6 +11,8 @@ import RegionalBalances from '@/components/RegionalBalances';
 import NewsList from '@/components/NewsList';
 import Section from '@/components/Section';
 import Notice from '@/components/Notice';
+import SubscribeForm from '@/components/SubscribeForm';
+import MarketCalendar from '@/components/MarketCalendar';
 import { getQuotes } from '@/lib/quotes';
 import { getNewsFeed } from '@/lib/news';
 import { getPsd } from '@/lib/psd';
@@ -103,6 +105,8 @@ export default async function MarketPage() {
             {t.footer.telegram.split('{link}')[1]}
           </p>
         </Section>
+        <MarketCalendar lang={lang} days={45} max={14} />
+        <div className="py-8"><SubscribeForm lang={lang} source="market" /></div>
       </main>
 
       <SiteFooter updatedAt={quotes.fetchedAt} />
