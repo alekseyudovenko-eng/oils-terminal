@@ -114,6 +114,7 @@ const ru = {
     none: 'Заметок по этой стране пока нет.',
   },
   back: 'Все страны',
+  pdf: 'Скачать PDF-отчёт',
   na: '—',
 };
 
@@ -227,7 +228,8 @@ const en: CountriesDict = {
     kinds: { ima: 'IMA', mpoc: 'MPOC', mpob: 'MPOB', oilworld: 'Oil World', gtt: 'GTT', media: 'Media' },
     none: 'No notes for this country yet.',
   },
-  back: 'All countries', na: '—',
+  back: 'All countries',
+  pdf: 'Download PDF report', na: '—',
 };
 
 const uz: CountriesDict = {
@@ -312,6 +314,7 @@ const uz: CountriesDict = {
   mpob: { ...en.mpob, title: 'Malayziyaning mamlakatga eksporti (MPOB)', total: 'Barcha mahsulotlar (OPP)', change: 'Oʻzgarish', group: 'Mahsulot guruhi', product: 'Mahsulot', share: 'Ulush', top: 'Eng yirik pozitsiyalar', none: 'MPOB faylida bu mamlakat boʻyicha maʼlumot yoʻq.' },
   notes: { ...en.notes, title: 'IMA va MPOC tahlili', lead: 'Hisobotlarimiz, xatlarimiz va MPOC profillaridan xulosalar. Har bir band hujjatga havola bilan.', topics: { market: 'Bozor', trade: 'Savdo', logistics: 'Logistika', policy: 'Tartibga solish va GR', buyers: 'Xaridorlar' }, none: 'Bu mamlakat boʻyicha hali yozuvlar yoʻq.' },
   back: 'Barcha mamlakatlar',
+  pdf: 'PDF hisobotni yuklab olish',
 };
 
 const kk: CountriesDict = {
@@ -396,6 +399,7 @@ const kk: CountriesDict = {
   mpob: { ...en.mpob, title: 'Малайзияның елге экспорты (MPOB)', total: 'Барлық өнім (OPP)', change: 'Өзгеріс', group: 'Өнім тобы', product: 'Өнім', share: 'Үлес', top: 'Ең ірі позициялар', none: 'MPOB файлында бұл ел бойынша дерек жоқ.' },
   notes: { ...en.notes, title: 'IMA және MPOC талдауы', lead: 'Есептеріміз, хаттарымыз және MPOC профильдерінен қорытындылар. Әр тармақ құжатқа сілтемемен.', topics: { market: 'Нарық', trade: 'Сауда', logistics: 'Логистика', policy: 'Реттеу және GR', buyers: 'Сатып алушылар' }, none: 'Бұл ел бойынша әзірге жазба жоқ.' },
   back: 'Барлық елдер',
+  pdf: 'PDF есепті жүктеу',
 };
 kk.basic.capital = 'Елорда';
 
@@ -481,6 +485,7 @@ const ms: CountriesDict = {
   mpob: { ...en.mpob, title: 'Eksport Malaysia ke negara ini (MPOB)', total: 'Semua produk (OPP)', change: 'Perubahan', group: 'Kumpulan produk', product: 'Produk', share: 'Bahagian', top: 'Item terbesar', none: 'Fail MPOB tiada data bagi negara ini.' },
   notes: { ...en.notes, title: 'Analisis IMA dan MPOC', lead: 'Penemuan daripada laporan, memo dan profil MPOC kami. Setiap perkara dipautkan kepada dokumennya.', topics: { market: 'Pasaran', trade: 'Perdagangan', logistics: 'Logistik', policy: 'Kawal selia dan GR', buyers: 'Pembeli' }, none: 'Belum ada nota bagi negara ini.' },
   back: 'Semua negara',
+  pdf: 'Muat turun laporan PDF',
 };
 
 export const COUNTRIES_DICT: Record<Locale, CountriesDict> = { ru, en, uz, kk, ms };
