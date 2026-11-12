@@ -88,6 +88,8 @@ export default async function CountriesHub() {
                       <Link href={`/lab/countries/${c.code.toLowerCase()}`} className="underline underline-offset-4 decoration-rule hover:decoration-ink">
                         <span aria-hidden="true" className="mr-1.5">{p.flag}</span>{lang === 'ru' ? c.ru : c.en}
                       </Link>
+                      <a href={`/lab/countries/${c.code.toLowerCase()}/pdf`} download title={D.pdf} aria-label={`${D.pdf}: ${lang === 'ru' ? c.ru : c.en}`}
+                        className="ml-2 text-xs font-normal text-ink-3 hover:text-ink">PDF ↓</a>
                     </th>
                     <td className="py-2.5 px-3 text-right num">{people(w.pop?.value, lang, D)}</td>
                     <td className="py-2.5 px-3 text-right num">{usdBn(w.gdp?.value, lang, D)}</td>

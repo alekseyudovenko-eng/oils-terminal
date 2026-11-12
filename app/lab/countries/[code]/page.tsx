@@ -421,6 +421,12 @@ export default async function CountryPage({ params }: { params: { code: string }
           <h1 className="mt-2 font-cond text-3xl sm:text-4xl font-semibold tracking-tight">
             <span aria-hidden="true" className="mr-2">{p.flag}</span>{name}
           </h1>
+          <p className="mt-3">
+            <a href={`/lab/countries/${code.toLowerCase()}/pdf`} download
+              className="inline-block bg-band text-band-text text-sm px-4 py-2 border-b-2 border-gold hover:opacity-90">
+              {D.pdf} <span aria-hidden="true">↓</span>
+            </a>
+          </p>
           <nav aria-label={name} className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
             {toc.map(([id, t]) => <a key={id} href={`#${id}`} className="text-ink-2 hover:text-ink underline-offset-4 hover:underline">{t}</a>)}
           </nav>
