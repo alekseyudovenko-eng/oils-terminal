@@ -57,9 +57,9 @@ export default function QuotesTable({ quotes }: { quotes: Quote[] }) {
                   <td className="py-2 px-3 text-ink-3 whitespace-nowrap">{it.unit}</td>
                   <td className="py-2 px-3 text-right num text-ink-2">{fmtPrice(q.usdT, lang)}</td>
                   <td className="py-2 px-3 text-right"><Change value={q.changePct} lang={lang} /></td>
-                  <td className={`py-2 px-3 text-right ${hide}`}><Change value={q.perfW} lang={lang} /></td>
-                  <td className={`py-2 px-3 text-right ${hide}`}><Change value={q.perf1M} lang={lang} /></td>
-                  <td className={`py-2 pl-3 text-right ${hide}`}><Change value={q.perfYTD} lang={lang} /></td>
+                  <td className={`py-2 px-3 text-right ${hide}`}>{q.perfW == null ? null : <Change value={q.perfW} lang={lang} />}</td>
+                  <td className={`py-2 px-3 text-right ${hide}`}>{q.perf1M == null ? null : <Change value={q.perf1M} lang={lang} />}</td>
+                  <td className={`py-2 pl-3 text-right ${hide}`}>{q.perfYTD == null ? null : <Change value={q.perfYTD} lang={lang} />}</td>
                 </tr>
               );
             })}

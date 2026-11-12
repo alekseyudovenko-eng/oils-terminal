@@ -8,7 +8,14 @@ import SpreadsTable from '@/components/SpreadsTable';
 import Sparkline from '@/components/Sparkline';
 import PsdExplorer from '@/components/PsdExplorer';
 import RegionalBalances from '@/components/RegionalBalances';
-import NewsList from '@/components/NewsList';
+import QuickCards from '@/components/QuickCards';
+import MarketCharts from '@/components/MarketCharts';
+import { getPriceHistory } from '@/lib/price-history';
+import { INSTRUMENTS } from '@/lib/instruments';
+import { instText } from '@/lib/quote-i18n';
+import { QUICK } from '@/lib/dict-quick';
+import { EXTRA } from '@/lib/dict-extra';
+import { INTL } from '@/lib/i18n';
 import Section from '@/components/Section';
 import Notice from '@/components/Notice';
 import SubscribeForm from '@/components/SubscribeForm';
@@ -36,14 +43,25 @@ export function generateMetadata(): Metadata {
   };
 }
 
-const ANCHORS = ['prices', 'spreads', 'usda', 'regions', 'news'] as const;
+const ANCHORS = ['prices', 'charts', 'spreads', 'usda', 'regions'] as const;
+const CHART_SET = ['fcpo', 'dce_olein', 'zl', 'brent', 'usdmyr'];
 
 export default async function MarketPage() {
-  const [quotes, feed, psd, pogoHistory] = await Promise.all([getQuotes(), getNewsFeed(), getPsd(), getHistory('pogo')]);
+  const [quotes, feed, psd, pogoHistory, ...hists] = await Promise.all([getQuotes(), getNewsFeed(), getPsd(), getHistory('pogo'), ...CHART_SET.map(getPriceHistory)]);
   const { lang, t } = getDict();
   const m = t.market;
   const news = feed.items;
   const views = buildPsdView(psd.rows, lang).map(v => ({ ...v, label: t.psd.oils[v.id] }));
+  const q2 = QUICK[lang];
+  const series = CHART_SET.map((id, i) => {
+    const inst = INSTRUMENTS.find(z => z.id === id)!;
+    const it = instText(t, inst);
+    const pts = [...hists[i]];
+    const cq = quotes.quotes.find(z => z.id === id);
+    const today = quotes.fetchedAt.slice(0, 10);
+    if (cq?.price != null && (!pts.length || pts[pts.length - 1].d < today)) pts.push({ d: today, c: cq.price });
+    return { id, name: it.name, unit: it.unit, points: pts };
+  }).filter(s => s.points.length >= 2);
   const hasPsd = views.some(v => v.years.length > 0);
 
   return (
@@ -54,7 +72,7 @@ export default async function MarketPage() {
       <nav aria-label={m.onPage} className="border-b border-rule bg-panel">
         <ul className="mx-auto max-w-page px-4 sm:px-6 flex gap-5 overflow-x-auto text-sm py-2.5">
           {ANCHORS.map(a => (
-            <li key={a}><a href={`#${a}`} className="text-ink-2 hover:text-ink whitespace-nowrap">{m.anchors[a]}</a></li>
+            <li key={a}><a href={`#${a}`} className="text-ink-2 hover:text-ink whitespace-nowrap">{a === 'charts' ? q2.anchor : m.anchors[a as Exclude<typeof a, 'charts'>]}</a></li>
           ))}
         </ul>
       </nav>
@@ -62,10 +80,18 @@ export default async function MarketPage() {
       <main className="mx-auto max-w-page w-full px-4 sm:px-6">
         <h1 className="sr-only">{m.h1}</h1>
 
+        <QuickCards quotes={quotes} />
+
         <Section id="prices" title={m.anchors.prices} note={m.pricesNote}>
           {quotes.error && <Notice>{t.quotes.unavailable}</Notice>}
           <QuotesTable quotes={quotes.quotes} />
         </Section>
+
+        {series.length > 0 && (
+          <Section id="charts" title={q2.chartsTitle} note={q2.chartsNote}>
+            <MarketCharts series={series} locale={INTL[lang]} labels={{ ...EXTRA[lang].chart }} />
+          </Section>
+        )}
 
         <Section id="spreads" title={m.anchors.spreads} note={m.spreadsNote}>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
@@ -95,16 +121,6 @@ export default async function MarketPage() {
           <RegionalBalances lang={lang} t={t.regional} />
         </Section>
 
-        <Section id="news" title={m.newsTitle} note={feed.curated
-            ? <>{fill(m.newsCurated, { n: news.length })}{feed.updatedAt && fill(m.newsUpdated, { time: fmtTimeUtc(feed.updatedAt, lang) })}{m.newsOrder}</>
-            : fill(m.newsAuto, { n: news.length })}>
-          <NewsList news={news} />
-          <p className="mt-4 text-sm text-ink-2">
-            {t.footer.telegram.split('{link}')[0]}
-            <a href="https://t.me/oilpalm" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-gold">@oilpalm</a>
-            {t.footer.telegram.split('{link}')[1]}
-          </p>
-        </Section>
         <MarketCalendar lang={lang} days={45} max={14} />
         <div className="py-8"><SubscribeForm lang={lang} source="market" /></div>
       </main>
