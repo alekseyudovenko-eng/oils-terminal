@@ -3,7 +3,7 @@
 import { SITE_URL } from './site';
 
 export const INDEXNOW_KEY = 'a92a22fb8c7015d3c2310bb73aa89c99';
-const ENDPOINTS = ['https://yandex.com/indexnow', 'https://www.bing.com/indexnow'];
+const ENDPOINTS = ['https://yandex.com/indexnow', 'https://api.indexnow.org/indexnow'];
 
 export async function submitIndexNow(urls: string[]): Promise<Record<string, string>> {
   const list = Array.from(new Set(urls.filter(u => u.startsWith(SITE_URL)))).slice(0, 10000);
