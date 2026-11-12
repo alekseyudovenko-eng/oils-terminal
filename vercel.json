@@ -35,6 +35,10 @@
     {
       "path": "/api/cron/price-history",
       "schedule": "30 22 * * 1-5"
+    },
+    {
+      "path": "/api/cron/indexnow",
+      "schedule": "20 9 * * *"
     }
   ]
 }
