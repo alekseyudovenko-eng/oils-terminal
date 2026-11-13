@@ -1,6 +1,102 @@
 {
-  "updatedAt": "2026-11-12T05:56:23Z",
+  "updatedAt": "2026-11-13T06:00:00Z",
   "items": [
+    {
+      "id": "2026-11-12-kernel-halts-all-plants",
+      "publishedAt": "2026-11-12",
+      "title": "Kernel остановила все восемь маслоэкстракционных заводов в Украине после российских ударов",
+      "summary": "Крупнейший украинский производитель подсолнечного масла Kernel 12 ноября приостановила работу всех восьми заводов и закупки семян; компания продолжает отгрузку со складов и выполнение прежних контрактов. Мощность переработки — до 3,5 млн т семян в год.",
+      "titleEn": "Kernel halts all eight Ukrainian crushing plants after Russian strikes",
+      "summaryEn": "Ukraine's top sunflower oil producer Kernel said on Nov 12 it suspended all eight extraction plants and seed purchases, while still shipping stocks from warehouses and honoring prior contracts. Capacity is up to 3.5 Mt of seeds a year.",
+      "titleUz": "Kernel Rossiya zarbalaridan soʻng Ukrainadagi barcha sakkiz moy ekstraksiya zavodini toʻxtatdi",
+      "summaryUz": "Ukrainaning eng yirik kungaboqar yogʻi ishlab chiqaruvchisi Kernel 12-noyabr kuni barcha sakkiz zavod faoliyatini va urugʻ xaridini toʻxtatdi; kompaniya omborlardagi zaxiralarni joʻnatishda va avvalgi shartnomalarni bajarishda davom etmoqda. Qayta ishlash quvvati — yiliga 3,5 mln t gacha urugʻ.",
+      "titleKk": "Kernel ресейлік соққылардан кейін Украинадағы барлық сегіз май экстракциялау зауытын тоқтатты",
+      "summaryKk": "Украинаның ең ірі күнбағыс майы өндірушісі Kernel 12 қарашада барлық сегіз зауыттың жұмысын және тұқым сатып алуды тоқтатты; компания қоймалардағы қорларды жөнелтуді және бұрынғы келісімшарттарды орындауды жалғастыруда. Қайта өңдеу қуаты — жылына 3,5 млн т-ға дейін тұқым.",
+      "titleMs": "Kernel hentikan kesemua lapan kilang pengekstrakan di Ukraine selepas serangan Rusia",
+      "summaryMs": "Pengeluar minyak bunga matahari terbesar Ukraine, Kernel, berkata pada 12 November ia menggantung operasi kesemua lapan kilang dan pembelian benih, sambil terus menghantar stok dari gudang dan memenuhi kontrak terdahulu. Kapasiti pemprosesan sehingga 3.5 juta tan benih setahun.",
+      "originalTitle": "Ukraine's top sunflower oil producer shuts down all processing plants due to Russia's mass attacks",
+      "source": "The Kyiv Independent",
+      "url": "https://kyivindependent.com/ukraines-top-sunflower-oil-producer-shuts-down-all-processing-plants-due-to-russias-mass-attacks/",
+      "lang": "en",
+      "topics": [
+        "sunflower",
+        "trade"
+      ],
+      "region": "Украина",
+      "addedAt": "2026-11-13T06:00:00Z"
+    },
+    {
+      "id": "2026-11-12-palm-futures-bargain-hunting",
+      "publishedAt": "2026-11-12",
+      "title": "Фьючерсы на CPO закрылись ростом: январский контракт +RM30 до RM4 440/т",
+      "summary": "На Bursa Malaysia январский контракт 2027 г. подорожал на RM30 до RM4 440/т, физический CPO (ноябрь, юг) — +RM30 до RM4 200/т. Дисконт CPO к соевому маслу остаётся выше $100/т; внимание рынка — на конференции GAPKI на Бали.",
+      "titleEn": "Malaysian palm futures close higher; January contract up RM30 at RM4,440",
+      "summaryEn": "On Bursa Malaysia the January 2027 contract rose RM30 to RM4,440/t; physical CPO (Nov, South) gained RM30 to RM4,200/t. The discount to soybean oil stayed above $100/t, and attention is on the GAPKI conference in Bali.",
+      "titleUz": "Malayziya palma yogʻi fyuchers narxlari oshdi: yanvar shartnomasi RM30 ga oshib, RM4 440/t boʻldi",
+      "summaryUz": "Bursa Malaysia’da 2027-yil yanvar shartnomasi RM30 ga oshib, RM4 440/t ga yetdi; jismoniy CPO (noyabr, janub) — RM30 ga oshib, RM4 200/t. CPOning soya yogʻiga nisbatan chegirmasi $100/t dan yuqori; bozor eʼtibori Balidagi GAPKI konferensiyasida.",
+      "titleKk": "CPO фьючерстері өсіммен жабылды: қаңтар келісімшарты RM30-ға өсіп, RM4 440/т болды",
+      "summaryKk": "Bursa Malaysia-да 2027 жылғы қаңтар келісімшарты RM30-ға өсіп, RM4 440/т болды; физикалық CPO (қараша, оңтүстік) — RM30-ға өсіп, RM4 200/т. CPO-ның соя майына дисконты $100/т-дан жоғары; нарық назары Балидегі GAPKI конференциясында.",
+      "titleMs": "Niaga hadapan CPO ditutup lebih tinggi; kontrak Januari naik RM30 kepada RM4,440",
+      "summaryMs": "Di Bursa Malaysia, kontrak Januari 2027 naik RM30 kepada RM4,440/tan; CPO fizikal (November, Selatan) naik RM30 kepada RM4,200/tan. Diskaun kepada minyak soya kekal melebihi $100/tan, dan perhatian tertumpu pada persidangan GAPKI di Bali.",
+      "originalTitle": "CPO Futures End Higher On Bargain-hunting, Gains In Related Vegetable Oils",
+      "source": "Bernama",
+      "url": "https://www.bernama.com/en/market/news.php?id=2633510",
+      "lang": "en",
+      "topics": [
+        "palm"
+      ],
+      "region": "Малайзия",
+      "addedAt": "2026-11-13T06:00:00Z"
+    },
+    {
+      "id": "2026-11-13-russia-sunoil-share-blockade",
+      "publishedAt": "2026-11-13",
+      "title": "Доля России в мировом экспорте подсолнечного масла при блокаде морских поставок может упасть с 38% до 25–28%",
+      "summary": "Сейчас доля России — около 38%; при полной блокаде морских отгрузок она может снизиться до 25–28%. Основные покупатели: Индия — около 25% российских поставок, Иран и Турция — по 22%.",
+      "titleEn": "Russia's sunflower oil export share could drop from 38% to 25–28% in a sea blockade",
+      "summaryEn": "Russia holds about 38% of global sunflower oil exports; a full blockade of maritime shipments could cut that to 25–28%. India takes about 25% of Russian shipments, Iran and Turkey 22% each.",
+      "titleUz": "Dengiz yetkazib berishlari bloklansa, Rossiyaning kungaboqar yogʻi eksportidagi ulushi 38% dan 25–28% gacha tushishi mumkin",
+      "summaryUz": "Hozir Rossiyaning ulushi taxminan 38%; dengiz joʻnatmalari toʻliq bloklansa, u 25–28% gacha kamayishi mumkin. Asosiy xaridorlar: Hindiston — Rossiya yetkazib berishlarining taxminan 25%, Eron va Turkiya — 22% dan.",
+      "titleKk": "Теңіз жеткізілімдері бұғатталса, Ресейдің күнбағыс майы экспортындағы үлесі 38%-дан 25–28%-ға дейін түсуі мүмкін",
+      "summaryKk": "Қазір Ресейдің үлесі шамамен 38%; теңіз жөнелтімдері толық бұғатталса, ол 25–28%-ға дейін төмендеуі мүмкін. Негізгі сатып алушылар: Үндістан — ресейлік жеткізілімнің шамамен 25%-ы, Иран мен Түркия — 22%-дан.",
+      "titleMs": "Bahagian Rusia dalam eksport minyak bunga matahari boleh jatuh daripada 38% kepada 25–28% jika dikepung di laut",
+      "summaryMs": "Rusia kini memegang kira-kira 38% eksport minyak bunga matahari global; sekatan penuh penghantaran maritim boleh menurunkannya kepada 25–28%. India membeli kira-kira 25% penghantaran Rusia, Iran dan Turki masing-masing 22%.",
+      "originalTitle": "Russia's share of global sunflower oil exports could fall from 38% to 25%",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/russias-share-of-global-sunflower-oil-exports-could-fall-from-38-to-25/",
+      "lang": "en",
+      "topics": [
+        "sunflower",
+        "trade"
+      ],
+      "region": "Россия",
+      "addedAt": "2026-11-13T06:00:00Z"
+    },
+    {
+      "id": "2026-11-12-tunisia-onh-oil-tender",
+      "publishedAt": "2026-11-12",
+      "title": "Тунис объявил тендер на закупку около 6 тыс. т соевого или рапсового масла",
+      "summary": "Государственное агентство ONH ищет около 6 тыс. т сырого гидратированного соевого или рапсового масла. Приём ценовых предложений — до 16 ноября, отгрузка — 4–18 января 2027 г.",
+      "titleEn": "Tunisia issues tender for about 6,000 t of soybean or rapeseed oil",
+      "summaryEn": "State agency ONH seeks about 6,000 t of crude degummed soybean or rapeseed oil. Price offers are due by Nov 16, with shipment on Jan 4–18, 2027.",
+      "titleUz": "Tunis taxminan 6 ming t soya yoki raps yogʻi xaridi boʻyicha tender eʼlon qildi",
+      "summaryUz": "Davlat agentligi ONH taxminan 6 ming t xom gidratlangan soya yoki raps yogʻini izlamoqda. Narx takliflari 16-noyabrgacha qabul qilinadi, joʻnatish — 2027-yil 4–18-yanvar.",
+      "titleKk": "Тунис шамамен 6 мың т соя немесе рапс майын сатып алуға тендер жариялады",
+      "summaryKk": "Мемлекеттік ONH агенттігі шамамен 6 мың т шикі гидратталған соя немесе рапс майын іздеуде. Баға ұсыныстары 16 қарашаға дейін қабылданады, жөнелту — 2027 жылғы 4–18 қаңтар.",
+      "titleMs": "Tunisia keluarkan tender untuk kira-kira 6,000 tan minyak soya atau minyak rapeseed",
+      "summaryMs": "Agensi negeri ONH mencari kira-kira 6,000 tan minyak soya atau minyak rapeseed mentah yang dinyahgam. Tawaran harga sehingga 16 November, penghantaran pada 4–18 Januari 2027.",
+      "originalTitle": "Tunisia issues tender to buy 6 thsd tons of soybean or rapeseed oil",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/tunisia-issues-tender-to-buy-6-thsd-tons-of-soybean-or-rapeseed-oil/",
+      "lang": "en",
+      "topics": [
+        "soy",
+        "rapeseed",
+        "trade"
+      ],
+      "region": "Тунис",
+      "addedAt": "2026-11-13T06:00:00Z"
+    },
     {
       "id": "2026-11-11-malaysia-dec-cpo-reference-price",
       "publishedAt": "2026-11-11",
@@ -2163,30 +2259,6 @@
       "summaryKk": "Қыркүйек соңында Малайзиядағы қорлар рекордтық 3,51 млн т болды. BIMB 2026 жылы CPO-ның орташа бағасын 4 400 ринггит, 2027 жылы 4 500 ринггит деп күтеді, RHB да 4 400 және 4 500. Сұранысты Үндістандағы баж төмендеуі мен қазанда $375/т-ға дейін кеңейген соя–пальма спреді қолдап отыр.",
       "titleMs": "Penganalisis: stok rekod akan menekan harga MSM sehingga awal 2027",
       "summaryMs": "Stok Malaysia mencapai rekod 3.51 juta tan pada akhir September. BIMB menjangka purata harga MSM 4,400 ringgit pada 2026 dan 4,500 pada 2027; RHB juga menjangka 4,400 dan 4,500. Permintaan disokong oleh pengurangan duti India dan spread soya–sawit yang melebar ke $375/t pada Oktober."
-    },
-    {
-      "id": "2026-10-13-gapki-august",
-      "publishedAt": "2026-10-13",
-      "title": "Запасы пальмового масла в Индонезии в августе упали на 19,7% на фоне спроса на биодизель",
-      "summary": "По данным GAPKI, запасы на конец августа — 2,214 млн т против 2,758 млн т в июле. Производство — 5,343 млн т (−0,5%), использование на биодизель выросло на 5% до 1,35 млн т. Экспорт за январь–август — 23,37 млн т.",
-      "originalTitle": "Indonesia Palm Oil Stocks Fall 19.72% to 2.214 Million Tonnes as Biodiesel Demand Rises",
-      "source": "Palm Oil Magazine (GAPKI)",
-      "url": "https://www.palmoilmagazine.com/ipoa/2026/10/13/indonesia-palm-oil-stocks-fall-19-72-to-2-214-million-tonnes-as-biodiesel-demand-rises/",
-      "lang": "en",
-      "topics": [
-        "palm",
-        "biofuel"
-      ],
-      "region": "Индонезия",
-      "addedAt": "2026-10-16T08:37:46Z",
-      "titleEn": "Indonesia's palm oil stocks fall 19.7% in August on biodiesel demand",
-      "summaryEn": "Per GAPKI, end-August stocks were 2.214 Mt versus 2.758 Mt in July. Output was 5.343 Mt (−0.5%), and biodiesel use rose 5% to 1.35 Mt. January–August exports totalled 23.37 Mt.",
-      "titleUz": "Biodizel talabi fonida Indoneziyada palma yogʻi zaxiralari avgustda 19,7% kamaydi",
-      "summaryUz": "GAPKI maʼlumotiga koʻra, avgust oxirida zaxiralar 2,214 mln t ni tashkil etdi, iyulda 2,758 mln t edi. Ishlab chiqarish — 5,343 mln t (−0,5%), biodizelga ishlatish 5% oshib, 1,35 mln t ga yetdi. Yanvar–avgustda eksport — 23,37 mln t.",
-      "titleKk": "Биодизельге сұраныс аясында Индонезиядағы пальма майы қорлары тамызда 19,7%-ға азайды",
-      "summaryKk": "GAPKI деректері бойынша тамыз соңындағы қорлар 2,214 млн т болды, шілдеде 2,758 млн т еді. Өндіріс — 5,343 млн т (−0,5%), биодизельге пайдалану 5%-ға өсіп, 1,35 млн т болды. Қаңтар–тамыздағы экспорт — 23,37 млн т.",
-      "titleMs": "Stok minyak sawit Indonesia jatuh 19.7% pada Ogos didorong permintaan biodiesel",
-      "summaryMs": "Menurut GAPKI, stok akhir Ogos ialah 2.214 juta tan berbanding 2.758 juta tan pada Julai. Pengeluaran 5.343 juta tan (−0.5%), dan penggunaan untuk biodiesel naik 5% kepada 1.35 juta tan. Eksport Januari–Ogos berjumlah 23.37 juta tan."
     }
   ]
 }
