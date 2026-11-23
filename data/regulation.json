@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16",
+  "updatedAt": "2026-11-23",
   "period": {
     "ru": "октябрь 2025 – октябрь 2026 (и действующие нормы прошлых лет)",
     "en": "October 2025 – October 2026 (plus earlier rules still in force)"
@@ -854,18 +854,18 @@
       "status": "upcoming",
       "date": "2027-04-01",
       "act": {
-        "ru": "Перечень товаров, подлежащих маркировке (ред. 2026)",
-        "en": "List of goods subject to marking (2026 edition)"
+        "ru": "Приказ Министра сельского хозяйства РК от 16.11.2026 № 406 (правила маркировки и прослеживаемости растительных масел)",
+        "en": "Order of the Minister of Agriculture of Kazakhstan No. 406 of 16.11.2026 (marking and traceability rules for vegetable oils)"
       },
       "title": {
         "ru": "Обязательная цифровая маркировка растительных масел",
         "en": "Mandatory digital marking of vegetable oils"
       },
       "text": {
-        "ru": "Пилот — с сентября 2025. С 1.04.2027 маркируются масла в потребительской упаковке, включая пальмовое, маргарин и заменители какао-масла.",
-        "en": "Pilot since September 2025. From 1 Apr 2027 consumer-packed oils are marked, including palm oil, margarine and cocoa butter substitutes."
+        "ru": "Пилот — с сентября 2025. Правила утверждены приказом от 16.11.2026: производитель маркирует отечественную продукцию, импортёр — ввозимую; код действителен 1 год. С 1.04.2027 маркируются масла в потребительской упаковке, включая пальмовое, маргарин и заменители какао-масла.",
+        "en": "Pilot since September 2025. Rules approved by order of 16.11.2026: producers mark domestic goods, importers mark imports; a code is valid for one year. From 1 Apr 2027 consumer-packed oils are marked, including palm oil, margarine and cocoa butter substitutes."
       },
-      "url": "https://inbusiness.kz/ru/news/v-kazahstane-pochti-vdvoe-rasshirili-markirovku-tovarov"
+      "url": "https://mybuh.kz/news/markirovka-rastitelnogo-masla-v-kazakhstane-s-1-aprelya-2027-goda-kto-dolzhen-poluchat-kody/"
     },
     {
       "id": "kz-industry",
