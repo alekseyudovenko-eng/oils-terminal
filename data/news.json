@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T05:54:37Z",
+  "updatedAt": "2026-11-24T06:00:00Z",
   "items": [
     {
       "id": "2026-11-17-palm-falls-soyoil-crude",
@@ -1565,79 +1565,6 @@
       "addedAt": "2026-10-26T06:10:00Z"
     },
     {
-      "id": "2026-10-24-danube-freight-veg-oil-priority",
-      "publishedAt": "2026-10-24",
-      "title": "Ставки фрахта на Дунае могут вырасти из-за приоритета для растительных масел — Avalon Shipping",
-      "summary": "По словам Катерины Кононенко (Avalon Shipping), приоритет для судов с растительным маслом на Дунае ещё не действует, агенты не получили официальных инструкций, но слухи уже могут подталкивать фрахт вверх. Сильнее влияют туман и ограничения осадки: на участке Миля 44 — Галац допускается не более 6,7 м.",
-      "titleEn": "Danube freight may rise on Ukraine's edible oil priority, broker says",
-      "summaryEn": "Avalon Shipping's Kateryna Kononenko said priority passage for vegetable oil vessels on the Danube has not yet taken effect and agents have no official instructions, but rumours may already be lifting freight. Fog and draft limits matter more: the maximum between Mile 44 and Galati is 6.7 m.",
-      "titleUz": "Dunayda fraxt stavkalari oʻsimlik moylariga ustuvorlik berilgani sababli oshishi mumkin — Avalon Shipping",
-      "summaryUz": "Katerina Kononenko (Avalon Shipping) soʻzlariga koʻra, Dunayda oʻsimlik moyi tashiydigan kemalarga ustuvorlik hali amal qilmayapti, agentlar rasmiy koʻrsatma olmagan, ammo mish-mishlar fraxtni allaqachon oshirayotgan boʻlishi mumkin. Tuman va choʻkish cheklovlari kuchliroq taʼsir qiladi: Milya 44 — Galats oraligʻida 6,7 m dan oshmasligi kerak.",
-      "titleKk": "Дунайдағы фрахт мөлшерлемелері өсімдік майларына басымдық берілуіне байланысты өсуі мүмкін — Avalon Shipping",
-      "summaryKk": "Катерина Кононенконың (Avalon Shipping) айтуынша, Дунайда өсімдік майы бар кемелерге басымдық әлі күшіне енген жоқ, агенттер ресми нұсқаулық алмаған, бірақ қауесеттер фрахтты қазірдің өзінде көтеруі мүмкін. Тұман мен шөгу шектеулері күштірек әсер етеді: Миля 44 — Галац учаскесінде 6,7 м-ден аспауы тиіс.",
-      "titleMs": "Kadar tambang di Danube mungkin naik susulan keutamaan minyak sayuran Ukraine — Avalon Shipping",
-      "summaryMs": "Menurut Kateryna Kononenko dari Avalon Shipping, laluan keutamaan bagi kapal minyak sayuran di Danube belum berkuat kuasa dan ejen belum menerima arahan rasmi, tetapi khabar angin mungkin sudah menaikkan kadar tambang. Kabus dan had draf lebih memberi kesan: maksimum antara Batu 44 dan Galati ialah 6.7 m.",
-      "originalTitle": "Danube freight rates may rise as Ukraine prioritizes edible oil exports",
-      "source": "UkrAgroConsult (Ukrainian Shipping Magazine)",
-      "url": "https://ukragroconsult.com/en/news/danube-freight-rates-may-rise-as-ukraine-prioritizes-edible-oil-exports/",
-      "lang": "en",
-      "topics": [
-        "sunflower",
-        "trade"
-      ],
-      "region": "Украина",
-      "addedAt": "2026-10-26T06:10:00Z"
-    },
-    {
-      "id": "2026-10-24-palm-weekly-gain-outlook",
-      "publishedAt": "2026-10-24",
-      "title": "Фьючерсы на CPO завершили неделю ростом: январский контракт +RM49 до RM4 818/т",
-      "summary": "За неделю январский контракт на Bursa Malaysia подорожал на RM49 до RM4 818/т, ноябрьский — на RM51 до RM4 587/т. Дэвид Нг (Iceberg X) ждёт на следующей неделе торговли в коридоре: поддержка около RM4 600/т, сопротивление — RM4 800/т.",
-      "titleEn": "Palm oil posts weekly gain; January CPO up RM49 to RM4,818",
-      "summaryEn": "January CPO futures on Bursa Malaysia rose RM49 week on week to RM4,818/t, and November gained RM51 to RM4,587/t. Iceberg X's David Ng expects range-bound trade next week, with support around RM4,600/t and resistance at RM4,800/t.",
-      "titleUz": "CPO fyucherslari haftani oʻsish bilan yakunladi: yanvar kontrakti +RM49, RM4 818/t",
-      "summaryUz": "Bir hafta ichida Bursa Malaysia’dagi yanvar kontrakti RM49 ga qimmatlashib RM4 818/t ga, noyabr kontrakti RM51 ga oshib RM4 587/t ga yetdi. Devid Ng (Iceberg X) keyingi haftada savdo diapazonda boʻlishini kutmoqda: qoʻllab-quvvatlash taxminan RM4 600/t, qarshilik — RM4 800/t.",
-      "titleKk": "CPO фьючерстері аптаны өсіммен аяқтады: қаңтар келісімшарты +RM49, RM4 818/т",
-      "summaryKk": "Бір аптада Bursa Malaysia-дағы қаңтар келісімшарты RM49-ға қымбаттап, RM4 818/т-ға, қараша келісімшарты RM51-ге өсіп, RM4 587/т-ға жетті. Дэвид Нг (Iceberg X) келесі аптада сауда дәлізде өтеді деп күтеді: қолдау шамамен RM4 600/т, қарсылық — RM4 800/т.",
-      "titleMs": "Niaga hadapan CPO catat kenaikan mingguan; kontrak Januari naik RM49 kepada RM4,818",
-      "summaryMs": "Kontrak Januari di Bursa Malaysia naik RM49 minggu ke minggu kepada RM4,818 setan, manakala kontrak November naik RM51 kepada RM4,587 setan. David Ng dari Iceberg X menjangka dagangan dalam julat minggu depan, dengan sokongan sekitar RM4,600 setan dan rintangan pada RM4,800 setan.",
-      "originalTitle": "CPO Futures Expected To Trade Cautiously Next Week Amid Profit-Taking",
-      "source": "Bernama",
-      "url": "https://www.bernama.com/en/market/news.php?id=2624913",
-      "lang": "en",
-      "topics": [
-        "palm"
-      ],
-      "region": "Малайзия",
-      "addedAt": "2026-10-25T05:55:00Z"
-    },
-    {
-      "id": "2026-10-24-india-imports-17mt-forecast",
-      "publishedAt": "2026-10-24",
-      "title": "Импорт растительных масел в Индию в сезоне 2026/27 может вырасти на 3% до 17 млн т",
-      "summary": "По оценкам участников рынка, в сезоне, который начинается в ноябре, Индия может нарастить импорт примерно до 17 млн т после около 16,5 млн т в 2025/26. По словам B.V. Mehta (SEA), стране ежегодно нужно дополнительно 0,8–1 млн т масла.",
-      "titleEn": "India's edible oil imports seen rising 3% to 17 Mt in 2026/27",
-      "summaryEn": "India may lift edible oil imports about 3% to 17 Mt in the marketing year starting November, after an estimated 16.5 Mt in 2025/26, market participants say. SEA's B.V. Mehta says the country needs an extra 0.8–1 Mt of oil a year.",
-      "titleUz": "Hindistonning 2026/27 mavsumida oʻsimlik yogʻlari importi 3% ga oshib, 17 mln t ga yetishi mumkin",
-      "summaryUz": "Bozor ishtirokchilari baholashicha, noyabrda boshlanadigan mavsumda Hindiston importni taxminan 17 mln t gacha oshirishi mumkin; 2025/26 yilda bu koʻrsatkich taxminan 16,5 mln t boʻlgan. B.V. Mehta (SEA) soʻzlariga koʻra, mamlakatga har yili qoʻshimcha 0,8–1 mln t yogʻ kerak.",
-      "titleKk": "Үндістанның 2026/27 маусымында өсімдік майы импорты 3%-ға өсіп, 17 млн т-ға жетуі мүмкін",
-      "summaryKk": "Нарық қатысушыларының бағалауынша, қарашада басталатын маусымда Үндістан импортты шамамен 17 млн т-ға дейін арттыруы мүмкін; 2025/26 жылы ол шамамен 16,5 млн т болған. B.V. Mehta (SEA) сөзінше, елге жыл сайын қосымша 0,8–1 млн т май қажет.",
-      "titleMs": "Import minyak makan India dijangka naik 3% kepada 17 juta tan pada 2026/27",
-      "summaryMs": "India mungkin meningkatkan import minyak makan kira-kira 3% kepada 17 juta tan pada tahun pemasaran bermula November, selepas anggaran 16.5 juta tan pada 2025/26, menurut peserta pasaran. B.V. Mehta dari SEA berkata negara itu memerlukan tambahan 0.8–1 juta tan minyak setahun.",
-      "originalTitle": "India may increase edible oil imports to 17 mln tons in MY 2026/27",
-      "source": "UkrAgroConsult (Economic Times)",
-      "url": "https://ukragroconsult.com/en/news/india-may-increase-edible-oil-imports-to-17-mln-tons-in-my-2026-27/",
-      "lang": "en",
-      "topics": [
-        "trade",
-        "palm",
-        "soy",
-        "sunflower"
-      ],
-      "region": "Индия",
-      "addedAt": "2026-10-25T05:55:00Z"
-    },
-    {
       "id": "2026-11-19-cpo-close-lower-dalian-soyoil",
       "publishedAt": "2026-11-19",
       "title": "Фьючерсы на CPO снизились: декабрьский контракт −RM44 до RM4 142/т, январский −RM48 до RM4 253/т",
@@ -1731,6 +1658,53 @@
       ],
       "region": "Нидерланды, Сингапур",
       "addedAt": "2026-11-20T05:50:29Z"
+    },
+    {
+      "id": "2026-11-23-palm-nine-month-low-4140",
+      "publishedAt": "2026-11-23",
+      "addedAt": "2026-11-24T06:00:00Z",
+      "title": "Пальмовое масло в Малайзии упало до минимума почти за девять месяцев — 4 140 ринггит/т",
+      "titleEn": "Malaysian palm oil falls to nine-month low of 4,140 ringgit",
+      "summary": "Февральский контракт на Bursa Malaysia подешевел на 77 ринггит (1,83%) до 4 140 ринггит/т — самый низкий закрытый уровень с 27 февраля; пятая сессия падения подряд. По предварительным оценкам Intertek и AmSpec, экспорт 1–20 ноября снизился примерно на 10% к октябрю.",
+      "summaryEn": "The benchmark February contract on Bursa Malaysia fell 77 ringgit (1.83%) to 4,140 ringgit/t, the lowest close since Feb 27, a fifth straight session of losses. Preliminary Intertek and AmSpec estimates show Nov 1-20 exports down about 10% from October.",
+      "titleUz": "Malayziya palma yogʻi narxi toʻqqiz oydagi eng past darajaga — 4 140 ringgit/t gacha tushdi",
+      "summaryUz": "Bursa Malaysia’dagi fevral kontrakti 77 ringgitga (1,83%) arzonlashib, 4 140 ringgit/t ni tashkil etdi — 27 fevraldan beri eng past yopilish; ketma-ket beshinchi seans pasayishi. Intertek va AmSpec ning dastlabki baholariga koʻra, 1–20 noyabr eksporti oktyabrga nisbatan taxminan 10% kamaydi.",
+      "titleKk": "Малайзия пальма майы тоғыз айдағы ең төменгі деңгейге — 4 140 ринггит/т-ға түсті",
+      "summaryKk": "Bursa Malaysia-дағы ақпан келісімшарты 77 ринггитке (1,83%) арзандап, 4 140 ринггит/т болды — 27 ақпаннан бергі ең төмен жабылу; қатарынан бесінші сессия төмендеді. Intertek және AmSpec-тің алдын ала бағалауы бойынша 1–20 қарашадағы экспорт қазанмен салыстырғанда шамамен 10%-ға азайды.",
+      "titleMs": "Minyak sawit Malaysia jatuh ke paras terendah hampir sembilan bulan, RM4,140 setan",
+      "summaryMs": "Kontrak Februari di Bursa Malaysia susut 77 ringgit (1.83%) kepada 4,140 ringgit/tan, penutup terendah sejak 27 Februari, sesi kerugian kelima berturut-turut. Anggaran awal Intertek dan AmSpec menunjukkan eksport 1–20 November turun kira-kira 10% berbanding Oktober.",
+      "originalTitle": "Malaysian palm oil prices fall to nine-month low",
+      "source": "UkrAgroConsult (Business Recorder)",
+      "url": "https://ukragroconsult.com/en/news/malaysian-palm-oil-prices-fall-to-nine-month-low/",
+      "lang": "en",
+      "topics": [
+        "palm",
+        "trade"
+      ],
+      "region": "Малайзия"
+    },
+    {
+      "id": "2026-11-23-black-sea-high-risk-zone-romania-bulgaria",
+      "publishedAt": "2026-11-23",
+      "addedAt": "2026-11-24T06:00:00Z",
+      "title": "Зона высокого риска для судоходства в Чёрном море расширена на воды у Румынии и Болгарии",
+      "titleEn": "Black Sea high-risk shipping zone extended to Romanian, Bulgarian waters",
+      "summary": "Международный переговорный форум (IBF) 18 ноября расширил зону высокого риска на воды у Румынии и Болгарии на фоне атак дронов и ракет на торговые суда; якорная стоянка Сулина включена, воды в пределах 12 морских миль от берега исключены. По данным профсоюза SLN, судовладельцам придётся доплачивать экипажам 100% базовой зарплаты.",
+      "summaryEn": "The International Bargaining Forum (IBF) on Nov 18 extended the high-risk zone to waters off Romania and Bulgaria amid drone and missile attacks on merchant ships; the Sulina anchorage is included, waters within 12 nautical miles of the coast are excluded. Per the SLN seafarers' union, owners must pay crews an extra 100% of basic wages.",
+      "titleUz": "Qora dengizda yuqori xavfli kemachilik zonasi Ruminiya va Bolgariya suvlarigacha kengaytirildi",
+      "summaryUz": "Xalqaro muzokaralar forumi (IBF) 18 noyabrda savdo kemalariga dron va raketa hujumlari kuchaygani sababli yuqori xavfli zonani Ruminiya va Bolgariya suvlarigacha kengaytirdi; Sulina langar joyi kiritilgan, qirgʻoqdan 12 dengiz milyasi ichidagi suvlar istisno qilingan. SLN kasaba uyushmasiga koʻra, kema egalari ekipajga bazaviy ish haqining yana 100% ini toʻlashi kerak.",
+      "titleKk": "Қара теңіздегі жоғары қауіпті кеме қатынасы аймағы Румыния мен Болгария суларына дейін кеңейтілді",
+      "summaryKk": "Халықаралық келіссөз форумы (IBF) 18 қарашада сауда кемелеріне дрон мен зымыран шабуылдарының күшеюіне байланысты жоғары қауіпті аймақты Румыния мен Болгария суларына дейін кеңейтті; Сулина зәкір тұрағы кіреді, жағалаудан 12 теңіз милі ішіндегі сулар алынып тасталған. SLN кәсіподағына сәйкес, кеме иелері экипажға базалық жалақының қосымша 100%-ын төлеуі тиіс.",
+      "titleMs": "Zon berisiko tinggi perkapalan Laut Hitam diperluas ke perairan Romania dan Bulgaria",
+      "summaryMs": "Forum Perundingan Antarabangsa (IBF) pada 18 November memperluas zon berisiko tinggi ke perairan Romania dan Bulgaria ekoran serangan dron dan peluru berpandu ke atas kapal dagang; kawasan berlabuh Sulina termasuk, perairan dalam 12 batu nautika dari pantai dikecualikan. Menurut kesatuan SLN, pemilik kapal perlu membayar tambahan 100% gaji asas kepada anak kapal.",
+      "originalTitle": "Black Sea high-risk zone expanded to Romanian and Bulgarian coasts",
+      "source": "UkrAgroConsult",
+      "url": "https://ukragroconsult.com/en/news/black-sea-high-risk-zone-expanded-to-romanian-and-bulgarian-coasts/",
+      "lang": "en",
+      "topics": [
+        "trade"
+      ],
+      "region": "Чёрное море"
     }
   ]
 }
