@@ -1,11 +1,12 @@
 // /lab/importers — закрытая страница «Лаборатории IMA»: ключевые импортёры по странам.
 // Доступ по тому же паролю, что и /lab (middleware.ts, matcher '/lab/:path*').
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import LabHeader from '@/components/LabHeader';
 import ImportersExplorer from '@/components/ImportersExplorer';
 import ImportersDashboard from '@/components/ImportersDashboard';
 import { IMPORTERS } from '@/lib/importers';
-import { getCompanyContacts } from '@/lib/company-contacts';
+import { getContactIndex } from '@/lib/company-contacts';
 import { getDict } from '@/lib/i18n-server';
 import { getLabDict } from '@/lib/lab-i18n';
 import { localizeImporters } from '@/lib/importers-i18n';
@@ -27,9 +28,10 @@ export default async function ImportersPage() {
   const { lang, L } = getLabDict();
   const I = L.imp;
   const { countries, vocab } = localizeImporters(IMPORTERS.countries, lang, I.notes);
-  // Контакты из Supabase (не из репозитория), по исходным названиям компаний, в порядке списка страны.
-  const cmap = await getCompanyContacts();
-  const contacts = Object.fromEntries(IMPORTERS.countries.map(c => [c.id, c.companies.map(co => cmap[`${c.id}|${co.name}`] ?? null)]));
+  // Какие компании уже есть в базе контактов (Supabase): для них в таблице появится ссылка на страницу компании.
+  const index = await getContactIndex();
+  const known = new Set(index.map(r => `${r.c}|${r.n}`));
+  const contacts = Object.fromEntries(IMPORTERS.countries.map(c => [c.id, c.companies.map(co => known.has(`${c.id}|${co.name}`))]));
   const liNames = Object.fromEntries(IMPORTERS.countries.map(c => [c.id, c.companies.map(co => co.name)]));
   const total = countries.reduce((s, c) => s + c.companies.length, 0);
   const updated = new Date(IMPORTERS.updatedAt).toLocaleDateString(INTL[lang], { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
@@ -53,6 +55,7 @@ export default async function ImportersPage() {
         <ImportersDashboard countries={countries} lang={lang} L={I} vocab={vocab} />
         <section aria-labelledby="cards-title" className="mt-14 pt-8 border-t border-rule">
           <h2 id="cards-title" className="font-cond text-3xl font-semibold tracking-tight mb-4">{I.cards}</h2>
+          <p className="mb-4 text-sm"><Link href="/lab/importers/contacts" className="underline underline-offset-4 decoration-rule hover:decoration-ink">{lang === 'ru' ? `Все контакты (${index.length}): поиск по компаниям и людям →` : `All contacts (${index.length}): search companies and people →`}</Link></p>
           <ImportersExplorer countries={countries} lang={lang} L={I} contacts={contacts} liNames={liNames} />
         </section>
       </main>
