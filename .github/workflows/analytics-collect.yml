@@ -1,0 +1,42 @@
+name: analytics-collect
+# Раз в неделю собирает статистику Telegram (TGStat) и проверяет сайт.
+# Результат пишется в ветку analytics-data (папка data/analytics/), чтобы не запускать деплой на Vercel.
+# Секрет: Settings → Secrets and variables → Actions → TGSTAT_TOKEN.
+on:
+  schedule:
+    - cron: '0 4 * * 2'   # вторник 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Collect
+        env:
+          TGSTAT_TOKEN: ${{ secrets.TGSTAT_TOKEN }}
+        run: node scripts/analytics/collect.mjs
+      - name: Publish to analytics-data branch
+        run: |
+          cp -r analytics-out /tmp/analytics-out
+          git config user.name "analytics-bot"
+          git config user.email "analytics-bot@users.noreply.github.com"
+          if git fetch origin analytics-data; then
+            git checkout -B analytics-data origin/analytics-data
+          else
+            git checkout --orphan analytics-data
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
+          mkdir -p data/analytics
+          cp /tmp/analytics-out/*.json data/analytics/
+          git add data/analytics
+          git commit -m "analytics: weekly snapshot [skip ci]" || echo "nothing to commit"
+          git push origin analytics-data
