@@ -28,6 +28,29 @@ export async function postFacebookPhoto(png: ArrayBuffer, imageUrl: string, text
   return { ok: false, error: 'not configured' };
 }
 
+/** Текстовый пост на страницу (например, опрос недели из Telegram: в Facebook нет опросов, даём вопрос, варианты и ссылку). */
+export async function postFacebookText(text: string): Promise<FacebookResult> {
+  const pageId = (process.env.FB_PAGE_ID || '').trim();
+  const pageToken = (process.env.FB_PAGE_ACCESS_TOKEN || '').trim();
+  if (pageId && pageToken) {
+    try {
+      const res = await fetch(`https://graph.facebook.com/${GRAPH_VERSION}/${pageId}/feed`, {
+        method: 'POST', cache: 'no-store',
+        body: new URLSearchParams({ message: text, access_token: pageToken }),
+      });
+      const data: any = await res.json().catch(() => ({}));
+      if (!res.ok || data.error) return { ok: false, via: 'graph', error: data.error?.message || `HTTP ${res.status}` };
+      return { ok: true, via: 'graph', id: data.id };
+    } catch (e: any) {
+      return { ok: false, via: 'graph', error: String(e?.message || e) };
+    }
+  }
+  const mcToken = (process.env.METRICOOL_USER_TOKEN || '').trim();
+  const mcUser = (process.env.METRICOOL_USER_ID || '').trim();
+  if (mcToken && mcUser) return postViaMetricool(mcToken, mcUser, '', text, 'facebook');
+  return { ok: false, error: 'not configured' };
+}
+
 /** X (Twitter) через Metricool: включается переменной METRICOOL_X=1, когда аккаунт X подключён к бренду в Metricool. */
 export function xConfigured(): boolean {
   return (process.env.METRICOOL_X || '').trim() === '1' && !!(process.env.METRICOOL_USER_TOKEN && process.env.METRICOOL_USER_ID);
@@ -71,8 +94,8 @@ async function postViaMetricool(token: string, userId: string, imageUrl: string,
   try {
     // Metricool сначала забирает картинку к себе (static.metricool.com); если не вышло — отдаём исходный адрес.
     let media = imageUrl;
-    const norm = await fetch(`${METRICOOL_API}/actions/normalize/image/url?url=${encodeURIComponent(imageUrl)}&${qs}`, { headers, cache: 'no-store' });
-    if (norm.ok) {
+    const norm = !imageUrl ? null : await fetch(`${METRICOOL_API}/actions/normalize/image/url?url=${encodeURIComponent(imageUrl)}&${qs}`, { headers, cache: 'no-store' });
+    if (norm && norm.ok) {
       const body = (await norm.text()).trim().replace(/^"|"$/g, '');
       if (/^https?:\/\//.test(body)) media = body;
     }
@@ -80,7 +103,7 @@ async function postViaMetricool(token: string, userId: string, imageUrl: string,
     const when = localDateTime(new Date(Date.now() + 3 * 60_000), METRICOOL_TZ);
     const post = {
       autoPublish: true, draft: false, descendants: [], firstCommentText: '', hasNotReadNotes: false,
-      media: [media], mediaAltText: [], providers: [{ network }],
+      media: media ? [media] : [], mediaAltText: [], providers: [{ network }],
       publicationDate: { dateTime: when, timezone: METRICOOL_TZ },
       shortener: false, smartLinkData: { ids: [] }, text,
       ...(network === 'facebook' ? { facebookData: { type: 'POST' } } : { twitterData: { tags: [] } }),

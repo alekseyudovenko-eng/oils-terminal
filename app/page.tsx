@@ -13,6 +13,8 @@ import MpobCard from '@/components/MpobCard';
 import MarketCalendar from '@/components/MarketCalendar';
 import RegionBlock from '@/components/RegionBlock';
 import SubscribeForm from '@/components/SubscribeForm';
+import TelegramCta from '@/components/TelegramCta';
+import { tgUrl } from '@/lib/links';
 import { getPriceHistory } from '@/lib/price-history';
 import { getMpobLatest, getRegionTrade } from '@/lib/market-cards';
 import { upcomingEvents } from '@/lib/market-calendar';
@@ -49,6 +51,7 @@ export default async function OverviewPage() {
       <SiteHeader active="overview" />
       <QuoteTicker data={quotes} />
       <Hero data={quotes} />
+      <TelegramCta lang={lang} />
 
       <main className="mx-auto max-w-page w-full px-4 sm:px-6 grid gap-x-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
         <div className="min-w-0">
@@ -80,7 +83,7 @@ export default async function OverviewPage() {
           <NewsList news={feed.items} limit={12} />
           <p className="mt-4 text-sm text-ink-2">
             {t.footer.telegram.split('{link}')[0]}
-            <a href="https://t.me/oilpalm" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-gold">@oilpalm</a>
+            <a href={tgUrl("news")} target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-gold">@oilpalm</a>
             {t.footer.telegram.split('{link}')[1]}
           </p>
         </Section>
