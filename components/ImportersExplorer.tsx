@@ -116,8 +116,15 @@ export default function ImportersExplorer({ countries, lang, L, contacts = {}, l
             ))}
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm min-w-[760px]">
+            <table className="w-full text-sm min-w-[960px] table-fixed">
               <caption className="sr-only">{fill(L.tableCaption, { c: country.name })}</caption>
+              <colgroup>
+                <col className="w-[27%]" />
+                <col className="w-[12%]" />
+                <col className="w-[14%]" />
+                <col className="w-[12%]" />
+                <col className="w-[35%]" />
+              </colgroup>
               <thead>
                 <tr className="text-xs text-ink-3 border-b border-rule text-left">
                   <th scope="col" className="py-2 pr-4 font-normal">{L.cols.company}</th>
@@ -140,8 +147,8 @@ export default function ImportersExplorer({ countries, lang, L, contacts = {}, l
                     </th>
                     <td className="py-3 px-4 text-ink-2">{co.segment.join(', ')}</td>
                     <td className="py-3 px-4 text-ink-2">{co.products.join(', ')}</td>
-                    <td className="py-3 px-4 num whitespace-nowrap">{co.volume ?? '—'}</td>
-                    <td className="py-3 pl-4 text-ink-2 max-w-[38ch]">
+                    <td className="py-3 px-4 num break-words">{co.volume ?? '—'}</td>
+                    <td className="py-3 pl-4 text-ink-2 break-words">
                       {co.notes}
                       {(co.sources?.length || co.checkedAt) && (
                         <span className="block mt-1 text-xs text-ink-3">
