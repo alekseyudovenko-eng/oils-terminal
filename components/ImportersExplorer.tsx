@@ -5,15 +5,15 @@ import type { Country } from '@/lib/importers';
 import type { LabDict } from '@/lib/dict-lab';
 import { INTL, type Locale } from '@/lib/i18n';
 import { fill } from '@/lib/dict';
-import { linkedinLinks, type CompanyContact } from '@/lib/company-contacts-shared';
+import Link from 'next/link';
 
 const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е');
 
 export default function ImportersExplorer({ countries, lang, L, contacts = {}, liNames = {} }: {
   countries: Country[]; lang: Locale; L: LabDict['imp'];
-  /** id страны → контакты в порядке country.companies (null — контактов ещё нет). */
-  contacts?: Record<string, (CompanyContact | null)[]>;
-  /** id страны → исходные (нелокализованные) названия компаний, для поиска в LinkedIn. */
+  /** id страны → есть ли компания в базе контактов, в порядке country.companies. */
+  contacts?: Record<string, boolean[]>;
+  /** id страны → исходные (нелокализованные) названия компаний — ключ записи в базе контактов. */
   liNames?: Record<string, string[]>;
 }) {
   const [cid, setCid] = useState(countries[0]?.id ?? '');
@@ -39,33 +39,8 @@ export default function ImportersExplorer({ countries, lang, L, contacts = {}, l
 
   if (!country) return null;
 
-  const ContactBlock = ({ co, idx }: { co: Country['companies'][number]; idx: number }) => {
-    const c = contacts[country.id]?.[idx] ?? null;
-    const li = linkedinLinks(liNames[country.id]?.[idx] ?? co.name, c);
-    const C = L.contacts;
-    const linkCls = 'underline decoration-rule hover:text-gold';
-    return (
-      <span className="block mt-1.5 text-xs text-ink-3 space-y-0.5">
-        {c?.phone && <span className="block">{C.phone}: <a href={`tel:${c.phone.replace(/[^+\d]/g, '')}`} className={linkCls}>{c.phone}</a></span>}
-        {c?.email && <span className="block">{C.email}: <a href={`mailto:${c.email}`} className={linkCls}>{c.email}</a></span>}
-        {c?.procurement && <span className="block">{C.procurement}: {c.procurement}</span>}
-        {c?.address && <span className="block">{c.address}</span>}
-        {c?.people?.map(p => (
-          <span key={p.name} className="block">
-            {p.name}, {p.role}{p.source && <> · <a href={p.source} target="_blank" rel="noopener noreferrer" className={linkCls}>{L.source}</a></>}
-          </span>
-        ))}
-        <span className="flex flex-wrap gap-x-2 gap-y-0.5 pt-0.5">
-          <span className="text-ink-2">LinkedIn:</span>
-          <a href={li.company} target="_blank" rel="noopener noreferrer" className={linkCls}>{C.liCompany}</a>
-          <a href={li.procurement} target="_blank" rel="noopener noreferrer" className={linkCls}>{C.liProcurement}</a>
-          <a href={li.rnd} target="_blank" rel="noopener noreferrer" className={linkCls}>{C.liRnd}</a>
-          <a href={li.management} target="_blank" rel="noopener noreferrer" className={linkCls}>{C.liManagement}</a>
-        </span>
-        {c?.checkedAt && <span className="block">{fill(C.checked, { d: new Date(c.checkedAt).toLocaleDateString(INTL[lang], { timeZone: 'UTC' }) })}</span>}
-      </span>
-    );
-  };
+  const href = (idx: number, name: string) =>
+    `/lab/importers/company/${encodeURIComponent(country.id)}/${encodeURIComponent(liNames[country.id]?.[idx] ?? name)}`;
 
   return (
     <div>
@@ -139,11 +114,11 @@ export default function ImportersExplorer({ countries, lang, L, contacts = {}, l
                   <tr key={co.name} className="align-top">
                     <th scope="row" className="py-3 pr-4 text-left font-normal">
                       <span className="block font-medium text-ink">
-                        {co.website ? <a href={co.website} target="_blank" rel="noopener noreferrer" className="hover:text-gold">{co.name}</a> : co.name}
+                        <Link href={href(country.companies.indexOf(co), co.name)} className="underline decoration-rule underline-offset-4 hover:text-gold">{co.name}</Link>
+                        {contacts[country.id]?.[country.companies.indexOf(co)] && <span className="ml-2 text-xs font-normal text-ink-3">{lang === 'ru' ? 'контакты' : 'contacts'}</span>}
                       </span>
                       <span className="block text-xs text-ink-3">{[co.group, co.city].filter(Boolean).join(' · ')}</span>
-                      {co.contacts && <span className="block text-xs text-ink-3">{co.contacts}</span>}
-                      <ContactBlock co={co} idx={country.companies.indexOf(co)} />
+                      {co.website && <a href={co.website} target="_blank" rel="noopener noreferrer" className="block text-xs text-ink-3 underline decoration-rule hover:text-gold">{co.website.replace(/^https?:\/\/(www\.)?/, '')}</a>}
                     </th>
                     <td className="py-3 px-4 text-ink-2">{co.segment.join(', ')}</td>
                     <td className="py-3 px-4 text-ink-2">{co.products.join(', ')}</td>
