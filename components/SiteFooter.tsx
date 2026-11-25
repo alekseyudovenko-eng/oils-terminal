@@ -3,6 +3,7 @@ import { getDict } from '@/lib/i18n-server';
 import { fill } from '@/lib/dict';
 import { EXTRA } from '@/lib/dict-extra';
 import { localePath } from '@/lib/i18n';
+import { tgUrl } from '@/lib/links';
 
 export default function SiteFooter({ updatedAt }: { updatedAt: string | null }) {
   const { lang, t } = getDict();
@@ -11,7 +12,7 @@ export default function SiteFooter({ updatedAt }: { updatedAt: string | null }) 
       <div className="mx-auto max-w-page px-4 sm:px-6 py-5 grid gap-1">
         <p className="text-ink-2">
           {t.footer.telegram.split('{link}')[0]}
-          <a href="https://t.me/oilpalm" target="_blank" rel="noopener" className="underline hover:text-gold">@oilpalm</a>
+          <a href={tgUrl("footer")} target="_blank" rel="noopener" className="underline hover:text-gold">@oilpalm</a>
           {t.footer.telegram.split('{link}')[1]}
         </p>
         <p className="text-ink-2">

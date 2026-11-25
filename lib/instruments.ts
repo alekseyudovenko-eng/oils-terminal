@@ -113,13 +113,8 @@ export const INSTRUMENTS: Instrument[] = [
     group: 'energy', unit: 'USD/барр.', tickers: ['NYMEX:CL1!'], toUsdT: { kind: 'none' },
     expect: /crude/i,
   },
-  {
-    id: 'gasoil', name: 'Газойль', short: 'Газойль ICE', venue: 'ICE Low Sulphur Gasoil',
-    group: 'energy', unit: 'USD/т',
-    tickers: ['ICEEUR:G1!', 'ICEEUR:LGO1!', 'ICEEUR:GO1!', 'ICEEUR:GAS1!', 'ICEENDEX:G1!', 'ICE:G1!'],
-    toUsdT: { kind: 'usd_t' },
-    expect: /gas ?oil/i,
-  },
+  // ICE Low Sulphur Gasoil убран: на бесплатных источниках (TradingView, Sina) котировки нет — вечный null.
+  // POGO/BOGO считаются по ULSD NYMEX (отмечено как proxy), см. lib/quotes.ts.
   {
     id: 'ulsd', name: 'Дизель ULSD', short: 'ULSD', venue: 'NYMEX, NY Harbor',
     group: 'energy', unit: 'USD/галлон', tickers: ['NYMEX:HO1!'], toUsdT: { kind: 'usd_gal' },

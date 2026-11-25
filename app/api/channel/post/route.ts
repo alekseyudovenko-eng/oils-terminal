@@ -16,6 +16,8 @@ import { MAX_POSTS_PER_DAY, channelPostsToday, isWeekendMsk } from '@/lib/channe
 import { callTelegramChat } from '@/lib/telegram';
 import { channelChat, checkTelegramHtml, visibleLength } from '@/lib/channel';
 import { htmlToVkText, postToVk, vkConfigured } from '@/lib/vk';
+import { postFacebookText } from '@/lib/facebook';
+import { siteUrl } from '@/lib/links';
 
 export const dynamic = 'force-dynamic';
 
@@ -93,5 +95,18 @@ export async function POST(request: Request) {
     vk = v.ok ? `posted ${v.url}${v.error ? ' (' + v.error + ')' : ''}` : `error: ${v.error}`;
     console.log('channel/post vk:', vk, once);
   }
-  return NextResponse.json({ success: true, once, chat, messageId, url, vk });
+
+  // Facebook: опрос Telegram переносим текстом (вопрос, варианты, ссылка на опрос и на сайт с UTM) — так страница получает пост и в неделю опроса
+  let facebook = 'skipped';
+  if (poll) {
+    const opts = (poll.options as unknown[]).map(o => `• ${String(o).trim()}`).join('\n');
+    const fbText =
+      `🗳 Опрос недели\n${String(poll.question).trim()}\n\n${opts}\n\n` +
+      `Голосуйте в Telegram: ${url ? url + '?utm_source=facebook&utm_medium=social&utm_campaign=weekly_poll' : 'https://t.me/oilpalm'}\n` +
+      `Цены и графики: ${siteUrl('facebook', 'weekly_poll', '/market', 'prices')}`;
+    const fb = await postFacebookText(fbText);
+    facebook = fb.ok ? `posted via ${fb.via}` : fb.error === 'not configured' ? 'not configured' : `error (${fb.via}): ${fb.error}`;
+    console.log('channel/post facebook:', facebook, once);
+  }
+  return NextResponse.json({ success: true, once, chat, messageId, url, vk, facebook });
 }

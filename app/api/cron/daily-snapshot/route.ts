@@ -6,6 +6,7 @@
 // X: через Metricool, если METRICOOL_X=1 (аккаунт X должен быть подключён к бренду в Metricool).
 // ВКонтакте (https://vk.ru/public156172373): если задан VK_GROUP_TOKEN (см. lib/vk.ts).
 import { NextResponse } from 'next/server';
+import { siteUrl } from '@/lib/links';
 import { isCronAuthorized } from '@/lib/auth';
 import { alreadySentToday, caller, markSentToday } from '@/lib/once-a-day';
 import { isWeekendMsk } from '@/lib/channel-schedule';
@@ -60,12 +61,14 @@ export async function GET(request: Request) {
   if (!tgDone) {
     // Подпись по-русски: заголовок, две строки вывода, главные новости (картинка остаётся английской).
     const top = newsRu.slice(0, 3).map(t => `• ${escapeHtml(t)}`);
+    const isMonday = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Moscow', weekday: 'short' }).format(new Date()) === 'Mon';
+    const pollNote = isMonday ? '\n\n🗳 <b>Опрос недели</b> — через полчаса в канале, проголосуйте за 10 секунд' : '';
     let caption =
       `<b>IMA Daily Snapshot · ${dateRu}</b>\n<b>${escapeHtml(titleRu)}</b>\n\n` +
       leadRu.map(escapeHtml).join('\n') +
-      (top.length ? `\n\n📰 <b>Главное</b>\n${top.join('\n')}` : '') +
-      `\n\n<a href="${SITE_URL}">imaoils.vercel.app</a> — цены и новости рынка растительных масел`;
-    if (caption.length > 1024) caption = caption.replace(/\n\n📰[\s\S]*?(?=\n\n<a )/, ''); // лимит подписи Telegram
+      (top.length ? `\n\n📰 <b>Главное</b>\n${top.join('\n')}` : '') + pollNote +
+      `\n\n<a href="${escapeHtml(siteUrl('telegram', 'daily_snapshot', '/market', 'prices'))}">Таблица цен и графики на imaoils.vercel.app</a> — цены и новости рынка растительных масел`;
+    if (caption.length > 1024) caption = caption.replace(/\n\n📰[\s\S]*?(?=\n\n(?:🗳|<a ))/, ''); // лимит подписи Telegram
     tg = await sendTelegramPhotoFile(png, `IMA_Daily_Snapshot_${date}.png`, caption, chat);
     if (tg.ok) await markSentToday('daily-snapshot', via);
     console.log('daily-snapshot telegram:', tg.ok ? 'sent' : tg.error, 'chat', chat, 'caller', via);
@@ -78,7 +81,7 @@ export async function GET(request: Request) {
     const text =
       `IMA Daily Snapshot · ${dateRu}\n${titleRu}\n\n${leadRu.join('\n')}\n\n` +
       `Цены на пальмовое масло (FCPO), нефть Brent/WTI, курс USD/MYR и главные новости рынка растительных масел.\n\n` +
-      `🔗 ${SITE_URL}`;
+      `🔗 ${siteUrl('facebook', 'daily_snapshot', '/market', 'prices')}`;
     const fb = await postFacebookPhoto(png, `${SITE_URL}/api/snapshot?d=${date}`, text);
     fbOk = fb.ok;
     facebook = fb.ok ? `posted via ${fb.via}` : `error (${fb.via}): ${fb.error}`;
@@ -94,7 +97,7 @@ export async function GET(request: Request) {
     const text =
       `IMA Daily Snapshot · ${d}.${m}.${y}\n${title}\n\n` +
       `Palm oil (FCPO), Brent/WTI, USD/MYR and top vegetable oil market news.\n\n` +
-      `#palmoil #vegoils\n${SITE_URL}`;
+      `#palmoil #vegoils\n${siteUrl('x', 'daily_snapshot', '/en/market', 'prices')}`;
     const r = await postXPhoto(`${SITE_URL}/api/snapshot?d=${date}`, text);
     xOk = r.ok;
     x = r.ok ? `posted via ${r.via}` : `error (${r.via}): ${r.error}`;
@@ -110,7 +113,7 @@ export async function GET(request: Request) {
     const text =
       `IMA Daily Snapshot · ${dateRu}\n${titleRu}\n\n${leadRu.join('\n')}` +
       (top.length ? `\n\n📰 Главное\n${top.join('\n')}` : '') +
-      `\n\n🔗 ${SITE_URL} — цены и новости рынка растительных масел\n📣 Telegram: https://t.me/oilpalm\n\n#пальмовоемасло #растительныемасла`;
+      `\n\n🔗 ${siteUrl('vk', 'daily_snapshot', '/market', 'prices')} — цены и новости рынка растительных масел\n📣 Telegram: https://t.me/oilpalm\n\n#пальмовоемасло #растительныемасла`;
     const r = await postToVk(text, { png, filename: `IMA_Daily_Snapshot_${date}.png`, fallbackLink: `${SITE_URL}/snapshot/${date}` });
     vkOk = r.ok;
     vk = r.ok ? `posted ${r.url}${r.photo ? '' : ' (без картинки' + (r.error ? ': ' + r.error : '') + ')'}` : `error: ${r.error}`;
