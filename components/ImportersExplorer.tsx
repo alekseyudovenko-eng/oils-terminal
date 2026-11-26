@@ -5,16 +5,11 @@ import type { Country } from '@/lib/importers';
 import type { LabDict } from '@/lib/dict-lab';
 import { INTL, type Locale } from '@/lib/i18n';
 import { fill } from '@/lib/dict';
-import Link from 'next/link';
 
 const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е');
 
-export default function ImportersExplorer({ countries, lang, L, contacts = {}, liNames = {} }: {
+export default function ImportersExplorer({ countries, lang, L }: {
   countries: Country[]; lang: Locale; L: LabDict['imp'];
-  /** id страны → есть ли компания в базе контактов, в порядке country.companies. */
-  contacts?: Record<string, boolean[]>;
-  /** id страны → исходные (нелокализованные) названия компаний — ключ записи в базе контактов. */
-  liNames?: Record<string, string[]>;
 }) {
   const [cid, setCid] = useState(countries[0]?.id ?? '');
   const [q, setQ] = useState('');
@@ -38,9 +33,6 @@ export default function ImportersExplorer({ countries, lang, L, contacts = {}, l
   }, [country, q, seg]);
 
   if (!country) return null;
-
-  const href = (idx: number, name: string) =>
-    `/lab/importers/company/${encodeURIComponent(country.id)}/${encodeURIComponent(liNames[country.id]?.[idx] ?? name)}`;
 
   return (
     <div>
@@ -114,11 +106,9 @@ export default function ImportersExplorer({ countries, lang, L, contacts = {}, l
                   <tr key={co.name} className="align-top">
                     <th scope="row" className="py-3 pr-4 text-left font-normal">
                       <span className="block font-medium text-ink">
-                        <Link href={href(country.companies.indexOf(co), co.name)} className="underline decoration-rule underline-offset-4 hover:text-gold">{co.name}</Link>
-                        {contacts[country.id]?.[country.companies.indexOf(co)] && <span className="ml-2 text-xs font-normal text-ink-3">{lang === 'ru' ? 'контакты' : 'contacts'}</span>}
+                        {co.website ? <a href={co.website} target="_blank" rel="noopener noreferrer" className="hover:text-gold">{co.name}</a> : co.name}
                       </span>
                       <span className="block text-xs text-ink-3">{[co.group, co.city].filter(Boolean).join(' · ')}</span>
-                      {co.website && <a href={co.website} target="_blank" rel="noopener noreferrer" className="block text-xs text-ink-3 underline decoration-rule hover:text-gold">{co.website.replace(/^https?:\/\/(www\.)?/, '')}</a>}
                     </th>
                     <td className="py-3 px-4 text-ink-2">{co.segment.join(', ')}</td>
                     <td className="py-3 px-4 text-ink-2">{co.products.join(', ')}</td>
